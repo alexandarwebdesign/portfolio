@@ -4,7 +4,8 @@
       "Bash(python \"C:\\\\Users\\\\Aleksandar\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"portfolio project detail page case study navigation\" --domain ux -n 8)",
       "Bash(python \"C:\\\\Users\\\\Aleksandar\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"CTA clarity next action conversion\" --domain ux -n 6)",
       "Bash(python \"C:\\\\Users\\\\Aleksandar\\\\.claude\\\\skills\\\\ui-ux-pro-max\\\\scripts\\\\search.py\" \"layout confusion visual hierarchy touch target\" --domain ux -n 8)",
-      "Bash(gh auth:*)"
+      "Bash(gh auth:*)",
+      "Bash(gh repo:*)"
     ]
   }
 }
