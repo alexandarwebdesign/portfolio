@@ -272,8 +272,8 @@ textarea:focus-visible {
   left: 50%;
   transform: translateX(-50%);
   width: 880px;
-  max-width: calc(100% - 48px);
-  background: rgba(255, 255, 255, 0.3);
+  max-width: calc(100% - 64px);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(3rem);
   border-radius: 20px;
   padding: 13px 17px;
@@ -281,6 +281,19 @@ textarea:focus-visible {
   align-items: center;
   justify-content: space-between;
   z-index: 1000;
+}
+
+.navbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  padding: 1.25px; /* border thickness */
+  background: linear-gradient(135deg,rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.5) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .nav-logo {
