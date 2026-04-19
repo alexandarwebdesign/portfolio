@@ -25,7 +25,7 @@
   --color-warning: #ff9500;
 
   /* Typography - Fonts */
-  --font-display: "Marcellus", serif;
+  --font-display: "Manrope", sans-serif;
   --font-body: "Manrope", sans-serif;
 
   /* Typography - Sizes */
@@ -58,7 +58,7 @@
 
   /* Layout */
   --page-width: 1200px;
-  --content-width: 1400px;
+  --content-width: 1600px;
   --side-margin: 64px;
   --section-gap: 200px;
 
@@ -111,7 +111,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 400;
+  font-weight: 700;
   line-height: var(--leading-tight);
 }
 
@@ -1314,6 +1314,53 @@ textarea:focus-visible {
    6.7 Project Detail Page
    -------------------------------------------------------------------------- */
 
+/* Breadcrumb */
+.breadcrumb {
+  margin-bottom: 24px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.breadcrumb a:hover {
+  color: var(--color-accent);
+}
+
+.breadcrumb-sep {
+  margin: 0 6px;
+  opacity: 0.5;
+}
+
+/* Content stream reveal animation */
+.content-text-block.reveal,
+.content-image-block.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 600ms var(--ease-out),
+    transform 600ms var(--ease-out);
+}
+
+.content-text-block.reveal.visible,
+.content-image-block.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content-text-block.reveal,
+  .content-image-block.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* Back to Work link */
 .back-to-work {
   display: inline-flex;
@@ -1339,34 +1386,40 @@ textarea:focus-visible {
 .project-hero-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-4);
-  margin-bottom: var(--space-16);
+  align-items: flex-start;
+  text-align: left;
+  gap: var(--space-6);
+  margin-top: var(--space-16);
+  margin-bottom: var(--space-8);
+  max-width: 900px;
 }
 
 .project-eyebrow {
+  margin: 0;
   font-size: var(--text-body);
   font-weight: 600;
   color: var(--color-accent);
-  letter-spacing: 0.5px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .project-hero-title {
+  margin: 0;
   font-family: var(--font-display);
-  font-size: var(--text-hero);
-  font-weight: 400;
-  letter-spacing: -1.6px;
+  font-size: clamp(3rem, 9vw, var(--text-hero));
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
   color: var(--color-text);
-  max-width: 900px;
 }
 
-.project-description {
-  font-size: var(--text-body-lg);
+/* Lead paragraph below the hero title */
+.project-lead {
+  margin: 0;
+  max-width: 39rem;
+  font-size: clamp(1rem, 1.85vw, var(--text-body-lg));
+  line-height: 1.55;
   color: var(--color-text-muted);
-  max-width: 700px;
-  line-height: 1.6;
 }
 
 .project-hero-image-wrapper {
@@ -1377,6 +1430,40 @@ textarea:focus-visible {
 
 .project-hero-full-section {
   padding-bottom: var(--space-16);
+}
+
+/* Frame wrapper for relative positioning of the logo overlay */
+.project-hero-image-frame {
+  position: relative;
+  display: block;
+  line-height: 0; /* removes inline gap under img */
+}
+
+/* Centered glassmorphic logo pill */
+.project-hero-logo-wrap {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 11.11vw;
+  height: 11.11vw;
+  padding: 2.5vw;
+  background: radial-gradient(circle, rgba(224, 224, 224, 0) 30%, rgba(255, 255, 255, 1) 100%);
+  backdrop-filter: blur(3rem);
+  -webkit-backdrop-filter: blur(3rem);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+  z-index: 4;
+}
+
+.project-hero-logo {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
+  object-fit: contain;
 }
 
 .project-hero-image {
@@ -1489,6 +1576,12 @@ textarea:focus-visible {
   gap: var(--space-8);
 }
 
+.brief-meta-left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
 .meta-label {
   font-size: 14px;
   font-weight: 500;
@@ -1519,6 +1612,39 @@ textarea:focus-visible {
   border-radius: 100px;
 }
 
+/* Live site circular CTA button */
+.live-site-btn {
+  width: clamp(130px, 14.58vw, 280px);
+  height: clamp(130px, 14.58vw, 280px);
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: clamp(11px, 0.97vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  text-align: center;
+  box-shadow: 0 0 160px rgba(0, 0, 0, 0.10), 0 0 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+}
+
+
+.live-site-btn:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 200px rgba(0, 102, 255, 0.22), 0 0 40px rgba(0, 102, 255, 0.18);
+}
+
+.live-site-btn:active {
+  transform: scale(0.96);
+}
+
 .meta-block {
   display: flex;
   flex-direction: column;
@@ -1539,7 +1665,7 @@ textarea:focus-visible {
 /* Badge Styling */
 .project-badges {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     margin-bottom: var(--space-4);
 }
 
@@ -1564,7 +1690,15 @@ textarea:focus-visible {
 /* Single-column variant when the challenge text column is hidden (modern content mode) */
 .brief-grid.brief-meta-only {
   grid-template-columns: 1fr;
-  max-width: 480px;
+}
+
+@media (min-width: 901px) {
+  .brief-grid.brief-meta-only .brief-meta {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-16);
+  }
 }
 
 /* Responsive Grid */
@@ -1572,6 +1706,9 @@ textarea:focus-visible {
   .brief-grid {
     grid-template-columns: 1fr;
     gap: var(--space-12);
+  }
+  .brief-meta {
+    flex-direction: column-reverse;
   }
 }
 
@@ -1858,10 +1995,6 @@ textarea:focus-visible {
     padding-top: 120px;
   }
 
-  .project-hero-title {
-    font-size: var(--text-section);
-  }
-
 
 
   .navbar {
@@ -2122,7 +2255,18 @@ textarea:focus-visible {
 .project-content-stream {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
+  gap: var(--space-20);
+}
+
+/* Text block inside the content stream */
+.content-text-block {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Dynamic body section padding */
+.project-dynamic-body-section {
+  padding-bottom: 4rem;
 }
 
 .project-content-stream .rich-text > *:first-child {
@@ -2159,6 +2303,141 @@ textarea:focus-visible {
   object-fit: cover;
   border-radius: var(--border-radius);
   display: block;
+}
+
+/* Device mockup screen video — override the generic rule above */
+.image-layout-block .screen-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+
+/* Wide Video Block (.content-wide-video)
+   Equivalent of the reference's device-nodevice section —
+   full-width rounded video with a floating caption card */
+.content-wide-video {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 1.4rem;
+  overflow: hidden;
+  box-shadow: 0 28px 56px rgba(20, 21, 23, 0.10);
+  cursor: pointer;
+  background: #0f1012;
+}
+
+.content-wide-video::before {
+  content: "";
+  display: block;
+  padding-top: 56.5%; /* 16:9-ish, matches reference */
+}
+
+.content-wide-video .screen-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+  display: block;
+}
+
+/* Floating label card — bottom-right corner */
+.wide-video-label {
+  position: absolute;
+  right: clamp(1.2rem, 4vw, 2.4rem);
+  bottom: clamp(1.2rem, 4vw, 2.4rem);
+  z-index: 2;
+  width: min(18rem, 38%);
+  padding: 1rem 1.15rem;
+  border-radius: 1rem;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(20, 21, 23, 0.08);
+}
+
+.wide-video-label__icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.wide-video-label__eyebrow {
+  margin: 0 0 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.wide-video-label__heading {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+@media (max-width: 720px) {
+  .wide-video-label {
+    width: fit-content;
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
+
+/* Fullwidth Parallax Image (.content-fullwidth-parallax) */
+.content-fullwidth-parallax {
+  padding-top: 0;
+  padding-bottom: 0;
+  background: transparent;
+  width: 100%;
+}
+
+.content-fullwidth-parallax .single-image {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-background);
+}
+
+/* No ::before spacer — image natural height drives the container */
+
+.content-fullwidth-parallax .fp-parallax-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.content-fullwidth-parallax .fp-parallax-wrap .overlay-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.content-fullwidth-parallax .fp-parallax-wrap .dark-overlay {
+  background: linear-gradient(
+    45deg,
+    #d4d4d4,
+    #ffffff,
+    #ececec,
+    #ffffff,
+    #dadada
+  );
+  mix-blend-mode: multiply;
+  position: absolute;
+  inset: 0;
 }
 
 .image-block-caption {
@@ -2237,3 +2516,422 @@ textarea:focus-visible {
     border-radius: 8px;
   }
 }
+
+/* ==========================================================================
+   PARALLAX IMAGE COMPONENT (.parallax-img)
+   Use as: <div class="parallax-img"><img srcset="..." data-scroll data-scroll-speed="-1" /></div>
+   ========================================================================== */
+
+.parallax-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.parallax-img img {
+  position: absolute;
+  inset: -20%;
+  width: 100%;
+  height: 140%;
+  object-fit: cover;
+  will-change: transform;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-img img {
+    position: relative;
+    inset: auto;
+    height: 100%;
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
+   DEVICE MOCKUP COMPONENT
+   Ported from forma-device-mockup.html reference
+   Usage: add device_mockup: "macpro" to an image_block in projects.json
+   ========================================================================== */
+
+/* Base device wrapper */
+.device {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+  .device {
+    max-width: 88%;
+  }
+}
+
+@media (max-width: 480px) {
+  .device {
+    max-width: 82%;
+  }
+}
+
+/* The screen content area — video/image fills this */
+.block-device .single-image,
+.content-image-block .single-image {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  background: #000;
+  z-index: 1;
+}
+
+.block-device .single-image::before,
+.content-image-block .single-image::before {
+  content: "";
+  display: block;
+  padding-top: 62.5%;
+}
+
+/* Video fills the screen area */
+.screen-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  background: #000;
+  display: block;
+}
+
+/* The device frame image sits on top */
+.overlay-device-image {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.overlay-device-image::before {
+  content: "";
+  display: block;
+}
+
+.overlay-device {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* MacBook Pro (Higher angle) variant */
+.device-macprohigher .overlay-device-image::before {
+  padding-top: 85.5%;
+}
+
+.device-macprohigher .single-image {
+  width: 98.8%;
+  top: 37%;
+}
+
+.device-macprohigher .overlay-device {
+  background-image: url("images/Mockups/device-macpro-higher.png");
+}
+
+/* MacBook Pro 15 (no notch) variant */
+.device-mbp15 {
+  padding-inline: clamp(14px, 2vw, 26px);
+}
+
+.device-mbp15 .overlay-device-image::before {
+  padding-top: 50.365%;
+}
+
+.device-mbp15 .single-image {
+  width: 74.4%;
+  left: 49.95%;
+  top: 47.3%;
+  border-radius: 5px 5px 0 0;
+}
+
+.device-mbp15 .overlay-device {
+  background-image: url("images/Mockups/device-mbp-15-nonotch.png");
+}
+
+/* Frameless wide-card variant (device-nodevice) */
+.block-device .device-nodevice .single-image {
+  width: 100%;
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  border-radius: 1.4rem;
+  overflow: hidden;
+  box-shadow: 0 28px 56px rgba(20, 21, 23, 0.1);
+}
+
+.block-device .device-nodevice .single-image::before {
+  padding-top: 56.5%;
+}
+
+.block-device .device-nodevice .overlay-device-image {
+  display: none;
+}
+
+/* single-block layout helpers */
+.single-block {
+  margin-top: -1px;
+  padding-top: 5rem;
+  padding-bottom: 0;
+}
+
+.single-block.block-padding-bottom {
+  padding-bottom: 5rem;
+}
+
+/* Full-width image block */
+.block-fullwidth {
+  padding-top: 0;
+  padding-bottom: 0;
+  background: transparent;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.block-fullwidth .single-image {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.block-fullwidth .single-image::before {
+  content: "";
+  display: block;
+  padding-top: 66%;
+}
+
+.block-fullwidth .overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.block-fullwidth img.overlay,
+.block-fullwidth video.overlay {
+  display: block;
+  object-fit: cover;
+}
+
+.block-fullwidth .single-image .overlay-image {
+  height: 120%;
+  top: -10%;
+  bottom: auto;
+}
+
+.block-fullwidth .dark-overlay {
+  background: #141517;
+}
+
+.block-fullwidth .single-image {
+  background: rgba(20, 21, 23, 0.06);
+}
+
+
+/* Carousel/device block min-height */
+.single-block.block-device {
+  min-height: 70vh;
+}
+
+
+/* Metrics section */
+.project-metrics-section {
+  clip-path: polygon(0% 0%, 100% 16%, 100% 100%, 0% 88%);
+  padding: 6rem 0;
+  background: var(--color-white);
+  margin-top: 4rem;
+}
+
+.project-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metric-value {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+/* Carousel controls */
+.carousel-btn-track {
+  position: absolute;
+  left: max(0px, calc(50% - 550px));
+  right: max(0px, calc(50% - 550px));
+  top: 0;
+  bottom: 0;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+@media (min-width: 1440px) {
+  .carousel-btn-track {
+    left: max(0px, calc(50% - 550px - 10vw));
+    right: max(0px, calc(50% - 550px - 10vw));
+    padding: 0 2.525vw;
+  }
+}
+
+.carousel-btn {
+  width: clamp(52px, 5.05vw, 194px);
+  height: clamp(52px, 5.05vw, 194px);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  background: radial-gradient(circle, rgba(224, 224, 224, 0) 30%, rgba(255, 255, 255, 1) 100%);
+  box-shadow: 0 0 160px rgba(0, 0, 0, 0.10), 0 0 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.carousel-btn svg {
+  width: clamp(21px, 2.08vw, 80px);
+  height: clamp(21px, 2.08vw, 80px);
+  flex-shrink: 0;
+}
+
+.carousel-btn:hover {
+  transform: scale(1.08);
+  color: #111;
+}
+
+.carousel-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 540px) {
+  .carousel-btn {
+    width: clamp(32px, 8vw, 44px);
+    height: clamp(32px, 8vw, 44px);
+  }
+  .carousel-btn svg {
+    width: clamp(13px, 3.3vw, 18px);
+    height: clamp(13px, 3.3vw, 18px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 720px) {
+  .device-macprohigher .single-image {
+    width: 98.7%;
+    top: 37%;
+  }
+}
+
+/* video-toggle: pause/play on click (handled by existing JS) */
+.video-toggle {
+  cursor: pointer;
+}
+
+/* Mobile devices block */
+.block-mobile-devices {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+}
+
+.block-mobile-devices .mobile-devices-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 clamp(1.4em, 5vw, 5.25em);
+}
+
+.block-mobile-devices .mobile-col {
+  width: 33.333%;
+  padding-top: clamp(4.5em, 18vh, 11em);
+  padding-bottom: clamp(4.5em, 18vh, 11em);
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.block-mobile-devices .mobile-device {
+  width: 68%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+
+.block-mobile-devices .mobile-screen {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.35em;
+  background: var(--color-background);
+  box-shadow: 0 22px 48px rgba(20, 21, 23, 0.08);
+}
+
+.block-mobile-devices .mobile-screen::before {
+  content: "";
+  display: block;
+  padding-top: 203%;
+}
+
+.block-mobile-devices .mobile-screen--img::before {
+  display: none;
+}
+
+.block-mobile-devices .mobile-screen-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 720px) {
+  .block-mobile-devices .mobile-devices-row { padding: 0; }
+  .block-mobile-devices .mobile-device { width: 76%; }
+}
+
+@media (max-width: 540px) {
+  .block-mobile-devices .mobile-col {
+    padding-top: 9vh;
+    padding-bottom: 9vh;
+  }
+}
+

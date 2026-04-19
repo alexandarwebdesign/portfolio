@@ -14,8 +14,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Fonts: Optimized Loading -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"></noscript>
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css" />
@@ -119,17 +119,19 @@
             </svg>
             All Work
           </a>
-          <nav aria-label="Breadcrumb" class="breadcrumb" style="margin-bottom: 24px; font-size: 14px;">
-            <a href="/" style="color: inherit; text-decoration: none;">Home</a> &gt;
-            <a href="/#work" style="color: inherit; text-decoration: none;">Work</a> &gt;
+          <nav aria-label="Breadcrumb" class="breadcrumb">
+            <a href="/">Home</a>
+            <span class="breadcrumb-sep" aria-hidden="true">›</span>
+            <a href="/#work">Work</a>
+            <span class="breadcrumb-sep" aria-hidden="true">›</span>
             <span aria-current="page" id="breadcrumb-project-name">Project</span>
           </nav>
           <div class="project-hero-content animate-in">
-            <span class="project-eyebrow" id="project-eyebrow">Category · Year</span>
+            <p class="project-eyebrow" id="project-eyebrow">Category · Year</p>
             <h1 class="project-hero-title" id="project-title">Project Title</h1>
-            <p class="project-description" id="project-description">Project description goes here.</p>
+            <p class="project-lead" id="project-description">Project description goes here.</p>
             <div class="project-badges">
-                <span class="conceptual-badge">Conceptual Project</span>
+              <span class="conceptual-badge">Conceptual Project</span>
             </div>
           </div>
         </div>
@@ -141,13 +143,28 @@
       <!-- Hero Image -->
       <section id="project-hero-full" class="project-hero-full-section" style="display: none;">
         <div class="container">
-          <img
-            src=""
-            alt=""
-            class="project-hero-image"
-            id="project-hero-full-image"
-            loading="eager"
-          />
+          <div class="project-hero-image-frame">
+            <img
+              src=""
+              alt=""
+              class="project-hero-image"
+              id="project-hero-full-image"
+              loading="lazy"
+              decoding="async"
+              data-scroll
+              data-scroll-speed="-1"
+            />
+            <div class="project-hero-logo-wrap" data-parallax-speed="2">
+              <img
+                src="images/projects/Forma-Favicon.svg"
+                alt=""
+                class="project-hero-logo"
+                aria-hidden="true"
+                width="68"
+                height="68"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
@@ -156,23 +173,24 @@
         <div class="container">
            <div class="brief-grid">
                <div class="brief-meta">
-                   <div class="meta-block">
-                       <span class="meta-label">The AI Client Persona</span>
-                       <span class="meta-value" id="project-client-persona">Client Persona Name</span>
-                   </div>
-                   <div class="meta-block">
-                       <span class="meta-label">Services</span>
-                       <div class="project-tags" id="project-tags"></div>
-                   </div>
-                   <!-- Colour Palette (Conditional) -->
-                   <div class="meta-block" id="project-palette-block" style="display: none;">
-                       <span class="meta-label">Colour Palette</span>
-                       <div class="project-palette" id="project-palette"></div>
+                   <div class="brief-meta-left">
+                       <div class="meta-block">
+                           <span class="meta-label">The AI Client Persona</span>
+                           <span class="meta-value" id="project-client-persona">Client Persona Name</span>
+                       </div>
+                       <div class="meta-block">
+                           <span class="meta-label">Services</span>
+                           <div class="project-tags" id="project-tags"></div>
+                       </div>
+                       <!-- Colour Palette (Conditional) -->
+                       <div class="meta-block" id="project-palette-block" style="display: none;">
+                           <span class="meta-label">Colour Palette</span>
+                           <div class="project-palette" id="project-palette"></div>
+                       </div>
                    </div>
                    <!-- Live URL (Conditional) -->
                    <div class="meta-block" id="project-live-url-block" style="display: none;">
-                       <span class="meta-label">Live Site</span>
-                       <a href="#" class="meta-link" id="project-live-url" target="_blank" rel="noopener noreferrer">Visit Website ↗</a>
+                       <a href="#" class="live-site-btn" id="project-live-url" target="_blank" rel="noopener noreferrer" data-parallax-speed="2">Visit Site ↗</a>
                    </div>
                </div>
                
@@ -195,7 +213,7 @@
       </section>
 
       <!-- 4. Dynamic Body Content (New Layout System) -->
-      <section id="project-dynamic-body" class="project-dynamic-body-section" style="display: none; padding-bottom: 4rem;">
+      <section id="project-dynamic-body" class="project-dynamic-body-section" style="display: none;">
           <div class="container">
               <div id="project-content-stream" class="project-content-stream">
                   <!-- JS will dynamically interleaved `.content-text-block` and `.content-image-block` elements here -->
@@ -207,9 +225,9 @@
            Content should be authored as part of the narrative body in newer projects. -->
 
       <!-- EXTRAS: Metrics (Conditional) -->
-      <section id="project-metrics" class="project-metrics-section" style="display: none; padding: 4rem 0; background: var(--color-white); margin-top: 4rem;">
+      <section id="project-metrics" class="project-metrics-section" style="display: none;">
         <div class="container">
-           <div class="metrics-grid" id="project-metrics-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+           <div class="project-metrics-grid" id="project-metrics-grid">
              <!-- Metrics inserted here -->
            </div>
         </div>
@@ -304,6 +322,9 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="js/webgl-carousel.js"></script>
     <script src="main.js?v=2" defer></script>
     <script src="projects.js?v=2" defer></script>
   </body>

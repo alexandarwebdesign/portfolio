@@ -29,21 +29,21 @@
 
 ### Font Families
 ```css
---font-display: 'Marcellus', serif;
+--font-display: 'Manrope', sans-serif;
 --font-body: 'Manrope', sans-serif;
 ```
 
 ### Font Import
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 ```
 
 ### Type Scale
 
 | Element | Font | Size | Weight | Letter Spacing |
 |---------|------|------|--------|----------------|
-| Hero Title | Marcellus | 80px | 400 | -1.6px |
-| Section Title | Marcellus | 72px | 400 | -0.72px |
+| Hero Title | Manrope | 80px | 700 | -1.6px |
+| Section Title | Manrope | 72px | 700 | -0.72px |
 | Service Title | Manrope | 40px | 600 | -0.4px |
 | Project Title | Manrope | 28px | 700 | 0 |
 | Body Large | Manrope | 24px | 400 | -0.24px |
@@ -504,7 +504,7 @@ https://www.figma.com/design/gqKVKGWVU2rh5QUauSMIC2/Untitled?node-id=209-2367
 ## Font Tokens
 | Token | Value |
 |-------|-------|
-| Display | Marcellus |
+| Display | Manrope |
 | Body | Manrope |
 
 ## Spacing Tokens

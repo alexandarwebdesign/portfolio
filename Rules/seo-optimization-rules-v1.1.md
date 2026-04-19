@@ -252,15 +252,14 @@ https://yourwebsite.com/p/12345
 #### Implementation
 ```html
 <!-- Preload Critical Resources -->
-<link rel="preload" href="/fonts/marcellus.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/hero-image.webp" as="image">
 
 <!-- Font Loading Strategy -->
 <style>
   @font-face {
-    font-family: 'Marcellus';
-    src: url('/fonts/marcellus.woff2') format('woff2');
+    font-family: 'Manrope';
+    src: url('/fonts/manrope.woff2') format('woff2');
     font-display: swap; /* Show fallback immediately */
   }
 </style>

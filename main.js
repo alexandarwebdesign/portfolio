@@ -441,7 +441,62 @@
   }
 
   // ==========================================================================
-  // 7. INITIALIZE
+  // 8. SCROLL PARALLAX (data-parallax-speed)
+  // Same approach as the reference layout study.
+  // Elements with [data-parallax-speed] shift vertically relative to their
+  // center vs the viewport center as the user scrolls.
+  // ==========================================================================
+
+  function initParallax() {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    function tick() {
+      const items = document.querySelectorAll('[data-parallax-speed]');
+      if (items.length > 0) {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const viewportCenter = scrollY + window.innerHeight / 2;
+
+        items.forEach(function (item) {
+          item.style.transform = 'none'; // Clear previous transform to get true rect
+          let rawSpeed = Number(item.dataset.parallaxSpeed) || 0;
+          if (window.innerWidth <= 900 && rawSpeed > 1) {
+            rawSpeed = 1;
+          }
+          const speed = rawSpeed / 10;
+          const rect = item.getBoundingClientRect();
+          const itemMiddle = scrollY + rect.top + rect.height / 2;
+          const offset = (viewportCenter - itemMiddle) * -speed;
+          item.style.transform = 'translate3d(0, ' + offset + 'px, 0)';
+        });
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    tick();
+  }
+
+  // ==========================================================================
+  // 9. LOCOMOTIVE SCROLL
+  // Smooth scroll on [data-scroll-container]. Exposes window.locoScroll so
+  // other modules (e.g. GSAP ScrollTrigger) can hook into it later.
+  // ==========================================================================
+
+  function initLocomotiveScroll() {
+    const container = document.querySelector('[data-scroll-container]');
+    if (!container || typeof LocomotiveScroll === 'undefined') return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    window.locoScroll = new LocomotiveScroll({
+      el: container,
+      smooth: !reduceMotion,
+      smoothMobile: false,
+      resetNativeScroll: true,
+      lerp: 0.08,
+    });
+  }
   // ==========================================================================
 
   /**
@@ -455,6 +510,8 @@
     initNavbarScroll();
     initMobileNav();
     initFaqAccordion();
+    initLocomotiveScroll();
+    initParallax();
   }
 
   // Run init when DOM is ready

@@ -90,7 +90,7 @@
 ### Font Families
 
 ```css
---font-display: 'Marcellus', serif;
+--font-display: 'Manrope', sans-serif;
 --font-body: 'Manrope', sans-serif;
 ```
 
@@ -98,7 +98,7 @@
 ```html
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 ```
 
 ### Type Scale (Fibonacci Sequence)
@@ -106,13 +106,13 @@
 Based on the golden ratio (1.618) for harmonious hierarchy.
 
 ```css
-/* Display - Marcellus */
+/* Display - Manrope */
 --text-display-xl: 89px;      /* 55 × 1.618 */
 --text-display-lg: 55px;      /* Fibonacci */
 --text-display-md: 34px;      /* Fibonacci */
 --text-display-sm: 21px;      /* Fibonacci */
 
-/* Headings - Marcellus */
+/* Headings - Manrope */
 --text-h1: 55px;              /* Hero sections */
 --text-h2: 34px;              /* Section headings */
 --text-h3: 21px;              /* Card titles, subsections */
@@ -133,14 +133,14 @@ Based on the golden ratio (1.618) for harmonious hierarchy.
 
 ### Typography Specs
 
-#### Display Text (Marcellus)
+#### Display Text (Manrope)
 ```css
 .display-xl {
   font-family: var(--font-display);
   font-size: var(--text-display-xl);
   line-height: 100%;
   letter-spacing: -2px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .display-lg {
@@ -148,7 +148,7 @@ Based on the golden ratio (1.618) for harmonious hierarchy.
   font-size: var(--text-display-lg);
   line-height: 100%;
   letter-spacing: -2px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .display-md {
@@ -156,18 +156,18 @@ Based on the golden ratio (1.618) for harmonious hierarchy.
   font-size: var(--text-display-md);
   line-height: 100%;
   letter-spacing: -2px;
-  font-weight: 400;
+  font-weight: 700;
 }
 ```
 
-#### Headings (Marcellus)
+#### Headings (Manrope)
 ```css
 .h1 {
   font-family: var(--font-display);
   font-size: var(--text-h1);
   line-height: 100%;
   letter-spacing: -2px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .h2 {
@@ -175,7 +175,7 @@ Based on the golden ratio (1.618) for harmonious hierarchy.
   font-size: var(--text-h2);
   line-height: 100%;
   letter-spacing: -2px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .h3 {
@@ -183,7 +183,7 @@ Based on the golden ratio (1.618) for harmonious hierarchy.
   font-size: var(--text-h3);
   line-height: 100%;
   letter-spacing: -2px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .h4 {
@@ -191,7 +191,7 @@ Based on the golden ratio (1.618) for harmonious hierarchy.
   font-size: var(--text-h4);
   line-height: 100%;
   letter-spacing: -2px;
-  font-weight: 400;
+  font-weight: 700;
 }
 ```
 

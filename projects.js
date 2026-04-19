@@ -173,12 +173,34 @@
     const heroFullImage = document.getElementById('project-hero-full-image');
     if (project.hero_image && heroFullSection && heroFullImage) {
         const hfAttrs = getImageAttrs(project.hero_image, `${project.title} project hero image`);
-        heroFullImage.src = hfAttrs.src;
-        heroFullImage.alt = `${project.title} project hero image`;
+
+        if (isPlaceholder(project.hero_image)) {
+            // Placeholder: fall back to single src, no srcset
+            heroFullImage.src = hfAttrs.src;
+            heroFullImage.removeAttribute('srcset');
+            heroFullImage.removeAttribute('sizes');
+        } else {
+            // hero_image is the bare base name e.g. "keep_the_image_202604171721"
+            const base = project.hero_image;
+            const dir  = 'images/projects/';
+            heroFullImage.src    = `${dir}${base}-1440.webp`;
+            heroFullImage.srcset =
+                `${dir}${base}-800.webp 800w, ` +
+                `${dir}${base}-1440.webp 1440w, ` +
+                `${dir}${base}-2880.webp 2880w`;
+            heroFullImage.sizes  = '100vw';
+        }
+
+        heroFullImage.alt      = `${project.title} project hero image`;
+        heroFullImage.loading  = 'lazy';
+        heroFullImage.decoding = 'async';
+        heroFullImage.setAttribute('data-scroll', '');
+        heroFullImage.setAttribute('data-scroll-speed', '-1');
+
         if (hfAttrs.className) {
             heroFullImage.className = `project-hero-image ${hfAttrs.className}`;
         } else {
-            heroFullImage.className = `project-hero-image`;
+            heroFullImage.className = 'project-hero-image';
         }
         if (hfAttrs.onerror) {
             heroFullImage.setAttribute('onerror', hfAttrs.onerror);
@@ -221,35 +243,190 @@
         if (briefGrid) briefGrid.classList.add('brief-meta-only');
 
         dynamicBodySection.style.display = 'block';
-        contentStream.innerHTML = project.content.map(block => {
+        contentStream.innerHTML = project.content.map((block, blockIdx) => {
             if (block.type === 'text') {
-                return `<div class="content-text-block rich-text" style="max-width: 800px; margin: 0 auto;">${block.body}</div>`;
+                return `<div class="content-text-block rich-text reveal">${block.body}</div>`;
+            } else if (block.type === 'fullwidth_image') {
+                const blockClass = `block_${blockIdx}`;
+                const dir = 'images/projects/';
+                const base = block.image;
+                const fwAttrs = getImageAttrs(base, '');
+                const fwSrc = isPlaceholder(base) ? fwAttrs.src : `${dir}${base}-1440.webp`;
+                const fwSrcset = isPlaceholder(base) ? '' : `srcset="${dir}${base}-800.webp 800w, ${dir}${base}-1440.webp 1440w, ${dir}${base}-2880.webp 2880w"`;
+                const fwOnerror = isPlaceholder(base) ? '' : `onerror="${fwAttrs.onerror}"`;
+                return `
+                <section class="section single-block block-fullwidth ${blockClass}" aria-label="Full width image">
+                    <div class="row"><div class="flex-col">
+                        <div class="single-image">
+                            <img class="overlay overlay-image ${isPlaceholder(base) ? 'placeholder' : ''}"
+                                src="${fwSrc}"
+                                ${fwSrcset}
+                                sizes="100vw"
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                                data-parallax-speed="-3"
+                                ${fwOnerror}
+                            />
+                            <div class="project-hero-logo-wrap" data-parallax-speed="2">
+                                <img src="images/projects/Forma-Favicon.svg" alt="" class="project-hero-logo" aria-hidden="true" width="68" height="68" />
+                            </div>
+                        </div>
+                    </div></div>
+                </section>`;
+            } else if (block.type === 'wide_video') {
+                const labelHtml = (block.label_eyebrow || block.label_heading) ? `
+                    <div class="wide-video-label" data-parallax-speed="2" aria-hidden="true">
+                        ${block.label_eyebrow ? `
+                        <img src="images/projects/Forma-Favicon.svg" class="wide-video-label__icon" alt="" />
+                        <p class="wide-video-label__eyebrow">${block.label_eyebrow}</p>` : ''}
+                        ${block.label_heading ? `<h3 class="wide-video-label__heading">${block.label_heading}</h3>` : ''}
+                    </div>` : '';
+                return `
+                <div class="content-wide-video video-toggle" aria-label="Project wide video showcase">
+                    <video
+                        class="screen-video"
+                        src="${block.video}"
+                        poster="${block.poster || ''}"
+                        autoplay muted loop playsinline preload="auto"
+                        aria-label="Project wide video"
+                    ></video>
+                    ${labelHtml}
+                </div>`;
+            } else if (block.type === 'fullwidth_parallax_image') {
+                const dir = 'images/projects/';
+                const grayPlaceholder = getImageAttrs('placeholder', '').src;
+                const imageList = block.images
+                    ? block.images.map(b => isPlaceholder(b) ? grayPlaceholder : `${dir}${b}-1440.webp`)
+                    : [isPlaceholder(block.image) ? grayPlaceholder : `${dir}${block.image}-1440.webp`];
+                const imagesJson = JSON.stringify(imageList).replace(/"/g, '&quot;');
+
+                const carouselId = `webgl-carousel-${blockIdx}`;
+                return `
+                <div class="carousel-outer" data-parallax-speed="2" style="position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);">
+                    <div class="single-block block-device block-padding-bottom" style="background-color:#e6e8eb; clip-path:polygon(0% 4%, 100% 0%, 100% 96%, 0% 100%);">
+                        <div class="row device-mbp15"><div class="flex-col">
+                            <div class="device" data-parallax-speed="3" aria-label="Laptop showcase">
+                                <div class="single-image">
+                                    <div id="${carouselId}" class="webgl-carousel-target" data-webgl-images="${imagesJson}" style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:5px 5px 0 0;overflow:hidden;"></div>
+                                </div>
+                                <div class="overlay-device-image" aria-hidden="true"><div class="overlay overlay-device"></div></div>
+                            </div>
+                        </div></div>
+                    </div>
+                    <div class="carousel-btn-track" data-parallax-speed="3">
+                        <button class="carousel-btn carousel-btn--prev" data-carousel="${carouselId}" data-dir="prev" aria-label="Previous image">
+                            <svg width="80" height="80" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-btn carousel-btn--next" data-carousel="${carouselId}" data-dir="next" aria-label="Next image">
+                            <svg width="80" height="80" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>`;
             } else if (block.type === 'image_block') {
                 const layoutClass = `layout-${block.layout_type || 'full_width'}`;
                 const reversedClass = block.reverse ? 'is-reversed' : '';
                 const videos = block.videos || [];
+                const deviceMockup = block.device_mockup || null;
                 const imagesHtml = (block.images || []).map((img, i) => {
                     const videoSrc = videos[i] || null;
                     const attrs = getImageAttrs(img, `Project image ${i + 1}`);
                     if (videoSrc) {
+                        const videoEl = `<video src="${videoSrc}" poster="${attrs.src}" autoplay muted loop playsinline preload="auto" class="overlay screen-video" aria-label="Project video ${i + 1}"></video>`;
+                        if (deviceMockup === 'macpro') {
+                            return `
+                            <div class="device device-macprohigher video-toggle" aria-label="Desktop showcase">
+                                <div class="single-image">${videoEl}</div>
+                                <div class="overlay-device-image" aria-hidden="true">
+                                    <div class="overlay overlay-device"></div>
+                                </div>
+                            </div>`;
+                        }
                         return `<video src="${videoSrc}" poster="${attrs.src}" autoplay muted loop playsinline preload="metadata" class="content-video" aria-label="Project video ${i + 1}"></video>`;
                     }
                     return `<img src="${attrs.src}" alt="Project image" class="${attrs.className}" ${attrs.onerror ? `onerror="${attrs.onerror}"` : ''} loading="lazy" />`;
                 }).join('');
                 
-                const captionHtml = block.caption ? `<div class="image-block-caption">${block.caption}</div>` : '';
-                
                 return `
-                <div class="content-media-block">
-                    <div class="content-image-block image-layout-block ${layoutClass} ${reversedClass}">
-                        ${imagesHtml}
-                    </div>
-                    ${captionHtml}
+                <div class="content-image-block image-layout-block ${layoutClass} ${reversedClass} reveal">
+                    ${imagesHtml}
                 </div>
                 `;
+            } else if (block.type === 'mobile_devices') {
+                const blockClass = `block_${blockIdx}`;
+                const dir = 'images/projects/';
+                const videoSrc = block.video || '';
+                const posterAttr = block.poster ? ` poster="${block.poster}"` : '';
+                const bgColor = block.background || '#ffffff';
+                const placeholderSvg = getImageAttrs('placeholder', '').src;
+                const buildImg = (base) => {
+                    if (isPlaceholder(base)) {
+                        return `<img src="${placeholderSvg}" alt="" class="mobile-screen-img placeholder" loading="lazy" decoding="async" />`;
+                    }
+                    return `<img
+                                    src="${dir}${base}-1440.webp"
+                                    srcset="${dir}${base}-800.webp 800w, ${dir}${base}-1440.webp 1440w, ${dir}${base}-2880.webp 2880w"
+                                    sizes="25vw"
+                                    alt=""
+                                    class="mobile-screen-img"
+                                    loading="lazy"
+                                    decoding="async"
+                                    onerror="this.onerror=null;this.src='${placeholderSvg}';this.classList.add('placeholder');"
+                                />`;
+                };
+                const imgScreen = (base) => `<div class="mobile-screen mobile-screen--img">${buildImg(base)}</div>`;
+                return `
+                <section class="section single-block block-mobile-devices ${blockClass}" style="background-color: ${bgColor};" aria-label="Mobile screens section">
+                    <div class="mobile-devices-row">
+                        <div class="mobile-col">
+                            <div class="mobile-device" data-parallax-speed="1">
+                                ${block.left_image ? imgScreen(block.left_image) : '<div class="mobile-screen"></div>'}
+                            </div>
+                        </div>
+                        <div class="mobile-col">
+                            <div class="mobile-device${videoSrc ? ' video-toggle' : ''}">
+                                <div class="mobile-screen">
+                                    ${videoSrc
+                                        ? `<video class="overlay screen-video" src="${videoSrc}"${posterAttr} autoplay muted loop playsinline preload="auto"></video>`
+                                        : `<img src="${placeholderSvg}" alt="" class="mobile-screen-img placeholder" loading="lazy" decoding="async" />`
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mobile-col">
+                            <div class="mobile-device" data-parallax-speed="-1">
+                                ${block.right_image ? imgScreen(block.right_image) : '<div class="mobile-screen"></div>'}
+                            </div>
+                        </div>
+                    </div>
+                </section>`;
             }
             return '';
         }).join('');
+
+        // Init WebGL carousels after DOM is updated
+        if (typeof window.initWebGLCarousels === 'function') {
+            requestAnimationFrame(window.initWebGLCarousels);
+        }
+
+        // Scroll-reveal for dynamically injected content blocks
+        requestAnimationFrame(() => {
+            const revealEls = contentStream.querySelectorAll('.reveal');
+            if (!revealEls.length) return;
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        obs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+            revealEls.forEach(el => obs.observe(el));
+        });
     } else if (project.design_concept || project.solution) {
         // Legacy approach: just show the rich text
         dynamicBodySection.style.display = 'none';
@@ -287,10 +464,10 @@
     const metricsGrid = document.getElementById('project-metrics-grid');
     if (project.metrics && project.metrics.length > 0 && metricsSection && metricsGrid) {
         metricsSection.style.display = 'block';
-        metricsGrid.innerHTML = project.metrics.map(metric => 
+        metricsGrid.innerHTML = project.metrics.map(metric =>
             `<div class="metric-item">
-                <span style="display: block; font-family: var(--font-display); font-size: 2.5rem; color: var(--color-accent); margin-bottom: 0.5rem;">${metric.value}</span>
-                <span style="display: block; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7;">${metric.label}</span>
+                <span class="metric-value">${metric.value}</span>
+                <span class="metric-label">${metric.label}</span>
              </div>`
         ).join('');
     }

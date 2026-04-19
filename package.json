@@ -1,0 +1,13 @@
+{
+  "name": "aleksandar-pavlov-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website for Aleksandar Pavlov - UX/UI Designer & Website Developer",
+  "private": true,
+  "scripts": {
+    "optimize": "node scripts/optimize-images.js"
+  },
+  "dependencies": {
+    "locomotive-scroll": "^5.0.1",
+    "sharp": "^0.34.5"
+  }
+}
