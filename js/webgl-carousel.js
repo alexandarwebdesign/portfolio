@@ -7,7 +7,7 @@
       opts = opts || {};
       this.container = container;
       this.imageUrls = imageUrls;
-      this.duration = opts.duration || 1.54;
+      this.duration = opts.duration || 0.85;
 
       this.vertex = [
         'varying vec2 vUv;',
@@ -144,7 +144,7 @@
       gsap.to(this.material.uniforms.progress, {
         duration: this.duration,
         value: 1,
-        ease: 'power2.inOut',
+        ease: 'power2.out',
         onComplete: function () {
           self.current = newIndex;
           self.material.uniforms.texture1.value = targetTex;

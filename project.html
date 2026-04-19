@@ -69,6 +69,13 @@
       }
     </script>
   <body>
+    <!-- Ambient Background for Glassmorphism -->
+    <div class="ambient-background" aria-hidden="true">
+      <div class="ambient-orb orb-1"></div>
+      <div class="ambient-orb orb-2"></div>
+      <div class="ambient-orb orb-3"></div>
+    </div>
+
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Navigation -->
     <header>
@@ -171,7 +178,7 @@
       <!-- 2. The Brief & Persona (formerly Overview) -->
       <section id="project-brief" class="project-brief-section">
         <div class="container">
-           <div class="brief-grid">
+           <div class="brief-grid glass-panel reveal" style="padding: clamp(2rem, 5vw, 4rem);">
                <div class="brief-meta">
                    <div class="brief-meta-left">
                        <div class="meta-block">
@@ -190,7 +197,7 @@
                    </div>
                    <!-- Live URL (Conditional) -->
                    <div class="meta-block" id="project-live-url-block" style="display: none;">
-                       <a href="#" class="live-site-btn" id="project-live-url" target="_blank" rel="noopener noreferrer" data-parallax-speed="2">Visit Site ↗</a>
+                       <a href="#" class="live-site-btn" id="project-live-url" target="_blank" rel="noopener noreferrer" data-parallax-speed="4">Visit Site ↗</a>
                    </div>
                </div>
                
@@ -205,7 +212,7 @@
       <!-- 3. The Design Concept (Legacy) -->
       <section id="project-concept" class="project-concept-section">
         <div class="container">
-           <div class="concept-content">
+           <div class="concept-content glass-panel reveal" style="padding: clamp(2rem, 5vw, 4rem);">
                <h2 class="project-section-title">The Design Concept</h2>
                <div class="rich-text" id="project-concept-text"></div>
            </div>
@@ -223,6 +230,9 @@
 
       <!-- Deprecated: Key Features checklist has been removed from layout. 
            Content should be authored as part of the narrative body in newer projects. -->
+
+      <!-- Shared wrapper for metrics → testimonial → CTA transition -->
+      <div>
 
       <!-- EXTRAS: Metrics (Conditional) -->
       <section id="project-metrics" class="project-metrics-section" style="display: none;">
@@ -247,79 +257,98 @@
         </div>
       </section>
 
-      <!-- 5. CTA Section -->
-      <section id="project-cta" class="project-cta-section">
-        <div class="container">
-          <div class="project-cta-content">
-            <span class="project-cta-eyebrow">Like what you see?</span>
-            <h2 class="project-cta-title">Let's create something amazing together.</h2>
-            <a href="/#contact" class="button-primary">
-              <span class="btn-content">
-                <span class="btn-text">Start a Project</span>
-                <span class="btn-hover-text">Start a Project</span>
-              </span>
-            </a>
-          </div>
-        </div>
-      </section>
 
-      <!-- 6. Navigation -->
-      <section id="project-navigation" class="project-navigation-section">
-        <div class="container project-nav-grid">
-            <a href="#" class="project-nav-link project-nav-prev" id="prev-project" style="display: none;">
-                <span class="project-nav-label">Previous Project</span>
-                <span class="project-nav-title" id="prev-project-title"></span>
-            </a>
-            <a href="#" class="project-nav-link project-nav-next" id="next-project" style="display: none;">
-                <span class="project-nav-label">Next Project</span>
-                <span class="project-nav-title" id="next-project-title"></span>
-            </a>
-        </div>
-      </section>
+
+
+
+      </div><!-- /shared gray bg -->
+
     </main>
 
+    <!-- Footer reveal cap -->
+    <div class="footer-reveal-cap" aria-hidden="true">
+      <div class="footer-cap-wrap"><div class="footer-cap-pill"></div></div>
+    </div>
+
     <!-- Footer -->
+    <div class="footer-outer">
     <footer class="footer">
       <div class="container">
-        <div class="footer-top">
-          <div class="footer-brand">
-            <p class="footer-tagline">Designing websites that convert since 2023.</p>
+        <!-- Large Navigation Links -->
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/" class="footer-link">Home</a>
+          <a href="/#work" class="footer-link">Work</a>
+          <a href="/#services" class="footer-link">Services</a>
+          <a href="/#about" class="footer-link">About</a>
+        </nav>
+
+        <!-- Divider -->
+        <div class="footer-divider" aria-hidden="true"></div>
+
+        <!-- Bottom: Info + CTAs on left, Copyright + Social on right -->
+        <div class="footer-bottom-row">
+          <!-- Left side -->
+          <div class="footer-info">
+            <div class="footer-identity">
+              <img src="images/aleksandar-pavlov-ux-designer.webp" alt="Aleksandar Pavlov" class="footer-avatar" width="64" height="64" loading="lazy" />
+              <div class="footer-name-block">
+                <span class="footer-status">
+                  <svg class="footer-status-icon" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="9.5" cy="9.5" r="1.5" fill="#34C759"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="2.25" stroke="#34C759" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="4.25" stroke="#34C759" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="5.4" stroke="#34C759" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
+                  </svg>
+                  Online
+                </span>
+                <p class="footer-tagline">Designing websites that convert since 2023.</p>
+              </div>
+            </div>
             <p class="footer-location">Based in Sofia, Bulgaria · Working Worldwide</p>
+            <div class="footer-ctas">
+              <a href="/#contact" class="button-primary footer-cta-primary">
+                <span class="btn-content">
+                  <span class="btn-text">Start Now</span>
+                  <span class="btn-hover-text">Start Now</span>
+                </span>
+              </a>
+              <a href="/#contact" class="button-secondary footer-cta-secondary">
+                <span class="btn-content">
+                  <span class="btn-text">Start Now</span>
+                  <span class="btn-hover-text">Start Now</span>
+                </span>
+              </a>
+            </div>
           </div>
-          
-          <nav class="footer-nav" aria-label="Footer navigation">
-            <a href="/#work" class="footer-link">Work</a>
-            <a href="/#services" class="footer-link">Services</a>
-            <a href="/#about" class="footer-link">About</a>
-            <a href="/#contact" class="footer-link">Contact</a>
-          </nav>
-          
-          <div class="footer-social">
-            <a href="https://x.com/pavvlov_16" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Follow on X (Twitter)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="social-icon">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
-            <a href="https://dribbble.com/alexandar-webdesign" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Follow on Dribbble">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="social-icon">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"/>
-              </svg>
-            </a>
-            <a href="https://www.linkedin.com/in/alexander-pavlov-370261342/" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="social-icon">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-              </svg>
-            </a>
+
+          <!-- Right side -->
+          <div class="footer-right">
+            <p class="footer-copyright">
+              © 2026 Aleksandar Pavlov<br>
+              UX/UI Designer &amp; Website Developer
+            </p>
+            <div class="footer-social">
+              <a href="https://x.com/pavvlov_16" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Follow on X (Twitter)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="social-icon">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+              </a>
+              <a href="https://dribbble.com/alexandar-webdesign" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Follow on Dribbble">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="social-icon">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"/>
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/in/alexander-pavlov-370261342/" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="Connect on LinkedIn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="social-icon">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </a>
+            </div>
           </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p class="footer-copyright">
-            © 2026 Aleksandar Pavlov · UX/UI Designer & Website Developer
-          </p>
         </div>
       </div>
     </footer>
+    </div><!-- /footer-outer -->
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

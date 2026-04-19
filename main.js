@@ -276,28 +276,43 @@
 
     if (!navbar) return;
 
-    function updateNavbar() {
-      if (window.scrollY > 100) {
+    let lastScrollY = 0;
+
+    function updateNavbarAtY(currentScrollY) {
+      if (currentScrollY > 100) {
         navbar.classList.add("scrolled");
       } else {
         navbar.classList.remove("scrolled");
       }
+
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        navbar.classList.add("navbar--hidden");
+      } else {
+        navbar.classList.remove("navbar--hidden");
+      }
+
+      lastScrollY = currentScrollY;
     }
 
-    // Throttle scroll event
-    let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateNavbar();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
+    // Native scroll only on pages without Locomotive Scroll (e.g. PDPs).
+    // On the homepage, resetNativeScroll:true resets window.scrollY to 0 each
+    // tick, firing a spurious scroll event that would undo the hide immediately.
+    const hasLocoContainer = !!document.querySelector('[data-scroll-container]');
+    if (!hasLocoContainer) {
+      let ticking2 = false;
+      window.addEventListener("scroll", () => {
+        if (!ticking2) {
+          window.requestAnimationFrame(() => {
+            updateNavbarAtY(window.scrollY);
+            ticking2 = false;
+          });
+          ticking2 = true;
+        }
+      }, { passive: true });
+    }
 
-    // Initial check
-    updateNavbar();
+    // Expose for Locomotive Scroll hook
+    window._navbarScrollUpdate = updateNavbarAtY;
   }
 
   // ==========================================================================
@@ -441,7 +456,44 @@
   }
 
   // ==========================================================================
-  // 8. SCROLL PARALLAX (data-parallax-speed)
+  // 8. FOOTER REVEAL
+  // Mirrors the rounded-cap + parallax footer reveal from the reference layout.
+  // Uses getBoundingClientRect so it works with both native scroll and
+  // Locomotive Scroll (which transforms elements, not window.scrollY).
+  // ==========================================================================
+
+  function initFooterReveal() {
+    const capWrap = document.querySelector('.footer-cap-wrap');
+    const footerOuter = document.querySelector('.footer-outer');
+    const footerEl = document.querySelector('.footer-outer .footer');
+    if (!capWrap || !footerOuter) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) { capWrap.style.height = '0px'; return; }
+
+    function baseHeight() {
+      return window.innerWidth <= 720 ? window.innerHeight * 0.075 : window.innerHeight * 0.1;
+    }
+
+    function tick() {
+      const rect = footerOuter.getBoundingClientRect();
+      const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / window.innerHeight));
+
+      capWrap.style.height = (baseHeight() * (1 - progress)) + 'px';
+
+      if (footerEl) {
+        const offset = Math.max(0, (1 - progress) * 60);
+        footerEl.style.transform = 'translate3d(0,' + offset + 'px,0)';
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    tick();
+  }
+
+  // ==========================================================================
+  // 9. SCROLL PARALLAX (data-parallax-speed)
   // Same approach as the reference layout study.
   // Elements with [data-parallax-speed] shift vertically relative to their
   // center vs the viewport center as the user scrolls.
@@ -496,6 +548,13 @@
       resetNativeScroll: true,
       lerp: 0.08,
     });
+
+    if (window._navbarScrollUpdate) {
+      var loco = /** @type {any} */ (window).locoScroll;
+      loco.on('scroll', function (args) {
+        window._navbarScrollUpdate(args.scroll.y);
+      });
+    }
   }
   // ==========================================================================
 
@@ -511,6 +570,7 @@
     initMobileNav();
     initFaqAccordion();
     initLocomotiveScroll();
+    initFooterReveal();
     initParallax();
   }
 

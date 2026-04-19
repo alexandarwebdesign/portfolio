@@ -245,7 +245,7 @@
         dynamicBodySection.style.display = 'block';
         contentStream.innerHTML = project.content.map((block, blockIdx) => {
             if (block.type === 'text') {
-                return `<div class="content-text-block rich-text reveal">${block.body}</div>`;
+                return `<div class="content-text-block glass-panel rich-text reveal" style="padding: clamp(2rem, 5vw, 4rem);">${block.body}</div>`;
             } else if (block.type === 'fullwidth_image') {
                 const blockClass = `block_${blockIdx}`;
                 const dir = 'images/projects/';
@@ -269,7 +269,7 @@
                                 ${fwOnerror}
                             />
                             <div class="project-hero-logo-wrap" data-parallax-speed="2">
-                                <img src="images/projects/Forma-Favicon.svg" alt="" class="project-hero-logo" aria-hidden="true" width="68" height="68" />
+                                <img src="images/projects/logo_Forma.svg" alt="" class="project-hero-logo block-fullwidth-logo" aria-hidden="true" />
                             </div>
                         </div>
                     </div></div>
@@ -380,7 +380,7 @@
                 };
                 const imgScreen = (base) => `<div class="mobile-screen mobile-screen--img">${buildImg(base)}</div>`;
                 return `
-                <section class="section single-block block-mobile-devices ${blockClass}" style="background-color: ${bgColor};" aria-label="Mobile screens section">
+                <section class="section single-block block-mobile-devices ${blockClass}" aria-label="Mobile screens section">
                     <div class="mobile-devices-row">
                         <div class="mobile-col">
                             <div class="mobile-device" data-parallax-speed="1">
@@ -568,7 +568,7 @@
       const thumbAttrs = getImageAttrs(project.thumbnail, `${project.title} project preview`);
       const projectUrl = isLocal ? `/project.html#${project.slug}` : `/${project.slug}`;
       return `
-      <article class="project-card reveal" style="transition-delay: ${index * 100}ms;">
+      <article class="project-card glass-panel reveal" style="transition-delay: ${index * 100}ms;">
         <a href="${projectUrl}" class="project-card-link">
           <div class="project-image-wrapper">
             <img
