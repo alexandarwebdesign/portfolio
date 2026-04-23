@@ -62,10 +62,46 @@
     // Create a copy before sorting to avoid mutating the original array
     const sortedProjects = [...projects].sort((a, b) => b.year - a.year);
     const currentIndex = sortedProjects.findIndex(p => p.slug === currentSlug);
+
+    if (currentIndex === -1 || sortedProjects.length < 2) {
+      return {
+        prev: null,
+        next: null
+      };
+    }
     
     return {
-      prev: currentIndex > 0 ? sortedProjects[currentIndex - 1] : null,
-      next: currentIndex < sortedProjects.length - 1 ? sortedProjects[currentIndex + 1] : null
+      prev: currentIndex > 0 ? sortedProjects[currentIndex - 1] : sortedProjects[sortedProjects.length - 1],
+      next: currentIndex < sortedProjects.length - 1 ? sortedProjects[currentIndex + 1] : sortedProjects[0]
+    };
+  }
+
+  /**
+   * Split a title into left/right halves for the next-project teaser.
+   * @param {string} title
+   * @returns {{ left: string, right: string }}
+   */
+  function splitProjectTitle(title) {
+    const words = (title || '').trim().split(/\s+/).filter(Boolean);
+
+    if (words.length <= 1) {
+      return {
+        left: title || '',
+        right: ''
+      };
+    }
+
+    if (words.length === 2) {
+      return {
+        left: words[0],
+        right: words[1]
+      };
+    }
+
+    const splitIndex = Math.ceil(words.length / 2);
+    return {
+      left: words.slice(0, splitIndex).join(' '),
+      right: words.slice(splitIndex).join(' ')
     };
   }
 
@@ -100,6 +136,108 @@
     };
   }
 
+  function decodeHtmlEntities(value) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = value;
+    return textarea.value;
+  }
+
+  function stripHtml(value) {
+    return decodeHtmlEntities(
+      String(value || '')
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<\/(p|li|h3)>/gi, '\n')
+        .replace(/<[^>]+>/g, ' ')
+    )
+      .replace(/\u2022/g, '\n')
+      .replace(/[ \t]+\n/g, '\n')
+      .replace(/\n[ \t]+/g, '\n')
+      .replace(/\n{2,}/g, '\n')
+      .replace(/[ \t]{2,}/g, ' ')
+      .trim();
+  }
+
+  function escapeAttribute(value) {
+    return String(value || '')
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function extractBriefPressure(project) {
+    const text = stripHtml(project.the_brief || project.description || '')
+      .replace(/[“”]/g, '"')
+      .replace(/[‘’]/g, "'");
+
+    const quoted = [...text.matchAll(/["']([^"']{18,140})["']/g)]
+      .map(match => match[1].trim())
+      .filter(value => value.split(/\s+/).length >= 4)
+      .sort((a, b) => b.length - a.length);
+
+    if (quoted.length > 0) {
+      return quoted[0];
+    }
+
+    const description = stripHtml(project.description || '');
+    if (description.length <= 140) {
+      return description;
+    }
+
+    return `${description.slice(0, 137).trim()}...`;
+  }
+
+  function initWorkSignature(grid) {
+    const signature = document.getElementById('work-signature');
+    const personaEl = document.getElementById('work-signature-persona');
+    const quoteEl = document.getElementById('work-signature-quote');
+    const metaEl = document.getElementById('work-signature-meta');
+
+    if (!grid || !signature || !personaEl || !quoteEl || !metaEl) return;
+
+    const cards = Array.from(grid.querySelectorAll('.project-card'));
+    if (!cards.length) return;
+
+    let activeCard = null;
+    let resetTimer = null;
+
+    function applySignature(card) {
+      if (!card || activeCard === card) return;
+
+      activeCard = card;
+      cards.forEach(item => {
+        item.classList.toggle('is-signature-active', item === card);
+      });
+
+      signature.classList.add('is-refreshing');
+      window.clearTimeout(resetTimer);
+
+      resetTimer = window.setTimeout(() => {
+        personaEl.textContent = card.dataset.projectPersona || '';
+        quoteEl.textContent = card.dataset.projectQuote || '';
+        metaEl.textContent = card.dataset.projectMeta || '';
+        signature.classList.remove('is-refreshing');
+      }, 110);
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => applySignature(card));
+      card.addEventListener('focusin', () => applySignature(card));
+    });
+
+    grid.addEventListener('mouseleave', () => applySignature(cards[0]));
+    grid.addEventListener('focusout', () => {
+      window.setTimeout(() => {
+        if (!grid.contains(document.activeElement)) {
+          applySignature(cards[0]);
+        }
+      }, 0);
+    });
+
+    applySignature(cards[0]);
+  }
+
   // ==========================================================================
   // 2. PROJECT DETAIL PAGE RENDERING
   // ==========================================================================
@@ -114,6 +252,9 @@
       window.location.href = '/404.html';
       return;
     }
+
+    // Use fallback URLs locally to avoid Live Server 404s
+    const isLocal = window.location.hostname !== 'aleksandarpavlov.netlify.app';
 
     // Update page meta
     // Dynamic SEO: Update meta tags for specific project
@@ -194,8 +335,6 @@
         heroFullImage.alt      = `${project.title} project hero image`;
         heroFullImage.loading  = 'lazy';
         heroFullImage.decoding = 'async';
-        heroFullImage.setAttribute('data-scroll', '');
-        heroFullImage.setAttribute('data-scroll-speed', '-1');
 
         if (hfAttrs.className) {
             heroFullImage.className = `project-hero-image ${hfAttrs.className}`;
@@ -245,7 +384,7 @@
         dynamicBodySection.style.display = 'block';
         contentStream.innerHTML = project.content.map((block, blockIdx) => {
             if (block.type === 'text') {
-                return `<div class="content-text-block glass-panel rich-text reveal" style="padding: clamp(2rem, 5vw, 4rem);">${block.body}</div>`;
+                return `<div class="content-text-block rich-text reveal" style="padding: clamp(2rem, 5vw, 4rem);">${block.body}</div>`;
             } else if (block.type === 'fullwidth_image') {
                 const blockClass = `block_${blockIdx}`;
                 const dir = 'images/projects/';
@@ -268,7 +407,7 @@
                                 data-parallax-speed="-3"
                                 ${fwOnerror}
                             />
-                            <div class="project-hero-logo-wrap" data-parallax-speed="2">
+                            <div class="project-hero-logo-wrap" data-parallax-speed="3">
                                 <img src="images/projects/logo_Forma.svg" alt="" class="project-hero-logo block-fullwidth-logo" aria-hidden="true" />
                             </div>
                         </div>
@@ -304,7 +443,7 @@
                 const carouselId = `webgl-carousel-${blockIdx}`;
                 return `
                 <div class="carousel-outer" data-parallax-speed="2" style="position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);">
-                    <div class="single-block block-device block-padding-bottom" style="background-color:#e6e8eb; clip-path:polygon(0% 4%, 100% 0%, 100% 96%, 0% 100%);">
+                    <div class="single-block block-device block-padding-bottom" style="clip-path:polygon(0% 4%, 100% 0%, 100% 96%, 0% 100%);">
                         <div class="row device-mbp15"><div class="flex-col">
                             <div class="device" data-parallax-speed="3" aria-label="Laptop showcase">
                                 <div class="single-image">
@@ -427,6 +566,8 @@
             }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
             revealEls.forEach(el => obs.observe(el));
         });
+
+        window.dispatchEvent(new Event('portfolio:content-updated'));
     } else if (project.design_concept || project.solution) {
         // Legacy approach: just show the rich text
         dynamicBodySection.style.display = 'none';
@@ -470,6 +611,43 @@
                 <span class="metric-label">${metric.label}</span>
              </div>`
         ).join('');
+    }
+
+    // Next Project Teaser
+    const nextTeaserSection = document.getElementById('project-next-teaser');
+    const nextTeaserLink = document.getElementById('next-project-teaser-link');
+    const nextTeaserImage = document.getElementById('next-project-image');
+    const nextTeaserTitleLeft = document.getElementById('next-project-title-left');
+    const nextTeaserTitleRight = document.getElementById('next-project-title-right');
+    const teaserProject = nav.next;
+
+    if (
+      teaserProject &&
+      nextTeaserSection &&
+      nextTeaserLink &&
+      nextTeaserImage &&
+      nextTeaserTitleLeft &&
+      nextTeaserTitleRight
+    ) {
+      const teaserUrl = isLocal ? `/project.html#${teaserProject.slug}` : `/${teaserProject.slug}`;
+      const teaserImage = teaserProject.hero_image || teaserProject.thumbnail || 'placeholder';
+      const teaserAttrs = getImageAttrs(teaserImage, teaserProject.title);
+      const titleParts = splitProjectTitle(teaserProject.title);
+
+      nextTeaserLink.href = teaserUrl;
+      nextTeaserLink.setAttribute('aria-label', `View next project: ${teaserProject.title}`);
+      nextTeaserTitleLeft.textContent = titleParts.left;
+      nextTeaserTitleRight.textContent = titleParts.right;
+      nextTeaserImage.src = teaserAttrs.src;
+      nextTeaserImage.alt = teaserProject.title;
+      nextTeaserImage.className = `project-next-teaser__image ${teaserAttrs.className}`.trim();
+      if (teaserAttrs.onerror) {
+        nextTeaserImage.setAttribute('onerror', teaserAttrs.onerror);
+      } else {
+        nextTeaserImage.removeAttribute('onerror');
+      }
+
+      nextTeaserSection.style.display = 'block';
     }
 
     // Testimonial — hidden globally (projects are conceptual)
@@ -526,9 +704,6 @@
     const prevLink = document.getElementById('prev-project');
     const nextLink = document.getElementById('next-project');
     
-    // Use fallback URLs locally to avoid Live Server 404s
-    const isLocal = window.location.hostname !== 'aleksandarpavlov.netlify.app';
-    
     if (nav.prev && prevLink) {
       prevLink.href = isLocal ? `/project.html#${nav.prev.slug}` : `/${nav.prev.slug}`;
       document.getElementById('prev-project-title').textContent = nav.prev.title;
@@ -559,6 +734,7 @@
     if (countEl) {
       countEl.textContent = `(${String(projects.length).padStart(2, '0')})`;
     }
+    grid.classList.toggle('project-grid--quartet', projects.length === 4);
     
     // Use fallback URLs locally to avoid Live Server 404s
     const isLocal = window.location.hostname !== 'aleksandarpavlov.netlify.app';
@@ -567,8 +743,18 @@
     grid.innerHTML = projects.map((project, index) => {
       const thumbAttrs = getImageAttrs(project.thumbnail, `${project.title} project preview`);
       const projectUrl = isLocal ? `/project.html#${project.slug}` : `/${project.slug}`;
+      const projectNumber = String(index + 1).padStart(2, '0');
+      const briefPressure = extractBriefPressure(project);
+      const projectMeta = `${project.category} · ${project.year}`;
       return `
-      <article class="project-card glass-panel reveal" style="transition-delay: ${index * 100}ms;">
+      <article
+        class="project-card reveal"
+        style="transition-delay: ${index * 74}ms;"
+        data-project-title="${escapeAttribute(project.title)}"
+        data-project-persona="${escapeAttribute(project.client_persona || project.category)}"
+        data-project-quote="${escapeAttribute(briefPressure)}"
+        data-project-meta="${escapeAttribute(projectMeta)}"
+      >
         <a href="${projectUrl}" class="project-card-link">
           <div class="project-image-wrapper">
             <img
@@ -581,19 +767,22 @@
               loading="lazy"
             />
           </div>
+          <span class="project-card-number" aria-hidden="true">${projectNumber}</span>
+          <span class="project-card-arrow-badge" aria-hidden="true">
+            <span class="arrow-content">
+              <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-default" />
+              <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-hover" />
+            </span>
+          </span>
           <div class="project-info">
-            <div class="project-title-row">
-              <h3 class="project-title">${project.title}</h3>
-              <span class="arrow-content" aria-hidden="true">
-                <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-default" />
-                <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-hover" />
-              </span>
-            </div>
             <p class="project-category">${project.category}</p>
+            <h3 class="project-title">${project.title}</h3>
           </div>
         </a>
       </article>
     `;}).join('');
+
+    initWorkSignature(grid);
 
     // Re-trigger reveal animations for dynamically loaded content
     setTimeout(() => {
@@ -665,7 +854,7 @@
       }
     } else if (isProjectGrid) {
       // Homepage - render featured projects
-      const featuredProjects = getFeaturedProjects(projects, 6);
+      const featuredProjects = getFeaturedProjects(projects, 4);
       renderHomepageProjects(featuredProjects);
     }
   }

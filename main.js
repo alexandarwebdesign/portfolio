@@ -39,6 +39,32 @@
     });
   }
 
+  function getMotionSettings() {
+    const rootStyles = window.getComputedStyle(document.documentElement);
+
+    return {
+      tempo: parseFloat(rootStyles.getPropertyValue("--motion-tempo-primary")) || 436,
+      exitRatio: parseFloat(rootStyles.getPropertyValue("--motion-exit-ratio")) || 0.63,
+      primaryEasing: rootStyles.getPropertyValue("--motion-ease-primary").trim() || "cubic-bezier(0.33, 0.06, 0.12, 0.97)",
+      accentEasing: rootStyles.getPropertyValue("--motion-ease-accent").trim() || "cubic-bezier(0.38, 0.10, 0.16, 0.98)",
+    };
+  }
+
+  function initPageLoadSequence() {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion) {
+      document.body.classList.add("is-loaded");
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        document.body.classList.add("is-loaded");
+      });
+    });
+  }
+
   // ==========================================================================
   // 2. SMOOTH SCROLL FOR ANCHOR LINKS
   // ==========================================================================
@@ -46,12 +72,30 @@
   /**
    * Handle smooth scrolling for navigation links
    */
+  function scrollToAnchorTarget(targetElement, navbarHeight) {
+    const { tempo } = getMotionSettings();
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const targetPosition =
+      targetElement.getBoundingClientRect().top +
+      window.pageYOffset -
+      navbarHeight;
+
+    window.scrollTo({
+      top: targetPosition,
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+
+    return reduceMotion ? 0 : tempo;
+  }
+
   function initSmoothScroll() {
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
 
     anchorLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
         const targetId = link.getAttribute("href");
+        const focusTargetSelector = link.getAttribute("data-focus-target");
 
         // Skip if it's just "#" or empty
         if (targetId === "#" || !targetId) return;
@@ -63,21 +107,41 @@
 
           // Calculate offset for fixed navbar
           const navbarHeight = 120;
-          const targetPosition =
-            targetElement.getBoundingClientRect().top +
-            window.pageYOffset -
-            navbarHeight;
+          const focusDelay = scrollToAnchorTarget(targetElement, navbarHeight);
 
-          window.scrollTo({
-            top: targetPosition,
-            behavior: "smooth",
-          });
+          if (focusTargetSelector) {
+            window.setTimeout(() => {
+              const focusTarget = document.querySelector(focusTargetSelector);
+              if (focusTarget && typeof focusTarget.focus === "function") {
+                focusTarget.focus({ preventScroll: true });
+              }
+            }, focusDelay);
+          }
 
           // Update URL without jumping
           history.pushState(null, null, targetId);
         }
       });
     });
+  }
+
+  /**
+   * Focus the first contact field when the page loads on the contact hash.
+   */
+  function initContactHashFocus() {
+    if (window.location.hash !== "#contact") return;
+
+    window.setTimeout(() => {
+      const contactSection = document.getElementById("contact");
+      if (contactSection) {
+        scrollToAnchorTarget(contactSection, 120);
+      }
+
+      const nameField = document.getElementById("name");
+      if (nameField && typeof nameField.focus === "function") {
+        nameField.focus({ preventScroll: true });
+      }
+    }, 250);
   }
 
   // ==========================================================================
@@ -294,25 +358,18 @@
       lastScrollY = currentScrollY;
     }
 
-    // Native scroll only on pages without Locomotive Scroll (e.g. PDPs).
-    // On the homepage, resetNativeScroll:true resets window.scrollY to 0 each
-    // tick, firing a spurious scroll event that would undo the hide immediately.
-    const hasLocoContainer = !!document.querySelector('[data-scroll-container]');
-    if (!hasLocoContainer) {
-      let ticking2 = false;
-      window.addEventListener("scroll", () => {
-        if (!ticking2) {
-          window.requestAnimationFrame(() => {
-            updateNavbarAtY(window.scrollY);
-            ticking2 = false;
-          });
-          ticking2 = true;
-        }
-      }, { passive: true });
-    }
+    let ticking2 = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking2) {
+        window.requestAnimationFrame(() => {
+          updateNavbarAtY(window.scrollY);
+          ticking2 = false;
+        });
+        ticking2 = true;
+      }
+    }, { passive: true });
 
-    // Expose for Locomotive Scroll hook
-    window._navbarScrollUpdate = updateNavbarAtY;
+    updateNavbarAtY(window.scrollY);
   }
 
   // ==========================================================================
@@ -325,6 +382,9 @@
     if (!toggle || !mobileNav) return;
 
     let currentAnim = null;
+    const { tempo, exitRatio, accentEasing } = getMotionSettings();
+    const navOpenDuration = Math.round(tempo + 74);
+    const navCloseDuration = Math.round(navOpenDuration * exitRatio);
 
     // Enter: visible area grows from right (vw-x → vw), leading left edge curves left
     function enterPath(vw, vh, x, curve) {
@@ -363,7 +423,7 @@
           { clipPath: enterPath(vw, vh, mid, c), offset: 0.45 },
           { clipPath: enterPath(vw, vh, vw, 0) }
         ],
-        { duration: 650, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards' }
+        { duration: navOpenDuration, easing: accentEasing, fill: 'forwards' }
       );
     }
 
@@ -387,7 +447,7 @@
           { clipPath: exitPath(vh, mid, c), offset: 0.55 },
           { clipPath: exitPath(vh, 0, 0) }
         ],
-        { duration: 500, easing: 'cubic-bezier(0.4, 0, 0.2, 1)', fill: 'forwards' }
+        { duration: navCloseDuration, easing: accentEasing, fill: 'forwards' }
       );
 
 
@@ -456,41 +516,176 @@
   }
 
   // ==========================================================================
-  // 8. FOOTER REVEAL
-  // Mirrors the rounded-cap + parallax footer reveal from the reference layout.
-  // Uses getBoundingClientRect so it works with both native scroll and
-  // Locomotive Scroll (which transforms elements, not window.scrollY).
+  // 8. SERVICE CARD SVG HOVER BRIDGE
+  // Inline decorative SVGs so the parent card hover can control their strokes.
   // ==========================================================================
 
-  function initFooterReveal() {
-    const capWrap = document.querySelector('.footer-cap-wrap');
-    const footerOuter = document.querySelector('.footer-outer');
-    const footerEl = document.querySelector('.footer-outer .footer');
-    if (!capWrap || !footerOuter) return;
+  function updateServiceCardIconHeights() {
+    document.querySelectorAll(".service-item").forEach((item) => {
+      const title = item.querySelector(".service-title");
+      const description = item.querySelector(".service-description");
+      const icon = item.querySelector(".service-bg-icon");
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) { capWrap.style.height = '0px'; return; }
+      if (!title || !description || !icon) return;
 
-    function baseHeight() {
-      return window.innerWidth <= 720 ? window.innerHeight * 0.075 : window.innerHeight * 0.1;
-    }
+      const titleHeight = title.getBoundingClientRect().height;
+      const descriptionHeight = description.getBoundingClientRect().height;
+      const iconHeight = Math.ceil(titleHeight + descriptionHeight + 20);
 
-    function tick() {
-      const rect = footerOuter.getBoundingClientRect();
-      const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / window.innerHeight));
+      item.style.setProperty("--service-icon-height", `${iconHeight}px`);
+    });
+  }
 
-      capWrap.style.height = (baseHeight() * (1 - progress)) + 'px';
+  function updateServiceCardViewportPriority() {
+    const serviceItems = Array.from(document.querySelectorAll(".service-item"));
 
-      if (footerEl) {
-        const offset = Math.max(0, (1 - progress) * 60);
-        footerEl.style.transform = 'translate3d(0,' + offset + 'px,0)';
+    if (!serviceItems.length) return;
+
+    const viewportCenterY = window.innerHeight / 2;
+    let closestItem = null;
+    let closestDistance = Number.POSITIVE_INFINITY;
+
+    serviceItems.forEach((item) => {
+      const rect = item.getBoundingClientRect();
+      const itemCenterY = rect.top + rect.height / 2;
+      const distance = Math.abs(itemCenterY - viewportCenterY);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestItem = item;
+      }
+    });
+
+    serviceItems.forEach((item) => {
+      item.classList.toggle("is-viewport-active", item === closestItem);
+    });
+  }
+
+  function initServiceCardIcons() {
+    const serviceItems = document.querySelectorAll(".service-item");
+    if (!serviceItems.length) return;
+    const servicesList = serviceItems[0].closest(".services-list");
+
+    const serviceIcons = document.querySelectorAll('img.service-bg-icon[src$=".svg"]');
+
+    let serviceCardFrame = null;
+    const scheduleServiceCardUpdate = () => {
+      if (serviceCardFrame) {
+        cancelAnimationFrame(serviceCardFrame);
       }
 
-      requestAnimationFrame(tick);
+      serviceCardFrame = requestAnimationFrame(() => {
+        updateServiceCardIconHeights();
+        updateServiceCardViewportPriority();
+      });
+    };
+
+    let serviceCardInteractionFrame = null;
+    const scheduleServiceCardInteractionUpdate = () => {
+      if (serviceCardInteractionFrame) {
+        cancelAnimationFrame(serviceCardInteractionFrame);
+      }
+
+      serviceCardInteractionFrame = requestAnimationFrame(() => {
+        const activeItem = Array.from(serviceItems).find((item) =>
+          item.matches(":hover, :focus-within")
+        );
+
+        if (servicesList) {
+          servicesList.classList.toggle("has-service-interaction", Boolean(activeItem));
+        }
+
+        serviceItems.forEach((item) => {
+          item.classList.toggle("is-interaction-active", item === activeItem);
+        });
+      });
+    };
+
+    window.addEventListener("resize", scheduleServiceCardUpdate, { passive: true });
+    window.addEventListener("scroll", scheduleServiceCardUpdate, { passive: true });
+    window._serviceCardViewportUpdate = scheduleServiceCardUpdate;
+
+    serviceItems.forEach((item) => {
+      item.addEventListener("mouseenter", scheduleServiceCardInteractionUpdate);
+      item.addEventListener("mouseleave", scheduleServiceCardInteractionUpdate);
+      item.addEventListener("focusin", scheduleServiceCardInteractionUpdate);
+      item.addEventListener("focusout", scheduleServiceCardInteractionUpdate);
+    });
+
+    if (!serviceIcons.length) {
+      scheduleServiceCardUpdate();
+      scheduleServiceCardInteractionUpdate();
+      return;
     }
 
-    tick();
+    serviceIcons.forEach((icon) => {
+      const src = icon.getAttribute("src");
+      if (!src) return;
+
+      fetch(src)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to load SVG: ${src}`);
+          }
+
+          return response.text();
+        })
+        .then((svgMarkup) => {
+          const svgDocument = new DOMParser().parseFromString(svgMarkup, "image/svg+xml");
+          const svg = svgDocument.documentElement;
+
+          if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
+
+          const hoverArea = svg.querySelector("#hoverArea");
+          if (hoverArea) {
+            hoverArea.remove();
+          }
+
+          svg
+            .querySelectorAll("animate, animateTransform")
+            .forEach((animation) => {
+              const begin = animation.getAttribute("begin");
+
+              if (begin && /(mouseover|mouseout)/i.test(begin)) {
+                animation.remove();
+              }
+            });
+
+          svg.classList.add("service-bg-icon-svg");
+          svg.setAttribute("aria-hidden", "true");
+          svg.setAttribute("focusable", "false");
+          svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+          svg
+            .querySelectorAll("circle:not(#hoverArea), path, polygon, polyline, rect, ellipse")
+            .forEach((shape) => {
+              shape.classList.add("service-icon-shape");
+            });
+
+          const wrapper = document.createElement("div");
+          wrapper.className = icon.className;
+          wrapper.setAttribute("aria-hidden", "true");
+          wrapper.appendChild(svg);
+
+          icon.replaceWith(wrapper);
+          scheduleServiceCardUpdate();
+          scheduleServiceCardInteractionUpdate();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    });
+
+    if (document.fonts && typeof document.fonts.ready?.then === "function") {
+      document.fonts.ready.then(scheduleServiceCardUpdate).catch(() => {});
+    }
+
+    window.addEventListener("load", () => {
+      scheduleServiceCardUpdate();
+      scheduleServiceCardInteractionUpdate();
+    }, { once: true });
   }
+
 
   // ==========================================================================
   // 9. SCROLL PARALLAX (data-parallax-speed)
@@ -503,58 +698,49 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) return;
 
-    function tick() {
-      const items = document.querySelectorAll('[data-parallax-speed]');
-      if (items.length > 0) {
-        const scrollY = window.scrollY || window.pageYOffset;
-        const viewportCenter = scrollY + window.innerHeight / 2;
+    let items = [];
+    let ticking = false;
 
-        items.forEach(function (item) {
-          item.style.transform = 'none'; // Clear previous transform to get true rect
-          let rawSpeed = Number(item.dataset.parallaxSpeed) || 0;
-          if (window.innerWidth <= 900 && rawSpeed > 1) {
-            rawSpeed = 1;
-          }
-          const speed = rawSpeed / 10;
-          const rect = item.getBoundingClientRect();
-          const itemMiddle = scrollY + rect.top + rect.height / 2;
-          const offset = (viewportCenter - itemMiddle) * -speed;
-          item.style.transform = 'translate3d(0, ' + offset + 'px, 0)';
-        });
-      }
+    function updateParallax() {
+      if (!items.length) return;
 
-      requestAnimationFrame(tick);
-    }
+      const scrollY = window.scrollY || window.pageYOffset;
+      const viewportCenter = scrollY + window.innerHeight / 2;
 
-    tick();
-  }
+      items.forEach((item) => {
+        item.style.transform = 'none';
+        let rawSpeed = Number(item.dataset.parallaxSpeed) || 0;
+        if (window.innerWidth <= 900 && rawSpeed > 1) {
+          rawSpeed = 1;
+        }
 
-  // ==========================================================================
-  // 9. LOCOMOTIVE SCROLL
-  // Smooth scroll on [data-scroll-container]. Exposes window.locoScroll so
-  // other modules (e.g. GSAP ScrollTrigger) can hook into it later.
-  // ==========================================================================
-
-  function initLocomotiveScroll() {
-    const container = document.querySelector('[data-scroll-container]');
-    if (!container || typeof LocomotiveScroll === 'undefined') return;
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    window.locoScroll = new LocomotiveScroll({
-      el: container,
-      smooth: !reduceMotion,
-      smoothMobile: false,
-      resetNativeScroll: true,
-      lerp: 0.08,
-    });
-
-    if (window._navbarScrollUpdate) {
-      var loco = /** @type {any} */ (window).locoScroll;
-      loco.on('scroll', function (args) {
-        window._navbarScrollUpdate(args.scroll.y);
+        const speed = rawSpeed / 10;
+        const rect = item.getBoundingClientRect();
+        const itemMiddle = scrollY + rect.top + rect.height / 2;
+        const offset = (viewportCenter - itemMiddle) * -speed;
+        item.style.transform = `translate3d(0, ${offset}px, 0)`;
       });
     }
+
+    function requestParallaxUpdate() {
+      if (ticking) return;
+
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        updateParallax();
+        ticking = false;
+      });
+    }
+
+    function refreshParallaxItems() {
+      items = Array.from(document.querySelectorAll('[data-parallax-speed]'));
+      requestParallaxUpdate();
+    }
+
+    refreshParallaxItems();
+    window.addEventListener('scroll', requestParallaxUpdate, { passive: true });
+    window.addEventListener('resize', refreshParallaxItems, { passive: true });
+    window.addEventListener('portfolio:content-updated', refreshParallaxItems);
   }
   // ==========================================================================
 
@@ -562,15 +748,16 @@
    * Initialize all modules when DOM is ready
    */
   function init() {
+    initPageLoadSequence();
     initScrollReveal();
+    initServiceCardIcons();
     initSmoothScroll();
     initActiveNavigation();
     initFormHandling();
     initNavbarScroll();
     initMobileNav();
     initFaqAccordion();
-    initLocomotiveScroll();
-    initFooterReveal();
+    initContactHashFocus();
     initParallax();
   }
 

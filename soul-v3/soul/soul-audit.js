@@ -32,7 +32,7 @@ const VERBOSE = args.includes('--verbose');
 const IGNORE_DIRS = new Set([
   'node_modules', '.git', '.next', '.nuxt', '.svelte-kit',
   'dist', 'build', 'out', '.turbo', '.cache', 'coverage',
-  '.vercel', '.netlify', 'public', 'static',
+  '.vercel', '.netlify', 'public', 'static', 'soul', 'soul-v3',
 ]);
 
 const TEXT_EXTS = new Set([

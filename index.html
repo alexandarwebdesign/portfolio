@@ -28,7 +28,6 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css" />
 
     <!-- Meta Tags -->
     <meta name="description" content="I design and build websites that work on people — not just screens. Every layout, every word, every interaction is engineered around how your users actually think, feel, and decide.">
@@ -168,8 +167,8 @@
 
         <a href="#contact" class="button-primary nav-cta">
           <span class="btn-content">
-            <span class="btn-text">Start a Project →</span>
-            <span class="btn-hover-text">Start a Project →</span>
+            <span class="btn-text">Start a Project</span>
+            <span class="btn-hover-text">Start a Project</span>
           </span>
         </a>
 
@@ -190,22 +189,18 @@
       <a href="#services" class="mobile-nav-link">Services</a>
       <a href="#about" class="mobile-nav-link">About</a>
       <a href="#contact" class="mobile-nav-link">Contact</a>
-      <a href="#contact" class="mobile-nav-link mobile-nav-cta">Let's Talk →</a>
+      <a href="#contact" class="mobile-nav-link mobile-nav-cta">Let's Talk</a>
     </div>
 
-    <div data-scroll-container>
     <!-- Main Content -->
     <main id="main-content">
       <!-- Hero Section -->
       <section id="hero" class="hero-section">
-        <!-- Particle Effect Background -->
-        <div id="hero-particles" class="hero-particles"></div>
-        
-        <div class="hero-content animate-in">
-          <h1 class="hero-eyebrow">UX / Web Design · Sofia, Bulgaria</h1>
-          <h2 class="hero-title">Your website has 3 seconds to trigger the right feeling.</h2>
-          <p class="hero-subtitle">I design and build websites that work on people — not just screens. Every layout, every word, every interaction is engineered around how your users actually think, feel, and decide.</p>
-          <a href="#contact" class="button-primary hero-cta">
+        <div class="hero-content">
+          <h1 class="hero-eyebrow hero-stage-item">UX / Web Design · Sofia, Bulgaria</h1>
+          <h2 class="hero-title hero-stage-item">Your website has 3 seconds to trigger the right feeling.</h2>
+          <p class="hero-subtitle hero-stage-item">I design and build websites that work on people — not just screens. Every layout, every word, every interaction is engineered around how your users actually think, feel, and decide.</p>
+          <a href="#contact" class="button-primary hero-cta hero-stage-item">
             <span class="btn-content">
               <span class="btn-text">Start a Project</span>
               <span class="btn-hover-text">Start a Project</span>
@@ -221,8 +216,19 @@
             <div class="section-header-left">
               <h2 class="section-title">Work</h2>
             </div>
-            <span class="project-count">(06)</span>
+            <span class="project-count">(04)</span>
           </header>
+
+          <section class="work-signature glass-panel reveal" id="work-signature" aria-label="Live project brief preview">
+            <div class="work-signature__top">
+              <p class="work-signature__eyebrow">Live Brief Pressure</p>
+              <p class="work-signature__meta" id="work-signature-meta">Portfolio · 2025</p>
+            </div>
+            <div class="work-signature__swap">
+              <p class="work-signature__persona" id="work-signature-persona">The Strict Minimalist Architect</p>
+              <p class="work-signature__quote" id="work-signature-quote">If it doesn't serve a structural purpose, delete it.</p>
+            </div>
+          </section>
           
           <div class="project-grid" id="project-grid">
             <!-- Projects will be dynamically loaded from CMS -->
@@ -234,9 +240,6 @@
                   <li><a href="/project.html?slug=kaito-araki">Kaito Araki - Portfolio</a></li>
                   <li><a href="/project.html?slug=motioncraft">MotionCraft - Web Design</a></li>
                   <li><a href="/project.html?slug=corecloud">CoreCloud - SaaS</a></li>
-                  <li><a href="/project.html?slug=viva-architecture">Viva Architecture - Web Design</a></li>
-                  <li><a href="/project.html?slug=audio-product">Audio Product - E-commerce</a></li>
-                  <li><a href="/project.html?slug=gravity-zero">Gravity Zero - Branding & Web</a></li>
                 </ul>
                 <p>Enable JavaScript to view interactive portfolio.</p>
               </div>
@@ -302,6 +305,7 @@
               <p class="service-description">
                 Every layout decision is backed by UX research and conversion psychology — not personal taste. You get wireframes, user flows, and high-fidelity designs that guide visitors exactly where you need them to go.
               </p>
+              <img src="images/Ellipse 9.svg" class="service-bg-icon" alt="" aria-hidden="true" />
             </article>
 
             <article class="service-item reveal">
@@ -309,6 +313,7 @@
               <p class="service-description">
                 Clean, semantic HTML/CSS/JS with smooth animations, flawless responsiveness, and load times that don't punish your SEO. What's designed is what gets built — no compromises.
               </p>
+              <img src="images/triangle.svg" class="service-bg-icon" alt="" aria-hidden="true" />
             </article>
 
             <article class="service-item reveal">
@@ -316,6 +321,7 @@
               <p class="service-description">
                 Design, development, and deployment handled entirely by me. Faster timelines, consistent quality, and a single point of contact who understands the full picture — from the first wireframe to the live URL.
               </p>
+              <img src="images/Hexagon.svg" class="service-bg-icon" alt="" aria-hidden="true" />
             </article>
           </div>
 
@@ -521,11 +527,6 @@
       </section>
     </main>
 
-    <!-- Footer reveal cap -->
-    <div class="footer-reveal-cap" aria-hidden="true">
-      <div class="footer-cap-wrap"><div class="footer-cap-pill"></div></div>
-    </div>
-
     <!-- Footer -->
     <div class="footer-outer">
     <footer class="footer">
@@ -562,16 +563,16 @@
             </div>
             <p class="footer-location">Based in Sofia, Bulgaria · Working Worldwide</p>
             <div class="footer-ctas">
-              <a href="#contact" class="button-primary footer-cta-primary">
+              <a href="#contact" class="button-primary footer-cta-primary" data-focus-target="#name">
                 <span class="btn-content">
-                  <span class="btn-text">Start Now</span>
-                  <span class="btn-hover-text">Start Now</span>
+                  <span class="btn-text">Start a Project</span>
+                  <span class="btn-hover-text">Start a Project</span>
                 </span>
               </a>
-              <a href="#contact" class="button-secondary footer-cta-secondary">
+              <a href="mailto:alexandar.webdesign@gmail.com?subject=Project%20Inquiry" class="button-secondary footer-cta-secondary">
                 <span class="btn-content">
-                  <span class="btn-text">Start Now</span>
-                  <span class="btn-hover-text">Start Now</span>
+                  <span class="btn-text">Email Me</span>
+                  <span class="btn-hover-text">Email Me</span>
                 </span>
               </a>
             </div>
@@ -605,13 +606,9 @@
       </div>
     </footer>
     </div><!-- /footer-outer -->
-    </div><!-- /data-scroll-container -->
-
     <!-- Scripts -->
-    <script src="https://unpkg.com/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <!-- Application Scripts -->
     <script src="main.js?v=2" defer></script>
     <script src="projects.js?v=2" defer></script>
-    <script type="module" src="hero-particles.js"></script>
   </body>
 </html>
