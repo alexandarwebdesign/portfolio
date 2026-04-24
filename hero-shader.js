@@ -5,13 +5,13 @@
   const MAX_WARP_LAYERS = 10;
 
   const SHADER_SETTINGS = Object.freeze({
-    iterations: 75,
-    rotationYZ: 0.26,
+    iterations: 80,
+    rotationYZ: 0.01,
     rotationXZ: 0.3,
-    timeScale: 0.3141592653589793,
+    timeScale: 0.3265,
     warpLayers: 2,
-    warpBaseFrequency: 4.75,
-    warpFrequencyStep: 1.1,
+    warpBaseFrequency: 4,
+    warpFrequencyStep: 4,
     warpAmplitude: 0.66,
     stepBase: 0.0046,
     stepScale: 0.175,
@@ -22,6 +22,7 @@
     colorBias: 1.83,
     exposure: 9000,
     alphaBoost: 1.02,
+
   });
 
   const VERTEX_SHADER_SOURCE = `
@@ -155,7 +156,6 @@
           stencil: false,
           premultipliedAlpha: false,
           powerPreference: "high-performance",
-          desynchronized: true,
         }) ||
         this.canvas.getContext("experimental-webgl");
 

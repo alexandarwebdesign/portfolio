@@ -901,7 +901,7 @@ textarea:focus-visible {
     radial-gradient(circle at 100% 18%, rgba(255, 255, 255, 0.94) 0%, rgba(204, 248, 255, 0.78) 20%, rgba(113, 225, 232, 0.3) 38%, rgba(244, 249, 250, 0) 58%),
     radial-gradient(circle at 18% 12%, rgba(185, 255, 229, 0.72) 0%, rgba(115, 237, 201, 0.28) 28%, rgba(244, 249, 250, 0) 56%),
     radial-gradient(circle at 74% 78%, rgba(205, 214, 255, 0.54) 0%, rgba(140, 174, 255, 0.22) 26%, rgba(244, 249, 250, 0) 52%),
-    linear-gradient(180deg, #fbfdfe 0%, var(--color-background) 42%, #eef8f6 100%);
+    linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
 }
 
 .hero-section--shader::before {
@@ -929,13 +929,12 @@ textarea:focus-visible {
   display: block;
   width: 100%;
   height: 100%;
-  opacity: 0;
+  opacity: 1;
   transition: opacity var(--duration-slow) var(--ease-out);
+  mix-blend-mode: screen;
 }
 
-.hero-section--shader.is-shader-ready .hero-shader__canvas {
-  opacity: 1;
-}
+
 
 /* Hero Particle Effect Background */
 .hero-particles {
@@ -3671,4 +3670,3 @@ body.is-loaded .hero-stage-item {
     padding-bottom: 9vh;
   }
 }
-
