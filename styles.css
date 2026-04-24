@@ -893,6 +893,8 @@ textarea:focus-visible {
   padding-bottom: var(--space-20);
   position: relative;
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
 }
 
 .hero-section--shader {
