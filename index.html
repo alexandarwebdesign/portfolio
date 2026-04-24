@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UX/UI Designer & Website Developer | Aleksandar Pavlov</title>
 
@@ -17,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <!-- Performance: Preload Critical Resources -->
-    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="styles.css?v=5" as="style">
 
     
 
@@ -27,7 +28,7 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"></noscript>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=5" />
 
     <!-- Meta Tags -->
     <meta name="description" content="I design and build websites that work on people — not just screens. Every layout, every word, every interaction is engineered around how your users actually think, feel, and decide.">
@@ -195,7 +196,10 @@
     <!-- Main Content -->
     <main id="main-content">
       <!-- Hero Section -->
-      <section id="hero" class="hero-section">
+      <section id="hero" class="hero-section hero-section--shader">
+        <div class="hero-shader" aria-hidden="true">
+          <canvas class="hero-shader__canvas"></canvas>
+        </div>
         <div class="hero-content">
           <h1 class="hero-eyebrow hero-stage-item">UX / Web Design · Sofia, Bulgaria</h1>
           <h2 class="hero-title hero-stage-item">Your website has 3 seconds to trigger the right feeling.</h2>
@@ -218,17 +222,6 @@
             </div>
             <span class="project-count">(04)</span>
           </header>
-
-          <section class="work-signature glass-panel reveal" id="work-signature" aria-label="Live project brief preview">
-            <div class="work-signature__top">
-              <p class="work-signature__eyebrow">Live Brief Pressure</p>
-              <p class="work-signature__meta" id="work-signature-meta">Portfolio · 2025</p>
-            </div>
-            <div class="work-signature__swap">
-              <p class="work-signature__persona" id="work-signature-persona">The Strict Minimalist Architect</p>
-              <p class="work-signature__quote" id="work-signature-quote">If it doesn't serve a structural purpose, delete it.</p>
-            </div>
-          </section>
           
           <div class="project-grid" id="project-grid">
             <!-- Projects will be dynamically loaded from CMS -->
@@ -609,6 +602,7 @@
     <!-- Scripts -->
     <!-- Application Scripts -->
     <script src="main.js?v=2" defer></script>
+    <script src="hero-shader.js?v=9" defer></script>
     <script src="projects.js?v=2" defer></script>
   </body>
 </html>

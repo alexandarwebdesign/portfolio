@@ -373,7 +373,7 @@
   }
 
   // ==========================================================================
-  // 6. MOBILE NAVIGATION — Curved Wipe Transition
+  // 6. MOBILE NAVIGATION — Lightweight Overlay Transition
   // ==========================================================================
 
   function initMobileNav() {
@@ -381,83 +381,41 @@
     const mobileNav = document.getElementById('mobile-nav');
     if (!toggle || !mobileNav) return;
 
-    let currentAnim = null;
-    const { tempo, exitRatio, accentEasing } = getMotionSettings();
-    const navOpenDuration = Math.round(tempo + 74);
-    const navCloseDuration = Math.round(navOpenDuration * exitRatio);
+    const mobileViewport = window.matchMedia('(max-width: 900px)');
+    const { tempo, exitRatio } = getMotionSettings();
+    const navOpenDuration = Math.max(280, Math.round(tempo * 0.82));
+    const navCloseDuration = Math.max(180, Math.round(navOpenDuration * Math.max(exitRatio, 0.7)));
 
-    // Enter: visible area grows from right (vw-x → vw), leading left edge curves left
-    function enterPath(vw, vh, x, curve) {
-      const q1 = Math.round(vh * 0.25);
-      const q3 = Math.round(vh * 0.75);
-      const rx = vw - x;
-      return `path('M ${vw} 0 L ${vw} ${vh} L ${rx} ${vh} C ${rx - curve} ${q3} ${rx - curve} ${q1} ${rx} 0 Z')`;
+    mobileNav.style.setProperty('--mobile-nav-open-duration', `${navOpenDuration}ms`);
+    mobileNav.style.setProperty('--mobile-nav-close-duration', `${navCloseDuration}ms`);
+
+    function setOpenState(isOpen) {
+      toggle.classList.toggle('is-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+      mobileNav.classList.toggle('is-open', isOpen);
+      mobileNav.setAttribute('aria-hidden', String(!isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+      document.documentElement.style.overflow = isOpen ? 'hidden' : '';
     }
-
-    // Exit: visible area shrinks from right (0 → x), right edge curves left
-    function exitPath(vh, x, curve) {
-      const q1 = Math.round(vh * 0.25);
-      const q3 = Math.round(vh * 0.75);
-      return `path('M 0 0 L 0 ${vh} L ${x} ${vh} C ${x - curve} ${q3} ${x - curve} ${q1} ${x} 0 Z')`;
-    }
-
 
     function openNav() {
-      if (currentAnim) currentAnim.cancel();
-
-      toggle.classList.add('is-open');
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Close navigation menu');
-      mobileNav.setAttribute('aria-hidden', 'false');
-      mobileNav.style.pointerEvents = 'all';
-      document.body.style.overflow = 'hidden';
-
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const c  = Math.round(vw * 0.14);
-      const mid = Math.round(vw * 0.5);
-
-      currentAnim = mobileNav.animate(
-        [
-          { clipPath: enterPath(vw, vh, 0, 0) },
-          { clipPath: enterPath(vw, vh, mid, c), offset: 0.45 },
-          { clipPath: enterPath(vw, vh, vw, 0) }
-        ],
-        { duration: navOpenDuration, easing: accentEasing, fill: 'forwards' }
-      );
+      if (!mobileViewport.matches) return;
+      setOpenState(true);
     }
 
     function closeNav() {
-      if (currentAnim) currentAnim.cancel();
-
-      toggle.classList.remove('is-open');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open navigation menu');
-      mobileNav.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const c  = Math.round(vw * 0.14);
-      const mid = Math.round(vw * 0.5);
-
-      currentAnim = mobileNav.animate(
-        [
-          { clipPath: exitPath(vh, vw, 0) },
-          { clipPath: exitPath(vh, mid, c), offset: 0.55 },
-          { clipPath: exitPath(vh, 0, 0) }
-        ],
-        { duration: navCloseDuration, easing: accentEasing, fill: 'forwards' }
-      );
-
-
-      currentAnim.onfinish = () => {
-        mobileNav.style.pointerEvents = 'none';
-      };
+      setOpenState(false);
     }
 
-    // Set initial hidden state (matches enter animation start)
-    mobileNav.style.clipPath = enterPath(window.innerWidth, window.innerHeight, 0, 0);
+    function closeNavOnDesktop(event) {
+      const matches = typeof event?.matches === 'boolean' ? event.matches : mobileViewport.matches;
+      if (!matches) {
+        closeNav();
+      }
+    }
+
+    setOpenState(false);
 
     toggle.addEventListener('click', () => {
       toggle.classList.contains('is-open') ? closeNav() : openNav();
@@ -470,6 +428,18 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && toggle.classList.contains('is-open')) closeNav();
     });
+
+    mobileNav.addEventListener('click', (e) => {
+      if (e.target === mobileNav) {
+        closeNav();
+      }
+    });
+
+    if (typeof mobileViewport.addEventListener === 'function') {
+      mobileViewport.addEventListener('change', closeNavOnDesktop);
+    } else if (typeof mobileViewport.addListener === 'function') {
+      mobileViewport.addListener(closeNavOnDesktop);
+    }
   }
 
   // ==========================================================================

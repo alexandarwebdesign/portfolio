@@ -35,7 +35,7 @@
    * @param {number} limit - Maximum number of projects to return
    * @returns {Array} Featured projects
    */
-  function getFeaturedProjects(projects, limit = 6) {
+  function getFeaturedProjects(projects, limit = 4) {
     return projects
       .filter(p => p.featured)
       .sort((a, b) => b.year - a.year)
@@ -134,108 +134,6 @@
       className: '',
       onerror: `this.onerror=null;this.src='${fallbackSvg}';this.classList.add('placeholder');`
     };
-  }
-
-  function decodeHtmlEntities(value) {
-    const textarea = document.createElement('textarea');
-    textarea.innerHTML = value;
-    return textarea.value;
-  }
-
-  function stripHtml(value) {
-    return decodeHtmlEntities(
-      String(value || '')
-        .replace(/<br\s*\/?>/gi, '\n')
-        .replace(/<\/(p|li|h3)>/gi, '\n')
-        .replace(/<[^>]+>/g, ' ')
-    )
-      .replace(/\u2022/g, '\n')
-      .replace(/[ \t]+\n/g, '\n')
-      .replace(/\n[ \t]+/g, '\n')
-      .replace(/\n{2,}/g, '\n')
-      .replace(/[ \t]{2,}/g, ' ')
-      .trim();
-  }
-
-  function escapeAttribute(value) {
-    return String(value || '')
-      .replace(/&/g, '&amp;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
-  }
-
-  function extractBriefPressure(project) {
-    const text = stripHtml(project.the_brief || project.description || '')
-      .replace(/[“”]/g, '"')
-      .replace(/[‘’]/g, "'");
-
-    const quoted = [...text.matchAll(/["']([^"']{18,140})["']/g)]
-      .map(match => match[1].trim())
-      .filter(value => value.split(/\s+/).length >= 4)
-      .sort((a, b) => b.length - a.length);
-
-    if (quoted.length > 0) {
-      return quoted[0];
-    }
-
-    const description = stripHtml(project.description || '');
-    if (description.length <= 140) {
-      return description;
-    }
-
-    return `${description.slice(0, 137).trim()}...`;
-  }
-
-  function initWorkSignature(grid) {
-    const signature = document.getElementById('work-signature');
-    const personaEl = document.getElementById('work-signature-persona');
-    const quoteEl = document.getElementById('work-signature-quote');
-    const metaEl = document.getElementById('work-signature-meta');
-
-    if (!grid || !signature || !personaEl || !quoteEl || !metaEl) return;
-
-    const cards = Array.from(grid.querySelectorAll('.project-card'));
-    if (!cards.length) return;
-
-    let activeCard = null;
-    let resetTimer = null;
-
-    function applySignature(card) {
-      if (!card || activeCard === card) return;
-
-      activeCard = card;
-      cards.forEach(item => {
-        item.classList.toggle('is-signature-active', item === card);
-      });
-
-      signature.classList.add('is-refreshing');
-      window.clearTimeout(resetTimer);
-
-      resetTimer = window.setTimeout(() => {
-        personaEl.textContent = card.dataset.projectPersona || '';
-        quoteEl.textContent = card.dataset.projectQuote || '';
-        metaEl.textContent = card.dataset.projectMeta || '';
-        signature.classList.remove('is-refreshing');
-      }, 110);
-    }
-
-    cards.forEach(card => {
-      card.addEventListener('mouseenter', () => applySignature(card));
-      card.addEventListener('focusin', () => applySignature(card));
-    });
-
-    grid.addEventListener('mouseleave', () => applySignature(cards[0]));
-    grid.addEventListener('focusout', () => {
-      window.setTimeout(() => {
-        if (!grid.contains(document.activeElement)) {
-          applySignature(cards[0]);
-        }
-      }, 0);
-    });
-
-    applySignature(cards[0]);
   }
 
   // ==========================================================================
@@ -734,8 +632,6 @@
     if (countEl) {
       countEl.textContent = `(${String(projects.length).padStart(2, '0')})`;
     }
-    grid.classList.toggle('project-grid--quartet', projects.length === 4);
-    
     // Use fallback URLs locally to avoid Live Server 404s
     const isLocal = window.location.hostname !== 'aleksandarpavlov.netlify.app';
 
@@ -743,18 +639,8 @@
     grid.innerHTML = projects.map((project, index) => {
       const thumbAttrs = getImageAttrs(project.thumbnail, `${project.title} project preview`);
       const projectUrl = isLocal ? `/project.html#${project.slug}` : `/${project.slug}`;
-      const projectNumber = String(index + 1).padStart(2, '0');
-      const briefPressure = extractBriefPressure(project);
-      const projectMeta = `${project.category} · ${project.year}`;
       return `
-      <article
-        class="project-card reveal"
-        style="transition-delay: ${index * 74}ms;"
-        data-project-title="${escapeAttribute(project.title)}"
-        data-project-persona="${escapeAttribute(project.client_persona || project.category)}"
-        data-project-quote="${escapeAttribute(briefPressure)}"
-        data-project-meta="${escapeAttribute(projectMeta)}"
-      >
+      <article class="project-card glass-panel reveal" style="transition-delay: ${index * 100}ms;">
         <a href="${projectUrl}" class="project-card-link">
           <div class="project-image-wrapper">
             <img
@@ -767,22 +653,19 @@
               loading="lazy"
             />
           </div>
-          <span class="project-card-number" aria-hidden="true">${projectNumber}</span>
-          <span class="project-card-arrow-badge" aria-hidden="true">
-            <span class="arrow-content">
-              <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-default" />
-              <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-hover" />
-            </span>
-          </span>
           <div class="project-info">
+            <div class="project-title-row">
+              <h3 class="project-title">${project.title}</h3>
+              <span class="arrow-content" aria-hidden="true">
+                <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-default" />
+                <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-hover" />
+              </span>
+            </div>
             <p class="project-category">${project.category}</p>
-            <h3 class="project-title">${project.title}</h3>
           </div>
         </a>
       </article>
     `;}).join('');
-
-    initWorkSignature(grid);
 
     // Re-trigger reveal animations for dynamically loaded content
     setTimeout(() => {
