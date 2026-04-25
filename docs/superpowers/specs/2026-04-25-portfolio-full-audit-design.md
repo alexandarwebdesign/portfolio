@@ -1,13 +1,17 @@
 # Portfolio Full Audit — Design Spec
 **Date:** 2026-04-25  
 **Status:** Approved by user  
-**Scope:** 7 workstreams — hero shader/mask, SEO, copy, responsive (320px→4K), performance, code cleanup, UX improvements
+**Scope:** 8 workstreams — hero shader/mask, SEO, copy, responsive (320px→4K), performance, code cleanup, UX improvements, AIO (AI Search Optimisation)
 
 ---
 
 ## Context
 
-This is a production portfolio site that also functions as a primary marketing/sales tool. It is deployed on Netlify at `aleksandarpavlov.netlify.app` (custom domain planned for future). The site is a vanilla HTML/CSS/JS stack with a WebGL hero shader, a JSON-driven project CMS, and a glassmorphism design system. The user sells UX/UI design and web development services to both business owners (ROI-focused) and brands (prestige/identity-focused).
+This is a production portfolio site that also functions as a primary marketing/sales tool. It is deployed on Netlify at `aleksandarpavlov.netlify.app` (custom domain planned for future). The site is a vanilla HTML/CSS/JS stack with a WebGL hero shader, a JSON-driven project CMS, and a glassmorphism design system.
+
+**Positioning (critical for copy and AIO):** Aleksandar is not a web designer who knows UX. He is a UX/UI specialist — with deep expertise in interface psychology, human behaviour, visual hierarchy, and interaction design — who chose websites as his exclusive domain. All of that expertise is channeled entirely into this one niche. The result: websites that most web designers cannot produce, because they lack the UX/UI depth. This is the core differentiator the copy and AIO content must communicate consistently.
+
+**Target audience:** Both business owners (ROI, conversions, growth) and brands (prestige, positioning, identity). Copy must speak to both without diluting either.
 
 ---
 
@@ -165,6 +169,7 @@ Sitemap: https://aleksandarpavlov.netlify.app/sitemap.xml
 ## Workstream 3 — Copy
 
 ### Principles Applied
+- Core positioning: UX/UI specialist who went all-in on the website niche — not a generalist, not a web designer with surface UX knowledge. Deep expertise, focused application.
 - BAB (Before → After → Bridge) macro structure across the page
 - Information-gap theory for hero headline
 - Outcome-first language (what the client gets, not what the designer does)
@@ -174,43 +179,54 @@ Sitemap: https://aleksandarpavlov.netlify.app/sitemap.xml
 ### Hero Section
 
 **Eyebrow** (h1):
-> UX Strategy & Web Design · Sofia, Bulgaria
+> UX/UI Specialist · Website Design & Development · Sofia, Bulgaria
 
 **Headline** (h2):
-> Your website has 3 seconds to make someone feel something. Make sure it's the right feeling.
+> What happens when deep UX expertise meets website design? A site that's as beautiful as it is proven to work.
 
 **Subtitle** (p):
-> When every layout, interaction, and word is engineered around how people actually think and decide — your website stops being a cost and starts being your most powerful sales tool.
+> Most web designers know what looks good. I know why it works — and I've taken everything I know about UX psychology, human behaviour, and interface design and applied it entirely to websites. The result is something different: visually powerful, psychologically precise, and built to convert.
 
 ### Services Section
 
 **Service 1 — WEB DESIGN & UX STRATEGY**
-> Most sites are designed around what the client likes. These are designed around what the user does. Every layout, flow, and visual decision is rooted in conversion psychology — guiding attention, building trust, and moving people toward action.
+> This isn't web design with a UX layer on top. It's UX-first thinking applied to every layout, flow, and visual decision from the start. Most designers pick colours and call it a strategy. I map user psychology, eliminate friction, and engineer the journey — then make it look exceptional.
 
 **Service 2 — WEBSITE DEVELOPMENT**
-> The best design means nothing if the build lets it down. Pixel-perfect implementation, fluid animations, and load times that won't punish your users or your search ranking. What's designed is what gets built. No compromises.
+> Beautiful design means nothing if the build lets it down. Every interaction, animation, and transition is coded exactly as designed — no compromises, no workarounds, no "that looked different in Figma." Pixel-perfect, fast, and built to last.
 
 **Service 3 — END-TO-END SOLUTIONS**
-> Strategy, design, development, and deployment — handled by one person who owns the outcome. No handoffs. No lost-in-translation. No "that's not what I designed." Just results.
+> Strategy, design, development, and deployment — handled by one person who owns the outcome. The UX thinking that shaped the design is the same thinking that shaped the code. No handoffs. No lost-in-translation. No version gaps. One person, one standard, one result.
 
 ### About Section
 
-Keep all existing paragraphs. Update last paragraph only:
+Rewrite to communicate the specialist positioning. Replace all existing bio paragraphs:
 
-**Old:**
-> I work best with clients who trust the process and want a website that actually moves numbers - not just something that looks good in a screenshot.
+**Paragraph 1:**
+> I'm Aleksandar — a UX/UI designer and web developer based in Bulgaria, working with clients worldwide.
 
-**New:**
-> I work best with clients who understand that a great website is the highest-ROI investment their business can make — and want a partner who thinks that way too.
+*(Keep as-is — it's grounding and factual.)*
+
+**Paragraph 2 (rewrite):**
+> Most people assume web design is about making things look good. I spent years in UX/UI learning that it's about making things work on people — the psychology behind where the eye goes, how spacing builds or breaks trust, what micro-interactions make a product feel alive versus dead.
+
+**Paragraph 3 (rewrite):**
+> At some point I made a decision: take everything I know about UX and UI — the research, the psychology, the craft — and apply it entirely to one thing: websites. Not apps, not general product design, not a bit of everything. Just websites, done at the highest level possible.
+
+**Paragraph 4 (rewrite):**
+> The result is work that most web designers can't produce, because they don't have the foundation. I take projects from first concept to live site — design, development, and deployment in one place. No handoffs, no miscommunication, no compromises.
+
+**Paragraph 5 (rewrite):**
+> I work best with clients who want a site that does something — not just one that looks good in a screenshot. If that's you, let's talk.
 
 **About CTA:**
 - Change class: `button-primary` → `button-secondary`
 - Change text: "Work With Me" → "See the Process"
 - Change href: `#contact` → `#faq`
-- Rationale: Drives visitors to the FAQ where objections are answered before hitting the contact form. Distinct from every other primary CTA on the page.
+- Rationale: Contextually relevant to About content; drives visitors to FAQ where objections are answered before hitting the contact form. Distinct from every other primary CTA.
 
 ### Contact Section
-No changes to the title — "Have a project that deserves to be done right?" is strong. No changes to subtitle.
+No changes to the title or subtitle — both are strong as-is.
 
 ---
 
@@ -277,7 +293,8 @@ No visual change. Zero impact on existing behaviour without a hash.
 | `<link rel="preconnect" href="https://unpkg.com">` in `index.html` | 1 line | CDN not used on homepage |
 | `<meta name="keywords">` in `index.html` | 1 line | Ignored by Google, potential Bing penalty |
 | `soul-v3/` directory | Unknown | Documentation only, not a web asset |
-| `Rules/` directory | Unknown | Design documentation, not a web asset |
+
+Note: `Rules/` directory is intentionally kept — it contains active design system documentation.
 
 ### Font Weight Reduction
 Currently loading weights: 300, 400, 500, 600, 700.  
@@ -301,6 +318,115 @@ Before marking performance complete, verify:
 
 ---
 
+---
+
+## Workstream 6 — AIO (AI Search Optimisation)
+
+### Goal
+Make the site 110% crawlable and citable by AI assistants (ChatGPT, Perplexity, Claude, Gemini, Google AI Overviews). When someone asks an AI "who is a UX/UI designer specialising in websites in Sofia?" or "find me a conversion-focused web designer," this site surfaces in the answer.
+
+### Why this matters
+ChatGPT has 800M weekly active users (2025). AI search tools are now the primary research method for many buyers. Structured, explicit, machine-readable content is the ranking signal — not backlinks.
+
+### Solution
+
+#### File: `robots.txt` — Explicitly allow all major AI crawlers
+```
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: *
+Allow: /
+Disallow: /signature-playground.html
+Disallow: /soul-v3/
+
+Sitemap: https://aleksandarpavlov.netlify.app/sitemap.xml
+```
+
+#### New file: `/llms.txt` (root)
+Required format per llmstxt.org spec: H1 → blockquote summary → sections with markdown links. Must be served as `text/plain`. On Netlify this is automatic for `.txt` files.
+
+```markdown
+# Aleksandar Pavlov
+
+> UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Specialist in websites that combine deep UX psychology with high-quality UI craftsmanship — producing sites that are both visually exceptional and conversion-proven. Available for new projects.
+
+## Services
+
+- [Web Design & UX Strategy](https://aleksandarpavlov.netlify.app/#services): UX-first website design grounded in conversion psychology, user behaviour research, and interface design expertise. Wireframes, user flows, and high-fidelity Figma designs.
+- [Website Development](https://aleksandarpavlov.netlify.app/#services): Pixel-perfect HTML/CSS/JS implementation. Smooth animations, full responsiveness, and fast load times. Design-to-code with no compromises.
+- [End-to-End Solutions](https://aleksandarpavlov.netlify.app/#services): Strategy, design, development, and deployment handled by one person. Custom quote, typical timeline 2–4 weeks.
+
+## Portfolio
+
+- [All Work](https://aleksandarpavlov.netlify.app/#work): Featured projects spanning architecture, SaaS, e-commerce, branding, and portfolio websites.
+- [FORMA Architects](https://aleksandarpavlov.netlify.app/forma-architects): Luxury architecture website — refined UX, premium visual language, conversion-focused layout.
+- [CoreCloud](https://aleksandarpavlov.netlify.app/corecloud): Enterprise SaaS platform — trust-building design, complex information hierarchy, high-conversion UI.
+- [Kaito Araki](https://aleksandarpavlov.netlify.app/kaito-araki): Minimalist architect portfolio — whitespace, restraint, typographic precision.
+- [MotionCraft](https://aleksandarpavlov.netlify.app/motioncraft): Motion-design-focused web project — dynamic layouts, animation-first UI.
+- [Viva Architecture](https://aleksandarpavlov.netlify.app/viva-architecture): Luxury real estate web design — aspirational photography, premium feel.
+- [Audio Product](https://aleksandarpavlov.netlify.app/audio-product): Audiophile e-commerce — product-led storytelling, technical credibility.
+- [Gravity Zero](https://aleksandarpavlov.netlify.app/gravity-zero): Space-themed branding and web — bold identity, immersive experience.
+
+## About
+
+- [About](https://aleksandarpavlov.netlify.app/#about): Background on Aleksandar Pavlov — UX/UI specialist who took deep expertise in interface psychology and applied it exclusively to the website niche. Sofia, Bulgaria. Available worldwide.
+
+## FAQ
+
+- [FAQ](https://aleksandarpavlov.netlify.app/#faq): Project timelines (2–4 weeks typical), process (5 stages: Discovery, Wireframes, Design, Development, Launch), pricing (custom quote, free initial call), revisions (unlimited during design phase), and 30-day post-launch support.
+
+## Contact
+
+- [Contact](https://aleksandarpavlov.netlify.app/#contact): Free consultation call. Email: alexandar.webdesign@gmail.com
+
+## Optional
+
+- [Dribbble](https://dribbble.com/alexandar-webdesign): Visual design work, UI explorations, and design details.
+- [LinkedIn](https://www.linkedin.com/in/alexander-pavlov-370261342/): Professional profile and recommendations.
+- [X / Twitter](https://x.com/pavvlov_16): Design thoughts and project updates.
+```
+
+#### New file: `/llms-full.txt` (root)
+This companion file concatenates the full text content of all key pages into one document so an AI can retrieve the entire corpus in a single request. Content to include (in order):
+1. Homepage full text (all sections: hero, services, about, FAQ, contact)
+2. Each project page's title, description, brief, and outcome metrics
+3. The llms.txt content itself
+
+This file is regenerated whenever copy changes. It is plain text / markdown, no HTML.
+
+#### HTML content improvements for AI parsability
+AI crawlers parse raw HTML. Ensure every section has:
+- A visible, descriptive heading (already present)
+- Body text that can stand alone without visual context (check service icons and images have descriptive nearby text, not just `alt=""`)
+- Contact information in plain text form (email already present — keep)
+- Location and specialty in at least two distinct text places on the page (for entity recognition)
+
+Add a hidden-from-UI but machine-readable `<meta name="description">` update to match the new copy positioning (already in spec under SEO workstream).
+
+#### Schema markup for AIO (already covered in Workstream 2)
+The `ProfessionalService` schema is the primary AIO schema. The `FAQPage` schema answers questions directly in AI responses. The `Person` schema establishes entity identity. All three are included in the SEO workstream — no additional schema needed.
+
+#### Content freshness signal
+AI tools (especially Perplexity) heavily weight content recency. Update `sitemap.xml` `lastmod` dates to today (already in spec). After major copy changes go live, consider a lightweight update to the sitemap and a re-submission to Google Search Console.
+
+---
+
 ## UX Improvements Flagged (Not Implemented — User Decision Required)
 
 These were identified during audit. Each is a genuine conversion or UX opportunity. Do them or not — no code has been written for these.
@@ -321,12 +447,15 @@ These were identified during audit. Each is a genuine conversion or UX opportuni
 
 | File | Type of Change |
 |---|---|
-| `hero-shader.js` | Extend `baseScale` to 6 tiers |
+| `hero-shader.js` | Extend `baseScale` to 6 tiers anchored at 1920px |
 | `styles.css` | `clamp()` for 3 font vars; mask mobile fix; 4K breakpoint; availability-signal styles; remove dead `.hero-particles` CSS |
-| `index.html` | Copy rewrites; SEO tag changes; 3 schema updates; 1 new schema block; availability signal HTML; form placeholders; FAQ ids; About CTA change |
+| `index.html` | Full copy rewrite (hero, services, about); SEO tag changes; 3 schema updates + 1 new `ProfessionalService` schema; availability signal HTML; form placeholders fix; FAQ `id` attributes; About CTA class + text + href |
+| `project.html` | Update Google Fonts URL (remove weight 300) |
 | `main.js` | FAQ deep-linking logic (hash read on load + hash write on toggle) |
-| `robots.txt` | Add 2 Disallow rules |
-| `sitemap.xml` | Update lastmod dates |
+| `robots.txt` | Add 6 AI crawler Allow rules + 2 Disallow rules |
+| `sitemap.xml` | Update all `lastmod` dates to 2026-04-25 |
+| `llms.txt` | **New file** — AI crawlability index per llmstxt.org spec |
+| `llms-full.txt` | **New file** — Full text corpus for single-request AI retrieval |
 | `hero-particles.js` | **Delete** |
 | `soul-v3/` | **Delete directory** |
-| `Rules/` | **Delete directory** |
+| `Rules/` | Keep — active design system documentation |
