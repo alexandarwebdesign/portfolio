@@ -31,9 +31,9 @@
   --font-body: "Manrope", sans-serif;
 
   /* Typography - Sizes */
-  --text-hero: 80px;
-  --text-section: 72px;
-  --text-service: 40px;
+  --text-hero:    clamp(40px, calc(2.5vw + 32px), 96px);
+  --text-section: clamp(36px, calc(2.25vw + 28.8px), 88px);
+  --text-service: clamp(24px, calc(1vw + 20.8px), 48px);
   --text-project: 32px;
   --text-body-lg: 24px;
   --text-body: 20px;
@@ -2525,9 +2525,6 @@ body.is-loaded .hero-stage-item {
 
 @media (max-width: 900px) {
   :root {
-    --text-hero: 56px;
-    --text-section: 48px;
-    --text-service: 32px;
     --section-gap: 120px;
   }
 
@@ -2591,9 +2588,6 @@ body.is-loaded .hero-stage-item {
 
 @media (max-width: 600px) {
   :root {
-    --text-hero: 40px;
-    --text-section: 36px;
-    --text-service: 24px;
     --text-body-lg: 20px;
     --text-body: 18px;
     
