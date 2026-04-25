@@ -1,4 +1,9 @@
-/404.html /404.html 200
-/robots.txt /robots.txt 200
-/sitemap.xml /sitemap.xml 200
-/* /project.html 200
+# Clean URL rewrites for project pages
+
+# Static page — fully crawlable without JavaScript
+/forma-architects     /forma-architects.html     200
+
+# Dynamic project pages (JS-rendered, noscript fallback included)
+/birse                /project.html?slug=birse                200
+/creative-asset       /project.html?slug=creative-asset       200
+/swis-saas            /project.html?slug=swis-saas            200

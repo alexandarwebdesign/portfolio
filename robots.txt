@@ -1,4 +1,11 @@
+# AI crawlers — explicitly welcomed
 User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: ClaudeBot
@@ -16,6 +23,37 @@ Allow: /
 User-agent: Bytespider
 Allow: /
 
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: ImagesiftBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# All other crawlers
 User-agent: *
 Allow: /
 Disallow: /signature-playground.html
