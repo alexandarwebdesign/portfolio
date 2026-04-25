@@ -1,5 +1,6 @@
 {
   "rewrites": [
-    { "source": "/forma-architects", "destination": "/forma-architects.html" }
+    { "source": "/forma-architects", "destination": "/forma-architects.html" },
+    { "source": "/about", "destination": "/about.html" }
   ]
 }
