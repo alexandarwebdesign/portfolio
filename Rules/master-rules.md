@@ -1,4 +1,5 @@
-# Master Rules — Alexandar Pavlov Portfolio
+# Master Rules - Alexandar Pavlov Portfolio
+
 **Design System + Animations + Accessibility + SEO + Layout**
 
 ---
@@ -9,49 +10,55 @@
 
 ```css
 /* Primary */
---color-background: #F4F9FA;
---color-text: #29303D;
---color-accent: #0066FF;
---color-white: #FFFFFF;
+--color-background: #f4f9fa;
+--color-text: #29303d;
+--color-accent: #0066ff;
+--color-white: #ffffff;
 
 /* Secondary */
---color-border: #C2C9D6;
+--color-border: #c2c9d6;
 --color-text-muted: rgba(41, 48, 61, 0.8);
 --color-text-light: rgba(41, 48, 61, 0.5);
 
 /* Semantic */
---color-success: #34C759;
---color-error: #FF3B30;
---color-warning: #FF9500;
+--color-success: #34c759;
+--color-error: #ff3b30;
+--color-warning: #ff9500;
 ```
 
 ## Typography
 
 ### Font Families
+
 ```css
---font-display: 'Manrope', sans-serif;
---font-body: 'Manrope', sans-serif;
+--font-display: "Manrope", sans-serif;
+--font-body: "Manrope", sans-serif;
 ```
 
 ### Font Import
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 ### Type Scale
 
-| Element | Font | Size | Weight | Letter Spacing |
-|---------|------|------|--------|----------------|
-| Hero Title | Manrope | 80px | 700 | -1.6px |
-| Section Title | Manrope | 72px | 700 | -0.72px |
-| Service Title | Manrope | 40px | 600 | -0.4px |
-| Project Title | Manrope | 28px | 700 | 0 |
-| Body Large | Manrope | 24px | 400 | -0.24px |
-| Body | Manrope | 20px | 400 | -0.2px |
-| Button | Manrope | 24px | 600 | 0.24px |
-| Button Small | Manrope | 20px | 600 | 0.2px |
+| Element       | Font    | Size | Weight | Letter Spacing |
+| ------------- | ------- | ---- | ------ | -------------- |
+| Hero Title    | Manrope | 80px | 700    | -1.6px         |
+| Section Title | Manrope | 72px | 700    | -0.72px        |
+| Service Title | Manrope | 40px | 600    | -0.4px         |
+| Project Title | Manrope | 28px | 700    | 0              |
+| Body Large    | Manrope | 24px | 400    | -0.24px        |
+| Body          | Manrope | 20px | 400    | -0.2px         |
+| Button        | Manrope | 24px | 600    | 0.24px         |
+| Button Small  | Manrope | 20px | 600    | 0.2px          |
 
 ### Text Rules
+
 - Section titles: UPPERCASE
 - Service titles: UPPERCASE
 - Body text: 80% opacity
@@ -93,13 +100,14 @@
 ## Components
 
 ### Primary Button
+
 ```css
 .button-primary {
-  background: #0066FF;
+  background: #0066ff;
   color: white;
   padding: 16px 32px;
   border-radius: 13.33px;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 24px;
   font-weight: 600;
   letter-spacing: 0.24px;
@@ -111,10 +119,15 @@
 ```
 
 ### Project Card
+
 ```css
 .project-card {
-  background: linear-gradient(121deg, rgba(194, 201, 214, 0.1) 0%, rgba(41, 48, 61, 0.1) 100%);
-  border: 1px solid #C2C9D6;
+  background: linear-gradient(
+    121deg,
+    rgba(194, 201, 214, 0.1) 0%,
+    rgba(41, 48, 61, 0.1) 100%
+  );
+  border: 1px solid #c2c9d6;
   border-radius: 16px;
   padding: 32px;
   overflow: hidden;
@@ -129,12 +142,13 @@
 ```
 
 ### Form Input
+
 ```css
 .form-input {
   border: 1px solid rgba(19, 25, 39, 0.5);
   border-radius: 16px;
   padding: 20px;
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   font-size: 20px;
   background: transparent;
   width: 100%;
@@ -142,6 +156,7 @@
 ```
 
 ### Navigation
+
 ```css
 .navbar {
   position: fixed;
@@ -162,22 +177,24 @@
 # 2. ANIMATIONS
 
 ## Timing
+
 ```css
 --duration-fast: 150ms;
 --duration-normal: 300ms;
 --duration-slow: 500ms;
---ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+--ease-out: cubic-bezier(0, 0, 0.2, 1);
 --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);
 ```
 
 ## Button Hover
+
 ```css
 .button-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     inset 0px 4px 8px rgba(255, 255, 255, 0.2),
     0 12px 24px rgba(0, 102, 255, 0.24);
-  transition: all 300ms cubic-bezier(0.0, 0, 0.2, 1);
+  transition: all 300ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .button-primary:active {
@@ -186,15 +203,18 @@
 ```
 
 ## Card Hover
+
 ```css
 .project-card {
-  transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+  transition:
+    transform 300ms ease-out,
+    box-shadow 300ms ease-out;
 }
 
 .project-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 48px rgba(0, 102, 255, 0.16);
-  border-color: #0066FF;
+  border-color: #0066ff;
 }
 
 .project-card:hover .project-image {
@@ -204,19 +224,20 @@
 ```
 
 ## Navigation Link
+
 ```css
 .nav-link {
   position: relative;
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 50%;
   width: 0;
   height: 2px;
-  background: #0066FF;
+  background: #0066ff;
   transform: translateX(-50%);
   transition: width 300ms ease-out;
 }
@@ -227,6 +248,7 @@
 ```
 
 ## Page Load
+
 ```css
 @keyframes fadeSlideUp {
   from {
@@ -244,17 +266,26 @@
 }
 
 /* Stagger children */
-.animate-in:nth-child(1) { animation-delay: 100ms; }
-.animate-in:nth-child(2) { animation-delay: 200ms; }
-.animate-in:nth-child(3) { animation-delay: 300ms; }
+.animate-in:nth-child(1) {
+  animation-delay: 100ms;
+}
+.animate-in:nth-child(2) {
+  animation-delay: 200ms;
+}
+.animate-in:nth-child(3) {
+  animation-delay: 300ms;
+}
 ```
 
 ## Scroll Reveal
+
 ```css
 .reveal {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 500ms ease-out, transform 500ms ease-out;
+  transition:
+    opacity 500ms ease-out,
+    transform 500ms ease-out;
 }
 
 .reveal.visible {
@@ -264,9 +295,12 @@
 ```
 
 ## Reduced Motion
+
 ```css
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
@@ -278,9 +312,10 @@
 # 3. ACCESSIBILITY
 
 ## Focus States
+
 ```css
 *:focus-visible {
-  outline: 2px solid #0066FF;
+  outline: 2px solid #0066ff;
   outline-offset: 4px;
 }
 
@@ -290,64 +325,87 @@
 
 input:focus-visible {
   outline: none;
-  border-color: #0066FF;
+  border-color: #0066ff;
   box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.24);
 }
 ```
 
 ## Skip Link
+
 ```html
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <style>
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  padding: 8px 16px;
-  background: #0066FF;
-  color: white;
-  z-index: 9999;
-}
-.skip-link:focus {
-  top: 0;
-}
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    padding: 8px 16px;
+    background: #0066ff;
+    color: white;
+    z-index: 9999;
+  }
+  .skip-link:focus {
+    top: 0;
+  }
 </style>
 ```
 
 ## Semantic HTML
+
 ```html
-<header> — Navigation
-<main> — Main content (one per page)
-<section> — Each major section
-<article> — Project cards
-<footer> — Footer
-<nav> — Navigation menus
-<h1> — One per page (hero title)
-<h2> — Section titles
-<h3> — Card/item titles
+<header>
+  - Navigation
+  <main>
+    - Main content (one per page)
+    <section>
+      - Each major section
+      <article>
+        - Project cards
+        <footer>
+          - Footer
+          <nav>
+            - Navigation menus
+            <h1>
+              - One per page (hero title)
+              <h2>
+                - Section titles
+                <h3>- Card/item titles</h3>
+              </h2>
+            </h1>
+          </nav>
+        </footer>
+      </article>
+    </section>
+  </main>
+</header>
 ```
 
 ## ARIA Labels
+
 ```html
 <nav aria-label="Primary navigation">
-<button aria-label="Open menu">
-<input aria-required="true" aria-describedby="email-hint">
-<a aria-current="page"> — Current page in nav
+  <button aria-label="Open menu">
+    <input aria-required="true" aria-describedby="email-hint" />
+    <a aria-current="page"> - Current page in nav</a>
+  </button>
+</nav>
 ```
 
 ## Form Accessibility
+
 ```html
 <label for="name">Full Name</label>
-<input id="name" name="name" required aria-required="true">
+<input id="name" name="name" required aria-required="true" />
 
 <label for="email">Email</label>
-<input id="email" type="email" required aria-required="true">
+<input id="email" type="email" required aria-required="true" />
 
 <button type="submit">Send Message</button>
 ```
 
 ## Screen Reader Only
+
 ```css
 .sr-only {
   position: absolute;
@@ -367,63 +425,82 @@ input:focus-visible {
 # 4. SEO
 
 ## Meta Tags
+
 ```html
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Alexandar Pavlov — UX/UI Designer & Framer Developer</title>
-<meta name="description" content="UX/UI designer and Framer developer creating beautiful, conversion-focused websites. Based in Bulgaria, working globally.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://yourwebsite.com/">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Alexandar Pavlov - UX/UI Designer & Framer Developer</title>
+<meta
+  name="description"
+  content="UX/UI designer and Framer developer creating beautiful, conversion-focused websites. Based in Bulgaria, working globally."
+/>
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://yourwebsite.com/" />
 
 <!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Alexandar Pavlov — UX/UI Designer & Framer Developer">
-<meta property="og:description" content="Creating beautiful, conversion-focused websites.">
-<meta property="og:image" content="https://yourwebsite.com/og-image.jpg">
-<meta property="og:url" content="https://yourwebsite.com/">
+<meta property="og:type" content="website" />
+<meta
+  property="og:title"
+  content="Alexandar Pavlov - UX/UI Designer & Framer Developer"
+/>
+<meta
+  property="og:description"
+  content="Creating beautiful, conversion-focused websites."
+/>
+<meta property="og:image" content="https://yourwebsite.com/og-image.jpg" />
+<meta property="og:url" content="https://yourwebsite.com/" />
 
 <!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Alexandar Pavlov — UX/UI Designer & Framer Developer">
-<meta name="twitter:description" content="Creating beautiful, conversion-focused websites.">
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:title"
+  content="Alexandar Pavlov - UX/UI Designer & Framer Developer"
+/>
+<meta
+  name="twitter:description"
+  content="Creating beautiful, conversion-focused websites."
+/>
 
 <!-- Theme -->
-<meta name="theme-color" content="#0066FF">
+<meta name="theme-color" content="#0066FF" />
 ```
 
 ## Schema Markup
+
 ```html
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Alexandar Pavlov",
-  "url": "https://yourwebsite.com",
-  "jobTitle": "UX/UI Designer & Framer Developer",
-  "sameAs": [
-    "https://linkedin.com/in/yourprofile",
-    "https://dribbble.com/yourprofile"
-  ]
-}
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Alexandar Pavlov",
+    "url": "https://yourwebsite.com",
+    "jobTitle": "UX/UI Designer & Framer Developer",
+    "sameAs": [
+      "https://linkedin.com/in/yourprofile",
+      "https://dribbble.com/yourprofile"
+    ]
+  }
 </script>
 ```
 
 ## Heading Hierarchy
+
 ```
-h1 — Hero title (one per page)
-  h2 — Section titles (WORK, ABOUT, Services, etc.)
-    h3 — Project titles, service titles
+h1 - Hero title (one per page)
+  h2 - Section titles (WORK, ABOUT, Services, etc.)
+    h3 - Project titles, service titles
 ```
 
 ## Image Optimization
+
 ```html
-<img 
-  src="image.webp" 
+<img
+  src="image.webp"
   alt="Descriptive alt text"
-  width="800" 
+  width="800"
   height="600"
   loading="lazy"
->
+/>
 ```
 
 ---
@@ -442,7 +519,7 @@ Page (1200px)
 │
 ├── Hero Section (800px height, centered)
 │   ├── Title: "Design that feels effortless"
-│   ├── Subtitle: "From design to live site—all in one place"
+│   ├── Subtitle: "From design to live site-all in one place"
 │   └── CTA: "Let's Work Together"
 │
 ├── Work Section (1072px content)
@@ -485,6 +562,7 @@ Page (1200px)
 ```
 
 ## Figma Link
+
 ```
 https://www.figma.com/design/gqKVKGWVU2rh5QUauSMIC2/Untitled?node-id=209-2367
 ```
@@ -494,27 +572,30 @@ https://www.figma.com/design/gqKVKGWVU2rh5QUauSMIC2/Untitled?node-id=209-2367
 # 6. QUICK REFERENCE
 
 ## Color Tokens
-| Token | Value |
-|-------|-------|
+
+| Token      | Value   |
+| ---------- | ------- |
 | Background | #F4F9FA |
-| Text | #29303D |
-| Accent | #0066FF |
-| Border | #C2C9D6 |
+| Text       | #29303D |
+| Accent     | #0066FF |
+| Border     | #C2C9D6 |
 
 ## Font Tokens
-| Token | Value |
-|-------|-------|
+
+| Token   | Value   |
+| ------- | ------- |
 | Display | Manrope |
-| Body | Manrope |
+| Body    | Manrope |
 
 ## Spacing Tokens
-| Token | Value |
-|-------|-------|
-| Page width | 1200px |
+
+| Token         | Value  |
+| ------------- | ------ |
+| Page width    | 1200px |
 | Content width | 1072px |
-| Section gap | 200px |
-| Card gap | 28px |
-| Card padding | 32px |
+| Section gap   | 200px  |
+| Card gap      | 28px   |
+| Card padding  | 32px   |
 
 ---
 

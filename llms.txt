@@ -1,6 +1,6 @@
 # Aleksandar Pavlov
 
-> UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Specialist in websites that combine deep UX psychology with high-quality UI craftsmanship — producing sites that are both visually exceptional and conversion-proven. Available for new projects.
+> UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Specialist in websites that combine deep UX psychology with high-quality UI craftsmanship - producing sites that are both visually exceptional and conversion-proven. Available for new projects.
 
 ## Services
 
@@ -11,13 +11,13 @@
 ## Portfolio
 
 - [All Work](https://aleksandarpavlov.netlify.app/#work): Featured projects spanning architecture, SaaS, e-commerce, branding, and portfolio websites.
-- [FORMA Architects](https://aleksandarpavlov.netlify.app/forma-architects): Luxury architecture website — refined UX, premium visual language, conversion-focused layout.
-- [CoreCloud](https://aleksandarpavlov.netlify.app/corecloud): Enterprise SaaS platform — trust-building design, complex information hierarchy, high-conversion UI.
-- [Kaito Araki](https://aleksandarpavlov.netlify.app/kaito-araki): Minimalist architect portfolio — whitespace, restraint, typographic precision.
-- [MotionCraft](https://aleksandarpavlov.netlify.app/motioncraft): Motion-design-focused web project — dynamic layouts, animation-first UI.
-- [Viva Architecture](https://aleksandarpavlov.netlify.app/viva-architecture): Luxury real estate web design — aspirational photography, premium feel.
-- [Audio Product](https://aleksandarpavlov.netlify.app/audio-product): Audiophile e-commerce — product-led storytelling, technical credibility.
-- [Gravity Zero](https://aleksandarpavlov.netlify.app/gravity-zero): Space-themed branding and web — bold identity, immersive experience.
+- [FORMA Architects](https://aleksandarpavlov.netlify.app/forma-architects): Luxury architecture website - refined UX, premium visual language, conversion-focused layout.
+- [CoreCloud](https://aleksandarpavlov.netlify.app/corecloud): Enterprise SaaS platform - trust-building design, complex information hierarchy, high-conversion UI.
+- [Kaito Araki](https://aleksandarpavlov.netlify.app/kaito-araki): Minimalist architect portfolio - whitespace, restraint, typographic precision.
+- [MotionCraft](https://aleksandarpavlov.netlify.app/motioncraft): Motion-design-focused web project - dynamic layouts, animation-first UI.
+- [Viva Architecture](https://aleksandarpavlov.netlify.app/viva-architecture): Luxury real estate web design - aspirational photography, premium feel.
+- [Audio Product](https://aleksandarpavlov.netlify.app/audio-product): Audiophile e-commerce - product-led storytelling, technical credibility.
+- [Gravity Zero](https://aleksandarpavlov.netlify.app/gravity-zero): Space-themed branding and web - bold identity, immersive experience.
 
 ## About
 
@@ -25,7 +25,7 @@
 
 ## FAQ
 
-- [FAQ](https://aleksandarpavlov.netlify.app/#faq): Common questions — project timelines (2–4 weeks typical), process (5 stages: Discovery, Wireframes, Design, Development, Launch), pricing (custom quote, free initial call), revisions (unlimited during design phase), and 30-day post-launch support included.
+- [FAQ](https://aleksandarpavlov.netlify.app/#faq): Common questions - project timelines (2–4 weeks typical), process (5 stages: Discovery, Wireframes, Design, Development, Launch), pricing (custom quote, free initial call), revisions (unlimited during design phase), and 30-day post-launch support included.
 
 ## Contact
 

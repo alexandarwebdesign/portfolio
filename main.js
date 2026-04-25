@@ -373,7 +373,7 @@
   }
 
   // ==========================================================================
-  // 6. MOBILE NAVIGATION — Lightweight Overlay Transition
+  // 6. MOBILE NAVIGATION - Lightweight Overlay Transition
   // ==========================================================================
 
   function initMobileNav() {

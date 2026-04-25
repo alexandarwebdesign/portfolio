@@ -524,7 +524,7 @@ textarea:focus-visible {
   padding: 12px 24px;
 }
 
-/* Mobile nav toggle button — hidden on desktop */
+/* Mobile nav toggle button - hidden on desktop */
 .nav-toggle {
   display: none;
   background: none;
@@ -554,7 +554,7 @@ textarea:focus-visible {
   display: flex;
 }
 
-/* Mobile Navigation Overlay — lightweight fade + staggered reveal */
+/* Mobile Navigation Overlay - lightweight fade + staggered reveal */
 .mobile-nav {
   --mobile-nav-duration: var(--mobile-nav-close-duration, var(--duration-normal));
   position: fixed;
@@ -3098,7 +3098,7 @@ body.is-loaded .hero-stage-item {
   display: block;
 }
 
-/* Device mockup screen video — override the generic rule above */
+/* Device mockup screen video - override the generic rule above */
 .image-layout-block .screen-video {
   position: absolute;
   inset: 0;
@@ -3110,7 +3110,7 @@ body.is-loaded .hero-stage-item {
 }
 
 /* Wide Video Block (.content-wide-video)
-   Equivalent of the reference's device-nodevice section —
+   Equivalent of the reference's device-nodevice section -
    full-width rounded video with a floating caption card */
 .content-wide-video {
   width: 100%;
@@ -3140,7 +3140,7 @@ body.is-loaded .hero-stage-item {
   display: block;
 }
 
-/* Floating label card — bottom-right corner */
+/* Floating label card - bottom-right corner */
 .wide-video-label {
   position: absolute;
   right: clamp(1.2rem, 4vw, 2.4rem);
@@ -3206,7 +3206,7 @@ body.is-loaded .hero-stage-item {
   background: var(--color-background);
 }
 
-/* No ::before spacer — image natural height drives the container */
+/* No ::before spacer - image natural height drives the container */
 
 .content-fullwidth-parallax .fp-parallax-wrap {
   position: relative;
@@ -3371,7 +3371,7 @@ body.is-loaded .hero-stage-item {
   }
 }
 
-/* The screen content area — video/image fills this */
+/* The screen content area - video/image fills this */
 .block-device .single-image,
 .content-image-block .single-image {
   width: 100%;

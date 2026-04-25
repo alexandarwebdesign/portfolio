@@ -1,4 +1,4 @@
-/* WebGL Image Carousel — adapted from akella/webGLImageTransitions demo3 */
+/* WebGL Image Carousel - adapted from akella/webGLImageTransitions demo3 */
 (function () {
   'use strict';
 

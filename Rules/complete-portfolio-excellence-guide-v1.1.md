@@ -1,4 +1,5 @@
 # The Complete Portfolio Excellence Guide
+
 **Apple-Inspired Perfection for 100%+ SEO, Conversions & Awards**
 
 ---
@@ -14,6 +15,7 @@ This guide represents the synthesis of Apple's design philosophy applied to your
 ## ♿ Accessibility - WCAG AAA Compliance
 
 ### Core Principle
+
 **Accessible design is better design for everyone.**
 
 ---
@@ -21,22 +23,24 @@ This guide represents the synthesis of Apple's design philosophy applied to your
 ### Color Contrast Requirements
 
 #### Text Contrast Ratios (WCAG AAA)
+
 ```css
 /* Regular Text (16px and below) - 7:1 minimum */
---text-primary: #1D1D1F;          /* 16.5:1 on white ✓ */
---text-secondary: rgba(0,0,0,0.56); /* 7.8:1 on white ✓ */
---text-tertiary: #333336;          /* 12.5:1 on white ✓ */
+--text-primary: #1d1d1f; /* 16.5:1 on white ✓ */
+--text-secondary: rgba(0, 0, 0, 0.56); /* 7.8:1 on white ✓ */
+--text-tertiary: #333336; /* 12.5:1 on white ✓ */
 
 /* Large Text (18px+ or 14px+ bold) - 4.5:1 minimum */
---text-large: #424245;             /* 9.2:1 on white ✓ */
+--text-large: #424245; /* 9.2:1 on white ✓ */
 
 /* Interactive Elements - 3:1 minimum */
---color-accent: #0066FF;           /* 4.75:1 on white ✓ */
+--color-accent: #0066ff; /* 4.75:1 on white ✓ */
 
 /* ALWAYS TEST: Use WebAIM Contrast Checker */
 ```
 
 #### Contrast Testing Checklist
+
 - [ ] All body text meets 7:1 ratio (AAA)
 - [ ] All headings meet 7:1 ratio (AAA)
 - [ ] All interactive elements meet 3:1 ratio
@@ -47,12 +51,11 @@ This guide represents the synthesis of Apple's design philosophy applied to your
 ### Keyboard Navigation
 
 #### Tab Order Rules
+
 ```html
 <!-- CORRECT: Natural DOM order = correct tab order -->
 <!-- Do NOT use positive tabindex values (1, 2, 3...) as they create accessibility issues -->
-<a href="#main-content" class="skip-link">
-  Skip to main content
-</a>
+<a href="#main-content" class="skip-link"> Skip to main content </a>
 
 <nav aria-label="Primary navigation">
   <a href="/">Home</a>
@@ -68,6 +71,7 @@ This guide represents the synthesis of Apple's design philosophy applied to your
 ```
 
 #### Focus Styles (Apple-Inspired)
+
 ```css
 /* Global focus indicator - Accent color, 2px offset */
 *:focus-visible {
@@ -103,26 +107,27 @@ This guide represents the synthesis of Apple's design philosophy applied to your
 ```
 
 #### Keyboard Shortcuts
+
 ```javascript
 // Global keyboard navigation (like Apple.com)
-document.addEventListener('keydown', (e) => {
+document.addEventListener("keydown", (e) => {
   // ESC - Close modals/menus
-  if (e.key === 'Escape') {
+  if (e.key === "Escape") {
     closeAllModals();
   }
-  
+
   // Cmd/Ctrl + K - Search
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+  if ((e.metaKey || e.ctrlKey) && e.key === "k") {
     e.preventDefault();
     openSearch();
   }
-  
+
   // Arrow keys - Navigate through sections
-  if (e.key === 'ArrowDown') {
+  if (e.key === "ArrowDown") {
     scrollToNextSection();
   }
-  
-  if (e.key === 'ArrowUp') {
+
+  if (e.key === "ArrowUp") {
     scrollToPreviousSection();
   }
 });
@@ -131,6 +136,7 @@ document.addEventListener('keydown', (e) => {
 ### Screen Reader Optimization
 
 #### ARIA Labels & Roles
+
 ```html
 <!-- Descriptive navigation -->
 <nav aria-label="Primary navigation">
@@ -147,11 +153,11 @@ document.addEventListener('keydown', (e) => {
 </button>
 
 <!-- Descriptive images -->
-<img 
-  src="project.jpg" 
+<img
+  src="project.jpg"
   alt="E-commerce website redesign showing improved product page with larger images and clearer call-to-action buttons"
   role="img"
->
+/>
 
 <!-- Loading states -->
 <button aria-busy="true" aria-live="polite">
@@ -160,18 +166,19 @@ document.addEventListener('keydown', (e) => {
 </button>
 
 <!-- Form validation -->
-<input 
-  type="email" 
+<input
+  type="email"
   aria-required="true"
   aria-invalid="false"
   aria-describedby="email-error"
->
+/>
 <span id="email-error" role="alert" aria-live="assertive">
   <!-- Error message appears here -->
 </span>
 ```
 
 #### Screen Reader Only Content
+
 ```css
 /* Hide visually, keep for screen readers */
 .sr-only {
@@ -198,6 +205,7 @@ document.addEventListener('keydown', (e) => {
 ```
 
 #### Semantic HTML Structure
+
 ```html
 <!-- CORRECT - Semantic and accessible -->
 <header>
@@ -237,60 +245,51 @@ document.addEventListener('keydown', (e) => {
 ### Form Accessibility
 
 #### Perfect Form Structure
+
 ```html
 <form>
   <!-- Label association -->
   <div class="form-field">
     <label for="name">Full Name *</label>
-    <input 
-      type="text" 
-      id="name" 
+    <input
+      type="text"
+      id="name"
       name="name"
       required
       aria-required="true"
       aria-describedby="name-hint"
       autocomplete="name"
-    >
+    />
     <span id="name-hint" class="form-hint">
       Enter your first and last name
     </span>
   </div>
-  
+
   <!-- Error states -->
   <div class="form-field" aria-invalid="true">
     <label for="email">Email Address *</label>
-    <input 
-      type="email" 
-      id="email" 
+    <input
+      type="email"
+      id="email"
       name="email"
       required
       aria-required="true"
       aria-invalid="true"
       aria-describedby="email-error"
-    >
+    />
     <span id="email-error" class="form-error" role="alert">
       Please enter a valid email address
     </span>
   </div>
-  
+
   <!-- Checkbox with proper association -->
   <div class="form-checkbox">
-    <input 
-      type="checkbox" 
-      id="newsletter" 
-      name="newsletter"
-    >
-    <label for="newsletter">
-      Subscribe to newsletter
-    </label>
+    <input type="checkbox" id="newsletter" name="newsletter" />
+    <label for="newsletter"> Subscribe to newsletter </label>
   </div>
-  
+
   <!-- Submit button with loading state -->
-  <button 
-    type="submit" 
-    class="button-primary"
-    aria-label="Send message"
-  >
+  <button type="submit" class="button-primary" aria-label="Send message">
     Send Message
   </button>
 </form>
@@ -303,6 +302,7 @@ document.addEventListener('keydown', (e) => {
 ### The Apple Animation Philosophy
 
 **Animations should:**
+
 1. **Feel natural** - Mimic real-world physics
 2. **Be purposeful** - Guide attention, provide feedback
 3. **Respect performance** - 60fps on all devices
@@ -315,12 +315,12 @@ document.addEventListener('keydown', (e) => {
 ```css
 /* Apple-inspired cubic bezier curves */
 :root {
-  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1);      /* Standard */
-  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);           /* Deceleration */
-  --ease-in: cubic-bezier(0.4, 0, 1, 1);              /* Acceleration */
-  --ease-sharp: cubic-bezier(0.4, 0, 0.6, 1);         /* Quick response */
-  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);    /* Smooth flow */
-  
+  --ease-in-out: cubic-bezier(0.42, 0, 0.58, 1); /* Standard */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1); /* Deceleration */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1); /* Acceleration */
+  --ease-sharp: cubic-bezier(0.4, 0, 0.6, 1); /* Quick response */
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1); /* Smooth flow */
+
   /* Durations */
   --duration-instant: 100ms;
   --duration-fast: 200ms;
@@ -333,6 +333,7 @@ document.addEventListener('keydown', (e) => {
 ### Page Load Animations
 
 #### Hero Section Entrance
+
 ```css
 /* Fade + Slide Up on load */
 @keyframes fadeSlideUp {
@@ -358,24 +359,33 @@ document.addEventListener('keydown', (e) => {
   animation-fill-mode: both;
 }
 
-.hero-content > *:nth-child(1) { animation-delay: 100ms; }
-.hero-content > *:nth-child(2) { animation-delay: 200ms; }
-.hero-content > *:nth-child(3) { animation-delay: 300ms; }
-.hero-content > *:nth-child(4) { animation-delay: 400ms; }
+.hero-content > *:nth-child(1) {
+  animation-delay: 100ms;
+}
+.hero-content > *:nth-child(2) {
+  animation-delay: 200ms;
+}
+.hero-content > *:nth-child(3) {
+  animation-delay: 300ms;
+}
+.hero-content > *:nth-child(4) {
+  animation-delay: 400ms;
+}
 ```
 
 #### Section Reveal on Scroll (Intersection Observer)
+
 ```javascript
 // Smooth scroll-triggered animations
 const observerOptions = {
   threshold: 0.1,
-  rootMargin: '0px 0px -100px 0px'
+  rootMargin: "0px 0px -100px 0px",
 };
 
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
+  entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
+      entry.target.classList.add("is-visible");
       // Unobserve after animation (performance)
       observer.unobserve(entry.target);
     }
@@ -383,7 +393,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe all animated sections
-document.querySelectorAll('.animate-on-scroll').forEach(el => {
+document.querySelectorAll(".animate-on-scroll").forEach((el) => {
   observer.observe(el);
 });
 ```
@@ -393,8 +403,9 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 .animate-on-scroll {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity var(--duration-slow) var(--ease-out),
-              transform var(--duration-slow) var(--ease-out);
+  transition:
+    opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
 }
 
 .animate-on-scroll.is-visible {
@@ -406,14 +417,23 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 .grid-animate > * {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity var(--duration-normal) var(--ease-out),
-              transform var(--duration-normal) var(--ease-out);
+  transition:
+    opacity var(--duration-normal) var(--ease-out),
+    transform var(--duration-normal) var(--ease-out);
 }
 
-.grid-animate.is-visible > *:nth-child(1) { transition-delay: 0ms; }
-.grid-animate.is-visible > *:nth-child(2) { transition-delay: 100ms; }
-.grid-animate.is-visible > *:nth-child(3) { transition-delay: 200ms; }
-.grid-animate.is-visible > *:nth-child(4) { transition-delay: 300ms; }
+.grid-animate.is-visible > *:nth-child(1) {
+  transition-delay: 0ms;
+}
+.grid-animate.is-visible > *:nth-child(2) {
+  transition-delay: 100ms;
+}
+.grid-animate.is-visible > *:nth-child(3) {
+  transition-delay: 200ms;
+}
+.grid-animate.is-visible > *:nth-child(4) {
+  transition-delay: 300ms;
+}
 
 .grid-animate.is-visible > * {
   opacity: 1;
@@ -447,7 +467,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 
 /* Ripple effect on click */
 .button-primary::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -456,9 +476,10 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
   transform: translate(-50%, -50%);
-  transition: width var(--duration-slow) var(--ease-out),
-              height var(--duration-slow) var(--ease-out),
-              opacity var(--duration-slow) var(--ease-out);
+  transition:
+    width var(--duration-slow) var(--ease-out),
+    height var(--duration-slow) var(--ease-out),
+    opacity var(--duration-slow) var(--ease-out);
   opacity: 0;
 }
 
@@ -476,7 +497,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 }
 
 .button-primary.is-loading::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -490,7 +511,9 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 ```
 
@@ -500,19 +523,22 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 /* Project card - Sophisticated hover */
 .card-project {
   position: relative;
-  transition: transform var(--duration-normal) var(--ease-out),
-              box-shadow var(--duration-normal) var(--ease-out);
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
 }
 
 .card-project::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: 12px;
   opacity: 0;
-  background: linear-gradient(135deg, 
-    rgba(0, 102, 255, 0.1) 0%, 
-    rgba(0, 102, 255, 0.05) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 102, 255, 0.1) 0%,
+    rgba(0, 102, 255, 0.05) 100%
+  );
   transition: opacity var(--duration-normal) var(--ease-out);
   pointer-events: none;
 }
@@ -547,7 +573,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 }
 
 .card-project-title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
@@ -572,7 +598,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -627,9 +653,15 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
   transition: all var(--duration-normal) var(--ease-out);
 }
 
-.hamburger span:nth-child(1) { top: 0px; }
-.hamburger span:nth-child(2) { top: 8px; }
-.hamburger span:nth-child(3) { top: 16px; }
+.hamburger span:nth-child(1) {
+  top: 0px;
+}
+.hamburger span:nth-child(2) {
+  top: 8px;
+}
+.hamburger span:nth-child(3) {
+  top: 16px;
+}
 
 .hamburger.is-open span:nth-child(1) {
   top: 8px;
@@ -653,8 +685,9 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 /* Input focus animation */
 .input {
   border: 2px solid var(--border-light);
-  transition: border-color var(--duration-normal) var(--ease-out),
-              box-shadow var(--duration-normal) var(--ease-out);
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
 }
 
 .input:focus {
@@ -706,9 +739,23 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 
 /* Error shake animation */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-  20%, 40%, 60%, 80% { transform: translateX(4px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 .form-field.has-error {
@@ -726,9 +773,7 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
   left: 0;
   width: 0%;
   height: 3px;
-  background: linear-gradient(90deg, 
-    var(--color-accent) 0%, 
-    #3385FF 100%);
+  background: linear-gradient(90deg, var(--color-accent) 0%, #3385ff 100%);
   z-index: var(--z-sticky);
   transition: width 0.1s linear;
 }
@@ -736,12 +781,12 @@ document.querySelectorAll('.animate-on-scroll').forEach(el => {
 
 ```javascript
 // Update scroll progress
-window.addEventListener('scroll', () => {
+window.addEventListener("scroll", () => {
   const scrollTop = window.pageYOffset;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercent = (scrollTop / docHeight) * 100;
-  
-  document.querySelector('.scroll-progress').style.width = `${scrollPercent}%`;
+
+  document.querySelector(".scroll-progress").style.width = `${scrollPercent}%`;
 });
 ```
 
@@ -758,13 +803,13 @@ window.addEventListener('scroll', () => {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   /* Keep essential feedback */
   .button:active {
     transform: scale(0.98);
     transition-duration: 0.01ms !important;
   }
-  
+
   /* Disable parallax */
   [data-parallax] {
     transform: none !important;
@@ -779,6 +824,7 @@ window.addEventListener('scroll', () => {
 ### Hero Section Variants
 
 #### Variant 1: Center-Aligned (Homepage)
+
 ```html
 <section class="hero hero-center">
   <div class="container">
@@ -787,15 +833,12 @@ window.addEventListener('scroll', () => {
         UX/UI Designer & Framer Developer
       </h1>
       <p class="body-xl animate-on-scroll">
-        Creating conversion-focused digital experiences that users love and businesses trust.
+        Creating conversion-focused digital experiences that users love and
+        businesses trust.
       </p>
       <div class="hero-cta animate-on-scroll">
-        <a href="/projects" class="button-primary">
-          View My Work
-        </a>
-        <a href="/contact" class="button-secondary">
-          Let's Talk
-        </a>
+        <a href="/projects" class="button-primary"> View My Work </a>
+        <a href="/contact" class="button-secondary"> Let's Talk </a>
       </div>
     </div>
   </div>
@@ -835,30 +878,28 @@ window.addEventListener('scroll', () => {
 ```
 
 #### Variant 2: Split Layout (About Page)
+
 ```html
 <section class="hero hero-split">
   <div class="container">
     <div class="hero-grid">
       <div class="hero-text">
         <span class="eyebrow">About Me</span>
-        <h1 class="display-lg">
-          Designing experiences that drive results
-        </h1>
+        <h1 class="display-lg">Designing experiences that drive results</h1>
         <p class="body-lg">
-          With 5+ years of experience in UX/UI design and Framer development, I help businesses create digital products that users love.
+          With 5+ years of experience in UX/UI design and Framer development, I
+          help businesses create digital products that users love.
         </p>
-        <a href="/contact" class="button-primary">
-          Work With Me
-        </a>
+        <a href="/contact" class="button-primary"> Work With Me </a>
       </div>
       <div class="hero-visual">
-        <img 
-          src="/your-photo.webp" 
+        <img
+          src="/your-photo.webp"
           alt="Your Name working on design projects"
           width="600"
           height="700"
           loading="eager"
-        >
+        />
       </div>
     </div>
   </div>
@@ -902,7 +943,7 @@ window.addEventListener('scroll', () => {
     grid-template-columns: 1fr;
     gap: var(--space-8);
   }
-  
+
   .hero-visual {
     order: -1;
   }
@@ -912,17 +953,18 @@ window.addEventListener('scroll', () => {
 ### Project Card Variants
 
 #### Variant 1: Image-First Card
+
 ```html
 <article class="card-project">
   <a href="/projects/ecommerce-redesign" class="card-link">
     <div class="card-project-image">
-      <img 
-        src="/projects/ecommerce-thumb.webp" 
+      <img
+        src="/projects/ecommerce-thumb.webp"
         alt="E-commerce website redesign preview"
         width="600"
         height="400"
         loading="lazy"
-      >
+      />
     </div>
     <div class="card-project-content">
       <span class="card-category">Web Design</span>
@@ -1014,25 +1056,27 @@ window.addEventListener('scroll', () => {
 ```
 
 #### Variant 2: Featured Project Card (Large)
+
 ```html
 <article class="card-featured">
   <a href="/projects/featured" class="card-link">
     <div class="card-featured-grid">
       <div class="card-featured-image">
-        <img 
-          src="/projects/featured.webp" 
+        <img
+          src="/projects/featured.webp"
           alt="Featured project preview"
           width="800"
           height="600"
           loading="lazy"
-        >
+        />
         <span class="badge badge-featured">Featured</span>
       </div>
       <div class="card-featured-content">
         <span class="card-category">Case Study</span>
         <h2 class="h2">SaaS Dashboard Redesign</h2>
         <p class="body-lg">
-          How strategic UX improvements led to a 250% increase in user engagement and 40% reduction in support tickets.
+          How strategic UX improvements led to a 250% increase in user
+          engagement and 40% reduction in support tickets.
         </p>
         <ul class="stats-list">
           <li>
@@ -1131,7 +1175,7 @@ window.addEventListener('scroll', () => {
 }
 
 .link-arrow::after {
-  content: ' →';
+  content: " →";
   transition: transform var(--duration-normal) var(--ease-out);
   display: inline-block;
 }
@@ -1144,12 +1188,12 @@ window.addEventListener('scroll', () => {
   .card-featured-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .stats-list {
     grid-template-columns: 1fr;
     gap: var(--space-4);
   }
-  
+
   .stats-list li {
     text-align: left;
   }
@@ -1162,33 +1206,35 @@ window.addEventListener('scroll', () => {
 <section class="testimonials">
   <div class="container">
     <h2 class="h2 text-center">What Clients Say</h2>
-    
+
     <div class="testimonial-grid">
       <article class="testimonial-card">
         <div class="testimonial-content">
           <div class="quote-icon" aria-hidden="true">"</div>
           <blockquote>
             <p class="body-lg">
-              Working with [Your Name] transformed our digital presence. The attention to detail and user-centric approach resulted in a 300% increase in conversions.
+              Working with [Your Name] transformed our digital presence. The
+              attention to detail and user-centric approach resulted in a 300%
+              increase in conversions.
             </p>
           </blockquote>
         </div>
         <div class="testimonial-author">
-          <img 
-            src="/testimonials/client-1.jpg" 
+          <img
+            src="/testimonials/client-1.jpg"
             alt="Sarah Johnson"
             class="author-photo"
             width="60"
             height="60"
             loading="lazy"
-          >
+          />
           <div class="author-info">
             <strong class="author-name">Sarah Johnson</strong>
             <span class="author-title">CEO, TechStartup Inc.</span>
           </div>
         </div>
       </article>
-      
+
       <!-- More testimonial cards... -->
     </div>
   </div>
@@ -1264,15 +1310,14 @@ window.addEventListener('scroll', () => {
     <div class="cta-content">
       <h2 class="display-md">Ready to elevate your digital presence?</h2>
       <p class="body-xl">
-        Let's create something amazing together. Book a free consultation to discuss your project.
+        Let's create something amazing together. Book a free consultation to
+        discuss your project.
       </p>
       <div class="cta-actions">
         <a href="/contact" class="button-primary button-lg">
           Book a Consultation
         </a>
-        <a href="/projects" class="button-ghost">
-          View All Projects →
-        </a>
+        <a href="/projects" class="button-ghost"> View All Projects → </a>
       </div>
     </div>
   </div>
@@ -1281,9 +1326,7 @@ window.addEventListener('scroll', () => {
 
 ```css
 .cta-section {
-  background: linear-gradient(135deg, 
-    var(--color-accent) 0%, 
-    #3385FF 100%);
+  background: linear-gradient(135deg, var(--color-accent) 0%, #3385ff 100%);
   color: white;
   padding: var(--space-24) 0;
   text-align: center;
@@ -1343,6 +1386,7 @@ window.addEventListener('scroll', () => {
 ### Headline Formulas
 
 #### Homepage Headlines
+
 ```
 Formula: [Role] + [Specialization] + [Benefit]
 
@@ -1358,6 +1402,7 @@ Formula: [Role] + [Specialization] + [Benefit]
 ```
 
 #### Project Headlines
+
 ```
 Formula: [Project Type] + [Result/Impact]
 
@@ -1373,6 +1418,7 @@ Formula: [Project Type] + [Result/Impact]
 ```
 
 #### Blog Post Headlines
+
 ```
 Formula: [Number] + [Benefit] + [Time Frame/Context]
 
@@ -1409,7 +1455,9 @@ Formula: [Number] + [Benefit] + [Time Frame/Context]
 ### Body Copy Principles
 
 #### The First 100 Words Rule
+
 **Hook them immediately. Include:**
+
 1. What you do
 2. Who you help
 3. Main benefit
@@ -1417,15 +1465,15 @@ Formula: [Number] + [Benefit] + [Time Frame/Context]
 
 ```
 ✅ GOOD Example:
-"I'm a UX/UI designer and Framer developer specializing in conversion-focused 
-digital experiences. Over the past 5 years, I've helped 50+ businesses increase 
-their online conversions by an average of 200% through strategic design and 
-data-driven user research. My approach combines beautiful aesthetics with 
+"I'm a UX/UI designer and Framer developer specializing in conversion-focused
+digital experiences. Over the past 5 years, I've helped 50+ businesses increase
+their online conversions by an average of 200% through strategic design and
+data-driven user research. My approach combines beautiful aesthetics with
 psychological principles that guide users toward action."
 
 ❌ BAD Example:
-"Welcome to my portfolio. I'm a designer who loves creating beautiful things. 
-I've been designing for a while and enjoy what I do. Take a look around and 
+"Welcome to my portfolio. I'm a designer who loves creating beautiful things.
+I've been designing for a while and enjoy what I do. Take a look around and
 see some of my projects."
 ```
 
@@ -1435,6 +1483,7 @@ see some of my projects."
 # [Project Name]: [Main Result/Impact]
 
 ## Overview
+
 - **Client**: Company Name
 - **Industry**: E-commerce / SaaS / etc.
 - **Timeline**: 3 months
@@ -1442,25 +1491,30 @@ see some of my projects."
 - **Team**: Solo / Team of X
 
 ## The Challenge
+
 [2-3 paragraphs describing the problem. Be specific. Use data.]
 
 The client was experiencing a 75% cart abandonment rate and declining user engagement...
 
 ## Research & Discovery
+
 - User interviews (n=20)
 - Analytics analysis
 - Competitor analysis
 - Heuristic evaluation
 
 ### Key Insights
+
 1. Users couldn't find product specifications
 2. Checkout process had 7 unnecessary steps
 3. Mobile experience was frustrating
 
 ## The Solution
+
 [Describe your approach. Show process.]
 
 ### Design Decisions
+
 - Simplified navigation from 6 to 3 main categories
 - Redesigned product pages with clear visual hierarchy
 - Reduced checkout from 7 to 3 steps
@@ -1468,16 +1522,20 @@ The client was experiencing a 75% cart abandonment rate and declining user engag
 [Include visuals: wireframes, mockups, prototypes]
 
 ## Results
+
 - 🎯 340% increase in conversions
 - 📱 65% improvement in mobile engagement
 - ⏱️ 40% reduction in time-to-purchase
 - 😊 95% user satisfaction score
 
 ## Testimonial
+
 "Working with [Your Name] completely transformed our business..."
-— Client Name, Title
+
+- Client Name, Title
 
 ## Next Project
+
 [Link to another case study]
 ```
 
@@ -1521,6 +1579,7 @@ The client was experiencing a 75% cart abandonment rate and declining user engag
 ### Framer Component Best Practices
 
 #### Component Naming Convention
+
 ```
 ComponentName_Variant_State
 
@@ -1538,52 +1597,52 @@ Examples:
 
 ```tsx
 // Button Component with Variants
-import { addPropertyControls, ControlType } from "framer"
+import { addPropertyControls, ControlType } from "framer";
 
 export function Button(props) {
-  const { 
-    text, 
+  const {
+    text,
     variant = "primary",
     size = "medium",
     onClick,
-    isLoading = false
-  } = props
-  
+    isLoading = false,
+  } = props;
+
   return (
-    <button 
-      className={`button button-${variant} button-${size} ${isLoading ? 'is-loading' : ''}`}
+    <button
+      className={`button button-${variant} button-${size} ${isLoading ? "is-loading" : ""}`}
       onClick={onClick}
       disabled={isLoading}
     >
       {text}
     </button>
-  )
+  );
 }
 
 addPropertyControls(Button, {
   text: {
     type: ControlType.String,
     title: "Text",
-    defaultValue: "Click Me"
+    defaultValue: "Click Me",
   },
   variant: {
     type: ControlType.Enum,
     title: "Variant",
     options: ["primary", "secondary", "ghost"],
-    defaultValue: "primary"
+    defaultValue: "primary",
   },
   size: {
     type: ControlType.Enum,
     title: "Size",
     options: ["small", "medium", "large"],
-    defaultValue: "medium"
+    defaultValue: "medium",
   },
   isLoading: {
     type: ControlType.Boolean,
     title: "Loading State",
-    defaultValue: false
-  }
-})
+    defaultValue: false,
+  },
+});
 ```
 
 ### CMS Structure for Projects
@@ -1621,12 +1680,12 @@ addPropertyControls(Button, {
 
 ```tsx
 // Scroll-triggered animation
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export function AnimatedSection(props) {
-  const { scrollY } = useScroll()
-  const y = useTransform(scrollY, [0, 300], [0, -50])
-  
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 300], [0, -50]);
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 30 }}
@@ -1636,7 +1695,7 @@ export function AnimatedSection(props) {
     >
       {props.children}
     </motion.section>
-  )
+  );
 }
 
 // Stagger children animation
@@ -1646,16 +1705,16 @@ export function StaggerGrid(props) {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
-  }
-  
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  }
-  
+    show: { opacity: 1, y: 0 },
+  };
+
   return (
     <motion.div
       variants={container}
@@ -1670,21 +1729,22 @@ export function StaggerGrid(props) {
         </motion.div>
       ))}
     </motion.div>
-  )
+  );
 }
 ```
 
 ### Performance Optimization in Framer
 
 #### Code Overrides for Lazy Loading
+
 ```typescript
 // Lazy load images
 export function LazyImage(Component): ComponentType {
   return (props) => {
     const [isLoaded, setIsLoaded] = React.useState(false)
-    
+
     return (
-      <Component 
+      <Component
         {...props}
         loading="lazy"
         onLoad={() => setIsLoaded(true)}
@@ -1700,18 +1760,19 @@ export function LazyImage(Component): ComponentType {
 ```
 
 #### Optimize Animations for Performance
+
 ```typescript
 // Use transform and opacity only (GPU accelerated)
 export function PerformantHover(Component): ComponentType {
   return (props) => {
     return (
-      <Component 
+      <Component
         {...props}
         whileHover={{
           scale: 1.05,        // Uses transform
           opacity: 0.9        // GPU accelerated
         }}
-        transition={{ 
+        transition={{
           duration: 0.3,
           ease: [0.4, 0, 0.2, 1]
         }}
@@ -1737,35 +1798,35 @@ export function PerformantHover(Component): ComponentType {
 // Page views (automatic)
 
 // Button clicks
-gtag('event', 'cta_click', {
-  'button_location': 'hero',
-  'button_text': 'Book Consultation',
-  'page': window.location.pathname
+gtag("event", "cta_click", {
+  button_location: "hero",
+  button_text: "Book Consultation",
+  page: window.location.pathname,
 });
 
 // Project views
-gtag('event', 'view_project', {
-  'project_name': 'E-commerce Redesign',
-  'project_category': 'Web Design'
+gtag("event", "view_project", {
+  project_name: "E-commerce Redesign",
+  project_category: "Web Design",
 });
 
 // Form submissions
-gtag('event', 'generate_lead', {
-  'form_type': 'contact',
-  'page': '/contact'
+gtag("event", "generate_lead", {
+  form_type: "contact",
+  page: "/contact",
 });
 
 // Scroll depth
-gtag('event', 'scroll', {
-  'percent_scrolled': 75,
-  'page': window.location.pathname
+gtag("event", "scroll", {
+  percent_scrolled: 75,
+  page: window.location.pathname,
 });
 
 // Outbound links
-gtag('event', 'click', {
-  'event_category': 'outbound',
-  'event_label': url,
-  'transport_type': 'beacon'
+gtag("event", "click", {
+  event_category: "outbound",
+  event_label: url,
+  transport_type: "beacon",
 });
 ```
 
@@ -1792,6 +1853,7 @@ Track drop-off at each step and optimize accordingly.
 ## 🎯 Final Pre-Launch Checklist
 
 ### Design & UX
+
 - [ ] All colors meet WCAG AAA contrast (7:1)
 - [ ] All touch targets minimum 48x48px
 - [ ] Consistent spacing on 4px grid
@@ -1802,6 +1864,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] Visual hierarchy guides attention
 
 ### Content
+
 - [ ] Headlines include target keywords
 - [ ] Every page has unique title tag (50-60 chars)
 - [ ] Every page has unique meta description (150-160 chars)
@@ -1812,6 +1875,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] All links work (no 404s)
 
 ### Technical
+
 - [ ] HTTPS enabled
 - [ ] All images optimized (WebP, <200KB)
 - [ ] All images have width/height attributes
@@ -1828,6 +1892,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] Google Search Console set up
 
 ### Accessibility
+
 - [ ] Keyboard navigation works everywhere
 - [ ] Screen reader tested (NVDA/VoiceOver)
 - [ ] All forms have proper labels
@@ -1838,6 +1903,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] Semantic HTML throughout
 
 ### SEO
+
 - [ ] Schema markup implemented (Person, Article, Breadcrumb)
 - [ ] Open Graph tags complete
 - [ ] Twitter Card tags complete
@@ -1848,6 +1914,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] URL structure clean and keyword-rich
 
 ### Responsive
+
 - [ ] Tested on iPhone SE (375px)
 - [ ] Tested on iPad (768px)
 - [ ] Tested on desktop (1280px)
@@ -1857,6 +1924,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] Images responsive at all breakpoints
 
 ### Conversion Optimization
+
 - [ ] Primary CTA above fold on every page
 - [ ] Contact form on /contact page
 - [ ] Social proof visible (testimonials, client logos)
@@ -1867,6 +1935,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] Trust signals present (awards, certifications)
 
 ### Performance
+
 - [ ] Total page size <2MB
 - [ ] First Contentful Paint <1.8s
 - [ ] Time to Interactive <3.8s
@@ -1877,6 +1946,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] Fonts subset to used characters only
 
 ### Browser Testing
+
 - [ ] Chrome (Desktop + Mobile)
 - [ ] Safari (Desktop + Mobile)
 - [ ] Firefox
@@ -1884,6 +1954,7 @@ Track drop-off at each step and optimize accordingly.
 - [ ] No JavaScript errors in any browser
 
 ### Final Steps
+
 - [ ] Backup created
 - [ ] 404 page designed
 - [ ] Privacy policy published
@@ -1898,30 +1969,35 @@ Track drop-off at each step and optimize accordingly.
 ## 🏆 The Success Formula
 
 ### Week 1-2: Soft Launch
+
 - Share with close network
 - Gather initial feedback
 - Monitor analytics
 - Fix any bugs
 
 ### Week 3-4: Content Marketing
+
 - Publish first blog post
 - Share on LinkedIn, Twitter
 - Email professional network
 - Submit to design communities (Dribbble, Behance)
 
 ### Month 2-3: SEO Ramp-up
+
 - Build quality backlinks
 - Guest post on design blogs
 - Create shareable resources
 - Optimize based on search console data
 
 ### Month 4-6: Scale
+
 - Regular blog posts (weekly)
 - Case studies from new clients
 - Video content (project walkthroughs)
 - Speaking at events/webinars
 
 ### Success Metrics to Track
+
 - **Traffic**: 1,000+ monthly visitors by month 3
 - **Engagement**: 3+ minutes average session
 - **Conversions**: 5%+ contact form submission rate

@@ -32,7 +32,7 @@
     }
   `;
 
-  // FIX: Removed rotate3D entirely — mat3*vec3 multiply was invalid GLSL on many
+  // FIX: Removed rotate3D entirely - mat3*vec3 multiply was invalid GLSL on many
   // GPU drivers, causing silent shader compile failure and a black canvas.
   // Replaced with explicit per-axis sin warping which produces the same fluid
   // effect and compiles correctly on all WebGL 1.0 implementations.

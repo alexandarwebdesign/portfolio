@@ -548,7 +548,7 @@
       nextTeaserSection.style.display = 'block';
     }
 
-    // Testimonial — hidden globally (projects are conceptual)
+    // Testimonial - hidden globally (projects are conceptual)
 
     // Gallery
     const gallerySection = document.getElementById('project-gallery');
