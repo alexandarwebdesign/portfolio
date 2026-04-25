@@ -1,0 +1,38 @@
+# Aleksandar Pavlov
+
+> UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Specialist in websites that combine deep UX psychology with high-quality UI craftsmanship — producing sites that are both visually exceptional and conversion-proven. Available for new projects.
+
+## Services
+
+- [Web Design & UX Strategy](https://aleksandarpavlov.netlify.app/#services): UX-first website design grounded in conversion psychology, user behaviour research, and interface design expertise. Wireframes, user flows, and high-fidelity Figma designs.
+- [Website Development](https://aleksandarpavlov.netlify.app/#services): Pixel-perfect HTML/CSS/JS implementation. Smooth animations, full responsiveness, and fast load times. Design-to-code with no compromises.
+- [End-to-End Solutions](https://aleksandarpavlov.netlify.app/#services): Strategy, design, development, and deployment handled by one person. Custom quote. Typical timeline 2–4 weeks.
+
+## Portfolio
+
+- [All Work](https://aleksandarpavlov.netlify.app/#work): Featured projects spanning architecture, SaaS, e-commerce, branding, and portfolio websites.
+- [FORMA Architects](https://aleksandarpavlov.netlify.app/forma-architects): Luxury architecture website — refined UX, premium visual language, conversion-focused layout.
+- [CoreCloud](https://aleksandarpavlov.netlify.app/corecloud): Enterprise SaaS platform — trust-building design, complex information hierarchy, high-conversion UI.
+- [Kaito Araki](https://aleksandarpavlov.netlify.app/kaito-araki): Minimalist architect portfolio — whitespace, restraint, typographic precision.
+- [MotionCraft](https://aleksandarpavlov.netlify.app/motioncraft): Motion-design-focused web project — dynamic layouts, animation-first UI.
+- [Viva Architecture](https://aleksandarpavlov.netlify.app/viva-architecture): Luxury real estate web design — aspirational photography, premium feel.
+- [Audio Product](https://aleksandarpavlov.netlify.app/audio-product): Audiophile e-commerce — product-led storytelling, technical credibility.
+- [Gravity Zero](https://aleksandarpavlov.netlify.app/gravity-zero): Space-themed branding and web — bold identity, immersive experience.
+
+## About
+
+- [About](https://aleksandarpavlov.netlify.app/#about): Aleksandar Pavlov is a UX/UI specialist who took deep expertise in interface psychology, visual design, and human behaviour and applied it exclusively to the website niche. Based in Sofia, Bulgaria. Available worldwide.
+
+## FAQ
+
+- [FAQ](https://aleksandarpavlov.netlify.app/#faq): Common questions — project timelines (2–4 weeks typical), process (5 stages: Discovery, Wireframes, Design, Development, Launch), pricing (custom quote, free initial call), revisions (unlimited during design phase), and 30-day post-launch support included.
+
+## Contact
+
+- [Contact](https://aleksandarpavlov.netlify.app/#contact): Free consultation. Direct email: alexandar.webdesign@gmail.com
+
+## Optional
+
+- [Dribbble](https://dribbble.com/alexandar-webdesign): Visual design work and UI samples.
+- [LinkedIn](https://www.linkedin.com/in/alexander-pavlov-370261342/): Professional profile.
+- [X / Twitter](https://x.com/pavvlov_16): Design thoughts and updates.
