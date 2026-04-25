@@ -1361,6 +1361,26 @@ body.is-loaded .hero-stage-item {
   opacity: 0.8;
 }
 
+/* --------------------------------------------------------------------------
+   Availability Signal
+   -------------------------------------------------------------------------- */
+
+.availability-signal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-6);
+  font-size: 14px;
+  font-weight: 500;
+  color: #34C759;
+  letter-spacing: 0.2px;
+}
+
+.availability-icon {
+  flex-shrink: 0;
+  display: block;
+}
+
 .contact-form {
   background: transparent;
 }
