@@ -544,8 +544,11 @@
       }
     });
 
+    const threshold = window.innerHeight * 0.4;
+    const activeItem = closestDistance <= threshold ? closestItem : null;
+
     serviceItems.forEach((item) => {
-      item.classList.toggle("is-viewport-active", item === closestItem);
+      item.classList.toggle("is-viewport-active", item === activeItem);
     });
   }
 

@@ -639,9 +639,9 @@
     grid.innerHTML = projects.map((project, index) => {
       const thumbAttrs = getImageAttrs(project.thumbnail, `${project.title} project preview`);
       const projectUrl = isLocal ? `/project.html#${project.slug}` : `/${project.slug}`;
-      return `
-      <article class="project-card glass-panel reveal" style="transition-delay: ${index * 100}ms;">
-        <a href="${projectUrl}" class="project-card-link">
+      const isUpcoming = project.upcoming === true;
+
+      const imageHtml = `
           <div class="project-image-wrapper">
             <img
               src="${thumbAttrs.src}"
@@ -651,18 +651,35 @@
               width="400"
               height="284"
               loading="lazy"
-            />
-          </div>
+            />${isUpcoming ? `
+            <div class="project-upcoming-overlay">
+              <span class="project-upcoming-label">Upcoming</span>
+            </div>` : ''}
+          </div>`;
+
+      const infoHtml = `
           <div class="project-info">
             <div class="project-title-row">
-              <h3 class="project-title">${project.title}</h3>
+              <h3 class="project-title">${project.title}</h3>${!isUpcoming ? `
               <span class="arrow-content" aria-hidden="true">
                 <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-default" />
                 <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-hover" />
-              </span>
+              </span>` : ''}
             </div>
             <p class="project-category">${project.category}</p>
-          </div>
+          </div>`;
+
+      if (isUpcoming) {
+        return `
+      <article class="project-card glass-panel project-card--upcoming reveal" style="transition-delay: ${index * 100}ms;">
+        <div class="project-card-link project-card-link--disabled">${imageHtml}${infoHtml}
+        </div>
+      </article>`;
+      }
+
+      return `
+      <article class="project-card glass-panel reveal" style="transition-delay: ${index * 100}ms;">
+        <a href="${projectUrl}" class="project-card-link">${imageHtml}${infoHtml}
         </a>
       </article>
     `;}).join('');

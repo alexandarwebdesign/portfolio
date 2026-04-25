@@ -875,6 +875,57 @@ textarea:focus-visible {
   color: var(--color-text-muted);
 }
 
+/* Upcoming Project Overlay */
+.project-image-wrapper {
+  position: relative;
+}
+
+.project-upcoming-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.project-upcoming-label {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1.4rem;
+  border-radius: 999px;
+}
+
+/* Disabled card (upcoming projects) */
+.project-card--upcoming {
+  cursor: default;
+}
+
+.project-card--upcoming:hover {
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+}
+
+.project-card--upcoming:hover .project-image {
+  transform: none;
+}
+
+.project-card-link--disabled {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
 /* ==========================================================================
    6. SECTIONS
    ========================================================================== */
@@ -1099,6 +1150,10 @@ body.is-loaded .hero-stage-item {
   justify-content: center;
 }
 
+.about-text-column .button-secondary {
+  color: var(--color-text);
+}
+
 .about-text {
   display: flex;
   flex-direction: column;
@@ -1284,6 +1339,12 @@ body.is-loaded .hero-stage-item {
   opacity: 1;
 }
 
+.service-item.is-viewport-active .service-icon-shape {
+  stroke: #3b82f6;
+  stroke-width: 40px;
+  stroke-dasharray: 100 0;
+}
+
 .services-list.has-service-interaction .service-item .service-bg-icon {
   opacity: 0.5;
 }
@@ -1369,11 +1430,11 @@ body.is-loaded .hero-stage-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: var(--space-6);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: var(--text-body);
+  font-weight: 600;
   color: #34C759;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .availability-icon {
@@ -2192,6 +2253,7 @@ body.is-loaded .hero-stage-item {
 }
 
 .project-next-teaser-section {
+  display: none !important; /* Hidden until more projects are added */
   padding: clamp(6rem, 12vw, 10rem) 0;
 }
 

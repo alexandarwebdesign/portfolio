@@ -2,407 +2,6 @@
   "projects": [
     {
       "id": 1,
-      "title": "Kaito Araki",
-      "slug": "kaito-araki",
-      "category": "Portfolio",
-      "client_persona": "The Strict Minimalist Architect",
-      "year": 2025,
-      "featured": true,
-      "thumbnail": "images/projects/kaito-araki.webp",
-      "hero_image": "images/projects/kaito-araki.webp",
-      "gallery": [
-        "placeholder",
-        "placeholder",
-        "placeholder",
-        "placeholder"
-      ],
-      "description": "A conceptual portfolio designed for an AI persona acting as a world-renowned minimalist architect who demands absolute purity in design.",
-      "the_brief": "<p><strong>The Persona:</strong> Kaito is an uncompromising architect who believes 'decoration is a crime.' He requested a portfolio that feels 'like an empty room with perfect light.'</p><p><strong>The Constraints:</strong><br>• No color other than black, white, and grey.<br>• No navigation bars ('they clutter the view').<br>• Typography must be invisible.<br>• 'If it doesn't serve a structural purpose, delete it.'</p><p><strong>The Challenge:</strong> How do you design a website that feels 'invisible' while still being usable? The AI rejected 4 initial iterations for being 'too noisy' because they included standard elements like a visible menu button.</p>",
-      "design_concept": "<p><strong>The Approach: Structural Typography.</strong></p><p>Since traditional UI elements were forbidden, I used the grid itself as the navigation. The layout mimics the floor plan of a gallery. Moving the cursor reveals the path forward, much like walking through a physical space.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Helvetica function (modified) - cold, neutral, objective.<br>• <strong>Layout:</strong> Asymmetrical grid based on Kaito's own architectural blueprints.<br>• <strong>Interaction:</strong> Hover states are instant and sharp, with zero easing, reflecting the physical rigidity of concrete.</p>",
-      "tags": [
-        "UX Design",
-        "UI Design",
-        "Web Design",
-        "Figma"
-      ],
-      "content": [
-        {
-          "type": "text",
-          "body": "<h3>Overview</h3><p><strong>The Persona:</strong> Kaito is an uncompromising architect who believes 'decoration is a crime.' He requested a portfolio that feels 'like an empty room with perfect light.'</p><p><strong>The Constraints:</strong><br>• No color other than black, white, and grey.<br>• No navigation bars ('they clutter the view').<br>• Typography must be invisible.<br>• 'If it doesn't serve a structural purpose, delete it.'</p><p><strong>The Challenge:</strong> How do you design a website that feels 'invisible' while still being usable? The AI rejected 4 initial iterations for being 'too noisy' because they included standard elements like a visible menu button.</p>"
-        },
-        {
-          "type": "image_block",
-          "layout_type": "full_width",
-          "device_mockup": "macpro",
-          "images": [
-            "images/projects/kaito-araki.webp"
-          ],
-          "videos": []
-        },
-        {
-          "type": "text",
-          "body": "<h3>The Design Concept</h3><p><strong>The Approach: Structural Typography.</strong></p><p>Since traditional UI elements were forbidden, I used the grid itself as the navigation. The layout mimics the floor plan of a gallery. Moving the cursor reveals the path forward, much like walking through a physical space.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Helvetica function (modified) - cold, neutral, objective.<br>• <strong>Layout:</strong> Asymmetrical grid based on Kaito's own architectural blueprints.<br>• <strong>Interaction:</strong> Hover states are instant and sharp, with zero easing, reflecting the physical rigidity of concrete.</p>"
-        },
-        {
-          "type": "fullwidth_parallax_image",
-          "images": [
-            "placeholder",
-            "placeholder",
-            "placeholder"
-          ]
-        },
-        {
-          "type": "mobile_devices",
-          "left_image": "placeholder",
-          "video": "",
-          "poster": "",
-          "right_image": "placeholder",
-          "background": "var(--color-background)"
-        },
-        {
-          "type": "fullwidth_image",
-          "image": "placeholder"
-        },
-        {
-          "type": "text",
-          "body": "<h3>Results</h3><p>This project addressed every constraint from the original persona brief. Through multiple design iterations, we refined the visual hierarchy, typography, and interaction system to deliver a cohesive experience that communicates credibility and craft.</p>"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "title": "MotionCraft",
-      "slug": "motioncraft",
-      "category": "Web Design",
-      "client_persona": "The Hyper-Active Creative Director",
-      "year": 2025,
-      "featured": true,
-      "thumbnail": "images/projects/motioncraft.webp",
-      "hero_image": "images/projects/motioncraft.webp",
-      "gallery": [
-        "placeholder",
-        "placeholder",
-        "placeholder",
-        "placeholder"
-      ],
-      "description": "A high-energy conceptual site for an imaginary motion studio. The AI persona demanded 'constant movement' without crashing the browser.",
-      "the_brief": "<p><strong>The Persona:</strong> 'Sarah', a chaotic but brilliant Creative Director for a Gen-Z focused motion agency.</p><p><strong>The Constraints:</strong><br>• 'I want it to look like a glitched VHS tape but in 4K.'<br>• 'Make the user feel slightly overwhelmed, but in a good way.'<br>• 'Static images are boring. Everything must move.'<br>• 'Use neon green. Like, radioactive green.'</p><p><strong>The Challenge:</strong> The AI kept asking for more animations ('More chaos!'), pushing the limits of what is visually coherent. The challenge was to organize this chaos into a navigable experience.</p>",
-      "design_concept": "<p><strong>The Approach: Controlled Chaos.</strong></p><p>To satisfy the request for 'constant movement' without inducing motion sickness, I implemented a 'calm center' layout. The background is a riot of WebGL distortion and kinetic type, but the content sits in a stabilized central column.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Custom stretched sans-serif mixed with pixel fonts.<br>• <strong>Color:</strong> Acid Green (#39FF14) on Deep Void Black.<br>• <strong>Effect:</strong> Custom shader that distorts images based on scroll velocity.</p>",
-      "tags": [
-        "UX Design",
-        "UI Design",
-        "Web Design",
-        "Branding"
-      ],
-      "content": [
-        {
-          "type": "text",
-          "body": "<h3>Overview</h3><p><strong>The Persona:</strong> 'Sarah', a chaotic but brilliant Creative Director for a Gen-Z focused motion agency.</p><p><strong>The Constraints:</strong><br>• 'I want it to look like a glitched VHS tape but in 4K.'<br>• 'Make the user feel slightly overwhelmed, but in a good way.'<br>• 'Static images are boring. Everything must move.'<br>• 'Use neon green. Like, radioactive green.'</p><p><strong>The Challenge:</strong> The AI kept asking for more animations ('More chaos!'), pushing the limits of what is visually coherent. The challenge was to organize this chaos into a navigable experience.</p>"
-        },
-        {
-          "type": "image_block",
-          "layout_type": "full_width",
-          "device_mockup": "macpro",
-          "images": [
-            "images/projects/motioncraft.webp"
-          ],
-          "videos": []
-        },
-        {
-          "type": "text",
-          "body": "<h3>The Design Concept</h3><p><strong>The Approach: Controlled Chaos.</strong></p><p>To satisfy the request for 'constant movement' without inducing motion sickness, I implemented a 'calm center' layout. The background is a riot of WebGL distortion and kinetic type, but the content sits in a stabilized central column.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Custom stretched sans-serif mixed with pixel fonts.<br>• <strong>Color:</strong> Acid Green (#39FF14) on Deep Void Black.<br>• <strong>Effect:</strong> Custom shader that distorts images based on scroll velocity.</p>"
-        },
-        {
-          "type": "fullwidth_parallax_image",
-          "images": [
-            "placeholder",
-            "placeholder",
-            "placeholder"
-          ]
-        },
-        {
-          "type": "mobile_devices",
-          "left_image": "placeholder",
-          "video": "",
-          "poster": "",
-          "right_image": "placeholder",
-          "background": "var(--color-background)"
-        },
-        {
-          "type": "fullwidth_image",
-          "image": "placeholder"
-        },
-        {
-          "type": "text",
-          "body": "<h3>Results</h3><p>This project addressed every constraint from the original persona brief. Through multiple design iterations, we refined the visual hierarchy, typography, and interaction system to deliver a cohesive experience that communicates credibility and craft.</p>"
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "title": "CoreCloud",
-      "slug": "corecloud",
-      "category": "SaaS",
-      "client_persona": "The Risk-Averse Enterprise CTO",
-      "year": 2024,
-      "featured": true,
-      "thumbnail": "images/projects/corecloud.webp",
-      "hero_image": "images/projects/corecloud.webp",
-      "gallery": [
-        "placeholder",
-        "placeholder"
-      ],
-      "description": "A B2B SaaS platform designed to reassure a nervous conservative buyer. Focus on trust, stability, and clarity.",
-      "the_brief": "<p><strong>The Persona:</strong> 'Robert', a 50-year-old CTO at a Fortune 500 bank who is terrified of data leaks and downtime.</p><p><strong>The Constraints:</strong><br>• 'No fancy animations. They make me nervous.'<br>• 'Everything must look expensive and secure.'<br>• 'Use blue. Blue means trust.'<br>• 'I need to see the dashboard immediately. Don't sell me a dream, show me the tool.'</p><p><strong>The Challenge:</strong> The AI persona negatively reacted to anything 'trendy.' Dark mode was rejected as 'too gamer.' Gradients were 'too startup.' The challenge was to make 'boring' look beautiful.</p>",
-      "design_concept": "<p><strong>The Approach: Radical Clarity.</strong></p><p>I focused on typographic hierarchy and information density. The design uses a rigid 12-column grid that conveys stability. Nothing floats; everything is anchored.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Inter - the gold standard for legibility.<br>• <strong>Color:</strong> A monochromatic palette of Navy and Slate, utilizing varying opacities to create depth without distraction.<br>• <strong>Visuals:</strong> Isometric technical illustrations that explain the architecture without metaphor.</p>",
-      "tags": [
-        "UX Design",
-        "UI Design",
-        "SaaS",
-        "Web Design"
-      ],
-      "content": [
-        {
-          "type": "text",
-          "body": "<h3>Overview</h3><p><strong>The Persona:</strong> 'Robert', a 50-year-old CTO at a Fortune 500 bank who is terrified of data leaks and downtime.</p><p><strong>The Constraints:</strong><br>• 'No fancy animations. They make me nervous.'<br>• 'Everything must look expensive and secure.'<br>• 'Use blue. Blue means trust.'<br>• 'I need to see the dashboard immediately. Don't sell me a dream, show me the tool.'</p><p><strong>The Challenge:</strong> The AI persona negatively reacted to anything 'trendy.' Dark mode was rejected as 'too gamer.' Gradients were 'too startup.' The challenge was to make 'boring' look beautiful.</p>"
-        },
-        {
-          "type": "image_block",
-          "layout_type": "full_width",
-          "device_mockup": "macpro",
-          "images": [
-            "images/projects/corecloud.webp"
-          ],
-          "videos": []
-        },
-        {
-          "type": "text",
-          "body": "<h3>The Design Concept</h3><p><strong>The Approach: Radical Clarity.</strong></p><p>I focused on typographic hierarchy and information density. The design uses a rigid 12-column grid that conveys stability. Nothing floats; everything is anchored.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Inter - the gold standard for legibility.<br>• <strong>Color:</strong> A monochromatic palette of Navy and Slate, utilizing varying opacities to create depth without distraction.<br>• <strong>Visuals:</strong> Isometric technical illustrations that explain the architecture without metaphor.</p>"
-        },
-        {
-          "type": "fullwidth_parallax_image",
-          "images": [
-            "placeholder",
-            "placeholder",
-            "placeholder"
-          ]
-        },
-        {
-          "type": "mobile_devices",
-          "left_image": "placeholder",
-          "video": "",
-          "poster": "",
-          "right_image": "placeholder",
-          "background": "var(--color-background)"
-        },
-        {
-          "type": "fullwidth_image",
-          "image": "placeholder"
-        },
-        {
-          "type": "text",
-          "body": "<h3>Results</h3><p>This project addressed every constraint from the original persona brief. Through multiple design iterations, we refined the visual hierarchy, typography, and interaction system to deliver a cohesive experience that communicates credibility and craft.</p>"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "title": "Viva Architecture",
-      "slug": "viva-architecture",
-      "category": "Web Design",
-      "client_persona": "The Luxury Real Estate Mogul",
-      "year": 2024,
-      "featured": true,
-      "thumbnail": "images/projects/viva-architecture.webp",
-      "hero_image": "images/projects/viva-architecture.webp",
-      "gallery": [],
-      "description": "A luxury experience designed for an AI persona selling $50M properties. The brief was simply: 'Make it drip money.'",
-      "the_brief": "<p><strong>The Persona:</strong> 'Elena', a high-end developer in Miami who sells to billionaires.</p><p><strong>The Constraints:</strong><br>• 'I need the user to feel underdressed just looking at the website.'<br>• 'White space is luxury. Use more of it.'<br>• 'The photos are the hero. The text is secondary.'<br>• 'It needs to feel slow. Rich people don't rush.'</p><p><strong>The Challenge:</strong> The AI requested 'slow' interactions. I had to design a scroll experience that physically resists rapid scrolling, forcing the user to consume the content at a leisurely, deliberate pace-a digital velvet rope.</p>",
-      "design_concept": "<p><strong>The Approach: Digital Gallery.</strong></p><p>The interface is treated as a frame, not a container. Images go full-bleed. Text is small and set in classical serif typefaces, mimicking an art gallery catalog.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Editor's Note (Serif) for headings, conveying editorial elegance.<br>• <strong>Color:</strong> Warm Stone, Champagne, and Charcoal.<br>• <strong>Interaction:</strong> Parallax scrolling where images move slower than text, creating a sense of weight and scale.</p>",
-      "tags": [
-        "UX Design",
-        "UI Design",
-        "Web Design"
-      ],
-      "content": [
-        {
-          "type": "text",
-          "body": "<h3>Overview</h3><p><strong>The Persona:</strong> 'Elena', a high-end developer in Miami who sells to billionaires.</p><p><strong>The Constraints:</strong><br>• 'I need the user to feel underdressed just looking at the website.'<br>• 'White space is luxury. Use more of it.'<br>• 'The photos are the hero. The text is secondary.'<br>• 'It needs to feel slow. Rich people don't rush.'</p><p><strong>The Challenge:</strong> The AI requested 'slow' interactions. I had to design a scroll experience that physically resists rapid scrolling, forcing the user to consume the content at a leisurely, deliberate pace-a digital velvet rope.</p>"
-        },
-        {
-          "type": "image_block",
-          "layout_type": "full_width",
-          "device_mockup": "macpro",
-          "images": [
-            "images/projects/viva-architecture.webp"
-          ],
-          "videos": []
-        },
-        {
-          "type": "text",
-          "body": "<h3>The Design Concept</h3><p><strong>The Approach: Digital Gallery.</strong></p><p>The interface is treated as a frame, not a container. Images go full-bleed. Text is small and set in classical serif typefaces, mimicking an art gallery catalog.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Editor's Note (Serif) for headings, conveying editorial elegance.<br>• <strong>Color:</strong> Warm Stone, Champagne, and Charcoal.<br>• <strong>Interaction:</strong> Parallax scrolling where images move slower than text, creating a sense of weight and scale.</p>"
-        },
-        {
-          "type": "fullwidth_parallax_image",
-          "images": [
-            "placeholder",
-            "placeholder",
-            "placeholder"
-          ]
-        },
-        {
-          "type": "mobile_devices",
-          "left_image": "placeholder",
-          "video": "",
-          "poster": "",
-          "right_image": "placeholder",
-          "background": "var(--color-background)"
-        },
-        {
-          "type": "fullwidth_image",
-          "image": "placeholder"
-        },
-        {
-          "type": "text",
-          "body": "<h3>Results</h3><p>This project addressed every constraint from the original persona brief. Through multiple design iterations, we refined the visual hierarchy, typography, and interaction system to deliver a cohesive experience that communicates credibility and craft.</p>"
-        }
-      ]
-    },
-    {
-      "id": 5,
-      "title": "Audio Product",
-      "slug": "audio-product",
-      "category": "E-commerce",
-      "client_persona": "The Audiophile Engineer",
-      "year": 2024,
-      "featured": true,
-      "thumbnail": "images/projects/audio-product.webp",
-      "hero_image": "images/projects/audio-product.webp",
-      "gallery": [
-        "placeholder",
-        "placeholder",
-        "placeholder",
-        "placeholder"
-      ],
-      "description": "A product page designed to visualize sound quality. The AI persona was obsessed with technical specs and materials.",
-      "the_brief": "<p><strong>The Persona:</strong> 'Marcus', a sound engineer who inspects frequency response curves for fun.</p><p><strong>The Constraints:</strong><br>• 'Don't just say it sounds good. Show me the physics.'<br>• 'I want to see the copper wiring inside.'<br>• 'The website should feel analog, tactile.'<br>• 'If I can't read the technical specs in the hero section, I'm leaving.'</p><p><strong>The Challenge:</strong> Translating the invisible sensation of 'sound' into a visible interface. The AI rejected 'lifestyle' photography, demanding instead 'exploded views' and 'material close-ups.'</p>",
-      "design_concept": "<p><strong>The Approach: Visualizing Physics.</strong></p><p>I used sine waves and frequency patterns as the primary UI motif. The background subtly pulsates at 60bpm (resting heart rate). The layout borrows from technical manuals rather than fashion magazines.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Mono-spaced fonts (Space Mono) to evoke technical data.<br>• <strong>Color:</strong> Copper, Matte Black, and Signal White.<br>• <strong>Touch:</strong> Buttons have a 'click' animation that mimics the haptic feedback of a physical amplifier switch.</p>",
-      "tags": [
-        "UX Design",
-        "UI Design",
-        "E-commerce",
-        "Web Design"
-      ],
-      "content": [
-        {
-          "type": "text",
-          "body": "<h3>Overview</h3><p><strong>The Persona:</strong> 'Marcus', a sound engineer who inspects frequency response curves for fun.</p><p><strong>The Constraints:</strong><br>• 'Don't just say it sounds good. Show me the physics.'<br>• 'I want to see the copper wiring inside.'<br>• 'The website should feel analog, tactile.'<br>• 'If I can't read the technical specs in the hero section, I'm leaving.'</p><p><strong>The Challenge:</strong> Translating the invisible sensation of 'sound' into a visible interface. The AI rejected 'lifestyle' photography, demanding instead 'exploded views' and 'material close-ups.'</p>"
-        },
-        {
-          "type": "image_block",
-          "layout_type": "full_width",
-          "device_mockup": "macpro",
-          "images": [
-            "images/projects/audio-product.webp"
-          ],
-          "videos": []
-        },
-        {
-          "type": "text",
-          "body": "<h3>The Design Concept</h3><p><strong>The Approach: Visualizing Physics.</strong></p><p>I used sine waves and frequency patterns as the primary UI motif. The background subtly pulsates at 60bpm (resting heart rate). The layout borrows from technical manuals rather than fashion magazines.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Mono-spaced fonts (Space Mono) to evoke technical data.<br>• <strong>Color:</strong> Copper, Matte Black, and Signal White.<br>• <strong>Touch:</strong> Buttons have a 'click' animation that mimics the haptic feedback of a physical amplifier switch.</p>"
-        },
-        {
-          "type": "fullwidth_parallax_image",
-          "images": [
-            "placeholder",
-            "placeholder",
-            "placeholder"
-          ]
-        },
-        {
-          "type": "mobile_devices",
-          "left_image": "placeholder",
-          "video": "",
-          "poster": "",
-          "right_image": "placeholder",
-          "background": "var(--color-background)"
-        },
-        {
-          "type": "fullwidth_image",
-          "image": "placeholder"
-        },
-        {
-          "type": "text",
-          "body": "<h3>Results</h3><p>This project addressed every constraint from the original persona brief. Through multiple design iterations, we refined the visual hierarchy, typography, and interaction system to deliver a cohesive experience that communicates credibility and craft.</p>"
-        }
-      ]
-    },
-    {
-      "id": 6,
-      "title": "Gravity Zero",
-      "slug": "gravity-zero",
-      "category": "Branding & Web",
-      "client_persona": "The Visionary Space Futurist",
-      "year": 2023,
-      "featured": true,
-      "thumbnail": "images/projects/gravity-zero.webp",
-      "hero_image": "images/projects/gravity-zero.webp",
-      "gallery": [],
-      "description": "A branding project for a fictional Mars colonization startup. The AI persona spoke in riddles about 'the next horizon.'",
-      "the_brief": "<p><strong>The Persona:</strong> 'Dr. X', a mysterious founder obsessed with human evolution.</p><p><strong>The Constraints:</strong><br>• 'It must look like it wasn't made on Earth.'<br>• 'No standard buttons. Humans in 2050 won't click buttons.'<br>• 'The void of space is not black, it is full of potential. Show me that.'<br>• 'I want the user to feel small.'</p><p><strong>The Challenge:</strong> Designing a UI that feels alien but is still usable by humans today. The AI requested 'telepathic navigation'-since I couldn't code that, I settled for gesture-based look navigation where the cursor acts as a flashlight in the dark.</p>",
-      "design_concept": "<p><strong>The Approach: Atmospheric Immersion.</strong></p><p>The concept is 'Lighting the Void.' The interface is predominantly dark, but user interaction illuminates content. It feels like exploring a cave or a dark planet. The scale is massive-text is tiny against giant imagery to convey the scale of space.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Custom wide sans-serif.<br>• <strong>Color:</strong> Deep Indigo, Nebular Purple, and Starlight White.<br>• <strong>Texture:</strong> Grain and noise overlays to simulate film taken in low light conditions.</p>",
-      "tags": [
-        "Branding",
-        "UX Design",
-        "UI Design",
-        "Web Design"
-      ],
-      "content": [
-        {
-          "type": "text",
-          "body": "<h3>Overview</h3><p><strong>The Persona:</strong> 'Dr. X', a mysterious founder obsessed with human evolution.</p><p><strong>The Constraints:</strong><br>• 'It must look like it wasn't made on Earth.'<br>• 'No standard buttons. Humans in 2050 won't click buttons.'<br>• 'The void of space is not black, it is full of potential. Show me that.'<br>• 'I want the user to feel small.'</p><p><strong>The Challenge:</strong> Designing a UI that feels alien but is still usable by humans today. The AI requested 'telepathic navigation'-since I couldn't code that, I settled for gesture-based look navigation where the cursor acts as a flashlight in the dark.</p>"
-        },
-        {
-          "type": "image_block",
-          "layout_type": "full_width",
-          "device_mockup": "macpro",
-          "images": [
-            "images/projects/gravity-zero.webp"
-          ],
-          "videos": []
-        },
-        {
-          "type": "text",
-          "body": "<h3>The Design Concept</h3><p><strong>The Approach: Atmospheric Immersion.</strong></p><p>The concept is 'Lighting the Void.' The interface is predominantly dark, but user interaction illuminates content. It feels like exploring a cave or a dark planet. The scale is massive-text is tiny against giant imagery to convey the scale of space.</p><p><strong>Visual Identity:</strong><br>• <strong>Type:</strong> Custom wide sans-serif.<br>• <strong>Color:</strong> Deep Indigo, Nebular Purple, and Starlight White.<br>• <strong>Texture:</strong> Grain and noise overlays to simulate film taken in low light conditions.</p>"
-        },
-        {
-          "type": "fullwidth_parallax_image",
-          "images": [
-            "placeholder",
-            "placeholder",
-            "placeholder"
-          ]
-        },
-        {
-          "type": "mobile_devices",
-          "left_image": "placeholder",
-          "video": "",
-          "poster": "",
-          "right_image": "placeholder",
-          "background": "var(--color-background)"
-        },
-        {
-          "type": "fullwidth_image",
-          "image": "placeholder"
-        },
-        {
-          "type": "text",
-          "body": "<h3>Results</h3><p>This project addressed every constraint from the original persona brief. Through multiple design iterations, we refined the visual hierarchy, typography, and interaction system to deliver a cohesive experience that communicates credibility and craft.</p>"
-        }
-      ]
-    },
-    {
-      "id": 7,
       "title": "FORMA Architects",
       "slug": "forma-architects",
       "category": "Architecture / Luxury Website",
@@ -530,6 +129,39 @@
         "Dark/light section contrast",
         "Mobile-optimized experience"
       ]
+    },
+    {
+      "id": 2,
+      "title": "Birsé",
+      "slug": "birse",
+      "category": "E-Commerce / Luxury Brand",
+      "year": 2026,
+      "featured": true,
+      "upcoming": true,
+      "thumbnail": "images/projects/birse.webp",
+      "description": "A luxury e-commerce platform for the Birsé jewelry brand."
+    },
+    {
+      "id": 3,
+      "title": "Creative Asset",
+      "slug": "creative-asset",
+      "category": "3D / Interactive Experience",
+      "year": 2026,
+      "featured": true,
+      "upcoming": true,
+      "thumbnail": "images/projects/creative-asset.webp",
+      "description": "An interactive 3D creative asset tool with real-time shader controls."
+    },
+    {
+      "id": 4,
+      "title": "Swis SaaS",
+      "slug": "swis-saas",
+      "category": "SaaS / Productivity Platform",
+      "year": 2026,
+      "featured": true,
+      "upcoming": true,
+      "thumbnail": "images/projects/swis-saas.webp",
+      "description": "A SaaS productivity platform designed to cut through digital noise."
     }
   ]
 }
