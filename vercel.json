@@ -1,6 +1,6 @@
 {
   "rewrites": [
-    { "source": "/forma-architects", "destination": "/project.html?slug=forma-architects" },
+    { "source": "/forma-architects", "destination": "/forma-architects.html" },
     { "source": "/birse", "destination": "/project.html?slug=birse" },
     { "source": "/creative-asset", "destination": "/project.html?slug=creative-asset" },
     { "source": "/swis-saas", "destination": "/project.html?slug=swis-saas" }
