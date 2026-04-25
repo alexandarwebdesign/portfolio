@@ -317,9 +317,12 @@
       const cssWidth = Math.max(1, Math.round(rect.width));
       const cssHeight = Math.max(1, Math.round(rect.height));
 
-      const baseScale = window.innerWidth <= 640 ? 0.4
-                      : window.innerWidth <= 980 ? 0.55
-                      : 0.7;
+      const baseScale = window.innerWidth <= 480  ? 0.30
+                      : window.innerWidth <= 640  ? 0.38
+                      : window.innerWidth <= 980  ? 0.52
+                      : window.innerWidth <= 1920 ? 0.70
+                      : window.innerWidth <= 2560 ? 0.85
+                      : 1.00;
 
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2) * baseScale;
       const width = Math.max(1, Math.round(cssWidth * pixelRatio));
