@@ -1,0 +1,129 @@
+# Aleksandar Pavlov — Full Site Content
+
+> Complete text content of aleksandarpavlov.netlify.app for AI retrieval. Last updated: 2026-04-25.
+
+---
+
+## Homepage — Hero
+
+**Eyebrow:** UX/UI Specialist · Website Design & Development · Sofia, Bulgaria
+
+**Headline:** What happens when deep UX expertise meets website specialisation? A site that's as beautiful as it is built to convert.
+
+**Subtitle:** Most web designers know what looks good. I know why it works — and I've taken everything I know about UX psychology, human behaviour, and interface design and applied it entirely to websites. The result is something different: visually powerful, psychologically precise, and built to convert.
+
+---
+
+## Homepage — Services
+
+### Web Design & UX Strategy
+This isn't web design with a UX layer on top. It's UX-first thinking applied to every layout, flow, and visual decision from the start. Most designers pick colours and call it a strategy. I map user psychology, eliminate friction, and engineer the journey — then make it look exceptional.
+
+### Website Development
+Beautiful design means nothing if the build lets it down. Every interaction, animation, and transition is coded exactly as designed — no compromises, no workarounds, no "that looked different in Figma." Pixel-perfect, fast, and built to last.
+
+### End-to-End Solutions
+Strategy, design, development, and deployment — handled by one person who owns the outcome. The UX thinking that shaped the design is the same thinking that shaped the code. No handoffs. No lost-in-translation. No version gaps. One person, one standard, one result.
+
+---
+
+## Homepage — About
+
+I'm Aleksandar — a UX/UI designer and web developer based in Bulgaria, working with clients worldwide.
+
+Most people assume web design is about making things look good. I spent years in UX/UI learning that it's about making things work on people — the psychology behind where the eye goes, how spacing builds or breaks trust, what micro-interactions make a product feel alive versus dead.
+
+At some point I made a decision: take everything I know about UX and UI — the research, the psychology, the craft — and apply it entirely to one thing: websites. Not apps, not general product design, not a bit of everything. Just websites, done at the highest level possible.
+
+The result is work that most web designers can't produce, because they don't have the foundation. I take projects from first concept to live site — design, development, and deployment in one place. No handoffs, no miscommunication, no compromises.
+
+I work best with clients who want a site that does something — not just one that looks good in a screenshot. If that's you, let's talk.
+
+---
+
+## Homepage — FAQ
+
+**Q: How long does a typical project take?**
+A: Most projects go live in 2–4 weeks. A focused landing page takes 1–2 weeks; a full multi-page website takes 3–4. I'll give you a precise timeline after understanding your scope — no vague estimates.
+
+**Q: What does your process actually look like?**
+A: Five stages: Discovery (your goals, your users, your constraints), Wireframes (structure and flow), Design (high-fidelity visuals in Figma), Development (built in code, pixel-perfect), and Launch (live, with support). You're involved at every feedback stage — nothing ships that you haven't approved.
+
+**Q: How much does a website cost?**
+A: Pricing depends on scope, not a fixed menu. I give you a detailed quote after understanding what you actually need — no surprise charges mid-project. Book a free call and we'll figure it out in 20 minutes.
+
+**Q: How many revisions do I get?**
+A: Unlimited during the design phase. I'd rather spend extra rounds getting it right than ship something you're only half-happy with. In practice, most projects land in 2–3 rounds because the discovery phase does its job.
+
+**Q: What do you need from me to get started?**
+A: Your goals, any existing brand assets (logo, colours), your content, and 3–5 websites you like. That's enough to start. I'll guide you through everything else — including what to do if you don't have all of it yet.
+
+**Q: Do you provide support after launch?**
+A: 30 days of free post-launch support is included in every project. After that, I offer maintenance packages or one-off updates — whatever fits your situation.
+
+---
+
+## Homepage — Contact
+
+**Heading:** Have a project that deserves to be done right?
+
+**Subtitle:** Tell me what you're building. I'll tell you exactly how I'd approach it.
+
+**Email:** alexandar.webdesign@gmail.com
+
+**Availability:** Currently available for new projects.
+
+---
+
+## Portfolio Projects
+
+### FORMA Architects (2026)
+Category: Architecture / Web Design
+Tags: Architecture, Luxury, Minimal, Quiet Design
+Description: Luxury architecture website with refined UX, premium visual language, and conversion-focused layout. Designed around the persona of a client who values precision and restraint.
+
+### Kaito Araki (2025)
+Category: Portfolio
+Tags: Architecture, Portfolio, Minimalist, Whitespace
+Description: Minimalist architect portfolio — typographic precision, generous whitespace, and a visual hierarchy that lets the work breathe.
+
+### MotionCraft (2025)
+Category: Web Design
+Tags: Motion, Animation, Dynamic, Bold
+Description: Motion-design-focused web project — dynamic layouts, animation-first UI, designed for a creative audience.
+
+### CoreCloud (2024)
+Category: SaaS / Web Design
+Tags: SaaS, Enterprise, Trust, Conversion
+Description: Enterprise SaaS platform — trust-building design, complex information hierarchy, high-conversion UI for business buyers.
+
+### Viva Architecture (2024)
+Category: Web Design / Architecture
+Tags: Luxury, Real Estate, Architecture, Premium
+Description: Luxury real estate web design — aspirational photography, premium feel, conversion-optimised layout.
+
+### Audio Product (2024)
+Category: E-commerce
+Tags: Audiophile, E-commerce, Product Design, Technical
+Description: Audiophile e-commerce — product-led storytelling, technical credibility, conversion-focused product pages.
+
+### Gravity Zero (2023)
+Category: Branding & Web
+Tags: Space, Futuristic, Branding, Immersive
+Description: Space-themed branding and web — bold identity system, immersive experience design.
+
+---
+
+## About Aleksandar Pavlov
+
+**Name:** Aleksandar Pavlov
+**Profession:** UX/UI Designer & Web Developer
+**Location:** Sofia, Bulgaria
+**Available:** Worldwide, currently accepting new projects
+**Email:** alexandar.webdesign@gmail.com
+**Specialisation:** Websites designed from a deep UX/UI foundation — not surface-level web design.
+
+**Social profiles:**
+- Dribbble: https://dribbble.com/alexandar-webdesign
+- LinkedIn: https://www.linkedin.com/in/alexander-pavlov-370261342/
+- X/Twitter: https://x.com/pavvlov_16
