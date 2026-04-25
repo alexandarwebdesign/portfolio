@@ -893,8 +893,8 @@ textarea:focus-visible {
   padding-bottom: var(--space-20);
   position: relative;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
 
 .hero-section--shader {
@@ -2608,6 +2608,8 @@ body.is-loaded .hero-stage-item {
   .hero-section {
     padding-top: 100px;
     padding-bottom: 80px;
+    -webkit-mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 88%, transparent 100%);
   }
 
   .hero-section--shader .hero-title {
@@ -2833,6 +2835,20 @@ body.is-loaded .hero-stage-item {
     padding-bottom: var(--space-16);
   }
 
+}
+
+/* ==========================================================================
+   4K / ULTRA-WIDE (≥ 1920px)
+   ========================================================================== */
+
+@media (min-width: 1920px) {
+  .navbar {
+    width: min(1400px, calc(100% - 80px));
+  }
+
+  .container {
+    max-width: 1600px;
+  }
 }
 
 /* ==========================================================================
