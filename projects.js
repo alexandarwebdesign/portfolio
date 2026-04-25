@@ -207,6 +207,12 @@
     document.getElementById('project-eyebrow').textContent = `${project.category} · ${project.year}`;
     document.getElementById('project-title').textContent = project.title;
     document.getElementById('project-description').textContent = project.description;
+
+    // Trigger entrance animation now that real content is in place
+    requestAnimationFrame(() => {
+      const heroContent = document.getElementById('project-hero-content');
+      if (heroContent) heroContent.classList.add('animate-in');
+    });
     // Full-Bleed Hero Image (New Placement)
     const heroFullSection = document.getElementById('project-hero-full');
     const heroFullImage = document.getElementById('project-hero-full-image');

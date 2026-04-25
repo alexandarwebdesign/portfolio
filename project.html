@@ -18,7 +18,9 @@
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"></noscript>
 
     <!-- Styles -->
+    <link rel="preload" href="styles.css" as="style">
     <link rel="stylesheet" href="styles.css" />
+    <link rel="prefetch" href="/">
 
     <!-- Meta Tags -->
     <meta name="description" id="page-description" content="" />
@@ -133,10 +135,10 @@
             <span class="breadcrumb-sep" aria-hidden="true">›</span>
             <span aria-current="page" id="breadcrumb-project-name">Project</span>
           </nav>
-          <div class="project-hero-content animate-in">
-            <p class="project-eyebrow" id="project-eyebrow">Category · Year</p>
-            <h1 class="project-hero-title" id="project-title">Project Title</h1>
-            <p class="project-lead" id="project-description">Project description goes here.</p>
+          <div class="project-hero-content" id="project-hero-content">
+            <p class="project-eyebrow" id="project-eyebrow"></p>
+            <h1 class="project-hero-title" id="project-title"></h1>
+            <p class="project-lead" id="project-description"></p>
             <div class="project-badges">
               <span class="conceptual-badge">Conceptual Project</span>
             </div>
@@ -366,9 +368,9 @@
     </div><!-- /footer-outer -->
 
     <!-- Scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="js/webgl-carousel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="js/webgl-carousel.js" defer></script>
     <script src="main.js?v=2" defer></script>
     <script src="projects.js?v=2" defer></script>
   </body>
