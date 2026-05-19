@@ -1229,7 +1229,7 @@ body.is-loaded .hero-stage-item {
   display: block;
   width: fit-content;
   max-width: 240px;
-  padding: var(--space-6) var(--space-6) var(--space-5);
+  padding: var(--space-5) var(--space-6);
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -1250,23 +1250,23 @@ body.is-loaded .hero-stage-item {
 }
 
 .hanger-eyebrow {
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-1);
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
+  font-size: 13px;
   font-weight: 400;
   line-height: var(--leading-tight);
-  letter-spacing: 0.4px;
+  letter-spacing: 0.6px;
   text-transform: uppercase;
   color: var(--color-text-light);
 }
 
 .hanger-text {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--text-service);
-  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 600;
   line-height: var(--leading-tight);
-  letter-spacing: -0.5px;
+  letter-spacing: -0.2px;
   color: var(--color-text);
 }
 
