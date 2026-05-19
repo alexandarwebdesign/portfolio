@@ -1222,7 +1222,17 @@ body.is-loaded .hero-stage-item {
   letter-spacing: -0.1px;
   color: var(--color-text-soft);
   margin: 0;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
   align-self: center;
+}
+
+.about-content .about-cta-btn {
+  align-self: flex-start;
 }
 
 .hanger {
