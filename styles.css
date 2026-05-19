@@ -1222,6 +1222,7 @@ body.is-loaded .hero-stage-item {
   letter-spacing: -0.1px;
   color: var(--color-text-soft);
   margin: 0;
+  align-self: center;
 }
 
 .hanger {
