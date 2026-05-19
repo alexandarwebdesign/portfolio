@@ -1224,6 +1224,47 @@ body.is-loaded .hero-stage-item {
   margin: 0;
 }
 
+.about-facts {
+  margin: 0;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-fact {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-6);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.about-fact:first-child {
+  padding-top: 0;
+}
+
+.about-fact:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.about-fact-label {
+  font-size: var(--text-body-sm);
+  font-weight: 400;
+  color: var(--color-text-light);
+  letter-spacing: -0.1px;
+}
+
+.about-fact-value {
+  margin: 0;
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.1px;
+  text-align: right;
+}
+
 
 .about-cta-btn {
   display: inline-flex;
