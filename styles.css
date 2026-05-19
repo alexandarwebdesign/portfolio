@@ -1221,7 +1221,7 @@ body.is-loaded .hero-stage-item {
 .about-bio-new {
   font-size: var(--text-body-sm);
   font-weight: 400;
-  line-height: var(--space-8);
+  line-height: 32px;
   letter-spacing: -0.1px;
   color: var(--color-text-soft);
   margin: 0;
