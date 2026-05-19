@@ -80,11 +80,9 @@
   --space-8: 32px;
   --space-10: 40px;
   --space-12: 48px;
-  --space-14: 56px;
   --space-16: 64px;
   --space-20: 80px;
   --space-24: 96px;
-  --space-40: 160px;
 
   /* Layout */
   --page-width: 1200px;
@@ -1161,7 +1159,7 @@ body.is-loaded .hero-stage-item {
    -------------------------------------------------------------------------- */
 
 .about-section {
-  padding-bottom: var(--space-40);
+  padding-bottom: var(--section-gap);
 }
 
 .about-container {
@@ -1207,7 +1205,7 @@ body.is-loaded .hero-stage-item {
 .about-body-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-14);
+  gap: var(--space-16);
   padding: var(--space-16) 0;
 }
 
