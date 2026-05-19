@@ -1178,14 +1178,8 @@ body.is-loaded .hero-stage-item {
   transition: border-radius var(--duration-normal) var(--ease-out);
 }
 
-.about-section:hover .about-photo-circle {
+.about-photo-circle--square {
   border-radius: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-photo-circle {
-    transition: none;
-  }
 }
 
 .about-photo-img {

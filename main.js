@@ -735,6 +735,19 @@
   }
   // ==========================================================================
 
+  function initAboutPhotoInteraction() {
+    const cta = document.querySelector('#about .about-cta-btn');
+    const circle = document.querySelector('#about .about-photo-circle');
+    if (!cta || !circle) return;
+
+    cta.addEventListener('click', function (e) {
+      e.preventDefault();
+      const dest = cta.getAttribute('href');
+      circle.classList.add('about-photo-circle--square');
+      setTimeout(() => { window.location.href = dest; }, 436);
+    });
+  }
+
   /**
    * Initialize all modules when DOM is ready
    */
@@ -750,6 +763,7 @@
     initFaqAccordion();
     initContactHashFocus();
     initParallax();
+    initAboutPhotoInteraction();
   }
 
   // Run init when DOM is ready
