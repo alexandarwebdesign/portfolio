@@ -1225,20 +1225,12 @@ body.is-loaded .hero-stage-item {
 }
 
 
-.about-cta-row {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .about-cta-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 160px;
-  height: 160px;
-  padding: 0;
-  border-radius: 50%;
-  text-align: center;
+  padding: 19px 49px;
+  border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.55);
   background: radial-gradient(98.12% 191.19% at 50% 50.72%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.34) 75.96%);
   box-shadow:
