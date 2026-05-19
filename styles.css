@@ -2613,7 +2613,6 @@ body.about-page {
 .about-page-section {
   display: flex;
   min-height: 100vh;
-  background-color: var(--color-about-bg);
 }
 
 .about-page-photo {
@@ -2642,7 +2641,6 @@ body.about-page {
   flex-direction: column;
   justify-content: center;
   padding: var(--space-20) var(--space-16) var(--space-20) 72px;
-  background-color: var(--color-about-bg);
 }
 
 .about-page-heading-block {
@@ -2750,7 +2748,6 @@ body.about-page {
 
 .about-work-section {
   padding: var(--space-20) 0 var(--section-gap);
-  background-color: var(--color-background);
 }
 
 .about-page .footer-outer {
