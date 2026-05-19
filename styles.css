@@ -1226,21 +1226,21 @@ body.is-loaded .hero-stage-item {
 
 .hanger {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-5);
-  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-8);
+  display: block;
+  width: fit-content;
+  max-width: 240px;
+  padding: var(--space-6) var(--space-6) var(--space-5);
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
-  border-radius: var(--border-radius-button);
+  border-radius: var(--border-radius);
   align-self: center;
   justify-self: end;
   color: var(--color-text);
-  transform: rotate(-2deg);
-  transform-origin: left center;
+  transform: rotate(-3deg);
+  transform-origin: center;
   transition: transform var(--duration-normal) var(--ease-out), box-shadow var(--duration-normal) var(--ease-out);
 }
 
@@ -1249,22 +1249,33 @@ body.is-loaded .hero-stage-item {
   box-shadow: var(--glass-shadow), 0 16px 32px color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
-.hanger-text {
-  margin: 0;
-  font-family: var(--font-display);
+.hanger-eyebrow {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-body);
   font-size: var(--text-body-sm);
-  font-weight: 600;
+  font-weight: 400;
   line-height: var(--leading-tight);
   letter-spacing: 0.4px;
   text-transform: uppercase;
-  white-space: nowrap;
+  color: var(--color-text-light);
+}
+
+.hanger-text {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-service);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: -0.5px;
+  color: var(--color-text);
 }
 
 .hanger-ball {
-  position: relative;
-  flex-shrink: 0;
-  width: var(--space-16);
-  height: var(--space-16);
+  position: absolute;
+  top: calc(var(--space-4) * -1);
+  right: calc(var(--space-4) * -1);
+  width: var(--space-12);
+  height: var(--space-12);
   border-radius: 50%;
   background: radial-gradient(
     circle at 30% 28%,
