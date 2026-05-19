@@ -2647,10 +2647,6 @@ body.about-page {
   padding-bottom: var(--space-12);
 }
 
-.about-page-heading-border {
-  padding-bottom: var(--space-12);
-}
-
 .about-page-title {
   font-family: var(--font-display);
   font-size: 96px;
@@ -2663,11 +2659,10 @@ body.about-page {
 }
 
 .about-page-body-block {
-  padding-bottom: 56px;
+  padding-bottom: var(--space-16);
 }
 
 .about-page-body-border {
-  padding-bottom: 77px;
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
