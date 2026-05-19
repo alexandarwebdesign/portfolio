@@ -740,12 +740,8 @@
     const circle = document.querySelector('#about .about-photo-circle');
     if (!cta || !circle) return;
 
-    cta.addEventListener('click', function (e) {
-      e.preventDefault();
-      const dest = cta.getAttribute('href');
-      circle.classList.add('about-photo-circle--square');
-      setTimeout(() => { window.location.href = dest; }, 436);
-    });
+    cta.addEventListener('mouseenter', () => circle.classList.add('about-photo-circle--square'));
+    cta.addEventListener('mouseleave', () => circle.classList.remove('about-photo-circle--square'));
   }
 
   /**
