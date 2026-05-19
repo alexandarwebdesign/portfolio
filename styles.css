@@ -1175,6 +1175,17 @@ body.is-loaded .hero-stage-item {
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
+  transition: border-radius var(--duration-normal) var(--ease-out);
+}
+
+.about-section:hover .about-photo-circle {
+  border-radius: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-photo-circle {
+    transition: none;
+  }
 }
 
 .about-photo-img {
