@@ -1225,67 +1225,55 @@ body.is-loaded .hero-stage-item {
 }
 
 .hanger {
-  --hanger-size: var(--space-16);
-  position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-6);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--border-radius-button);
   align-self: center;
   justify-self: end;
-  font-size: var(--hanger-size);
   color: var(--color-text);
-}
-
-.hanger-shape {
-  display: block;
-  width: auto;
-  height: 6em;
-  color: inherit;
+  transition: all var(--duration-normal) var(--ease-out);
 }
 
 .hanger-text {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
   margin: 0;
-  padding-left: 1.2em;
-  padding-right: 5em;
   font-family: var(--font-display);
-  font-size: 1.05em;
+  font-size: var(--text-body-sm);
   font-weight: 600;
   line-height: var(--leading-tight);
+  letter-spacing: 0.4px;
   text-transform: uppercase;
-  color: var(--color-white);
+  white-space: nowrap;
 }
 
-.hanger-text span {
-  display: block;
-}
-
-.digital-ball {
-  position: absolute;
-  top: 0.9em;
-  right: 0.9em;
-  width: 4.2em;
-  height: 4.2em;
+.hanger-ball {
+  position: relative;
+  flex-shrink: 0;
+  width: var(--space-12);
+  height: var(--space-12);
   border-radius: 50%;
   background: var(--color-accent);
   overflow: hidden;
 }
 
-.globe {
+.hanger-globe {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 2.5em;
-  height: 2.5em;
-  font-size: 0.8em;
+  width: 60%;
+  height: 60%;
   border-radius: 50%;
   overflow: hidden;
   transform: translate(-50%, -50%);
-  will-change: transform;
 }
 
-.globe-wrap {
+.hanger-globe-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1294,27 +1282,26 @@ body.is-loaded .hero-stage-item {
   border-radius: 50%;
   overflow: hidden;
   transform: translate(-50%, -50%) rotate(30deg);
-  box-shadow: inset 0 0 0 0.125em var(--color-white);
+  box-shadow: inset 0 0 0 1.5px var(--color-white);
   animation: hangerGlobe 5.4s var(--ease-out) infinite;
 }
 
-.globe .circle {
+.hanger-globe-circle {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  box-shadow: inset 0.1em 0 0 0.08em var(--color-white);
+  box-shadow: inset 1.5px 0 0 1.5px var(--color-white);
   animation: hangerCircle 2.7s linear infinite;
-  font-size: 0.75em;
   transform: translate(-50%, -50%);
 }
 
-.globe .circle:nth-child(1) { animation-delay: -1.8s; }
-.globe .circle:nth-child(2) { animation-delay: -0.9s; }
+.hanger-globe-circle:nth-child(1) { animation-delay: -1.8s; }
+.hanger-globe-circle:nth-child(2) { animation-delay: -0.9s; }
 
-.globe .circle-hor {
+.hanger-globe-hor {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1322,19 +1309,17 @@ body.is-loaded .hero-stage-item {
   height: 55%;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: inset 0 0 0 0.15em var(--color-white);
-  font-size: 0.75em;
+  box-shadow: inset 0 0 0 1.5px var(--color-white);
 }
 
-.globe .circle-hor-middle {
+.hanger-globe-hor-middle {
   position: absolute;
   top: 50%;
   left: 50%;
   width: 150%;
-  height: 0.15em;
+  height: 1.5px;
   background: var(--color-white);
   transform: translate(-50%, -50%);
-  font-size: 0.75em;
 }
 
 @keyframes hangerGlobe {
@@ -1344,16 +1329,16 @@ body.is-loaded .hero-stage-item {
 }
 
 @keyframes hangerCircle {
-  0%   { border-radius: 50%; box-shadow: inset 0.1em 0 0 0.08em var(--color-white); width: 100%; }
-  49%  { border-radius: 50%; box-shadow: inset 0.1em 0 0 0.08em var(--color-white); background: transparent; }
-  50%  { border-radius: 0; width: 0.175em; background: var(--color-white); }
-  51%  { border-radius: 50%; box-shadow: inset -0.1em 0 0 0.08em var(--color-white); background: transparent; }
-  100% { border-radius: 50%; box-shadow: inset -0.1em 0 0 0.08em var(--color-white); width: 100%; }
+  0%   { border-radius: 50%; box-shadow: inset 1.5px 0 0 1.5px var(--color-white); width: 100%; }
+  49%  { border-radius: 50%; box-shadow: inset 1.5px 0 0 1.5px var(--color-white); background: transparent; }
+  50%  { border-radius: 0; width: 2px; background: var(--color-white); }
+  51%  { border-radius: 50%; box-shadow: inset -1.5px 0 0 1.5px var(--color-white); background: transparent; }
+  100% { border-radius: 50%; box-shadow: inset -1.5px 0 0 1.5px var(--color-white); width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .globe-wrap,
-  .globe .circle {
+  .hanger-globe-wrap,
+  .hanger-globe-circle {
     animation: none;
   }
 }
