@@ -1,17 +1,22 @@
+# Cloudflare Pages — path-level rewrites and redirects.
+# Cross-host redirects (www→apex, http→https) handled in Cloudflare dashboard:
+#   - SSL/TLS → Edge Certificates → "Always Use HTTPS" ON
+#   - Rules → Redirect Rules → www.aleksandarpavlov.com → aleksandarpavlov.com (301)
+
 # Clean URL rewrites for static pages
 /about                /about.html                200
 /forma-architects     /forma-architects.html     200
+
+# Canonical .html → clean URL (301 so search engines drop the .html)
+/index.html           /                          301
+/about.html           /about                     301
+/forma-architects.html  /forma-architects        301
 
 # Dynamic project pages (JS-rendered, noscript fallback included)
 /birse                /project.html?slug=birse                200
 /creative-asset       /project.html?slug=creative-asset       200
 /swis-saas            /project.html?slug=swis-saas            200
 
-# Force HTTPS + non-www canonical (Netlify handles automatically when domain configured,
-# but explicit rules ensure www → apex redirect for aleksandarpavlov.com)
-https://www.aleksandarpavlov.com/*    https://aleksandarpavlov.com/:splat    301!
-http://aleksandarpavlov.com/*         https://aleksandarpavlov.com/:splat    301!
-http://www.aleksandarpavlov.com/*     https://aleksandarpavlov.com/:splat    301!
-
-# Legacy netlify.app → new domain (preserves old links/backlinks)
-https://aleksandarpavlov.netlify.app/*    https://aleksandarpavlov.com/:splat    301!
+# NOTE: do NOT add a catchall like "/*  /404.html  404" on Cloudflare Pages —
+# it is processed before static asset lookup and returns 404 for every image/CSS/JS.
+# Cloudflare Pages automatically serves /404.html for unmatched routes when present.
