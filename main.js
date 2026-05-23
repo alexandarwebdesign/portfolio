@@ -747,6 +747,152 @@
   /**
    * Initialize all modules when DOM is ready
    */
+  // ==========================================================================
+  //   IMAGE MARQUEE — scroll-linked horizontal parallax (Locomotive-style)
+  // ==========================================================================
+
+  function initImageMarquee() {
+    const marquees = document.querySelectorAll("[data-marquee]");
+    if (!marquees.length) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    marquees.forEach((root) => {
+      const track = root.querySelector("[data-marquee-track]");
+      const row = root.querySelector("[data-marquee-row]");
+      if (!track || !row) return;
+
+      row.querySelectorAll("img").forEach((img) => {
+        if (img.complete && img.naturalWidth > 0) {
+          img.dataset.loaded = "true";
+        } else {
+          img.addEventListener("load", () => { img.dataset.loaded = "true"; }, { once: true });
+        }
+      });
+
+      if (reduceMotion) return;
+
+      const clone = row.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      clone.querySelectorAll("img").forEach((img) => {
+        if (img.complete && img.naturalWidth > 0) img.dataset.loaded = "true";
+        else img.addEventListener("load", () => { img.dataset.loaded = "true"; }, { once: true });
+      });
+      track.appendChild(clone);
+
+      const SCROLL_SPEED = 0.49;
+      const IDLE_SPEED = 0.056;
+      const MOMENTUM_DECAY = 0.93;
+      const MOMENTUM_THRESHOLD = 0.05;
+      let rowWidth = 0;
+      let currentX = 0;
+      let lastScrollY = window.scrollY;
+      let lastFrame = performance.now();
+      let rafId = null;
+      let inView = false;
+
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragLastX = 0;
+      let dragLastT = 0;
+      let velocity = 0;
+      let activePointerId = null;
+
+      const viewport = root.querySelector(".image-marquee__viewport") || root;
+
+      const measure = () => {
+        rowWidth = row.getBoundingClientRect().width;
+      };
+      measure();
+      window.addEventListener("resize", measure);
+
+      const onScroll = () => {
+        const dy = window.scrollY - lastScrollY;
+        lastScrollY = window.scrollY;
+        if (!isDragging) currentX -= dy * SCROLL_SPEED;
+      };
+
+      const tick = (now) => {
+        const dt = now - lastFrame;
+        lastFrame = now;
+        if (isDragging) {
+          // pointer drives currentX directly
+        } else if (Math.abs(velocity) > MOMENTUM_THRESHOLD) {
+          currentX += velocity * dt;
+          velocity *= Math.pow(MOMENTUM_DECAY, dt / 16.67);
+        } else {
+          velocity = 0;
+          currentX -= IDLE_SPEED * dt;
+        }
+        if (rowWidth > 0) {
+          while (currentX <= -rowWidth) currentX += rowWidth;
+          while (currentX > 0) currentX -= rowWidth;
+        }
+        track.style.transform = `translate3d(${currentX.toFixed(2)}px, 0, 0)`;
+        if (inView) rafId = requestAnimationFrame(tick);
+        else rafId = null;
+      };
+
+      const onPointerDown = (e) => {
+        if (e.button !== undefined && e.button !== 0) return;
+        isDragging = true;
+        activePointerId = e.pointerId;
+        dragStartX = e.clientX;
+        dragLastX = e.clientX;
+        dragLastT = performance.now();
+        velocity = 0;
+        viewport.classList.add("is-dragging");
+        try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
+      };
+
+      const onPointerMove = (e) => {
+        if (!isDragging || e.pointerId !== activePointerId) return;
+        const now = performance.now();
+        const dx = e.clientX - dragLastX;
+        const dt = Math.max(1, now - dragLastT);
+        currentX += dx;
+        velocity = dx / dt;
+        dragLastX = e.clientX;
+        dragLastT = now;
+        if (rowWidth > 0) {
+          while (currentX <= -rowWidth) currentX += rowWidth;
+          while (currentX > 0) currentX -= rowWidth;
+        }
+      };
+
+      const onPointerUp = (e) => {
+        if (!isDragging || e.pointerId !== activePointerId) return;
+        isDragging = false;
+        activePointerId = null;
+        viewport.classList.remove("is-dragging");
+        try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
+      };
+
+      viewport.addEventListener("pointerdown", onPointerDown);
+      viewport.addEventListener("pointermove", onPointerMove);
+      viewport.addEventListener("pointerup", onPointerUp);
+      viewport.addEventListener("pointercancel", onPointerUp);
+      viewport.addEventListener("dragstart", (e) => e.preventDefault());
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          inView = entry.isIntersecting;
+          if (inView) {
+            window.addEventListener("scroll", onScroll, { passive: true });
+            measure();
+            lastFrame = performance.now();
+            if (!rafId) rafId = requestAnimationFrame(tick);
+          } else {
+            window.removeEventListener("scroll", onScroll);
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+          }
+        });
+      }, { rootMargin: "200px 0px" });
+
+      io.observe(root);
+    });
+  }
+
   function init() {
     initPageLoadSequence();
     initScrollReveal();
@@ -760,6 +906,7 @@
     initContactHashFocus();
     initParallax();
     initAboutPhotoInteraction();
+    initImageMarquee();
   }
 
   // Run init when DOM is ready

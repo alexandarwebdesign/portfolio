@@ -4195,3 +4195,108 @@ body.about-page {
     padding-bottom: 9vh;
   }
 }
+
+/* ──────────────────────────────────────────────────────────────
+   Image Marquee — scroll-linked horizontal parallax
+   Mirrors Dennis Snellenberg .name-h1 with data-scroll-speed
+   ────────────────────────────────────────────────────────────── */
+.image-marquee {
+  position: relative;
+  width: 100%;
+  padding: 12vh 0;
+  overflow: hidden;
+}
+
+.image-marquee__viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.image-marquee__viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.image-marquee__item img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.image-marquee__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.image-marquee__row {
+  display: flex;
+  flex-shrink: 0;
+  gap: 2.4rem;
+  padding-right: 2.4rem;
+}
+
+.image-marquee__item {
+  flex-shrink: 0;
+  width: clamp(400px, 50vw, 820px);
+  aspect-ratio: 3456 / 2234;
+  margin: 0;
+  padding: 10.5px;
+  border-radius: 18px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+.image-marquee__item picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.image-marquee__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-marquee__item img {
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.image-marquee__item img.is-loaded,
+.image-marquee__item img[data-loaded="true"] {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .image-marquee { padding: 8vh 0; }
+  .image-marquee__row { gap: 1.2rem; padding-right: 1.2rem; }
+  .image-marquee__item {
+    width: clamp(320px, 88vw, 580px);
+    padding: 8.4px;
+    border-radius: 14px;
+  }
+  .image-marquee__item picture { border-radius: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-marquee__track {
+    transform: none !important;
+  }
+  .image-marquee__viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .image-marquee__viewport::-webkit-scrollbar { display: none; }
+}

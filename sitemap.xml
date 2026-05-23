@@ -1,26 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://aleksandarpavlov.netlify.app/</loc>
-    <lastmod>2026-04-25</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://aleksandarpavlov.com/</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://aleksandarpavlov.com/og-image.jpg</image:loc>
+      <image:title>Aleksandar Pavlov - UX/UI Designer &amp; Web Developer</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://aleksandarpavlov.netlify.app/forma-architects</loc>
-    <lastmod>2026-04-25</lastmod>
+    <loc>https://aleksandarpavlov.com/about</loc>
+    <lastmod>2026-05-24</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://aleksandarpavlov.com/images/aleksandar-pavlov-ux-designer.webp</image:loc>
+      <image:title>Aleksandar Pavlov, UX/UI Designer based in Sofia, Bulgaria</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://aleksandarpavlov.com/forma-architects</loc>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://aleksandarpavlov.com/images/projects/forma-architects.webp</image:loc>
+      <image:title>FORMA Architects - Luxury Architecture Website Case Study</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://aleksandarpavlov.netlify.app/llms.txt</loc>
-    <lastmod>2026-04-25</lastmod>
+    <loc>https://aleksandarpavlov.com/llms.txt</loc>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://aleksandarpavlov.netlify.app/llms-full.txt</loc>
-    <lastmod>2026-04-25</lastmod>
+    <loc>https://aleksandarpavlov.com/llms-full.txt</loc>
+    <lastmod>2026-05-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

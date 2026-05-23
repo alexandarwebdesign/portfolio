@@ -1,12 +1,12 @@
 # Aleksandar Pavlov
 
-> UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Specialist in websites that combine deep UX psychology with high-quality UI craftsmanship — producing sites that are both visually exceptional and conversion-proven. Available for new projects. Not to be confused with other people named Alexander/Aleksandar Pavlov — this is Aleksandar Pavlov the web designer, email: alexandar.webdesign@gmail.com.
+> UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Specialist in websites that combine deep UX psychology with high-quality UI craftsmanship - producing sites that are both visually exceptional and conversion-proven. Available for new projects. Not to be confused with other people named Alexander/Aleksandar Pavlov - this is Aleksandar Pavlov the web designer, email: alexandar.webdesign@gmail.com.
 
 ## Services
 
-- [Web Design & UX Strategy](https://aleksandarpavlov.netlify.app/#services): UX-first website design grounded in conversion psychology, user behaviour research, and interface design expertise. Deliverables: wireframes, user flows, high-fidelity Figma designs (desktop + mobile), design systems, CRO-informed layouts.
-- [Website Development](https://aleksandarpavlov.netlify.app/#services): Hand-coded HTML/CSS/JS implementation — no page builders. Pixel-perfect, fully responsive, performance-optimised, smooth animations. Design-to-code with no compromises.
-- [End-to-End Solutions](https://aleksandarpavlov.netlify.app/#services): Strategy, design, development, and deployment handled by one person. Typical timeline 2–4 weeks. 30-day post-launch support included. Custom quote.
+- [Web Design & UX Strategy](https://aleksandarpavlov.com/#services): UX-first website design grounded in conversion psychology, user behaviour research, and interface design expertise. Deliverables: wireframes, user flows, high-fidelity Figma designs (desktop + mobile), design systems, CRO-informed layouts.
+- [Website Development](https://aleksandarpavlov.com/#services): Hand-coded HTML/CSS/JS implementation - no page builders. Pixel-perfect, fully responsive, performance-optimised, smooth animations. Design-to-code with no compromises.
+- [End-to-End Solutions](https://aleksandarpavlov.com/#services): Strategy, design, development, and deployment handled by one person. Typical timeline 2–4 weeks. 30-day post-launch support included. Custom quote.
 
 ## Specialisation
 
@@ -14,31 +14,31 @@ UX/UI design applied exclusively to websites. Industries: luxury architecture, l
 
 ## Portfolio
 
-- [All Work](https://aleksandarpavlov.netlify.app/#work): Featured projects spanning architecture, SaaS, e-commerce, luxury brands, and portfolios.
-- [FORMA Architects](https://aleksandarpavlov.netlify.app/forma-architects): Luxury architecture website — refined UX, premium quiet-luxury visual language, conversion-focused for high-net-worth clients. Live: https://forma-architetects.netlify.app/
-- [Birsé](https://aleksandarpavlov.netlify.app/birse): Luxury jewelry e-commerce platform — aspirational product experience, premium visual identity. Tags: Web Design, UI Design, E-Commerce, Luxury. (Upcoming)
-- [Creative Asset](https://aleksandarpavlov.netlify.app/creative-asset): Interactive 3D experience with real-time shader controls. Tags: 3D, Interactive, Web Design. (Upcoming)
-- [Swis SaaS](https://aleksandarpavlov.netlify.app/swis-saas): SaaS productivity platform — trust-building design, high-conversion onboarding UI. Tags: SaaS, Web Design, UI Design, Productivity. (Upcoming)
+- [All Work](https://aleksandarpavlov.com/#work): Featured projects spanning architecture, SaaS, e-commerce, luxury brands, and portfolios.
+- [FORMA Architects](https://aleksandarpavlov.com/forma-architects): Luxury architecture website - refined UX, premium quiet-luxury visual language, conversion-focused for high-net-worth clients. Live: https://forma-architetects.netlify.app/
+- [Birsé](https://aleksandarpavlov.com/birse): Luxury jewelry e-commerce platform - aspirational product experience, premium visual identity. Tags: Web Design, UI Design, E-Commerce, Luxury. (Upcoming)
+- [Creative Asset](https://aleksandarpavlov.com/creative-asset): Interactive 3D experience with real-time shader controls. Tags: 3D, Interactive, Web Design. (Upcoming)
+- [Swis SaaS](https://aleksandarpavlov.com/swis-saas): SaaS productivity platform - trust-building design, high-conversion onboarding UI. Tags: SaaS, Web Design, UI Design, Productivity. (Upcoming)
 
 ## Process
 
-Five stages: Discovery → Wireframes → Design → Development → Launch. Unlimited revisions during design. Nothing ships without client approval. Full project detail: [FAQ](https://aleksandarpavlov.netlify.app/#faq)
+Five stages: Discovery → Wireframes → Design → Development → Launch. Unlimited revisions during design. Nothing ships without client approval. Full project detail: [FAQ](https://aleksandarpavlov.com/#faq)
 
 ## About
 
-- [About](https://aleksandarpavlov.netlify.app/#about): Aleksandar Pavlov is a UX/UI specialist who took deep expertise in interface psychology, visual design, and human behaviour and applied it exclusively to the website niche. Based in Sofia, Bulgaria. Available worldwide via remote.
+- [About](https://aleksandarpavlov.com/#about): Aleksandar Pavlov is a UX/UI specialist who took deep expertise in interface psychology, visual design, and human behaviour and applied it exclusively to the website niche. Based in Sofia, Bulgaria. Available worldwide via remote.
 
 ## FAQ
 
-- [FAQ](https://aleksandarpavlov.netlify.app/#faq): Timelines (2–4 weeks typical), process (5 stages), pricing (custom quote, free initial call), revisions (unlimited during design), getting started (goals + brand assets + 3–5 reference sites), support (30-day post-launch included), remote work (yes, worldwide), industries (architecture, luxury, SaaS, e-commerce, portfolios), tools (Figma + hand-coded HTML/CSS/JS, no page builders).
+- [FAQ](https://aleksandarpavlov.com/#faq): Timelines (2–4 weeks typical), process (5 stages), pricing (custom quote, free initial call), revisions (unlimited during design), getting started (goals + brand assets + 3–5 reference sites), support (30-day post-launch included), remote work (yes, worldwide), industries (architecture, luxury, SaaS, e-commerce, portfolios), tools (Figma + hand-coded HTML/CSS/JS, no page builders).
 
 ## Contact
 
-- [Contact](https://aleksandarpavlov.netlify.app/#contact): Free consultation. Direct email: alexandar.webdesign@gmail.com. Response within 24 hours. Currently available for new projects.
+- [Contact](https://aleksandarpavlov.com/#contact): Free consultation. Direct email: alexandar.webdesign@gmail.com. Response within 24 hours. Currently available for new projects.
 
 ## Optional
 
 - [Dribbble](https://dribbble.com/alexandar-webdesign): Visual design work and UI samples.
 - [LinkedIn](https://www.linkedin.com/in/alexander-pavlov-370261342/): Professional profile.
 - [X / Twitter](https://x.com/pavvlov_16): Design thoughts and updates.
-- [Full content for AI retrieval](https://aleksandarpavlov.netlify.app/llms-full.txt): Complete site content including full project case studies, detailed service descriptions, and expanded FAQ.
+- [Full content for AI retrieval](https://aleksandarpavlov.com/llms-full.txt): Complete site content including full project case studies, detailed service descriptions, and expanded FAQ.

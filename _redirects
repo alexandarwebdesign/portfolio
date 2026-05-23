@@ -1,9 +1,17 @@
-# Clean URL rewrites for project pages
-
-# Static page — fully crawlable without JavaScript
+# Clean URL rewrites for static pages
+/about                /about.html                200
 /forma-architects     /forma-architects.html     200
 
 # Dynamic project pages (JS-rendered, noscript fallback included)
 /birse                /project.html?slug=birse                200
 /creative-asset       /project.html?slug=creative-asset       200
 /swis-saas            /project.html?slug=swis-saas            200
+
+# Force HTTPS + non-www canonical (Netlify handles automatically when domain configured,
+# but explicit rules ensure www → apex redirect for aleksandarpavlov.com)
+https://www.aleksandarpavlov.com/*    https://aleksandarpavlov.com/:splat    301!
+http://aleksandarpavlov.com/*         https://aleksandarpavlov.com/:splat    301!
+http://www.aleksandarpavlov.com/*     https://aleksandarpavlov.com/:splat    301!
+
+# Legacy netlify.app → new domain (preserves old links/backlinks)
+https://aleksandarpavlov.netlify.app/*    https://aleksandarpavlov.com/:splat    301!
