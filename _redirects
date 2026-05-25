@@ -7,10 +7,8 @@
 /about                /about.html                200
 /forma-architects     /forma-architects.html     200
 
-# Canonical .html → clean URL (301 so search engines drop the .html)
-/index.html           /                          301
-/about.html           /about                     301
-/forma-architects.html  /forma-architects        301
+# NOTE: do NOT add ".html → /clean-url" 301 rules here. They form a loop
+# with the rewrites above on Cloudflare Pages, producing ERR_TOO_MANY_REDIRECTS.
 
 # Dynamic project pages (JS-rendered, noscript fallback included)
 /birse                /project.html?slug=birse                200
