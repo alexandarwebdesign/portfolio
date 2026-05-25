@@ -3,12 +3,10 @@
 #   - SSL/TLS → Edge Certificates → "Always Use HTTPS" ON
 #   - Rules → Redirect Rules → www.aleksandarpavlov.com → aleksandarpavlov.com (301)
 
-# Clean URL rewrites for static pages
-/about                /about.html                200
-/forma-architects     /forma-architects.html     200
-
-# NOTE: do NOT add ".html → /clean-url" 301 rules here. They form a loop
-# with the rewrites above on Cloudflare Pages, producing ERR_TOO_MANY_REDIRECTS.
+# Cloudflare Pages has "Automatic clean URLs" enabled by default —
+# /about.html is served at /about, /forma-architects.html at /forma-architects.
+# Do NOT add explicit "/clean-url -> /clean-url.html 200" rewrites here;
+# they conflict with auto-clean-urls and cause ERR_TOO_MANY_REDIRECTS.
 
 # Dynamic project pages (JS-rendered, noscript fallback included)
 /birse                /project.html?slug=birse                200
