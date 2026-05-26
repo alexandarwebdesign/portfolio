@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Build sources (originals — processed outputs are committed)
+images/raw/
+
+# Dev tooling / IDE
+.agent/
+.claude/
+.vscode/
+.idea/
+
+# Internal docs & AI rules (not deployed)
+Rules/
+docs/
+
+# OS / temp
+.DS_Store
+Thumbs.db
+*.log
+*.tmp

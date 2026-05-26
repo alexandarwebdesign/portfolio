@@ -38,18 +38,18 @@
   --color-accent: #0066ff;
   --color-white: #ffffff;
 
-  /* Colors - Secondary */
-  --color-border: #c2c9d6;
+  /* Colors - Secondary (WCAG 2.2-tuned) */
+  --color-border: #8d97aa;                  /* was #c2c9d6 — bumped to UI 3:1 */
   --color-text-muted: rgba(41, 48, 61, 0.8);
   --color-text-soft: rgba(41, 48, 61, 0.75);
-  --color-text-light: rgba(41, 48, 61, 0.5);
+  --color-text-light: rgba(41, 48, 61, 0.65); /* was 0.5 — now passes AA */
   --color-border-subtle: rgba(41, 48, 61, 0.12);
   --color-about-bg: #f8f6f2;
 
-  /* Colors - Semantic */
-  --color-success: #34c759;
-  --color-error: #ff3b30;
-  --color-warning: #ff9500;
+  /* Colors - Semantic (WCAG 2.2-tuned) */
+  --color-success: #1f9c44;  /* was #34c759 — passes UI 3:1 */
+  --color-error:   #cf2820;  /* was #ff3b30 — passes AA normal text */
+  --color-warning: #cc6b00;  /* was #ff9500 — passes UI + AA large */
 
   /* Typography - Fonts */
   --font-display: "Manrope", sans-serif;
@@ -62,7 +62,7 @@
   --text-project: 32px;
   --text-body-lg: 24px;
   --text-body: 20px;
-  --text-body-sm: 17px;
+  --text-body-sm: 16px;
   --text-button: 24px;
   --text-button-sm: 20px;
 
@@ -479,7 +479,7 @@ textarea:focus-visible {
   box-shadow:
     0 14px 30px rgba(16, 24, 40, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.42);
-  color: var(--color-white);
+  color: var(--color-text);
 }
 
 .button-secondary:hover {
@@ -1244,7 +1244,7 @@ body.is-loaded .hero-stage-item {
 .about-bio-new {
   font-size: var(--text-body-sm);
   font-weight: 400;
-  line-height: 32px;
+  line-height: 1.6;
   letter-spacing: -0.1px;
   color: var(--color-text-soft);
   margin: 0;
@@ -1505,11 +1505,41 @@ body.is-loaded .hero-stage-item {
 
   .about-body-row {
     grid-template-columns: 1fr;
+    gap: var(--space-10);
+    padding: var(--space-10) 0;
+  }
+
+  .about-content {
+    gap: var(--space-6);
+    align-self: stretch;
+  }
+
+  .about-heading-content {
     gap: var(--space-4);
+  }
+
+  .hanger {
+    width: min(220px, 70vw);
+    justify-self: center;
+    align-self: center;
+    transform: rotate(-2deg);
+  }
+  .hanger:hover {
+    transform: rotate(0deg);
   }
 
   .about-cta-row {
     padding-top: var(--space-10);
+  }
+}
+
+@media (max-width: 480px) {
+  .about-body-row {
+    gap: var(--space-8);
+    padding: var(--space-8) 0;
+  }
+  .hanger {
+    width: min(200px, 64vw);
   }
 }
 
@@ -2078,6 +2108,7 @@ body.is-loaded .hero-stage-item {
 .footer-cta-secondary {
   font-size: 16px;
   padding: 12px 28px;
+  color: var(--color-white);
 }
 
 /* Right side: copyright + social stacked */
@@ -2430,7 +2461,7 @@ body.is-loaded .hero-stage-item {
   display: inline-block;
   padding: 6px 12px;
   background: rgba(0, 102, 255, 0.1);
-  color: var(--color-accent);
+  color: #0052cc; /* darkened accent for 5.59:1 AA on the 10% tinted bg */
   font-size: 14px;
   font-weight: 500;
   border-radius: 100px;
@@ -2871,7 +2902,8 @@ body.about-page {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 17px 45px;
+  padding: var(--button-padding);
+  min-width: 200px;
   border-radius: 9999px;
   border: 1px solid rgba(255, 255, 255, 0.55);
   background: radial-gradient(98.12% 191.19% at 50% 50.72%, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.34) 75.96%);
@@ -2929,6 +2961,19 @@ body.about-page {
   align-items: center;
   gap: var(--space-4);
   flex-wrap: wrap;
+}
+/* Buttons in about-page row share same dimensions */
+.about-page-cta-row .button-primary,
+.about-page-cta-row .button-secondary,
+.about-page-cta-row .about-page-cta-btn {
+  min-width: 200px;
+  padding: var(--button-padding);
+}
+
+/* Unhide next-project teaser on about page (it's hidden globally
+   pending more case studies, but on /about we use it as the closer) */
+.about-page .project-next-teaser-section {
+  display: block !important;
 }
 
 .about-page .nav-link[href="/about"] {
@@ -3977,6 +4022,33 @@ body.about-page {
   overflow: hidden;
 }
 
+/* Second instance — same wrap, less padding so logo reads larger */
+.block-fullwidth .project-hero-logo-wrap {
+  padding: 1.25vw;
+}
+
+/* Form a11y additions — error + live-status */
+.form-error {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-error);
+  letter-spacing: 0;
+}
+.form-error[hidden] { display: none; }
+
+.form-status {
+  margin-top: var(--space-3);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--color-text-soft);
+  min-height: 1.4em; /* prevent layout jump when status appears */
+}
+.form-status:empty { min-height: 0; }
+.form-status[data-state="success"] { color: var(--color-success); }
+.form-status[data-state="error"]   { color: var(--color-error); }
+
 /* Full-width image block */
 .block-fullwidth {
   padding-top: 0;
@@ -4023,11 +4095,6 @@ body.about-page {
 }
 
 
-.block-fullwidth .project-hero-logo-wrap {
-  width: fit-content;
-  height: fit-content;
-  padding: 1vw;
-}
 
 .block-fullwidth-logo {
   width: clamp(120px, 13.89vw, 240px);
@@ -4357,4 +4424,286 @@ body.about-page {
     scrollbar-width: none;
   }
   .image-marquee__viewport::-webkit-scrollbar { display: none; }
+}
+
+/* ==========================================================================
+   FORMA CASE STUDY — GLOBAL OVERRIDES (all breakpoints)
+   ========================================================================== */
+.carousel-outer {
+  background: #d9d9d9;
+}
+.single-block.block-device.block-padding-bottom {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  -webkit-clip-path: none !important;
+}
+
+/* Content text block — owns its own padding (was inline) */
+.project-content-stream .content-text-block {
+  padding: clamp(2rem, 5vw, 4rem);
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Solution list — semantic, scannable */
+.solution-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-6) 0 0 0;
+  display: grid;
+  gap: var(--space-6);
+  counter-reset: solution;
+}
+.solution-list li {
+  position: relative;
+  padding: var(--space-5) 0 var(--space-5) var(--space-12);
+  border-top: 1px solid var(--color-border-subtle);
+  display: grid;
+  gap: var(--space-2);
+}
+.solution-list li:last-child {
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+.solution-list li::before {
+  counter-increment: solution;
+  content: counter(solution, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: var(--space-5);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  line-height: 1.4;
+}
+.solution-list li strong {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.solution-list li span {
+  font-size: var(--text-body);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.solution-list li em {
+  font-style: italic;
+  color: var(--color-text);
+}
+
+/* Peak-end CTA block — full-bleed white panel, single primary action */
+.project-cta-block {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  margin-top: var(--space-12);
+  padding: clamp(3rem, 7vw, 6rem) clamp(1.25rem, 5vw, 4rem);
+  background: #ffffff;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  text-align: center;
+  display: grid;
+  gap: var(--space-6);
+}
+.project-cta-eyebrow {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-text);
+  margin: 0;
+}
+.project-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .solution-list li {
+    padding-left: var(--space-10);
+  }
+  .project-cta-block {
+    padding: var(--space-12) var(--space-6);
+  }
+  .project-cta-actions .button-primary,
+  .project-cta-actions .button-secondary {
+    width: 100%;
+    max-width: 360px;
+  }
+}
+
+/* ==========================================================================
+   FORMA CASE STUDY — MOBILE OVERRIDES (≤768px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* 1. Hero frame: kill side padding + image height 50vh */
+  .project-hero-full-section > .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .project-hero-image-frame {
+    border-radius: 0;
+  }
+  .project-hero-image {
+    border-radius: 0;
+    height: 50vh;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* 2. Logo wrap 1.4× bigger */
+  .project-hero-logo-wrap {
+    width: calc(11.11vw * 1.4);
+    height: calc(11.11vw * 1.4);
+    padding: calc(2.5vw * 1.4);
+  }
+  .block-fullwidth-logo {
+    width: clamp(168px, 19.45vw, 336px);
+  }
+
+  /* 3. Brief grid (meta-only): full-bleed + centered meta blocks */
+  .project-brief-section > .container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .brief-grid.brief-meta-only {
+    margin: 0;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    padding-left: var(--space-6) !important;
+    padding-right: var(--space-6) !important;
+  }
+  .brief-grid.brief-meta-only .brief-meta,
+  .brief-grid.brief-meta-only .brief-meta-left {
+    align-items: center;
+    text-align: center;
+  }
+  .brief-grid.brief-meta-only .meta-block {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+  .brief-grid.brief-meta-only .project-tags,
+  .brief-grid.brief-meta-only .project-palette {
+    justify-content: center;
+  }
+  /* Palette: was collapsing because flex:1 children w/ basis:0 in centered narrow container */
+  .brief-grid.brief-meta-only .project-palette {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    gap: 6px;
+  }
+  .brief-grid.brief-meta-only .palette-swatch {
+    flex: 1 1 0;
+    min-width: 40px;
+    height: 40px;
+    display: block;
+  }
+
+  /* 4. Wide video: no rounded corners, full-bleed (parallax label kept) */
+  .content-wide-video {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .content-wide-video .screen-video {
+    border-radius: 0;
+  }
+
+  /* 5. Device: near-full-bleed, .content-image-block escapes container
+        but keeps minimum side padding so the device never kisses the
+        screen edges. */
+  .content-image-block {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  .device,
+  .content-image-block .device {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    height: auto;
+  }
+  .device-mbp15 {
+    padding-inline: 0;
+  }
+  .device.device-macprohigher {
+    padding-inline: 0.25rem;
+  }
+  .carousel-outer .single-block.block-device {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* 6 + 7. Carousel arrows sit BELOW the device, 1.25rem gap.
+        Bg + clip-path removal handled globally above. */
+  .carousel-outer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 1.5rem;
+  }
+  .carousel-outer .single-block.block-device.block-padding-bottom {
+    padding-bottom: 0;
+    margin: 0;
+  }
+  .carousel-btn-track {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    padding: 0;
+    margin: 1.25rem 0 0 0;
+    gap: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    transform: none !important;
+  }
+  .carousel-btn {
+    pointer-events: auto;
+  }
+
+  /* Carousel buttons: min 52px each on mobile (override the 540px rule) */
+  .carousel-btn {
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px;
+    min-height: 52px;
+  }
+  .carousel-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* 8. Parallax: KEEP original effect on overlay-image, wide-video-label,
+        meta-block, and project-hero-logo-wrap. Do NOT kill transform
+        globally — JS-driven parallax stays alive on mobile too. */
+  /* (intentionally empty — previous blanket transform kill removed) */
 }

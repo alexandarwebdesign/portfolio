@@ -208,31 +208,71 @@
 
     if (!form) return;
 
+    const statusEl = document.getElementById("form-status");
+    const fieldIds = ["name", "email", "service", "message"];
+
+    function clearErrors() {
+      fieldIds.forEach(id => {
+        const input = form.querySelector(`#${id}`);
+        const errEl = form.querySelector(`#${id}-error`);
+        if (input) {
+          input.removeAttribute("aria-invalid");
+        }
+        if (errEl) {
+          errEl.hidden = true;
+          errEl.textContent = "";
+        }
+      });
+    }
+
+    function showFieldError(id, msg) {
+      const input = form.querySelector(`#${id}`);
+      const errEl = form.querySelector(`#${id}-error`);
+      if (input) input.setAttribute("aria-invalid", "true");
+      if (errEl) {
+        errEl.textContent = msg;
+        errEl.hidden = false;
+      }
+    }
+
+    function setStatus(msg, state) {
+      if (!statusEl) return;
+      statusEl.textContent = msg;
+      if (state) statusEl.dataset.state = state;
+      else delete statusEl.dataset.state;
+    }
+
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      // Get form data
       const formData = new FormData(form);
       const data = Object.fromEntries(formData);
 
-      // Basic validation
+      clearErrors();
+      setStatus("");
+
       const errors = validateForm(data);
 
-      if (errors.length > 0) {
-        // Show errors
-        alert(errors.join('\n'));
+      if (Object.keys(errors).length > 0) {
+        Object.entries(errors).forEach(([id, msg]) => showFieldError(id, msg));
+        const firstInvalidId = Object.keys(errors)[0];
+        const firstInvalid = form.querySelector(`#${firstInvalidId}`);
+        if (firstInvalid) firstInvalid.focus();
+        setStatus(
+          `Please correct ${Object.keys(errors).length} field${
+            Object.keys(errors).length === 1 ? "" : "s"
+          } above.`,
+          "error"
+        );
         return;
       }
 
-      // Submit to Web3Forms via fetch
       const submitBtn = form.querySelector('button[type="submit"]');
-      
-      // Store original content
+
       if (!submitBtn.hasAttribute('data-original-content')) {
         submitBtn.setAttribute('data-original-content', submitBtn.innerHTML);
       }
-      
-      // Update UI to Loading
+
       submitBtn.classList.add('loading');
       submitBtn.innerHTML = `
         <div class="loading-container">
@@ -243,47 +283,44 @@
         </div>
       `;
       submitBtn.disabled = true;
+      setStatus("Sending your message…", "");
 
-      // Minimum animation time promise
       const minAnimationTime = new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // API request promise
       const apiRequest = fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         body: formData
       });
 
-      // Wait for BOTH to complete
       Promise.all([apiRequest, minAnimationTime])
       .then(async ([response]) => {
         const json = await response.json();
-        
+
         if (response.status === 200) {
-          // Success
           submitBtn.classList.remove('loading');
           submitBtn.classList.add('success');
           submitBtn.innerHTML = 'Thanks for applying 💙';
-          
-          // Reset form
+
           form.reset();
-          
-          // Restore button after delay
+          setStatus("Message sent. I'll reply within 24 hours.", "success");
+
           setTimeout(() => {
             submitBtn.classList.remove('success');
             submitBtn.innerHTML = submitBtn.getAttribute('data-original-content');
             submitBtn.disabled = false;
           }, 3000);
-          
+
         } else {
-          // Error handling
           console.error(json);
           throw new Error(json.message || 'Something went wrong');
         }
       })
       .catch(error => {
         console.error(error);
-        alert(error.message || 'Something went wrong. Please try again.');
-        
+        setStatus(
+          error.message || "Something went wrong. Please try again or email me directly.",
+          "error"
+        );
+
         submitBtn.classList.remove('loading');
         submitBtn.innerHTML = submitBtn.getAttribute('data-original-content');
         submitBtn.disabled = false;
@@ -294,25 +331,25 @@
   /**
    * Validate form data
    * @param {Object} data - Form data object
-   * @returns {Array} Array of error messages
+   * @returns {Object} Map of fieldId -> error message
    */
   function validateForm(data) {
-    const errors = [];
+    const errors = {};
 
     if (!data.name || data.name.trim().length < 2) {
-      errors.push("Please enter your full name");
+      errors.name = "Please enter your full name.";
     }
 
     if (!data.email || !isValidEmail(data.email)) {
-      errors.push("Please enter a valid email address");
+      errors.email = "Please enter a valid email address.";
     }
 
     if (!data.service) {
-      errors.push("Please select a service");
+      errors.service = "Please select a service.";
     }
 
     if (!data.message || data.message.trim().length < 10) {
-      errors.push("Please tell us more about your project");
+      errors.message = "Tell me a little more — 10+ characters helps me reply usefully.";
     }
 
     return errors;
@@ -397,6 +434,17 @@
       mobileNav.setAttribute('aria-hidden', String(!isOpen));
       document.body.style.overflow = isOpen ? 'hidden' : '';
       document.documentElement.style.overflow = isOpen ? 'hidden' : '';
+      // a11y: make background content inert while menu is open so screen
+      // readers + keyboard cannot interact with content behind the dialog.
+      // Skip <header> — it contains the nav-toggle which must stay live
+      // to close the menu.
+      const mainEl = document.getElementById('main-content');
+      const footerEl = document.querySelector('footer');
+      [mainEl, footerEl].forEach(el => {
+        if (!el) return;
+        if (isOpen) el.setAttribute('inert', '');
+        else el.removeAttribute('inert');
+      });
     }
 
     function openNav() {

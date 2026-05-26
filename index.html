@@ -13,10 +13,10 @@
     <!-- Preconnect -->
 
     <!-- Performance: Preload Critical Resources -->
-    <link rel="preload" href="styles.css?v=6" as="style">
+    <link rel="preload" href="styles.css?v=7" as="style">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css?v=6" />
+    <link rel="stylesheet" href="styles.css?v=7" />
 
     <!-- Meta Tags -->
     <meta name="description" content="UX/UI specialist who channels deep expertise in interface psychology and visual design entirely into websites. Beautiful, conversion-proven, and built to last. Based in Sofia, Bulgaria.">
@@ -403,8 +403,8 @@
           <canvas class="hero-shader__canvas"></canvas>
         </div>
         <div class="hero-content">
-          <h1 class="hero-eyebrow hero-stage-item">Website Design & Development</h1>
-          <h2 class="hero-title hero-stage-item">Pretty Isn't Enough.</h2>
+          <p class="hero-eyebrow hero-stage-item">Website Design &amp; Development</p>
+          <h1 class="hero-title hero-stage-item">Pretty Isn't Enough.</h1>
           <p class="hero-subtitle hero-stage-item">UX psychology meets precise UI craft - applied entirely to websites. Visually powerful, built to perform.</p>
           <a href="#contact" class="button-primary hero-cta hero-stage-item">
             <span class="btn-content">
@@ -813,9 +813,12 @@
                   name="name"
                   class="form-input"
                   placeholder="Your full name"
+                  autocomplete="name"
                   required
                   aria-required="true"
+                  aria-describedby="name-error"
                 />
+                <span id="name-error" class="form-error" role="alert" hidden></span>
               </div>
 
               <div class="form-group">
@@ -826,9 +829,12 @@
                   name="email"
                   class="form-input"
                   placeholder="you@company.com"
+                  autocomplete="email"
                   required
                   aria-required="true"
+                  aria-describedby="email-error"
                 />
+                <span id="email-error" class="form-error" role="alert" hidden></span>
               </div>
 
               <div class="form-group">
@@ -842,6 +848,7 @@
                     class="form-input form-select"
                     required
                     aria-required="true"
+                    aria-describedby="service-error"
                   >
                     <option value="" disabled selected>Select Service</option>
                     <option value="web-design">Web Design & UX Strategy</option>
@@ -849,6 +856,7 @@
                     <option value="end-to-end">End-to-End Solutions</option>
                   </select>
                 </div>
+                <span id="service-error" class="form-error" role="alert" hidden></span>
               </div>
 
               <div class="form-group">
@@ -863,7 +871,9 @@
                   rows="5"
                   required
                   aria-required="true"
+                  aria-describedby="message-error"
                 ></textarea>
+                <span id="message-error" class="form-error" role="alert" hidden></span>
               </div>
 
               <button type="submit" class="button-primary form-submit">
@@ -874,6 +884,7 @@
               </button>
 
               <p class="form-helper">I typically respond within 24 hours</p>
+              <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
             </form>
           </div>
         </div>
@@ -904,10 +915,10 @@
               <div class="footer-name-block">
                 <span class="footer-status">
                   <svg class="footer-status-icon" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <circle cx="9.5" cy="9.5" r="1.5" fill="#34C759"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
-                    <circle cx="9.5" cy="9.5" r="2.25" stroke="#34C759" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
-                    <circle cx="9.5" cy="9.5" r="4.25" stroke="#34C759" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
-                    <circle cx="9.5" cy="9.5" r="5.4" stroke="#34C759" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="1.5" fill="#1f9c44"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="2.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="4.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="5.4" stroke="#1f9c44" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
                   </svg>
                   Online
                 </span>
@@ -961,7 +972,7 @@
     </div><!-- /footer-outer -->
     <!-- Scripts -->
     <!-- Application Scripts -->
-    <script src="main.js?v=2" defer></script>
+    <script src="main.js?v=4" defer></script>
     <script src="hero-shader.js?v=9" defer></script>
   </body>
 </html>
