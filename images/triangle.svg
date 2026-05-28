@@ -5,19 +5,19 @@
         calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1" keyTimes="0; 0.5; 1" repeatCount="indefinite" />
 
     <path d="M720.5 401.598C733.833 409.296 733.833 428.541 720.5 436.24 L149.5 765.904C136.167 773.602 119.5 763.98 119.5 748.582 L119.5 89.255C119.5 73.8576 136.167 64.2351 149.5 71.9332 L720.5 401.598Z" 
-          stroke="#464646" stroke-width="32" stroke-linejoin="round" stroke-linecap="round" fill="transparent" 
-          pathLength="100" stroke-dasharray="40 60">
-          
-      <animate attributeName="stroke-dashoffset" values="100; 0" dur="3.48s" repeatCount="indefinite" />
-      
-      <animate attributeName="stroke-dasharray" values="40 60; 100 0" dur="0.4s" begin="mouseover" fill="freeze" />
-      <animate attributeName="stroke-dasharray" values="100 0; 40 60" dur="0.4s" begin="mouseout" fill="freeze" />
-      
+          stroke="#464646" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" fill="transparent"
+          pathLength="100" stroke-dasharray="1 8">
+
+      <animate attributeName="stroke-dashoffset" values="100; 0" dur="7s" repeatCount="indefinite" />
+
+      <animate attributeName="stroke-dasharray" values="1 8; 100 0" dur="0.4s" begin="mouseover" fill="freeze" />
+      <animate attributeName="stroke-dasharray" values="100 0; 1 8" dur="0.4s" begin="mouseout" fill="freeze" />
+
       <animate attributeName="stroke" values="#464646; #3b82f6" dur="0.4s" begin="mouseover" fill="freeze" />
       <animate attributeName="stroke" values="#3b82f6; #464646" dur="0.4s" begin="mouseout" fill="freeze" />
-      
-      <animate attributeName="stroke-width" values="32; 40" dur="0.4s" begin="mouseover" fill="freeze" />
-      <animate attributeName="stroke-width" values="40; 32" dur="0.4s" begin="mouseout" fill="freeze" />
+
+      <animate attributeName="stroke-width" values="12; 18" dur="0.4s" begin="mouseover" fill="freeze" />
+      <animate attributeName="stroke-width" values="18; 12" dur="0.4s" begin="mouseout" fill="freeze" />
     </path>
   </g>
 </svg>

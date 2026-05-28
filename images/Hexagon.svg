@@ -5,19 +5,19 @@
         calcMode="spline" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1" keyTimes="0; 0.5; 1" repeatCount="indefinite" />
 
     <path d="M410.603 9.42265C398.603 2.49444 383.397 2.49444 371.397 9.42265 L36.3975 202.82C24.3975 209.749 16.8975 222.739 16.8975 236.596 L16.8975 623.404C16.8975 637.261 24.3975 650.251 36.3975 657.18 L371.397 850.577C383.397 857.506 398.603 857.506 410.603 850.577 L745.603 657.18C757.603 650.251 765.103 637.261 765.103 623.404 L765.103 236.596C765.103 222.739 757.603 209.749 745.603 202.82 L410.603 9.42265Z" 
-          stroke="#464646" stroke-width="32" stroke-linejoin="round" stroke-linecap="round" fill="transparent" 
-          pathLength="100" stroke-dasharray="40 60">
-          
-      <animate attributeName="stroke-dashoffset" values="100; 0" dur="3.48s" repeatCount="indefinite" />
-      
-      <animate attributeName="stroke-dasharray" values="40 60; 100 0" dur="0.4s" begin="mouseover" fill="freeze" />
-      <animate attributeName="stroke-dasharray" values="100 0; 40 60" dur="0.4s" begin="mouseout" fill="freeze" />
-      
+          stroke="#464646" stroke-width="12" stroke-linejoin="round" stroke-linecap="round" fill="transparent"
+          pathLength="100" stroke-dasharray="1 8">
+
+      <animate attributeName="stroke-dashoffset" values="100; 0" dur="7s" repeatCount="indefinite" />
+
+      <animate attributeName="stroke-dasharray" values="1 8; 100 0" dur="0.4s" begin="mouseover" fill="freeze" />
+      <animate attributeName="stroke-dasharray" values="100 0; 1 8" dur="0.4s" begin="mouseout" fill="freeze" />
+
       <animate attributeName="stroke" values="#464646; #3b82f6" dur="0.4s" begin="mouseover" fill="freeze" />
       <animate attributeName="stroke" values="#3b82f6; #464646" dur="0.4s" begin="mouseout" fill="freeze" />
-      
-      <animate attributeName="stroke-width" values="32; 40" dur="0.4s" begin="mouseover" fill="freeze" />
-      <animate attributeName="stroke-width" values="40; 32" dur="0.4s" begin="mouseout" fill="freeze" />
+
+      <animate attributeName="stroke-width" values="12; 18" dur="0.4s" begin="mouseover" fill="freeze" />
+      <animate attributeName="stroke-width" values="18; 12" dur="0.4s" begin="mouseout" fill="freeze" />
     </path>
   </g>
 </svg>

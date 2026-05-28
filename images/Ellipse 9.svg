@@ -6,20 +6,20 @@
 
     <circle id="hoverArea" cx="400" cy="400" r="380" stroke="transparent" stroke-width="80" fill="transparent" cursor="pointer" />
 
-    <circle cx="400" cy="400" r="380" 
-          stroke="#464646" stroke-width="32" stroke-linecap="round" fill="none" 
-          pathLength="100" stroke-dasharray="40 60" pointer-events="none">
-      
-      <animate attributeName="stroke-dashoffset" values="100; 0" dur="3.48s" repeatCount="indefinite" />
-      
-      <animate attributeName="stroke-dasharray" values="40 60; 100 0" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
-      <animate attributeName="stroke-dasharray" values="100 0; 40 60" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
-      
+    <circle cx="400" cy="400" r="380"
+          stroke="#464646" stroke-width="12" stroke-linecap="round" fill="none"
+          pathLength="100" stroke-dasharray="1 8" pointer-events="none">
+
+      <animate attributeName="stroke-dashoffset" values="100; 0" dur="7s" repeatCount="indefinite" />
+
+      <animate attributeName="stroke-dasharray" values="1 8; 100 0" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
+      <animate attributeName="stroke-dasharray" values="100 0; 1 8" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
+
       <animate attributeName="stroke" values="#464646; #3b82f6" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
       <animate attributeName="stroke" values="#3b82f6; #464646" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
-      
-      <animate attributeName="stroke-width" values="32; 40" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
-      <animate attributeName="stroke-width" values="40; 32" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
+
+      <animate attributeName="stroke-width" values="12; 18" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
+      <animate attributeName="stroke-width" values="18; 12" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
     </circle>
   </g>
 </svg>

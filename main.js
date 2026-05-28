@@ -723,6 +723,44 @@
       scheduleServiceCardUpdate();
       scheduleServiceCardInteractionUpdate();
     }, { once: true });
+
+    serviceItems.forEach((item) => {
+      const serviceValue = item.dataset.service;
+      if (!serviceValue) return;
+
+      const activate = () => {
+        const select = document.getElementById("service");
+        const nameField = document.getElementById("name");
+        const contact = document.getElementById("contact");
+
+        if (select) {
+          select.value = serviceValue;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (contact) {
+          contact.scrollIntoView({
+            behavior: reduceMotion ? "auto" : "smooth",
+            block: "start",
+          });
+        }
+
+        const focusName = () => {
+          if (nameField) nameField.focus({ preventScroll: true });
+        };
+        if (reduceMotion) focusName();
+        else setTimeout(focusName, 700);
+      };
+
+      item.addEventListener("click", activate);
+      item.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          activate();
+        }
+      });
+    });
   }
 
 
@@ -955,6 +993,111 @@
     initParallax();
     initAboutPhotoInteraction();
     initImageMarquee();
+    initPlates();
+    initSignatureLight();
+  }
+
+  /**
+   * Signature moment — "The Light Source"
+   * Updates --cursor-x / --cursor-y custom properties on pointermove. CSS uses
+   * those vars in body::after's radial-gradient to render a soft cursor glow.
+   * Compositor-only (opacity + transform via background-position). rAF-throttled.
+   * No-ops on touch devices and when prefers-reduced-motion is set.
+   */
+  function initSignatureLight() {
+    if (window.matchMedia("(hover: none)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let x = window.innerWidth / 2;
+    let y = window.innerHeight / 2;
+    let rafId = null;
+
+    const root = document.documentElement;
+    function update() {
+      rafId = null;
+      root.style.setProperty("--cursor-x", x + "px");
+      root.style.setProperty("--cursor-y", y + "px");
+    }
+
+    window.addEventListener("pointermove", (e) => {
+      x = e.clientX;
+      y = e.clientY;
+      if (rafId === null) rafId = requestAnimationFrame(update);
+    }, { passive: true });
+  }
+
+  /**
+   * Initialize the "Plates" presentation system used on case-study pages.
+   * - Updates the sticky page counter as each plate enters the viewport.
+   * - Adds .is-in-view to each plate the first time it crosses 18% from the
+   *   top, triggering the CSS entrance animation.
+   * - Hides the counter on plates whose chrome would clash (only the final
+   *   CTA plate currently — it removes itself).
+   */
+  function initPlates() {
+    const plates = document.querySelectorAll(".plate");
+    if (!plates.length) return;
+
+    const counterEl = document.getElementById("plates-counter");
+    const counterNumEl = document.getElementById("plates-counter-num");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Reveal-on-view: one-shot, fires once per plate
+    const revealIO = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in-view");
+          revealIO.unobserve(entry.target);
+        }
+      }
+    }, { threshold: reduceMotion ? 0 : 0.16, rootMargin: "0px 0px -8% 0px" });
+
+    plates.forEach((p) => {
+      if (reduceMotion) p.classList.add("is-in-view");
+      else revealIO.observe(p);
+    });
+
+    // Counter tracking — pick the plate whose centerline is closest to the
+    // viewport center, then mirror its data-plate.
+    if (counterEl && counterNumEl) {
+      let rafId = null;
+      const candidates = Array.from(plates).filter((p) => p.dataset.plate);
+
+      function updateCounter() {
+        rafId = null;
+        const viewportMid = window.innerHeight * 0.45;
+        let bestPlate = null;
+        let bestDistance = Infinity;
+
+        for (const p of candidates) {
+          const rect = p.getBoundingClientRect();
+          const center = rect.top + rect.height / 2;
+          const distance = Math.abs(center - viewportMid);
+          if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            bestPlate = p;
+          }
+        }
+
+        if (bestPlate) {
+          const num = bestPlate.dataset.plate;
+          if (counterNumEl.textContent !== num) counterNumEl.textContent = num;
+          counterEl.classList.add("is-visible");
+        } else {
+          counterEl.classList.remove("is-visible");
+        }
+      }
+
+      function onScroll() {
+        if (rafId !== null) return;
+        rafId = requestAnimationFrame(updateCounter);
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+      updateCounter();
+    }
   }
 
   // Run init when DOM is ready
