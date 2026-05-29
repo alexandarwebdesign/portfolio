@@ -43,32 +43,67 @@
   line-gap-override: 0%;
 }
 
-/* LQIP blur-up — placeholder while image decodes */
-.lqip-wrap {
-  display: block;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
+/* <picture> wrappers must not alter layout — the inner <img> is positioned
+   by its container (absolute fills, object-fit covers). display:contents
+   removes the picture's own box so the img behaves as a direct child. */
+.about-page-photo picture,
+.single-image picture,
+.mobile-screen picture,
+.mobile-screen--img picture,
+.project-hero-image-frame picture,
+.block-fullwidth .single-image picture {
+  display: contents;
 }
-.lqip-wrap > picture,
-.lqip-wrap > img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-.lqip-wrap picture img,
-.lqip-wrap > img {
-  opacity: 0;
-  transition: opacity 500ms ease;
-}
-.lqip-wrap.is-loaded picture img,
-.lqip-wrap.is-loaded > img {
-  opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .lqip-wrap picture img,
-  .lqip-wrap > img { opacity: 1; transition: none; }
+
+/* Mobile case-study tweaks */
+@media (max-width: 768px) {
+  /* Device blocks span full viewport width, no side padding */
+  .case-block--device {
+    overflow: visible;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: clamp(32px, 6vh, 64px) 0 clamp(40px, 8vh, 80px);
+  }
+
+  /* Tighter vertical rhythm between forma sections on mobile */
+  .project-content-stream {
+    gap: var(--space-10);
+  }
+
+  /* First device (hero macpro) fills full width */
+  .case-blocks .content-image-block {
+    width: 100%;
+  }
+
+  /* Carousel: kill inline 100vw break-out (case-block already spans full
+     width); laptop slot auto-height, btn-track flows below inside block. */
+  .case-block--device .carousel-outer {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 8px !important;
+    overflow: visible;
+  }
+  .case-block--device .single-block.block-device.block-padding-bottom {
+    height: auto;
+    padding-inline: 0;
+  }
+  /* Laptop near-full-width, centered, minimal side padding */
+  .case-block--device .single-block.block-device.block-padding-bottom .device,
+  .case-block--device .single-block.block-device.block-padding-bottom .device-mbp15 {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding-inline: 0;
+  }
+  .case-block--device .carousel-outer .single-block.block-device {
+    padding-inline: 4px;
+  }
+  .carousel-btn-track {
+    padding: 16px 8px 0;
+    max-width: 100%;
+  }
 }
 
 /* Craft-pass polish: selection, caret, body-copy text-wrap */
@@ -4035,7 +4070,7 @@ body.about-page {
 
 @media (max-width: 800px) {
   .device {
-    max-width: 88%;
+    max-width: 96%;
   }
   .content-image-block .device {
     max-width: 100%;
@@ -4044,7 +4079,7 @@ body.about-page {
 
 @media (max-width: 480px) {
   .device {
-    max-width: 82%;
+    max-width: 94%;
   }
   .content-image-block .device {
     max-width: 100%;
@@ -4172,11 +4207,6 @@ body.about-page {
 }
 
 .single-block.block-device.block-padding-bottom {
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
   overflow: hidden;
   height: 100vh;
 }
@@ -4783,11 +4813,23 @@ body.about-page {
   padding: clamp(80px, 10vh, 160px) 0;
 }
 .case-block--device {
-  background: transparent;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   padding: clamp(80px, 10vh, 160px) clamp(24px, 5vw, 80px);
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+}
+/* First device block: no glass surface */
+.case-block--device.case-block--bare {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  box-shadow: none;
 }
 .case-block--fullbleed {
   padding: clamp(40px, 6vh, 80px) 0;
@@ -5605,13 +5647,11 @@ body.about-page {
     border-radius: 0;
   }
 
-  /* 5. Device: near-full-bleed, .content-image-block escapes container
-        but keeps minimum side padding so the device never kisses the
-        screen edges. */
+  /* 5. Device: near-full-bleed. Parent .case-block--device already spans
+        100vw, so .content-image-block must NOT break out again — just fill
+        it with minimum side padding. Device stays centered. */
   .content-image-block {
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    width: 100%;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
@@ -5619,14 +5659,14 @@ body.about-page {
   .content-image-block .device {
     max-width: 100%;
     width: 100%;
-    margin: 0;
+    margin: 0 auto;
     height: auto;
   }
   .device-mbp15 {
     padding-inline: 0;
   }
   .device.device-macprohigher {
-    padding-inline: 0.25rem;
+    padding-inline: 0;
   }
   .carousel-outer .single-block.block-device {
     margin-left: 0;
