@@ -8,7 +8,7 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-XSS-Protection: 1; mode=block
-  # Default for clean-URL HTML (/about, /forma-architects, etc. — no .html match below).
+  # Default for clean-URL HTML (/about, /forma-architects, etc. - no .html match below).
   # Browser always revalidates (max-age=0) but the EDGE may hold it 1 day (s-maxage) and
   # serve stale instantly for 7 days while refreshing (SWR). Pages purges cache on each
   # deploy, so new content still ships immediately. Asset types override this below.
@@ -24,14 +24,14 @@
 /favicon.png
   Cache-Control: public, max-age=2592000
 
-# CSS/JS bumped via ?v= query parameter — safe to cache aggressively
+# CSS/JS bumped via ?v= query parameter - safe to cache aggressively
 /*.css
   Cache-Control: public, max-age=31536000, immutable
 
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 
-# HTML — browser revalidates each load; edge holds 1 day + serves stale while
+# HTML - browser revalidates each load; edge holds 1 day + serves stale while
 # revalidating so mobile gets an instant edge HIT instead of an origin round-trip.
 /*.html
   Cache-Control: public, max-age=0, s-maxage=86400, stale-while-revalidate=604800
@@ -39,7 +39,7 @@
 /
   Cache-Control: public, max-age=0, s-maxage=86400, stale-while-revalidate=604800
 
-# SEO/AI files — short cache so updates ship quickly
+# SEO/AI files - short cache so updates ship quickly
 /sitemap.xml
   Cache-Control: public, max-age=3600
   Content-Type: application/xml; charset=utf-8

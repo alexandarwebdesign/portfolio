@@ -1,9 +1,9 @@
-# Cloudflare Pages — path-level rewrites and redirects.
+# Cloudflare Pages - path-level rewrites and redirects.
 # Cross-host redirects (www→apex, http→https) handled in Cloudflare dashboard:
 #   - SSL/TLS → Edge Certificates → "Always Use HTTPS" ON
 #   - Rules → Redirect Rules → www.aleksandarpavlov.com → aleksandarpavlov.com (301)
 
-# Cloudflare Pages has "Automatic clean URLs" enabled by default —
+# Cloudflare Pages has "Automatic clean URLs" enabled by default -
 # /about.html is served at /about, /forma-architects.html at /forma-architects.
 # Do NOT add explicit "/clean-url -> /clean-url.html 200" rewrites here;
 # they conflict with auto-clean-urls and cause ERR_TOO_MANY_REDIRECTS.
@@ -13,6 +13,6 @@
 /creative-asset       /project.html?slug=creative-asset       200
 /swis-saas            /project.html?slug=swis-saas            200
 
-# NOTE: do NOT add a catchall like "/*  /404.html  404" on Cloudflare Pages —
+# NOTE: do NOT add a catchall like "/*  /404.html  404" on Cloudflare Pages -
 # it is processed before static asset lookup and returns 404 for every image/CSS/JS.
 # Cloudflare Pages automatically serves /404.html for unmatched routes when present.

@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
 
-# Build sources (originals — processed outputs are committed)
+# Build sources (originals - processed outputs are committed)
 images/raw/
 
 # Dev tooling / IDE
