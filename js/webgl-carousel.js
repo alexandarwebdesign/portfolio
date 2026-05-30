@@ -138,9 +138,18 @@
 
     _transition(targetTex, newIndex) {
       if (this.isRunning || this.textures.length < 2) return;
-      this.isRunning = true;
       this.material.uniforms.texture2.value = targetTex;
       var self = this;
+
+      /* Honour prefers-reduced-motion: swap instantly, skip the morph tween */
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        this.current = newIndex;
+        this.material.uniforms.texture1.value = targetTex;
+        this.material.uniforms.progress.value = 0;
+        return;
+      }
+
+      this.isRunning = true;
       gsap.to(this.material.uniforms.progress, {
         duration: this.duration,
         value: 1,
