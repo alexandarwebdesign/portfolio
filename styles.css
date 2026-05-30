@@ -2505,6 +2505,21 @@ body.is-loaded .hero-stage-item {
   display: block;
 }
 
+/* Hero spans the full viewport (desktop + mobile) — break out of .container */
+.project-hero-full-section > .container {
+  max-width: none;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-left: 0;
+  padding-right: 0;
+}
+.project-hero-image-frame { border-radius: 0; }
+.project-hero-full-section .project-hero-image {
+  border-radius: 0;
+  height: clamp(440px, 72vh, 860px);
+  object-fit: cover;
+}
+
 @media (max-width: 768px) {
   .project-hero-image {
     border-radius: 12px;
