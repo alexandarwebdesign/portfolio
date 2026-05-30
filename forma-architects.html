@@ -10,6 +10,8 @@
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <!-- Warm the connection for the lazy-loaded WebGL carousel libs (three.js + GSAP) -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preload" as="image" href="/images/projects/keep_the_image_202604171721-1600.jpg" imagesrcset="/images/projects/keep_the_image_202604171721-800.avif 800w, /images/projects/keep_the_image_202604171721-1080.avif 1080w, /images/projects/keep_the_image_202604171721-1600.avif 1600w, /images/projects/keep_the_image_202604171721-2400.avif 2400w, /images/projects/keep_the_image_202604171721-2752.avif 2752w" imagesizes="100vw" type="image/avif" fetchpriority="high">
     <link rel="preload" href="styles.css?v=27" as="style">
     <link rel="stylesheet" href="styles.css?v=27" />
@@ -524,16 +526,51 @@
     </footer>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-    <script src="js/webgl-carousel.js" defer></script>
     <script src="main.js?v=8" defer></script>
     <script>
-      window.addEventListener('load', function() {
-        if (typeof window.initWebGLCarousels === 'function') {
-          window.initWebGLCarousels();
+      /* Lazy-load the WebGL carousel stack (three.js + GSAP + carousel ~250KB)
+         only when the device block nears the viewport — keeps it off the
+         initial load so the case study paints fast. */
+      (function () {
+        var target = document.querySelector('[data-webgl-images]');
+        if (!target) return;
+
+        function loadScript(src) {
+          return new Promise(function (resolve, reject) {
+            var s = document.createElement('script');
+            s.src = src;
+            s.onload = resolve;
+            s.onerror = reject;
+            document.body.appendChild(s);
+          });
         }
-      });
+
+        var booted = false;
+        function boot() {
+          if (booted) return;
+          booted = true;
+          Promise.all([
+            loadScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js'),
+            loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js')
+          ])
+            .then(function () { return loadScript('js/webgl-carousel.js?v=2'); })
+            .then(function () {
+              if (typeof window.initWebGLCarousels === 'function') window.initWebGLCarousels();
+            })
+            .catch(function (e) { console.warn('WebGL carousel failed to load', e); });
+        }
+
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              if (en.isIntersecting) { boot(); io.disconnect(); }
+            });
+          }, { rootMargin: '600px 0px' });
+          io.observe(target.closest('.carousel-outer') || target);
+        } else {
+          boot();
+        }
+      })();
     </script>
   </body>
 </html>
