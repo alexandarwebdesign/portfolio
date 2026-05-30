@@ -2516,8 +2516,13 @@ body.is-loaded .hero-stage-item {
 .project-hero-image-frame { border-radius: 0; }
 .project-hero-full-section .project-hero-image {
   border-radius: 0;
-  height: clamp(440px, 72vh, 860px);
   object-fit: cover;
+}
+/* Desktop only: full-height hero. Mobile keeps its own 50vh rule. */
+@media (min-width: 769px) {
+  .project-hero-full-section .project-hero-image {
+    height: 100vh;
+  }
 }
 
 @media (max-width: 768px) {
