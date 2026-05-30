@@ -229,7 +229,7 @@ body::after {
   --color-border: #8d97aa;                  /* was #c2c9d6 — bumped to UI 3:1 */
   --color-text-muted: rgba(41, 48, 61, 0.8);
   --color-text-soft: rgba(41, 48, 61, 0.75);
-  --color-text-light: rgba(41, 48, 61, 0.65); /* was 0.5 — now passes AA */
+  --color-text-light: rgba(41, 48, 61, 0.72); /* ~5.3:1 on bg — passes AA for normal text */
   --color-border-subtle: rgba(41, 48, 61, 0.12);
   --color-about-bg: #f8f6f2;
 
@@ -544,7 +544,10 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: none;
+  /* Transparent outline stays invisible normally but becomes a real focus ring
+     in Windows high-contrast / forced-colors mode, where box-shadow is dropped. */
+  outline: 2px solid transparent;
+  outline-offset: 2px;
   border-color: var(--color-accent);
   box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.24);
 }
@@ -1503,7 +1506,7 @@ body.is-loaded .hero-stage-item {
   line-height: var(--leading-tight);
   letter-spacing: 0.6px;
   text-transform: uppercase;
-  color: var(--color-text-light);
+  color: var(--color-text-muted);
 }
 
 .hanger-text {
@@ -2008,6 +2011,7 @@ body.is-loaded .hero-stage-item {
   align-items: center;
   gap: var(--space-4);
   width: 100%;
+  min-height: 44px;
   padding: var(--space-6);
   cursor: pointer;
   font-family: var(--font-body);
@@ -5733,4 +5737,28 @@ body.about-page {
         meta-block, and project-hero-logo-wrap. Do NOT kill transform
         globally — JS-driven parallax stays alive on mobile too. */
   /* (intentionally empty — previous blanket transform kill removed) */
+}
+
+/* ==========================================================================
+   prefers-contrast: more — honour OS high-contrast requests
+   (low-vision users; EU Accessibility Act). Only active when requested.
+   ========================================================================== */
+@media (prefers-contrast: more) {
+  :root {
+    --color-text: #000000;
+    --color-text-muted: rgba(0, 0, 0, 0.92);
+    --color-text-soft: rgba(0, 0, 0, 0.9);
+    --color-text-light: rgba(0, 0, 0, 0.85);
+    --color-border: #000000;
+    --color-border-subtle: rgba(0, 0, 0, 0.45);
+  }
+  a:not(.button-primary):not(.button-secondary),
+  .nav-link {
+    text-decoration: underline;
+  }
+  .glass-panel,
+  .project-card,
+  .form-input {
+    border: 1px solid var(--color-text);
+  }
 }
