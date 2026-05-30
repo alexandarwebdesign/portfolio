@@ -4651,6 +4651,13 @@ body.about-page {
   color: var(--color-text);
 }
 
+/* Desktop only: breathing room above the case title */
+@media (min-width: 769px) {
+  .case-title {
+    margin-top: clamp(40px, 6vh, 96px);
+  }
+}
+
 .case-header .conceptual-badge {
   display: inline-block;
   padding: 6px 14px;
