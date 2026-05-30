@@ -83,7 +83,7 @@
       for (int i = 0; i < MAX_MARCH_STEPS; i++) {
         if (i >= uIterations) break;
 
-        vec3 p = z * normalize(vec3((FC * 2.0 - r) / r.y, 1.0));
+        vec3 p = z * normalize(vec3((FC * 2.0 - r) / min(r.x, r.y), 1.0));
         p.yz *= rotate2D(uRotationYZ);
         p.xz *= rotate2D(uRotationXZ);
 
