@@ -119,6 +119,13 @@ input, textarea {
 p, li {
   text-wrap: pretty;
 }
+/* Balance headings so the last line never drops a single orphan word */
+h1, h2, h3,
+.hero-title, .section-title, .project-title,
+.case-title, .about-page-title, .about-display-title,
+.project-section-title {
+  text-wrap: balance;
+}
 
 /* Craft-pass perf: skip layout/paint for off-screen long sections */
 .services-section,
@@ -2576,7 +2583,8 @@ body.is-loaded .hero-stage-item {
 }
 
 .project-content-section .rich-text {
-  max-width: 800px;
+  /* ~70 chars/line — the comfortable reading measure for 20px body */
+  max-width: 70ch;
 }
 
 /* Project Gallery */
