@@ -147,37 +147,6 @@ h1, h2, h3,
   border-color: rgba(46, 160, 110, 0.55);
 }
 
-/* ==========================================================================
-   Signature moment — The Light Source
-   GPU-rendered radial glow follows cursor across every section.
-   Compositor-only, pointer-events:none, accent-tinted.
-   Disabled on touch + prefers-reduced-motion via @media.
-   ========================================================================== */
-:root {
-  --cursor-x: 50vw;
-  --cursor-y: 50vh;
-}
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(
-    520px circle at var(--cursor-x) var(--cursor-y),
-    rgba(0, 102, 255, 0.10),
-    rgba(0, 102, 255, 0.04) 35%,
-    transparent 65%
-  );
-  mix-blend-mode: multiply;
-  opacity: 1;
-  transition: opacity 400ms ease;
-  will-change: opacity;
-}
-@media (hover: none), (prefers-reduced-motion: reduce) {
-  body::after { display: none; }
-}
-
 /* Print stylesheet — clean text output, no chrome */
 @media print {
   header, footer, .footer-outer, .navbar, .mobile-nav, .nav-toggle,

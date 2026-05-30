@@ -994,36 +994,6 @@
     initAboutPhotoInteraction();
     initImageMarquee();
     initPlates();
-    initSignatureLight();
-  }
-
-  /**
-   * Signature moment — "The Light Source"
-   * Updates --cursor-x / --cursor-y custom properties on pointermove. CSS uses
-   * those vars in body::after's radial-gradient to render a soft cursor glow.
-   * Compositor-only (opacity + transform via background-position). rAF-throttled.
-   * No-ops on touch devices and when prefers-reduced-motion is set.
-   */
-  function initSignatureLight() {
-    if (window.matchMedia("(hover: none)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let x = window.innerWidth / 2;
-    let y = window.innerHeight / 2;
-    let rafId = null;
-
-    const root = document.documentElement;
-    function update() {
-      rafId = null;
-      root.style.setProperty("--cursor-x", x + "px");
-      root.style.setProperty("--cursor-y", y + "px");
-    }
-
-    window.addEventListener("pointermove", (e) => {
-      x = e.clientX;
-      y = e.clientY;
-      if (rafId === null) rafId = requestAnimationFrame(update);
-    }, { passive: true });
   }
 
   /**
