@@ -9,10 +9,11 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-XSS-Protection: 1; mode=block
   # Default for clean-URL HTML (/about, /forma-architects, etc. - no .html match below).
-  # Browser always revalidates (max-age=0) but the EDGE may hold it 1 day (s-maxage) and
-  # serve stale instantly for 7 days while refreshing (SWR). Pages purges cache on each
-  # deploy, so new content still ships immediately. Asset types override this below.
-  Cache-Control: public, max-age=0, s-maxage=86400, stale-while-revalidate=604800
+  # HTML has stable URLs and changes on every deploy, so it must NOT be edge-cached:
+  # max-age=0 + must-revalidate forces a revalidation each request (cheap ETag 304),
+  # so a new deploy is live instantly with no manual cache purge. Asset types below
+  # use long immutable caching because their filenames are versioned.
+  Cache-Control: public, max-age=0, must-revalidate
 
 # Long-cache immutable assets (filenames are versioned via ?v= query, content-hashed dir, or unique paths)
 /images/*
@@ -31,13 +32,13 @@
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 
-# HTML - browser revalidates each load; edge holds 1 day + serves stale while
-# revalidating so mobile gets an instant edge HIT instead of an origin round-trip.
+# HTML - stable URLs, changes on every deploy. Always revalidate (cheap ETag 304)
+# so deploys are live instantly. Never edge-cache HTML on a deploy-driven static site.
 /*.html
-  Cache-Control: public, max-age=0, s-maxage=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
 /
-  Cache-Control: public, max-age=0, s-maxage=86400, stale-while-revalidate=604800
+  Cache-Control: public, max-age=0, must-revalidate
 
 # SEO/AI files - short cache so updates ship quickly
 /sitemap.xml
