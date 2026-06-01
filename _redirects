@@ -8,10 +8,10 @@
 # Do NOT add explicit "/clean-url -> /clean-url.html 200" rewrites here;
 # they conflict with auto-clean-urls and cause ERR_TOO_MANY_REDIRECTS.
 
-# Dynamic project pages (JS-rendered, noscript fallback included)
-/birse                /project.html?slug=birse                200
-/creative-asset       /project.html?slug=creative-asset       200
-/swis-saas            /project.html?slug=swis-saas            200
+# Dynamic project pages - re-enable once project.html template is built
+# /birse                /project.html?slug=birse                200
+# /creative-asset       /project.html?slug=creative-asset       200
+# /swis-saas            /project.html?slug=swis-saas            200
 
 # NOTE: do NOT add a catchall like "/*  /404.html  404" on Cloudflare Pages -
 # it is processed before static asset lookup and returns 404 for every image/CSS/JS.

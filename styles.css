@@ -4540,7 +4540,7 @@ body.about-page {
   aspect-ratio: 3456 / 2234;
   margin: 0;
   padding: 10.5px;
-  border-radius: 18px;
+  border-radius: 12px;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
@@ -4555,7 +4555,7 @@ body.about-page {
   width: 100%;
   height: 100%;
   overflow: visible;
-  border-radius: 10px;
+  border-radius: 8px;
   transform: translateZ(0);
 }
 
@@ -4583,7 +4583,7 @@ body.about-page {
     /* Use min() so tile never exceeds viewport (no horizontal scroll feel). */
     width: min(78vw, 420px);
     padding: 7px;
-    border-radius: 12px;
+    border-radius: 8px;
     /* Drop expensive backdrop blur on mobile - main cause of jank.
        Use opaque-ish gradient that approximates the glass look. */
     backdrop-filter: none;
@@ -4591,7 +4591,7 @@ body.about-page {
     background: linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.70) 100%);
     box-shadow: 0 8px 20px rgba(0, 30, 80, 0.08);
   }
-  .image-marquee__item picture { border-radius: 7px; }
+  .image-marquee__item picture { border-radius: 4px; }
 }
 
 @media (max-width: 480px) {
@@ -4600,9 +4600,9 @@ body.about-page {
   .image-marquee__item {
     width: min(82vw, 340px);
     padding: 6px;
-    border-radius: 10px;
+    border-radius: 8px;
   }
-  .image-marquee__item picture { border-radius: 6px; }
+  .image-marquee__item picture { border-radius: 4px; }
 }
 
 /* Drop backdrop-filter on any touch/coarse-pointer device - the GPU cost of
