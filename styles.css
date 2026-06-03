@@ -3838,10 +3838,9 @@ body.about-page {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
-  border-radius: 1.4rem;
+  border-radius: 0;
   overflow: hidden;
   box-shadow: 0 28px 56px rgba(20, 21, 23, 0.10);
-  cursor: pointer;
   background: #0f1012;
 }
 
@@ -3849,6 +3848,53 @@ body.about-page {
   content: "";
   display: block;
   padding-top: 56.5%; /* 16:9-ish, matches reference */
+}
+
+/* Birsé: let an <img> (inside <picture>) fill the wide-video band like the video does */
+.content-wide-video picture { display: contents; }
+
+/* Birsé nav band: light UI screenshot - kill the dark bg + rounded-corner leak,
+   and let the label overflow the frame instead of being clipped. */
+.content-wide-video.cwv-birse {
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+/* Show the whole image at natural aspect: width fills, height auto (no fixed band, no crop) */
+.content-wide-video.cwv-birse::before { display: none; }
+.content-wide-video.cwv-birse .screen-video {
+  position: static;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  object-fit: fill;
+}
+
+/* Birsé phones: stronger, phone-like corner radius that stays proportional
+   across breakpoints (phone slot is ~20-25vw wide, so ~2.6vw ≈ 12% radius).
+   clip-path mirrors it so the <img> rounds even inside a display:contents <picture>. */
+/* Top-align the phones so a small per-image aspect-ratio difference can't
+   stretch the shorter columns (which left fill gaps / clipped the taller ones). */
+.block-mobile-devices.bmd-birse .mobile-devices-row {
+  align-items: flex-start;
+}
+.block-mobile-devices.bmd-birse .mobile-screen {
+  border-radius: 0;
+}
+.block-mobile-devices.bmd-birse .mobile-screen-img {
+  clip-path: none;
+}
+
+/* Birsé static phone (forma's 2-static-1-scroll mix): fill the phone window, show the top, no motion */
+.block-mobile-devices .mobile-screen .screen-static-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 
 .content-wide-video .screen-video {
@@ -4188,7 +4234,7 @@ body.about-page {
   top: auto;
   left: auto;
   transform: none;
-  border-radius: 1.4rem;
+  border-radius: 0;
   overflow: hidden;
   box-shadow: 0 28px 56px rgba(20, 21, 23, 0.1);
 }
@@ -5757,4 +5803,191 @@ body.about-page {
   .form-input {
     border: 1px solid var(--color-text);
   }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Birsé case study — auto-scrolling screenshots
+   Tall full-page screenshots sit in a fixed device window and
+   slowly scroll to mimic a walkthrough. Each image carries its own
+   --scroll-end (computed from its aspect vs the window aspect) and
+   --scroll-dur. Static for reduced-motion users.
+   ─────────────────────────────────────────────────────────────── */
+
+/* Phone window: clamp a tall image to a ~100vh phone aspect (375:812). */
+.block-mobile-devices .mobile-screen--scroll {
+  overflow: hidden;
+}
+.block-mobile-devices .mobile-screen--scroll::before {
+  content: "";
+  display: block;
+  padding-top: 216%;
+}
+.block-mobile-devices .mobile-screen--scroll .screen-scroll-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  will-change: transform;
+}
+
+/* Desktop laptop window: tall screenshot scrolls inside the .single-image clip. */
+.device .single-image .screen-scroll-img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #fff;
+  transform: translate(-50%, 0);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .block-mobile-devices .mobile-screen--scroll .screen-scroll-img {
+    animation: birse-scroll-y var(--scroll-dur, 22s) linear infinite;
+  }
+  .device .single-image .screen-scroll-img {
+    animation: birse-scroll-yx var(--scroll-dur, 28s) linear infinite;
+  }
+}
+
+@keyframes birse-scroll-y {
+  0%, 5% { 
+    transform: translateY(0); 
+    animation-timing-function: ease-in-out;
+  }
+  85%, 90% { 
+    transform: translateY(var(--scroll-end, 0%)); 
+    animation-timing-function: ease-in-out;
+  }
+  100% { 
+    transform: translateY(0); 
+  }
+}
+@keyframes birse-scroll-yx {
+  0%, 5% { 
+    transform: translate(-50%, 0); 
+    animation-timing-function: ease-in-out;
+  }
+  85%, 90% { 
+    transform: translate(-50%, var(--scroll-end, 0%)); 
+    animation-timing-function: ease-in-out;
+  }
+  100% { 
+    transform: translate(-50%, 0); 
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Birsé — varied editorial rows (forma foundation + Snellenberg
+   per-row stacking). Mixed 1/2/3-up rows, unequal widths, offsets,
+   frameless clean shots. Tall shots reuse the auto-scroll mechanic.
+   ─────────────────────────────────────────────────────────────── */
+.case-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 3.5vw, 64px);
+  align-items: flex-start;
+  width: 100%;
+}
+.case-row--center { justify-content: center; }
+.case-row--phones { justify-content: center; align-items: flex-start; }
+
+.case-cell { flex: 1 1 0; min-width: 0; }
+.case-cell--wide   { flex: 1.7 1 0; }
+.case-cell--narrow { flex: 0.72 1 0; }
+.case-cell--mid    { flex: 0 1 min(840px, 84%); }     /* contained single */
+.case-cell--phone  { flex: 0 1 min(300px, 46%); }     /* a single phone in a row */
+.case-cell--offset { margin-top: clamp(48px, 9vw, 150px); }
+
+@media (max-width: 768px) {
+  .case-row { flex-direction: column; align-items: stretch; gap: clamp(40px, 11vw, 72px); }
+  .case-cell,
+  .case-cell--wide,
+  .case-cell--narrow,
+  .case-cell--mid { flex: 1 1 auto; }
+  .case-cell--phone { flex: 1 1 auto; max-width: 320px; margin-inline: auto; }
+  .case-cell--offset { margin-top: 0; }
+}
+
+/* Frameless clean shot — no device bezel. Fixed window aspect + overflow clip. */
+.case-shot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: 0 30px 64px rgba(20, 21, 23, 0.10);
+}
+.case-shot--desktop::before { content: ""; display: block; padding-top: 62.5%; }
+.case-shot--phone::before   { content: ""; display: block; padding-top: 216%; }
+.case-shot--wide::before    { content: ""; display: block; padding-top: 53%; }
+/* Inside a full-bleed block the shot goes edge-to-edge: no radius, no shadow */
+.case-block--fullbleed .case-shot { border-radius: 0; box-shadow: none; }
+.case-shot .screen-scroll-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .case-shot .screen-scroll-img {
+    animation: birse-scroll-y var(--scroll-dur, 24s) linear infinite;
+  }
+}
+/* Static fill for shots whose image is shorter than the window (no scroll) */
+.case-shot .case-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+/* Optional caption under a shot */
+.case-shot-caption {
+  margin-top: clamp(12px, 1.4vw, 20px);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-soft, #6b6560);
+}
+
+/* Contained full image on a tint backdrop (whole UI screen, no crop, no parallax) */
+.case-figure { max-width: 1100px; margin-inline: auto; }
+.case-figure-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+  box-shadow: 0 28px 60px rgba(20, 21, 23, 0.10);
+}
+
+/* Birsé hero logo pill — softer gradient + slightly larger wordmark (frame size unchanged) */
+.project-hero-logo-wrap.hero-logo--birse {
+  background: radial-gradient(circle, rgba(224, 224, 224, 0.35) 30%, rgba(255, 255, 255, 1) 100%);
+  padding: 1.6vw;
+}
+
+/* Link with arrow and accent color */
+.case-meta-link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.case-meta-link .inline-arrow {
+  transition: transform 0.2s ease;
+}
+.case-meta-link:hover .inline-arrow {
+  transform: translateX(3px);
 }

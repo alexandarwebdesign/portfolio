@@ -25,22 +25,23 @@
         'uniform sampler2D texture1;',
         'uniform sampler2D texture2;',
         'uniform sampler2D displacement;',
-        'uniform vec4 resolution;',
+        'uniform vec4 resolution1;',
+        'uniform vec4 resolution2;',
         'varying vec2 vUv;',
         'float parabola(float x, float k) {',
         '  return pow(4.0 * x * (1.0 - x), k);',
         '}',
         'void main() {',
-        '  vec2 newUV = (vUv - vec2(0.5)) * resolution.zw + vec2(0.5);',
-        '  vec2 uv = newUV;',
+        '  vec2 newUV1 = (vUv - vec2(0.5)) * resolution1.zw + vec2(0.5);',
+        '  vec2 newUV2 = (vUv - vec2(0.5)) * resolution2.zw + vec2(0.5);',
         '  vec2 start = vec2(0.5, 0.5);',
-        '  vec2 aspect = resolution.wz;',
+        '  vec2 aspect = resolution1.wz;',
         '  vec4 noise = texture2D(displacement, fract(vUv + time * 0.04));',
         '  float prog = progress * 0.66 + noise.g * 0.02;',
-        '  float circ = 1.0 - smoothstep(-width, 0.0, radius * distance(start * aspect, uv * aspect) - prog * (1.0 + width));',
+        '  float circ = 1.0 - smoothstep(-width, 0.0, radius * distance(start * aspect, newUV1 * aspect) - prog * (1.0 + width));',
         '  float intpl = pow(abs(circ), 1.0);',
-        '  vec4 t1 = texture2D(texture1, (uv - 0.5) * (1.0 - intpl) + 0.5);',
-        '  vec4 t2 = texture2D(texture2, (uv - 0.5) * intpl + 0.5);',
+        '  vec4 t1 = texture2D(texture1, (newUV1 - 0.5) * (1.0 - intpl) + 0.5);',
+        '  vec4 t2 = texture2D(texture2, (newUV2 - 0.5) * intpl + 0.5);',
         '  gl_FragColor = mix(t1, t2, intpl);',
         '}'
       ].join('\n');
@@ -99,7 +100,8 @@
           texture1:     { value: this.textures[0] },
           texture2:     { value: this.textures[1] || this.textures[0] },
           displacement: { value: this.dispTex },
-          resolution:   { value: new THREE.Vector4() }
+          resolution1:  { value: new THREE.Vector4() },
+          resolution2:  { value: new THREE.Vector4() }
         },
         vertexShader:   this.vertex,
         fragmentShader: this.fragment
@@ -118,17 +120,23 @@
       this.renderer.setSize(w, h);
       this.camera.aspect = w / h;
 
-      var imgAspect = this.textures[0].image.height / this.textures[0].image.width;
-      var a1, a2;
-      if (h / w > imgAspect) {
-        a1 = (w / h) * imgAspect;
-        a2 = 1;
-      } else {
-        a1 = 1;
-        a2 = (h / w) / imgAspect;
+      var self = this;
+      function setRes(tex, uniform) {
+        if (!tex || !tex.image) return;
+        var imgAspect = tex.image.height / tex.image.width;
+        var a1, a2;
+        if (h / w > imgAspect) {
+          a1 = (w / h) * imgAspect;
+          a2 = 1;
+        } else {
+          a1 = 1;
+          a2 = (h / w) / imgAspect;
+        }
+        uniform.value.set(w, h, a1, a2);
       }
 
-      this.material.uniforms.resolution.value.set(w, h, a1, a2);
+      setRes(this.material.uniforms.texture1.value, this.material.uniforms.resolution1);
+      setRes(this.material.uniforms.texture2.value, this.material.uniforms.resolution2);
 
       var dist = this.camera.position.z;
       this.camera.fov = 2 * (180 / Math.PI) * Math.atan(1 / (2 * dist));
@@ -139,12 +147,22 @@
     _transition(targetTex, newIndex) {
       if (this.isRunning || this.textures.length < 2) return;
       this.material.uniforms.texture2.value = targetTex;
+      
+      var w = this.container.offsetWidth;
+      var h = this.container.offsetHeight;
+      var imgAspect = targetTex.image.height / targetTex.image.width;
+      var a1, a2;
+      if (h / w > imgAspect) { a1 = (w / h) * imgAspect; a2 = 1; }
+      else { a1 = 1; a2 = (h / w) / imgAspect; }
+      this.material.uniforms.resolution2.value.set(w, h, a1, a2);
+      
       var self = this;
 
       /* Honour prefers-reduced-motion: swap instantly, skip the morph tween */
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         this.current = newIndex;
         this.material.uniforms.texture1.value = targetTex;
+        this.material.uniforms.resolution1.value.copy(this.material.uniforms.resolution2.value);
         this.material.uniforms.progress.value = 0;
         return;
       }
@@ -157,6 +175,7 @@
         onComplete: function () {
           self.current = newIndex;
           self.material.uniforms.texture1.value = targetTex;
+          self.material.uniforms.resolution1.value.copy(self.material.uniforms.resolution2.value);
           self.material.uniforms.progress.value = 0;
           self.isRunning = false;
         }

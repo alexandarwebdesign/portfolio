@@ -24,3 +24,7 @@ images/toups/
 Thumbs.db
 *.log
 *.tmp
+
+# Unused / Hidden Assets
+Gems/
+move-gems.js

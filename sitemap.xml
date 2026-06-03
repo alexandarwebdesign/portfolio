@@ -32,6 +32,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://aleksandarpavlov.com/birse</loc>
+    <lastmod>2026-06-03</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://aleksandarpavlov.com/images/projects/birse.webp</image:loc>
+      <image:title>Birsé - Jewelry E-Commerce UX Redesign Case Study</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://aleksandarpavlov.com/llms.txt</loc>
     <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>

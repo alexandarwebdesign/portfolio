@@ -158,11 +158,28 @@ A 6-page website plus individual project case studies. Three design iterations r
 
 ---
 
-### Birsé (2026) - E-Commerce / Luxury Brand (Upcoming)
+### Birsé (2026) - Jewelry E-Commerce UX Redesign
 
 **URL:** https://aleksandarpavlov.com/birse
-**Category:** E-Commerce / Luxury Brand
-**Description:** A luxury e-commerce platform for the Birsé jewelry brand - aspirational product experience, premium visual identity, and conversion-focused product pages. Currently in production.
+**Live site (current design):** https://www.birse.bg/
+**Category:** E-Commerce / Jewelry
+**Tags:** Web Design, UX Design, UI Design, E-Commerce, Conversion Optimization
+**Status:** Redesign in development, delivered with PFG Bulgaria; the current site is still live.
+
+**The Brief:**
+BirSé is a Bulgarian fine-jewelry house selling gold, silver, and natural-stone pieces online since 2013, with stores in Sofia. The brief was pointed: small UI changes, drastic UX improvements. Not a rebuild - a strategic visual elevation of a live store that already ranks and sells, without breaking its SEO.
+
+**The Challenge:**
+Around 80% of traffic is mobile, mostly women aged 45 to 64, often arriving from a Google ad. The live store could not be rebuilt, its SEO had to survive, and Bulgaria's 2026 euro adoption made dual-currency pricing a legal requirement. Every design decision was evaluated on a 375px screen first, desktop second.
+
+**The Design Concept:**
+The direction is "warm luxury" - clean but not cold. Generous whitespace, DM Serif Display headlines with italic serif product names, DM Sans body type at a 16px minimum, a muted gold accent (#B8986A), and a single confident red (#C4362A) used with restraint. Dark near-black call-to-action buttons read as premium rather than discount. The palette sits on a warm off-white ground (#FAF9F7). Designed for a 50-year-old shopping on an iPhone, not a design-award jury.
+
+**The Solution:**
+Mobile navigation as a full-screen drill-down drawer - a maximum of two taps to any subcategory, favouring visible navigation over a buried hamburger. Category filters moved into a slide-up bottom sheet so the product grid shows by default, with live result counts that prevent zero-result dead ends - the single biggest mobile win. A conversion-focused product page with ruthless hierarchy, trust chips above the fold, TBI installment pricing placed at the moment of price hesitation, and a sticky add-to-cart bar. A true multi-step checkout built around how Bulgaria buys: delivery method first (Еконт, Спиди, BoxNow offices, or store pickup), cash-on-delivery as the default payment, express pay at the top, and the promo-code field hidden so shoppers do not leave to hunt for a code. Legally-safe product cards with euro-first dual currency at equal weight, EU-Omnibus compliant - the discounted price shown in red, with no fake-urgency badges or phantom strikethroughs. A signature natural-stone system renders gems as radial-gradient orbs, colour-dotted for instant scanning.
+
+**What it optimises for:**
+The redesign is in development; targets are set, not yet measured. Guest checkout to cut abandonment (Baymard Institute estimates a 25-35% lift), proper checkout event instrumentation so wins become trackable, and a storefront shaped around the 80% who shop on a phone. No launch metrics exist yet - this is a design and handoff project still in production.
 
 ---
 
