@@ -823,7 +823,6 @@
 
   // ==========================================================================
   // 9. SCROLL PARALLAX (data-parallax-speed)
-  // Same approach as the reference layout study.
   // Elements with [data-parallax-speed] shift vertically relative to their
   // center vs the viewport center as the user scrolls.
   // ==========================================================================
@@ -842,12 +841,20 @@
 
       const scrollY = window.scrollY || window.pageYOffset;
       const viewportCenter = scrollY + window.innerHeight / 2;
+      const isMobile = window.innerWidth <= 900;
 
       items.forEach((item) => {
         item.style.transform = "none";
         let rawSpeed = Number(item.dataset.parallaxSpeed) || 0;
-        if (window.innerWidth <= 900 && rawSpeed > 1) {
-          rawSpeed = 1;
+
+        // On mobile, disable parallax entirely for phone-column sections
+        if (isMobile && item.closest(".mobile-col")) {
+          return;
+        }
+
+        // Cap all other parallax speeds on mobile for subtlety
+        if (isMobile && Math.abs(rawSpeed) > 1) {
+          rawSpeed = rawSpeed > 0 ? 1 : -1;
         }
 
         const speed = rawSpeed / 10;
@@ -860,7 +867,6 @@
 
     function requestParallaxUpdate() {
       if (ticking) return;
-
       ticking = true;
       window.requestAnimationFrame(() => {
         updateParallax();
@@ -878,6 +884,7 @@
     window.addEventListener("resize", refreshParallaxItems, { passive: true });
     window.addEventListener("portfolio:content-updated", refreshParallaxItems);
   }
+
   // ==========================================================================
 
   function initAboutPhotoInteraction() {
@@ -903,7 +910,6 @@
   function initImageMarquee() {
     const marquees = document.querySelectorAll("[data-marquee]");
     if (!marquees.length) return;
-
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -1067,6 +1073,56 @@
     });
   }
 
+  function initCaseCarousels() {
+    const carousels = document.querySelectorAll("[data-case-carousel]");
+    if (!carousels.length) return;
+
+    carousels.forEach((root) => {
+      const slides = Array.from(root.querySelectorAll("[data-carousel-slide]"));
+      if (!slides.length) return;
+
+      let activeIndex = slides.findIndex((slide) =>
+        slide.classList.contains("is-active"),
+      );
+      if (activeIndex < 0) activeIndex = 0;
+
+      const buttons = Array.from(
+        document.querySelectorAll(".carousel-btn[data-carousel]"),
+      ).filter((button) => button.dataset.carousel === root.id);
+
+      function setActive(nextIndex) {
+        activeIndex = (nextIndex + slides.length) % slides.length;
+
+        slides.forEach((slide, index) => {
+          const isActive = index === activeIndex;
+          slide.classList.toggle("is-active", isActive);
+          slide.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        root.dataset.activeSlide = String(activeIndex + 1);
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const direction = button.dataset.dir === "prev" ? -1 : 1;
+          setActive(activeIndex + direction);
+        });
+      });
+
+      root.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        setActive(activeIndex + (event.key === "ArrowLeft" ? -1 : 1));
+      });
+
+      if (!root.hasAttribute("tabindex")) {
+        root.setAttribute("tabindex", "0");
+      }
+
+      setActive(activeIndex);
+    });
+  }
+
   function init() {
     initPageLoadSequence();
     initScrollReveal();
@@ -1081,6 +1137,7 @@
     initParallax();
     initAboutPhotoInteraction();
     initImageMarquee();
+    initCaseCarousels();
     initPlates();
   }
 
