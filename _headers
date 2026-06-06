@@ -1,5 +1,12 @@
 # Cloudflare Pages headers
 # Applies to every response unless overridden by a more specific rule below.
+#
+# IMPORTANT: Cloudflare Pages MERGES every matching rule's headers - it does NOT
+# let a more specific rule override a broader one. So Cache-Control must NEVER be
+# set on /* : it would concatenate onto every asset rule below
+# ("max-age=0, must-revalidate, ... max-age=31536000, immutable") and browsers
+# take the FIRST max-age, killing immutable caching and re-validating every asset
+# on every navigation. Cache-Control is therefore scoped to explicit paths only.
 
 /*
   X-Content-Type-Options: nosniff
@@ -8,12 +15,6 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-XSS-Protection: 1; mode=block
-  # Default for clean-URL HTML (/about, /forma-architects, etc. - no .html match below).
-  # HTML has stable URLs and changes on every deploy, so it must NOT be edge-cached:
-  # max-age=0 + must-revalidate forces a revalidation each request (cheap ETag 304),
-  # so a new deploy is live instantly with no manual cache purge. Asset types below
-  # use long immutable caching because their filenames are versioned.
-  Cache-Control: public, max-age=0, must-revalidate
 
 # Long-cache immutable assets (filenames are versioned via ?v= query, content-hashed dir, or unique paths)
 /images/*
@@ -22,9 +23,6 @@
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
-/favicon.png
-  Cache-Control: public, max-age=2592000
-
 # CSS/JS bumped via ?v= query parameter - safe to cache aggressively
 /*.css
   Cache-Control: public, max-age=31536000, immutable
@@ -32,12 +30,29 @@
 /*.js
   Cache-Control: public, max-age=31536000, immutable
 
-# HTML - stable URLs, changes on every deploy. Always revalidate (cheap ETag 304)
-# so deploys are live instantly. Never edge-cache HTML on a deploy-driven static site.
+/favicon.png
+  Cache-Control: public, max-age=2592000
+
+# HTML surfaces - stable URLs, change on every deploy, so never long-cache them.
+# max-age=0 + must-revalidate = a deploy is live on the next navigation (cheap ETag
+# 304), with no manual cache purge. Clean URLs (/about etc.) are extensionless, so
+# they do NOT match /*.html and must be listed explicitly. ADD NEW PAGES HERE.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
-/
+/about
+  Cache-Control: public, max-age=0, must-revalidate
+
+/forma-architects
+  Cache-Control: public, max-age=0, must-revalidate
+
+/birse
+  Cache-Control: public, max-age=0, must-revalidate
+
+/404
   Cache-Control: public, max-age=0, must-revalidate
 
 # SEO/AI files - short cache so updates ship quickly
