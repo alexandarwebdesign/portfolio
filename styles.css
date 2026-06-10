@@ -207,9 +207,9 @@ h1, h2, h3,
   --color-text: var(--color-ink);
   --color-text-muted: rgba(28, 29, 32, 0.62);
   --color-text-soft: rgba(28, 29, 32, 0.62);
-  --color-text-light: rgba(28, 29, 32, 0.42);
-  --color-text-tertiary: rgba(28, 29, 32, 0.42);
-  --color-border: rgba(28, 29, 32, 0.28);
+  --color-text-light: rgba(28, 29, 32, 0.55);
+  --color-text-tertiary: rgba(28, 29, 32, 0.55);
+  --color-border: rgba(28, 29, 32, 0.45);
   --color-border-subtle: rgba(28, 29, 32, 0.14);
   --color-white: #ffffff;
   --color-accent: #455ce9;
