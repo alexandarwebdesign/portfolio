@@ -162,7 +162,7 @@
         if (targetElement) {
           e.preventDefault();
 
-          // Calculate offset for fixed navbar
+          // Calculate offset for the fixed nav pill
           const navbarHeight = 120;
           const focusDelay = scrollToAnchorTarget(targetElement, navbarHeight);
 
@@ -202,54 +202,52 @@
   }
 
   // ==========================================================================
-  // 3. ACTIVE NAVIGATION STATE
+  // 3. CONTACT POPOVER
+  // Espacio pattern: closes on outside click, scroll, or Escape. The popover
+  // ships with [hidden] for no-JS users; JS removes it on first open.
   // ==========================================================================
 
-  /**
-   * Highlight active navigation link based on scroll position
-   */
-  function initActiveNavigation() {
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll(".nav-link");
+  function initContactPopover() {
+    const btn = document.querySelector(".nav-contact-btn");
+    const pop = document.getElementById("nav-popover");
+    if (!btn || !pop) return;
 
-    if (!sections.length || !navLinks.length) return;
-
-    function updateActiveLink() {
-      const scrollPosition = window.scrollY + 200;
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.getAttribute("id");
-
-        if (
-          scrollPosition >= sectionTop &&
-          scrollPosition < sectionTop + sectionHeight
-        ) {
-          navLinks.forEach((link) => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${sectionId}`) {
-              link.classList.add("active");
-            }
-          });
-        }
-      });
+    function close() {
+      pop.classList.remove("is-open");
+      btn.setAttribute("aria-expanded", "false");
+      document.removeEventListener("click", onDocClick, true);
+      window.removeEventListener("scroll", close, { passive: true });
+      document.removeEventListener("keydown", onKey);
     }
 
-    // Throttle scroll event for performance
-    let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveLink();
-          ticking = false;
-        });
-        ticking = true;
+    function onDocClick(e) {
+      if (!pop.contains(e.target) && e.target !== btn) close();
+    }
+
+    function onKey(e) {
+      if (e.key === "Escape") {
+        close();
+        btn.focus();
       }
+    }
+
+    btn.addEventListener("click", () => {
+      if (pop.classList.contains("is-open")) {
+        close();
+        return;
+      }
+      pop.hidden = false;
+      requestAnimationFrame(() => pop.classList.add("is-open"));
+      btn.setAttribute("aria-expanded", "true");
+      document.addEventListener("click", onDocClick, true);
+      window.addEventListener("scroll", close, { passive: true });
+      document.addEventListener("keydown", onKey);
     });
 
-    // Initial check
-    updateActiveLink();
+    // Close after navigating to #contact from the popover CTA
+    pop
+      .querySelectorAll('a[href*="#"]')
+      .forEach((a) => a.addEventListener("click", close));
   }
 
   // ==========================================================================
@@ -425,153 +423,6 @@
   function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
-  }
-
-  // ==========================================================================
-  // 5. NAVBAR SCROLL EFFECT
-  // ==========================================================================
-
-  /**
-   * Add/remove class on navbar based on scroll position
-   */
-  function initNavbarScroll() {
-    const navbar = document.querySelector(".navbar");
-
-    if (!navbar) return;
-
-    let lastScrollY = 0;
-
-    function updateNavbarAtY(currentScrollY) {
-      if (currentScrollY > 80) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
-      }
-
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        navbar.classList.add("navbar--hidden");
-      } else {
-        navbar.classList.remove("navbar--hidden");
-      }
-
-      lastScrollY = currentScrollY;
-    }
-
-    let ticking2 = false;
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking2) {
-          window.requestAnimationFrame(() => {
-            updateNavbarAtY(window.scrollY);
-            ticking2 = false;
-          });
-          ticking2 = true;
-        }
-      },
-      { passive: true },
-    );
-
-    updateNavbarAtY(window.scrollY);
-  }
-
-  // ==========================================================================
-  // 6. MOBILE NAVIGATION - Lightweight Overlay Transition
-  // ==========================================================================
-
-  function initMobileNav() {
-    const toggle = document.querySelector(".nav-toggle");
-    const mobileNav = document.getElementById("mobile-nav");
-    if (!toggle || !mobileNav) return;
-
-    const mobileViewport = window.matchMedia("(max-width: 900px)");
-    const { tempo, exitRatio } = getMotionSettings();
-    const navOpenDuration = Math.max(280, Math.round(tempo * 0.82));
-    const navCloseDuration = Math.max(
-      180,
-      Math.round(navOpenDuration * Math.max(exitRatio, 0.7)),
-    );
-
-    mobileNav.style.setProperty(
-      "--mobile-nav-open-duration",
-      `${navOpenDuration}ms`,
-    );
-    mobileNav.style.setProperty(
-      "--mobile-nav-close-duration",
-      `${navCloseDuration}ms`,
-    );
-
-    function setOpenState(isOpen) {
-      toggle.classList.toggle("is-open", isOpen);
-      toggle.setAttribute("aria-expanded", String(isOpen));
-      toggle.setAttribute(
-        "aria-label",
-        isOpen ? "Close navigation menu" : "Open navigation menu",
-      );
-      mobileNav.classList.toggle("is-open", isOpen);
-      mobileNav.setAttribute("aria-hidden", String(!isOpen));
-      document.body.style.overflow = isOpen ? "hidden" : "";
-      document.documentElement.style.overflow = isOpen ? "hidden" : "";
-      // a11y: make background content inert while menu is open so screen
-      // readers + keyboard cannot interact with content behind the dialog.
-      // Skip <header> - it contains the nav-toggle which must stay live
-      // to close the menu.
-      const mainEl = document.getElementById("main-content");
-      const footerEl = document.querySelector("footer");
-      [mainEl, footerEl].forEach((el) => {
-        if (!el) return;
-        if (isOpen) el.setAttribute("inert", "");
-        else el.removeAttribute("inert");
-      });
-    }
-
-    function openNav() {
-      if (!mobileViewport.matches) return;
-      setOpenState(true);
-    }
-
-    function closeNav() {
-      setOpenState(false);
-    }
-
-    function closeNavOnDesktop(event) {
-      const matches =
-        typeof event?.matches === "boolean"
-          ? event.matches
-          : mobileViewport.matches;
-      if (!matches) {
-        closeNav();
-      }
-    }
-
-    setOpenState(false);
-
-    toggle.addEventListener("click", () => {
-      toggle.classList.contains("is-open") ? closeNav() : openNav();
-    });
-
-    mobileNav
-      .querySelectorAll(".mobile-nav-link, .mobile-nav-cta")
-      .forEach((link) => {
-        link.addEventListener("click", closeNav);
-      });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && toggle.classList.contains("is-open"))
-        closeNav();
-    });
-
-    mobileNav.addEventListener("click", (e) => {
-      if (e.target === mobileNav) {
-        closeNav();
-      }
-    });
-
-    if (typeof mobileViewport.addEventListener === "function") {
-      mobileViewport.addEventListener("change", closeNavOnDesktop);
-    } else if (typeof mobileViewport.addListener === "function") {
-      mobileViewport.addListener(closeNavOnDesktop);
-    }
   }
 
   // ==========================================================================
@@ -1143,10 +994,8 @@
     initScrollReveal();
     initServiceCardIcons();
     initSmoothScroll();
-    initActiveNavigation();
+    initContactPopover();
     initFormHandling();
-    initNavbarScroll();
-    initMobileNav();
     initFaqAccordion();
     initContactHashFocus();
     initParallax();
