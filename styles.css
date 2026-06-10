@@ -854,6 +854,7 @@ textarea:focus-visible {
   border-radius: var(--border-radius);
   aspect-ratio: 16 / 10;
   background: var(--color-surface-subtle);
+  isolation: isolate;
 }
 
 .project-card-media img {
@@ -869,6 +870,7 @@ textarea:focus-visible {
 
 .project-card-meta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   gap: 16px;
@@ -888,7 +890,7 @@ textarea:focus-visible {
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
   color: var(--color-text-tertiary);
-  white-space: nowrap;
+  white-space: normal;
 }
 
 /* Upcoming (non-link) cards: dimmed media, inert */
@@ -2991,9 +2993,8 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
    ========================================================================== */
 
 @media (max-width: 768px) {
-  /* Project Grid - single column, tighter row rhythm */
+  /* Project Grid - tighter row rhythm (columns already 1fr from ≤900px rule) */
   .project-grid {
-    grid-template-columns: 1fr;
     gap: 40px;
   }
 
