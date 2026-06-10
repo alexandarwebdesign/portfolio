@@ -119,7 +119,7 @@
       "inLanguage": "en",
       "speakable": {
         "@type": "SpeakableSpecification",
-        "cssSelector": [".hero-title", ".hero-subtitle", ".service-title", ".service-description", ".about-bio-new", ".section-title-display"]
+        "cssSelector": [".hero-title", ".hero-subtitle", ".service-title", ".service-description", ".about-bio-new", ".section-title"]
       }
     }
     </script>
@@ -374,10 +374,8 @@
       <section id="work" class="work-section">
         <div class="container">
           <header class="section-header reveal">
-            <div class="section-header-left">
-              <h2 class="section-title">Work</h2>
-            </div>
-            <span class="project-count">(04)</span>
+            <p class="mono-label"><span class="index">(01)</span> Selected Work &middot; 04 Projects</p>
+            <h2 class="section-title">Work that ships.</h2>
           </header>
           
           <div class="project-grid" id="project-grid">
@@ -523,6 +521,11 @@
       <section id="about" class="about-section">
         <div class="container">
 
+          <div class="section-header reveal">
+            <p class="mono-label"><span class="index">(02)</span> About</p>
+            <h2 class="section-title">Design for how people behave.</h2>
+          </div>
+
           <div class="about-grid reveal">
             <div class="about-lead">
               <div class="about-heading-content">
@@ -533,15 +536,9 @@
                     <img src="/images/aleksandar-pavlov-ux-designer-720.jpg" srcset="/images/aleksandar-pavlov-ux-designer-500.jpg 500w, /images/aleksandar-pavlov-ux-designer-720.jpg 720w, /images/aleksandar-pavlov-ux-designer-800.jpg 800w" sizes="96px" alt="Aleksandar Pavlov, UX/UI Designer and Website Developer" width="96" height="96" loading="lazy" decoding="async">
                   </picture>
                 </div>
-                <h2 class="section-title">About</h2>
               </div>
-              <p class="about-bio-new">I'm Aleksandar — a UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Years in UX/UI taught me design is about how people behave, not just how things look.</p>
-              <a href="/about" class="about-cta-btn">
-                <span class="btn-content">
-                  <span class="btn-text">The Full Story</span>
-                  <span class="btn-hover-text">The Full Story</span>
-                </span>
-              </a>
+              <p class="about-bio-new">I'm Aleksandar - a UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Years in UX/UI taught me design is about how people behave, not just how things look.</p>
+              <a href="/about" class="link-roll" data-text="The Full Story"><span>The Full Story</span></a>
             </div>
 
             <dl class="about-index">
@@ -586,7 +583,10 @@
       <!-- Services Section -->
       <section id="services" class="services-section">
         <div class="container">
-          <h2 class="section-title-display reveal">Services</h2>
+          <div class="section-header reveal">
+            <p class="mono-label"><span class="index">(03)</span> Services</p>
+            <h2 class="section-title">From strategy to live site.</h2>
+          </div>
 
           <div class="services-list">
             <article class="service-item reveal" data-service="web-design" role="button" tabindex="0" aria-label="Web Design & UX Strategy - start a project with this service preselected">
@@ -642,12 +642,7 @@
           </div>
 
           <div class="services-cta reveal">
-            <a href="#contact" class="button-primary">
-              <span class="btn-content">
-                <span class="btn-text">Let's work together →</span>
-                <span class="btn-hover-text">Let's work together →</span>
-              </span>
-            </a>
+            <a href="#contact" class="button-primary" data-magnetic><span class="btn-label">Let's work together</span></a>
           </div>
         </div>
       </section>
@@ -655,7 +650,10 @@
       <!-- FAQ Section -->
       <section id="faq" class="faq-section" aria-labelledby="faq-title">
         <div class="container">
-          <h2 id="faq-title" class="section-title-display reveal">Frequently Asked Questions</h2>
+          <div class="section-header reveal">
+            <p class="mono-label"><span class="index">(04)</span> FAQ</p>
+            <h2 id="faq-title" class="section-title">Questions, answered.</h2>
+          </div>
           
           <div class="faq-list">
             <div id="faq-timeline" class="faq-item reveal">
@@ -736,6 +734,10 @@
       <!-- Contact Section -->
       <section id="contact" class="contact-section">
         <div class="container">
+          <div class="section-header reveal">
+            <p class="mono-label"><span class="index">(05)</span> Contact</p>
+            <h2 class="section-title">Have a project that deserves to be done right?</h2>
+          </div>
           <div class="contact-grid">
             <!-- Left Column -->
             <div class="contact-info reveal">
@@ -749,11 +751,6 @@
                 <span>Currently available for new projects</span>
               </div>
 
-              <h2 class="contact-title">
-                <span>Have a project that</span>
-                <span>deserves to be</span>
-                <span>done right?</span>
-              </h2>
               <p class="contact-subtitle">Tell me what you're building. I'll tell you exactly how I'd approach it.</p>
 
               <div class="contact-email">
@@ -851,12 +848,7 @@
                 <span id="message-error" class="form-error" role="alert" hidden></span>
               </div>
 
-              <button type="submit" class="button-primary form-submit">
-                <span class="btn-content">
-                  <span class="btn-text">Send Message →</span>
-                  <span class="btn-hover-text">Send Message →</span>
-                </span>
-              </button>
+              <button type="submit" class="button-primary form-submit" data-magnetic><span class="btn-label">Send Message</span></button>
 
               <p class="form-helper">I typically respond within 24 hours</p>
               <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -906,18 +898,8 @@
             </div>
             <p class="footer-location">Based in Sofia, Bulgaria · Working Worldwide</p>
             <div class="footer-ctas">
-              <a href="#contact" class="button-primary footer-cta-primary" data-focus-target="#name">
-                <span class="btn-content">
-                  <span class="btn-text">Start a Project</span>
-                  <span class="btn-hover-text">Start a Project</span>
-                </span>
-              </a>
-              <a href="mailto:alexandar.webdesign@gmail.com?subject=Project%20Inquiry" class="button-secondary footer-cta-secondary">
-                <span class="btn-content">
-                  <span class="btn-text">Email Me</span>
-                  <span class="btn-hover-text">Email Me</span>
-                </span>
-              </a>
+              <a href="#contact" class="button-primary footer-cta-primary" data-focus-target="#name" data-magnetic><span class="btn-label">Start a Project</span></a>
+              <a href="mailto:alexandar.webdesign@gmail.com?subject=Project%20Inquiry" class="button-secondary footer-cta-secondary"><span class="btn-label">Email Me</span></a>
             </div>
           </div>
 
