@@ -288,7 +288,6 @@ h1, h2, h3,
 
   /* ---------- Components (legacy - keep until consuming rules are rebuilt) ---------- */
   --card-gap: 28px;
-  --button-padding: 20px 40px;
   --input-padding: 20px;
 
   /* ---------- Glass (Espacio recipe) ---------- */
@@ -507,7 +506,7 @@ textarea:focus-visible {
   font-size: var(--text-button);
   font-weight: 600;
   text-decoration: none;
-  border: 0;
+  border: 1px solid transparent;
   cursor: pointer;
 }
 
@@ -525,12 +524,15 @@ textarea:focus-visible {
   transform: translateY(0) scale(1.5);
 }
 
+.btn-label { display: inline-block; transition: transform 150ms var(--ease); }
 .button-primary .btn-label { position: relative; z-index: 1; }
+.button-primary:active .btn-label { transform: scale(0.97); }
 
 /* Hairline pill */
 .button-secondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: 18px 36px;
   border-radius: var(--border-radius-button);
   border: 1px solid var(--color-border);
@@ -570,7 +572,8 @@ textarea:focus-visible {
 }
 
 .link-roll::after {
-  content: attr(data-text);
+  content: attr(data-text);            /* fallback for engines without alt syntax */
+  content: attr(data-text) / "";       /* empty alt - excluded from accessible name */
   position: absolute;
   left: 0;
   top: 0;
@@ -1997,6 +2000,13 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
   padding: 12px 28px;
 }
 
+.footer-ctas .button-primary {
+  background: var(--color-accent);
+}
+.footer-ctas .button-primary::before {
+  background: var(--color-ink);
+}
+
 .footer-cta-secondary {
   font-size: 16px;
   padding: 12px 28px;
@@ -3062,8 +3072,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
     
     /* Mobile Button Sizes */
     --text-button: 18px;
-    --button-padding: 14px 24px;
-    
+
     /* Spacing */
     --section-gap: 64px;
     --side-margin: 20px;
@@ -3073,6 +3082,10 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
     padding-left: 20px;
     padding-right: 20px;
   }
+
+  .button-primary,
+  .button-secondary { padding: 14px 28px; font-size: var(--text-body-sm); }
+
 
   .project-hero-section {
     padding-top: 120px;
@@ -3274,6 +3287,9 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   pointer-events: none;
 }
 
+.button-primary.loading::before,
+.button-primary.success::before { display: none; }
+
 /* Success State */
 .button-primary.success {
   background: var(--color-surface);
@@ -3296,7 +3312,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
 .spinner-checkmark {
   width: 8px;
   height: 14px;
-  border: solid #2563eb;
+  border: solid var(--color-accent);
   border-width: 0 2.5px 2.5px 0;
   transform: rotate(45deg);
   margin-bottom: 3px;
@@ -3314,7 +3330,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
 }
 
 .progress-ring__circle {
-  stroke: #2563eb;
+  stroke: var(--color-accent);
   fill: transparent;
   stroke-width: 3;
   stroke-dasharray: 100 100;
