@@ -1254,7 +1254,7 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
 /* Full-width hairline rows: index | title | description. No boxes, no icons. */
 .service-row {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr minmax(0, 38ch);
   gap: 32px;
   align-items: baseline;
   padding: 40px 0;
@@ -1282,7 +1282,6 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
 .service-desc {
   font-size: var(--text-body-sm);
   color: var(--color-text-muted);
-  max-width: 38ch;
   margin: 0;
 }
 
@@ -1419,7 +1418,8 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
   outline: 2px solid transparent;
   outline-offset: 2px;
   box-shadow: none;
-  border-color: var(--color-accent);
+  border-bottom: 2px solid var(--color-accent);
+  margin-bottom: -1px; /* compensate 1px->2px so layout doesn't shift */
 }
 
 .contact-section .form-input:user-invalid,
