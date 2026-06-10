@@ -43,22 +43,14 @@
   line-gap-override: 0%;
 }
 
-/* Marcellus - editorial display serif for headlines (self-hosted, 400 only). */
-@font-face {
-  font-family: 'Marcellus';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/marcellus-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+@property --degshine {
+  syntax: "<angle>";
+  initial-value: 156deg;
+  inherits: false;
 }
-@font-face {
-  font-family: 'Marcellus';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('fonts/marcellus-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+
+@keyframes shine-rotate {
+  to { --degshine: 516deg; }
 }
 
 /* <picture> wrappers must not alter layout - the inner <img> is positioned
@@ -206,59 +198,73 @@ h1, h2, h3,
 :root {
   color-scheme: light;
 
-  /* Colors - Primary */
-  --color-background: #fafaf9;
-  --color-text: #29303d;
-  --color-accent: #0066ff;
-  --color-accent-muted: rgba(0, 102, 255, 0.4); /* soft accent - hover borders */
+  /* ---------- Color: warm paper + ink + single interactive accent ---------- */
+  --color-background: #f3f0ea;
+  --color-surface: #faf8f4;
+  --color-surface-subtle: #ebe7df;
+  --color-ink: #1c1d20;
+  --color-ink-deep: #141517;
+  --color-text: var(--color-ink);
+  --color-text-muted: rgba(28, 29, 32, 0.62);
+  --color-text-soft: rgba(28, 29, 32, 0.62);
+  --color-text-light: rgba(28, 29, 32, 0.42);
+  --color-text-tertiary: rgba(28, 29, 32, 0.42);
+  --color-border: rgba(28, 29, 32, 0.28);
+  --color-border-subtle: rgba(28, 29, 32, 0.14);
   --color-white: #ffffff;
+  --color-accent: #455ce9;
+  --color-accent-hover: #334bd3;
+  --color-accent-muted: rgba(69, 92, 233, 0.35);
+  --color-success: #1f9c44;
+  --color-error: #cf2820;
+  --color-warning: #cc6b00;
+  /* On-dark (footer, contact band) */
+  --color-on-dark: #f3f0ea;
+  --color-on-dark-secondary: rgba(243, 240, 234, 0.6);
+  --color-on-dark-border: rgba(243, 240, 234, 0.18);
+  /* Legacy aliases — keep until consuming rules are rebuilt */
+  --color-about-bg: var(--color-surface-subtle);
+  --color-section-alt: var(--color-surface-subtle);
+  --color-danger: var(--color-error);
 
-  /* Colors - Secondary (WCAG 2.2-tuned) */
-  --color-border: #8d97aa;                  /* was #c2c9d6 - bumped to UI 3:1 */
-  --color-text-muted: rgba(41, 48, 61, 0.8);
-  --color-text-soft: rgba(41, 48, 61, 0.75);
-  --color-text-light: rgba(41, 48, 61, 0.72); /* ~5.3:1 on bg - passes AA for normal text */
-  --color-border-subtle: rgba(41, 48, 61, 0.12);
-  --color-about-bg: #f8f6f2;
-
-  /* Surfaces + tertiary text (guide 02 - reconciled to warm base) */
-  --color-surface: #ffffff;            /* elevated cards/panels */
-  --color-surface-subtle: #F0EDE7;     /* alternate section bg, warm tint of --color-background */
-  --color-text-tertiary: rgba(41, 48, 61, 0.68); /* counters, metadata labels - tuned to clear WCAG AA 4.5:1 on --color-background */
-
-  /* Colors - Semantic (WCAG 2.2-tuned) */
-  --color-success: #1f9c44;  /* was #34c759 - passes UI 3:1 */
-  --color-error:   #cf2820;  /* was #ff3b30 - passes AA normal text */
-  --color-warning: #cc6b00;  /* was #ff9500 - passes UI + AA large */
-
-  /* Typography - Fonts */
-  --font-display: "Marcellus", Georgia, "Times New Roman", serif;
-  --font-body: "Manrope", "Manrope Fallback", system-ui, sans-serif;
-  /* Tracking for the serif display face - slight negative, never the heavy
-     -0.72px the sans used (that crushes a serif). */
-  --tracking-display: -0.01em;
-
-  /* Typography - Sizes */
-  --text-hero:    clamp(48px, calc(5vw + 16px), 132px);
-  --text-section: clamp(36px, calc(2.25vw + 28.8px), 88px);
-  --text-service: clamp(24px, calc(1vw + 20.8px), 48px);
-  --text-project: 32px;
-  --text-body-lg: 24px;
+  /* ---------- Typography ---------- */
+  --font-body: "Manrope", system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-body);
+  --font-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", monospace;
+  --text-hero: clamp(64px, 11vw, 176px);
+  --text-section: clamp(40px, 5.5vw, 96px);
+  --text-title: clamp(24px, 2vw, 36px);
+  --text-project: clamp(24px, 1.8vw, 32px);
+  --text-service: clamp(24px, 1vw + 20.8px, 48px);
+  --text-body-lg: clamp(20px, 1.4vw, 24px);
   --text-body: 20px;
   --text-body-sm: 16px;
-  --text-sm: 14px;        /* nav items, captions */
-  --text-xs: 12px;        /* all-caps tags, section counters, metadata */
-  --text-button: 24px;
-  --text-button-sm: 20px;
-
-  /* Typography - Line Heights */
-  --leading-tight: 1.2;
+  --text-sm: 16px;
+  --text-label: 14px;
+  --text-xs: 12px;
+  --text-button: 18px;
+  --text-button-sm: 16px;
+  --leading-display: 0.95;
+  --leading-tight: 1.05;
   --leading-normal: 1.5;
+  --tracking-display: -0.03em;
+  --tracking-tight: -0.02em;
+  --tracking-caps: 0.08em;
 
-  /* All-caps tracking (guide 03) */
-  --tracking-caps: 0.08em;   /* section labels, group headings */
+  /* ---------- Motion: ONE master curve ---------- */
+  --ease: cubic-bezier(0.55, 0, 0.1, 1);
+  --ease-out: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-signature: var(--ease);
+  --ease-in-out: var(--ease);
+  --duration-fast: 450ms;
+  --duration-normal: 600ms;
+  --duration-slow: 900ms;
+  /* Legacy motion aliases — keep until consuming rules are rebuilt */
+  --motion-tempo-primary: var(--duration-normal);
+  --motion-ease-primary: var(--ease-out);
+  --motion-ease-accent: var(--ease);
 
-  /* Spacing */
+  /* ---------- Spacing ---------- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -272,41 +278,30 @@ h1, h2, h3,
   --space-20: 80px;
   --space-24: 96px;
 
-  /* Layout */
+  /* ---------- Layout ---------- */
   --content-width: 1600px;
   --side-margin: 64px;
-  --section-gap: 200px;
 
-  /* Components */
-  --card-padding: 32px;
+  /* ---------- Shape ---------- */
+  --border-radius: 20px;
+  --border-radius-button: 9999px;
+  --section-gap: clamp(120px, 18vh, 220px);
+
+  /* ---------- Components (legacy — keep until consuming rules are rebuilt) ---------- */
   --card-gap: 28px;
   --button-padding: 20px 40px;
   --input-padding: 20px;
-  --border-radius: 16px;
-  --border-radius-button: 9999px;
 
-  /* Animations */
-  --duration-fast: 274ms;
-  --duration-normal: var(--motion-tempo-primary);
-  --duration-slow: 692ms;
-  --ease-out: var(--motion-ease-primary);
-  --ease-in-out: var(--motion-ease-accent);
-  --ease-signature: cubic-bezier(0.22, 1, 0.36, 1); /* cinematic deceleration */
-  --motion-tempo-primary: 436ms;
-  --motion-ease-primary: cubic-bezier(0.33, 0.06, 0.12, 0.97);
-  --motion-ease-accent: cubic-bezier(0.38, 0.10, 0.16, 0.98);
-  --motion-exit-ratio: 0.63;
-
-  /* Glassmorphism (guide 06 recipe - flat translucency, restrained blur).
-     Blur reduced 48px -> 12px standard so glass reads as depth, not frost.
-     All existing var names retained; only values retuned. */
-  --glass-bg: rgba(255, 255, 255, 0.65);
-  --glass-bg-hover: rgba(255, 255, 255, 0.80);
-  --glass-border: rgba(255, 255, 255, 0.9);
-  --glass-blur: blur(12px);          /* standard */
-  --glass-blur-nav: blur(16px);      /* nav on scroll */
-  --glass-shadow: 0 4px 24px rgba(0, 30, 80, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --glass-accent-bg-strong: rgba(255, 255, 255, 0.86); /* project pill hover */
+  /* ---------- Glass (Espacio recipe) ---------- */
+  --glass-bg: rgba(128, 128, 128, 0.3);
+  --glass-blur: blur(5px) saturate(1.1);
+  --glass-radius: 999px;
+  /* Legacy glass aliases — keep until consuming rules are rebuilt */
+  --glass-bg-hover: rgba(128, 128, 128, 0.45);
+  --glass-border: rgba(243, 240, 234, 0.18);
+  --glass-blur-nav: blur(10px) saturate(1.2);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --glass-accent-bg-strong: rgba(69, 92, 233, 0.15);
 }
 
 /* ==========================================================================
@@ -384,8 +379,6 @@ body {
   background-color: var(--color-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Marcellus ships only 400; never fake heavier weights into faux-bold
-     (Manrope is a real variable 400-700 face, harmless for body). */
   font-synthesis: none;
 }
 
