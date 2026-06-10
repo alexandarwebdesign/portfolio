@@ -39,6 +39,22 @@
     });
   }
 
+  /**
+   * SMIL <animate> ignores prefers-reduced-motion; pause it for users who opt
+   * out (footer / contact / about status icons).
+   */
+  function initReducedMotionSvg() {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.querySelectorAll("svg").forEach((svg) => {
+      if (
+        typeof svg.pauseAnimations === "function" &&
+        svg.querySelector("animate, animateTransform, animateMotion")
+      ) {
+        svg.pauseAnimations();
+      }
+    });
+  }
+
   function getMotionSettings() {
     const rootStyles = window.getComputedStyle(document.documentElement);
 
@@ -79,6 +95,31 @@
   // ==========================================================================
 
   /**
+   * Lenis smooth scroll (vendored). Skipped for reduced-motion users and if the
+   * library failed to load. Other scroll helpers route through window.__lenis
+   * when present so anchor offsets + focus still work.
+   */
+  function initSmoothScrollLenis() {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduceMotion || typeof window.Lenis === "undefined") return;
+
+    const lenis = new window.Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    window.__lenis = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      window.requestAnimationFrame(raf);
+    }
+    window.requestAnimationFrame(raf);
+  }
+
+  /**
    * Handle smooth scrolling for navigation links
    */
   function scrollToAnchorTarget(targetElement, navbarHeight) {
@@ -86,6 +127,11 @@
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+
+    if (window.__lenis && !reduceMotion) {
+      window.__lenis.scrollTo(targetElement, { offset: -navbarHeight });
+      return tempo;
+    }
 
     const targetPosition =
       targetElement.getBoundingClientRect().top +
@@ -396,7 +442,7 @@
     let lastScrollY = 0;
 
     function updateNavbarAtY(currentScrollY) {
-      if (currentScrollY > 100) {
+      if (currentScrollY > 80) {
         navbar.classList.add("scrolled");
       } else {
         navbar.classList.remove("scrolled");
@@ -594,22 +640,6 @@
   // Inline decorative SVGs so the parent card hover can control their strokes.
   // ==========================================================================
 
-  function updateServiceCardIconHeights() {
-    document.querySelectorAll(".service-item").forEach((item) => {
-      const title = item.querySelector(".service-title");
-      const description = item.querySelector(".service-description");
-      const icon = item.querySelector(".service-bg-icon");
-
-      if (!title || !description || !icon) return;
-
-      const titleHeight = title.getBoundingClientRect().height;
-      const descriptionHeight = description.getBoundingClientRect().height;
-      const iconHeight = Math.ceil(titleHeight + descriptionHeight + 20);
-
-      item.style.setProperty("--service-icon-height", `${iconHeight}px`);
-    });
-  }
-
   function updateServiceCardViewportPriority() {
     const serviceItems = Array.from(document.querySelectorAll(".service-item"));
 
@@ -653,10 +683,7 @@
         cancelAnimationFrame(serviceCardFrame);
       }
 
-      serviceCardFrame = requestAnimationFrame(() => {
-        updateServiceCardIconHeights();
-        updateServiceCardViewportPriority();
-      });
+      serviceCardFrame = requestAnimationFrame(updateServiceCardViewportPriority);
     };
 
     let serviceCardInteractionFrame = null;
@@ -689,7 +716,6 @@
     window.addEventListener("scroll", scheduleServiceCardUpdate, {
       passive: true,
     });
-    window._serviceCardViewportUpdate = scheduleServiceCardUpdate;
 
     serviceItems.forEach((item) => {
       item.addEventListener("mouseenter", scheduleServiceCardInteractionUpdate);
@@ -886,19 +912,6 @@
   }
 
   // ==========================================================================
-
-  function initAboutPhotoInteraction() {
-    const cta = document.querySelector("#about .about-cta-btn");
-    const circle = document.querySelector("#about .about-photo-circle");
-    if (!cta || !circle) return;
-
-    cta.addEventListener("mouseenter", () =>
-      circle.classList.add("about-photo-circle--square"),
-    );
-    cta.addEventListener("mouseleave", () =>
-      circle.classList.remove("about-photo-circle--square"),
-    );
-  }
 
   /**
    * Initialize all modules when DOM is ready
@@ -1124,6 +1137,8 @@
   }
 
   function init() {
+    initSmoothScrollLenis();
+    initReducedMotionSvg();
     initPageLoadSequence();
     initScrollReveal();
     initServiceCardIcons();
@@ -1135,7 +1150,6 @@
     initFaqAccordion();
     initContactHashFocus();
     initParallax();
-    initAboutPhotoInteraction();
     initImageMarquee();
     initCaseCarousels();
     initPlates();

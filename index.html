@@ -15,10 +15,11 @@
 
     <!-- Performance: Preload Critical Resources -->
     <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="styles.css?v=59" as="style">
+    <link rel="preload" href="fonts/marcellus-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="styles.css?v=61" as="style">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css?v=59" />
+    <link rel="stylesheet" href="styles.css?v=61" />
 
     <!-- Meta Tags -->
     <meta name="description" content="UX/UI specialist turning interface psychology into websites that convert. Beautiful, proven to work, and built to last. Based in Sofia, Bulgaria.">
@@ -115,7 +116,7 @@
         "@type": "Person",
         "name": "Aleksandar Pavlov"
       },
-      "dateModified": "2026-06-01",
+      "dateModified": "2026-06-10",
       "inLanguage": "en",
       "speakable": {
         "@type": "SpeakableSpecification",
@@ -326,13 +327,6 @@
     </script>
   </head>
   <body>
-    <!-- Ambient Background for Glassmorphism -->
-    <div class="ambient-background" aria-hidden="true">
-      <div class="ambient-orb orb-1"></div>
-      <div class="ambient-orb orb-2"></div>
-      <div class="ambient-orb orb-3"></div>
-    </div>
-
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <!-- Navigation -->
     <header>
@@ -404,51 +398,41 @@
           
           <div class="project-grid" id="project-grid">
 
-            <article class="project-card glass-panel reveal" style="transition-delay: 0ms;">
+            <article class="project-card reveal">
               <a href="/birse" class="project-card-link">
                 <div class="project-image-wrapper">
                   <picture>
-                    <source type="image/avif" srcset="/images/projects/birse-cover-500.avif 500w, /images/projects/birse-cover-800.avif 800w, /images/projects/birse-cover-1080.avif 1080w, /images/projects/birse-cover-1388.avif 1388w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
-                    <source type="image/webp" srcset="/images/projects/birse-cover-500.webp 500w, /images/projects/birse-cover-800.webp 800w, /images/projects/birse-cover-1080.webp 1080w, /images/projects/birse-cover-1388.webp 1388w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
-                    <img src="/images/projects/birse-cover-1080.jpg" srcset="/images/projects/birse-cover-500.jpg 500w, /images/projects/birse-cover-800.jpg 800w, /images/projects/birse-cover-1080.jpg 1080w, /images/projects/birse-cover-1388.jpg 1388w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px" class="project-image project-image--birse-cover" alt="Birsé jewelry e-commerce redesign project preview" width="400" height="400" loading="lazy" decoding="async">
+                    <source type="image/avif" srcset="/images/projects/birse-card-500.avif 500w, /images/projects/birse-card-800.avif 800w, /images/projects/birse-card-1080.avif 1080w, /images/projects/birse-card-1600.avif 1600w, /images/projects/birse-card-2400.avif 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
+                    <source type="image/webp" srcset="/images/projects/birse-card-500.webp 500w, /images/projects/birse-card-800.webp 800w, /images/projects/birse-card-1080.webp 1080w, /images/projects/birse-card-1600.webp 1600w, /images/projects/birse-card-2400.webp 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
+                    <img src="/images/projects/birse-card-1080.jpg" srcset="/images/projects/birse-card-500.jpg 500w, /images/projects/birse-card-800.jpg 800w, /images/projects/birse-card-1080.jpg 1080w, /images/projects/birse-card-1600.jpg 1600w, /images/projects/birse-card-2400.jpg 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px" class="project-image project-image--birse-cover" alt="Birsé jewelry e-commerce redesign project preview" width="400" height="284" loading="lazy" decoding="async">
                   </picture>
                 </div>
-                <div class="project-info">
-                  <div class="project-title-row">
-                    <h3 class="project-title">Birsé</h3>
-                    <span class="arrow-content" aria-hidden="true">
-                      <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-default" />
-                      <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-hover" />
-                    </span>
-                  </div>
-                  <p class="project-category">E-Commerce / Jewelry</p>
+                <div class="project-pill">
+                  <h3 class="project-pill-name">Birsé</h3>
+                  <span class="project-pill-sep" aria-hidden="true">·</span>
+                  <span class="project-pill-category">E-Commerce / Jewelry</span>
                 </div>
               </a>
             </article>
 
-            <article class="project-card glass-panel reveal" style="transition-delay: 100ms;">
+            <article class="project-card reveal">
               <a href="/forma-architects" class="project-card-link">
                 <div class="project-image-wrapper">
                   <picture>
-  <source type="image/avif" srcset="/images/projects/forma-architects-500.avif 500w, /images/projects/forma-architects-800.avif 800w, /images/projects/forma-architects-1080.avif 1080w, /images/projects/forma-architects-1440.avif 1440w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
-  <source type="image/webp" srcset="/images/projects/forma-architects-500.webp 500w, /images/projects/forma-architects-800.webp 800w, /images/projects/forma-architects-1080.webp 1080w, /images/projects/forma-architects-1440.webp 1440w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
-  <img src="/images/projects/forma-architects-1080.jpg" srcset="/images/projects/forma-architects-500.jpg 500w, /images/projects/forma-architects-800.jpg 800w, /images/projects/forma-architects-1080.jpg 1080w, /images/projects/forma-architects-1440.jpg 1440w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px" class="project-image" alt="FORMA Architects project preview" width="400" height="284" loading="lazy" decoding="async">
-</picture>
+                    <source type="image/avif" srcset="/images/projects/forma-card-500.avif 500w, /images/projects/forma-card-800.avif 800w, /images/projects/forma-card-1080.avif 1080w, /images/projects/forma-card-1600.avif 1600w, /images/projects/forma-card-2400.avif 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
+                    <source type="image/webp" srcset="/images/projects/forma-card-500.webp 500w, /images/projects/forma-card-800.webp 800w, /images/projects/forma-card-1080.webp 1080w, /images/projects/forma-card-1600.webp 1600w, /images/projects/forma-card-2400.webp 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
+                    <img src="/images/projects/forma-card-1080.jpg" srcset="/images/projects/forma-card-500.jpg 500w, /images/projects/forma-card-800.jpg 800w, /images/projects/forma-card-1080.jpg 1080w, /images/projects/forma-card-1600.jpg 1600w, /images/projects/forma-card-2400.jpg 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px" class="project-image" alt="FORMA Architects project preview" width="400" height="284" loading="lazy" decoding="async">
+                  </picture>
                 </div>
-                <div class="project-info">
-                  <div class="project-title-row">
-                    <h3 class="project-title">FORMA Architects</h3>
-                    <span class="arrow-content" aria-hidden="true">
-                      <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-default" />
-                      <img src="Icons/Cards-Arrow.svg" alt="" class="project-arrow arrow-hover" />
-                    </span>
-                  </div>
-                  <p class="project-category">Architecture / Luxury Website</p>
+                <div class="project-pill">
+                  <h3 class="project-pill-name">FORMA Architects</h3>
+                  <span class="project-pill-sep" aria-hidden="true">·</span>
+                  <span class="project-pill-category">Architecture / Luxury Website</span>
                 </div>
               </a>
             </article>
 
-            <article class="project-card glass-panel project-card--upcoming reveal" style="transition-delay: 200ms;">
+            <article class="project-card project-card--upcoming reveal">
               <div class="project-card-link project-card-link--disabled">
                 <div class="project-image-wrapper">
                   <picture>
@@ -460,16 +444,15 @@
                     <span class="project-upcoming-label">In Development</span>
                   </div>
                 </div>
-                <div class="project-info">
-                  <div class="project-title-row">
-                    <h3 class="project-title">Swis SaaS</h3>
-                  </div>
-                  <p class="project-category">SaaS / Productivity Platform</p>
+                <div class="project-pill">
+                  <h3 class="project-pill-name">Swis SaaS</h3>
+                  <span class="project-pill-sep" aria-hidden="true">·</span>
+                  <span class="project-pill-category">SaaS / Productivity Platform</span>
                 </div>
               </div>
             </article>
 
-            <article class="project-card glass-panel project-card--upcoming reveal" style="transition-delay: 300ms;">
+            <article class="project-card project-card--upcoming reveal">
               <div class="project-card-link project-card-link--disabled">
                 <div class="project-image-wrapper">
                   <picture>
@@ -481,11 +464,10 @@
                     <span class="project-upcoming-label">Upcoming</span>
                   </div>
                 </div>
-                <div class="project-info">
-                  <div class="project-title-row">
-                    <h3 class="project-title">Creative Asset</h3>
-                  </div>
-                  <p class="project-category">3D / Interactive Experience</p>
+                <div class="project-pill">
+                  <h3 class="project-pill-name">Creative Asset</h3>
+                  <span class="project-pill-sep" aria-hidden="true">·</span>
+                  <span class="project-pill-category">3D / Interactive Experience</span>
                 </div>
               </div>
             </article>
@@ -557,20 +539,19 @@
       <section id="about" class="about-section">
         <div class="container">
 
-          <!-- Body row -->
-          <div class="about-body-row reveal">
-            <div class="about-content">
+          <div class="about-grid reveal">
+            <div class="about-lead">
               <div class="about-heading-content">
                 <div class="about-photo-circle">
                   <picture>
-  <source type="image/avif" srcset="/images/aleksandar-pavlov-ux-designer-500.avif 500w, /images/aleksandar-pavlov-ux-designer-720.avif 720w, /images/aleksandar-pavlov-ux-designer-800.avif 800w, /images/aleksandar-pavlov-ux-designer-1080.avif 1080w, /images/aleksandar-pavlov-ux-designer-1600.avif 1600w, /images/aleksandar-pavlov-ux-designer-2321.avif 2321w" sizes="148px">
-  <source type="image/webp" srcset="/images/aleksandar-pavlov-ux-designer-500.webp 500w, /images/aleksandar-pavlov-ux-designer-720.webp 720w, /images/aleksandar-pavlov-ux-designer-800.webp 800w, /images/aleksandar-pavlov-ux-designer-1080.webp 1080w, /images/aleksandar-pavlov-ux-designer-1600.webp 1600w, /images/aleksandar-pavlov-ux-designer-2321.webp 2321w" sizes="148px">
-  <img src="/images/aleksandar-pavlov-ux-designer-1080.jpg" srcset="/images/aleksandar-pavlov-ux-designer-500.jpg 500w, /images/aleksandar-pavlov-ux-designer-720.jpg 720w, /images/aleksandar-pavlov-ux-designer-800.jpg 800w, /images/aleksandar-pavlov-ux-designer-1080.jpg 1080w, /images/aleksandar-pavlov-ux-designer-1600.jpg 1600w, /images/aleksandar-pavlov-ux-designer-2321.jpg 2321w" sizes="148px" class="about-photo-img" alt="Aleksandar Pavlov - UX/UI Designer and Website Developer based in Sofia, Bulgaria" width="148" height="148" loading="lazy" decoding="async">
-</picture>
+                    <source type="image/avif" srcset="/images/aleksandar-pavlov-ux-designer-500.avif 500w, /images/aleksandar-pavlov-ux-designer-720.avif 720w, /images/aleksandar-pavlov-ux-designer-800.avif 800w" sizes="96px">
+                    <source type="image/webp" srcset="/images/aleksandar-pavlov-ux-designer-500.webp 500w, /images/aleksandar-pavlov-ux-designer-720.webp 720w, /images/aleksandar-pavlov-ux-designer-800.webp 800w" sizes="96px">
+                    <img src="/images/aleksandar-pavlov-ux-designer-720.jpg" srcset="/images/aleksandar-pavlov-ux-designer-500.jpg 500w, /images/aleksandar-pavlov-ux-designer-720.jpg 720w, /images/aleksandar-pavlov-ux-designer-800.jpg 800w" sizes="96px" alt="Aleksandar Pavlov, UX/UI Designer and Website Developer" width="96" height="96" loading="lazy" decoding="async">
+                  </picture>
                 </div>
                 <h2 class="section-title">About</h2>
               </div>
-              <p class="about-bio-new">I'm Aleksandar - a UX/UI designer and web developer based in Bulgaria, working with clients worldwide. Most people assume web design is about making things look good. I spent years in UX/UI learning that it's actually about making things work on people - then applied everything I know entirely to one thing: websites.</p>
+              <p class="about-bio-new">I'm Aleksandar — a UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Years in UX/UI taught me design is about how people behave, not just how things look.</p>
               <a href="/about" class="about-cta-btn">
                 <span class="btn-content">
                   <span class="btn-text">The Full Story</span>
@@ -578,21 +559,41 @@
                 </span>
               </a>
             </div>
-            <div class="hanger" aria-hidden="true">
-              <div class="hanger-photo">
-                <div class="hanger-globe">
-                  <div class="hanger-globe-wrap">
-                    <div class="hanger-globe-circle"></div>
-                    <div class="hanger-globe-circle"></div>
-                    <div class="hanger-globe-circle"></div>
-                    <div class="hanger-globe-hor"></div>
-                    <div class="hanger-globe-hor-middle"></div>
-                  </div>
-                </div>
+
+            <dl class="about-index">
+              <div class="about-index-row">
+                <dt>Role</dt>
+                <dd>UX/UI Designer &amp; Web Developer</dd>
               </div>
-              <p class="hanger-eyebrow">Based in</p>
-              <p class="hanger-text">Europe, Bulgaria</p>
-            </div>
+              <div class="about-index-row">
+                <dt>Based</dt>
+                <dd>
+                  Sofia, Bulgaria · Worldwide
+                  <span class="about-index-globe" aria-hidden="true">
+                    <span class="globe-wrap">
+                      <span class="globe-circle"></span>
+                      <span class="globe-circle"></span>
+                      <span class="globe-circle"></span>
+                      <span class="globe-hor"></span>
+                      <span class="globe-hor-middle"></span>
+                    </span>
+                  </span>
+                </dd>
+              </div>
+              <div class="about-index-row">
+                <dt>Experience</dt>
+                <dd>Since 2023</dd>
+              </div>
+              <div class="about-index-row">
+                <dt>Status</dt>
+                <dd><svg class="about-status-icon" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="9.5" cy="9.5" r="1.5" fill="#1f9c44"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
+                  <circle cx="9.5" cy="9.5" r="2.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
+                  <circle cx="9.5" cy="9.5" r="4.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
+                  <circle cx="9.5" cy="9.5" r="5.4" stroke="#1f9c44" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
+                </svg>Available for work</dd>
+              </div>
+            </dl>
           </div>
 
         </div>
@@ -605,7 +606,16 @@
 
           <div class="services-list">
             <article class="service-item reveal" data-service="web-design" role="button" tabindex="0" aria-label="Web Design & UX Strategy - start a project with this service preselected">
-              <h3 class="service-title">WEB DESIGN & UX STRATEGY</h3>
+              <span class="service-number" aria-hidden="true">01</span>
+              <div class="service-head">
+                <h3 class="service-title">Web Design &amp; UX Strategy</h3>
+                <ul class="service-caps">
+                  <li>UX Research</li>
+                  <li>Wireframing</li>
+                  <li>Visual Design</li>
+                  <li>Conversion Strategy</li>
+                </ul>
+              </div>
               <p class="service-description">
                 This isn't web design with a UX layer on top. It's UX-first thinking applied to every layout, flow, and visual decision from the start. Most designers pick colours and call it a strategy. I map user psychology, eliminate friction, and engineer the journey - then make it look exceptional.
               </p>
@@ -613,7 +623,16 @@
             </article>
 
             <article class="service-item reveal" data-service="website-dev" role="button" tabindex="0" aria-label="Website Development - start a project with this service preselected">
-              <h3 class="service-title">WEBSITE DEVELOPMENT</h3>
+              <span class="service-number" aria-hidden="true">02</span>
+              <div class="service-head">
+                <h3 class="service-title">Website Development</h3>
+                <ul class="service-caps">
+                  <li>HTML / CSS / JS</li>
+                  <li>Responsive Build</li>
+                  <li>Animation</li>
+                  <li>Performance</li>
+                </ul>
+              </div>
               <p class="service-description">
                 Beautiful design means nothing if the build lets it down. Every interaction, animation, and transition is coded exactly as designed - no compromises, no workarounds, no "that looked different in Figma." Pixel-perfect, fast, and built to last.
               </p>
@@ -621,7 +640,16 @@
             </article>
 
             <article class="service-item reveal" data-service="end-to-end" role="button" tabindex="0" aria-label="End-to-End Solutions - start a project with this service preselected">
-              <h3 class="service-title">END-TO-END SOLUTIONS</h3>
+              <span class="service-number" aria-hidden="true">03</span>
+              <div class="service-head">
+                <h3 class="service-title">End-to-End Solutions</h3>
+                <ul class="service-caps">
+                  <li>Strategy</li>
+                  <li>Design</li>
+                  <li>Build</li>
+                  <li>Launch &amp; Support</li>
+                </ul>
+              </div>
               <p class="service-description">
                 Strategy, design, development, and deployment - handled by one person who owns the outcome. The UX thinking that shaped the design is the same thinking that shaped the code. No handoffs. No lost-in-translation. No version gaps. One person, one standard, one result.
               </p>
@@ -646,7 +674,7 @@
           <h2 id="faq-title" class="section-title-display reveal">Frequently Asked Questions</h2>
           
           <div class="faq-list">
-            <div id="faq-timeline" class="faq-item glass-panel reveal">
+            <div id="faq-timeline" class="faq-item reveal">
               <button class="faq-question" aria-expanded="false">
                 <span>How long does a typical project take?</span>
                 <span class="faq-icon" aria-hidden="true"></span>
@@ -658,7 +686,7 @@
               </div>
             </div>
             
-            <div id="faq-cost" class="faq-item glass-panel reveal">
+            <div id="faq-cost" class="faq-item reveal">
               <button class="faq-question" aria-expanded="false">
                 <span>How much does a website cost?</span>
                 <span class="faq-icon" aria-hidden="true"></span>
@@ -670,7 +698,7 @@
               </div>
             </div>
             
-            <div id="faq-revisions" class="faq-item glass-panel reveal">
+            <div id="faq-revisions" class="faq-item reveal">
               <button class="faq-question" aria-expanded="false">
                 <span>How many revisions do I get?</span>
                 <span class="faq-icon" aria-hidden="true"></span>
@@ -682,7 +710,7 @@
               </div>
             </div>
             
-            <div id="faq-start" class="faq-item glass-panel reveal">
+            <div id="faq-start" class="faq-item reveal">
               <button class="faq-question" aria-expanded="false">
                 <span>What do you need from me to get started?</span>
                 <span class="faq-icon" aria-hidden="true"></span>
@@ -694,7 +722,7 @@
               </div>
             </div>
             
-            <div id="faq-support" class="faq-item glass-panel reveal">
+            <div id="faq-support" class="faq-item reveal">
               <button class="faq-question" aria-expanded="false">
                 <span>Do you provide support after launch?</span>
                 <span class="faq-icon" aria-hidden="true"></span>
@@ -706,7 +734,7 @@
               </div>
             </div>
 
-            <div id="faq-redesign" class="faq-item glass-panel reveal">
+            <div id="faq-redesign" class="faq-item reveal">
               <button class="faq-question" aria-expanded="false">
                 <span>Can you redesign an existing website?</span>
                 <span class="faq-icon" aria-hidden="true"></span>
@@ -728,7 +756,12 @@
             <!-- Left Column -->
             <div class="contact-info reveal">
               <div class="availability-signal">
-                <img src="images/projects/Frame 69.svg" width="19" height="19" alt="" aria-hidden="true" class="availability-icon">
+                <svg class="availability-icon" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <circle cx="9.5" cy="9.5" r="1.5" fill="#1f9c44"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
+                  <circle cx="9.5" cy="9.5" r="2.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
+                  <circle cx="9.5" cy="9.5" r="4.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
+                  <circle cx="9.5" cy="9.5" r="5.4" stroke="#1f9c44" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
+                </svg>
                 <span>Currently available for new projects</span>
               </div>
 
@@ -934,7 +967,8 @@
     </div><!-- /footer-outer -->
     <!-- Scripts -->
     <!-- Application Scripts -->
-    <script src="main.js?v=11" defer></script>
+    <script src="vendor/lenis.min.js?v=1" defer></script>
+    <script src="main.js?v=13" defer></script>
     <script src="hero-shader.js?v=12" defer></script>
   </body>
 </html>
