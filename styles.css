@@ -231,7 +231,7 @@ h1, h2, h3,
   --font-body: "Manrope", system-ui, -apple-system, sans-serif;
   --font-display: var(--font-body);
   --font-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", monospace;
-  --text-hero: clamp(64px, 11vw, 176px);
+  --text-hero: clamp(56px, 11vw, 176px);
   --text-section: clamp(40px, 5.5vw, 96px);
   --text-title: clamp(24px, 2vw, 36px);
   --text-project: clamp(24px, 1.8vw, 32px);
@@ -1128,7 +1128,7 @@ textarea:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0 clamp(20px, 4vw, 64px) 40px;
+  padding: clamp(96px, 12vh, 140px) clamp(20px, 4vw, 64px) 40px;
 }
 
 .hero-content { margin-bottom: clamp(48px, 8vh, 96px); }
@@ -1164,6 +1164,8 @@ textarea:focus-visible {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
   padding-top: 24px;
   border-top: 1px solid var(--color-border-subtle);
 }
@@ -1177,11 +1179,6 @@ textarea:focus-visible {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-caps);
-  color: var(--color-text-muted);
 }
 
 /* Staggered entrance - visible by default; animates only once the page-load
