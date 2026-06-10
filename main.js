@@ -212,16 +212,30 @@
     const pop = document.getElementById("nav-popover");
     if (!btn || !pop) return;
 
+    let openScrollY = 0;
+
     function close() {
       pop.classList.remove("is-open");
       btn.setAttribute("aria-expanded", "false");
+      pop.addEventListener("transitionend", function onEnd(e) {
+        if (e.target === pop && !pop.classList.contains("is-open")) pop.hidden = true;
+        pop.removeEventListener("transitionend", onEnd);
+      });
+      // Fallback: transitionend may never fire (e.g. prefers-reduced-motion)
+      setTimeout(() => {
+        if (!pop.classList.contains("is-open")) pop.hidden = true;
+      }, 700);
       document.removeEventListener("click", onDocClick, true);
-      window.removeEventListener("scroll", close, { passive: true });
+      window.removeEventListener("scroll", onScroll, { passive: true });
       document.removeEventListener("keydown", onKey);
     }
 
+    function onScroll() {
+      if (Math.abs(window.scrollY - openScrollY) > 12) close();
+    }
+
     function onDocClick(e) {
-      if (!pop.contains(e.target) && e.target !== btn) close();
+      if (!pop.contains(e.target) && !btn.contains(e.target)) close();
     }
 
     function onKey(e) {
@@ -237,10 +251,12 @@
         return;
       }
       pop.hidden = false;
-      requestAnimationFrame(() => pop.classList.add("is-open"));
+      void pop.offsetWidth; // force reflow so the fade-in transition runs
+      pop.classList.add("is-open");
       btn.setAttribute("aria-expanded", "true");
+      openScrollY = window.scrollY;
       document.addEventListener("click", onDocClick, true);
-      window.addEventListener("scroll", close, { passive: true });
+      window.addEventListener("scroll", onScroll, { passive: true });
       document.addEventListener("keydown", onKey);
     });
 

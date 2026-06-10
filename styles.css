@@ -631,6 +631,10 @@ textarea:focus-visible {
   mix-blend-mode: difference;
 }
 
+@media (max-width: 719px) {
+  .brand { display: none; }
+}
+
 /* Centered shrink-wrapped glass pill */
 .nav {
   position: fixed;
@@ -655,6 +659,7 @@ textarea:focus-visible {
 /* Rotating shine ring (Espacio rim-light) */
 .nav-pill::after,
 .nav-popover::after {
+  --degshine: 156deg; /* static ring fallback where @property is unsupported */
   content: "";
   position: absolute;
   inset: 0;
@@ -687,7 +692,7 @@ textarea:focus-visible {
   transition: color var(--duration-fast) var(--ease);
 }
 
-.nav-link:hover { color: rgba(28, 29, 32, 0.55); }
+.nav-link:hover { color: rgba(28, 29, 32, 0.72); }
 
 /* Active-page dot (Dennis pattern) */
 .nav-link[aria-current="page"]::after {
@@ -728,10 +733,6 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   gap: 8px;
-  font: 500 var(--text-label) var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-caps);
-  color: var(--color-text-muted);
   margin-bottom: 16px;
 }
 
@@ -750,7 +751,8 @@ textarea:focus-visible {
 
 .nav-popover-mail {
   display: block;
-  font-size: var(--text-body-lg);
+  font-size: var(--text-body-sm);
+  overflow-wrap: anywhere;
   font-weight: 600;
   color: var(--color-ink);
   text-decoration: none;
@@ -1506,6 +1508,9 @@ body.is-loaded .hero-cta      { animation-delay: 0.40s; }
   .about-index-globe .globe-circle {
     animation: none;
   }
+  .nav-pill::after,
+  .nav-popover::after { animation: none; }
+  .status-dot { animation: none; }
 }
 
 
