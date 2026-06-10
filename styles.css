@@ -159,7 +159,7 @@ h1, h2, h3,
 
 /* Print stylesheet - clean text output, no chrome */
 @media print {
-  header, footer, .footer-outer,
+  header, footer, .footer-reveal,
   .image-marquee, .plates-counter, .skip-link,
   .case-live-cta, .live-site-btn, .button-primary, .button-secondary,
   .video-toggle video, .screen-video, .carousel-btn-track {
@@ -1653,203 +1653,141 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
    6.6 Footer
    -------------------------------------------------------------------------- */
 
-/* --- Footer Base --- */
-.footer-outer {
+/* --- Sticky reveal mechanics ---
+   The footer parks beneath the page: a 200lvh strip pulled up by -100lvh
+   hosts a sticky 100lvh footer, which the page uncovers as it scrolls past
+   its end. `main` gets z-index + opaque background so it paints above. */
+
+main {
   position: relative;
-  overflow: hidden;
-  background: #3a3a3a;
+  z-index: 1;
+  background: var(--color-background);
+}
+
+body.about-page main {
+  background: var(--color-about-bg);
+}
+
+.footer-reveal {
+  position: relative;
+  height: 200lvh;
+  margin-top: -100lvh;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .footer {
-  padding-top: var(--space-16);
-  padding-bottom: var(--space-8);
-  background: radial-gradient(42.5% 39.06% at 11.71% 68.84%, rgba(89, 91, 94, 0.80) 0%, #3C3D3E 100%);
-}
-
-.footer .container {
+  position: sticky;
+  top: 0;
+  height: 100lvh;
   display: flex;
-  flex-direction: column;
-  gap: var(--space-10);
+  align-items: flex-end;
+  background: var(--color-ink-deep);
+  color: var(--color-on-dark);
+  pointer-events: auto;
 }
 
-/* --- Footer Nav (large links at top) --- */
-.footer-nav {
-  display: flex;
-  align-items: start;
-  gap: clamp(var(--space-8), 4vw, var(--space-16));
-  flex-wrap: wrap;
+@supports not (height: 100lvh) {
+  .footer-reveal {
+    height: 200vh;
+    margin-top: -100vh;
+  }
+
+  .footer {
+    height: 100vh;
+  }
 }
 
-.footer-link {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 5vw, 56px);
-  font-weight: 500;
-  color: var(--color-white);
-  letter-spacing: -0.5px;
-  transition: color var(--duration-normal) var(--ease-out);
-}
-
-.footer-link:hover {
-  color: var(--color-accent);
-}
-
-/* --- Divider --- */
-.footer-divider {
+.footer-inner {
   width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
+  padding: 0 clamp(20px, 4vw, 64px) 40px;
 }
 
-/* --- Footer Bottom Row (info + right) --- */
-.footer-bottom-row {
+.footer-eyebrow {
+  color: var(--color-on-dark-secondary);
+}
+
+/* Giant roll-link CTA. Accent ::after flood (#455ce9 on #141517) = 3.4:1,
+   passes WCAG AA for large text. */
+.footer-cta-title {
+  display: inline-block;
+  font-size: var(--text-section);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+  color: var(--color-on-dark);
+  margin: 16px 0 clamp(48px, 8vh, 96px);
+}
+
+.footer-grid {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  gap: var(--space-8);
-  margin-bottom: var(--space-16);
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding: 32px 0;
+  border-top: 1px solid var(--color-on-dark-border);
 }
 
-/* Left side: avatar + info + CTAs */
-.footer-info {
+.footer-nav {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
+  flex-wrap: wrap;
+  gap: 12px 24px;
 }
 
-.footer-identity {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
+.footer-nav a,
+.footer-social a {
+  color: var(--color-on-dark-secondary);
+  text-decoration: none;
+  font-size: var(--text-body-sm);
+  transition: color var(--duration-fast) var(--ease);
 }
 
-.footer-avatar {
-  width: 80px;
-  height: 80px;
-  min-width: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: top;
-  flex-shrink: 0;
-  aspect-ratio: 1;
-}
-
-.footer-name-block {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.footer-status {
-  display: flex;
-  align-items: center;
-  gap: 0px;
-  font-size: 16px;
-  font-weight: 600;
-  color: #34c759;
-}
-
-.footer-status-icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-}
-
-.footer-tagline {
-  font-size: 28px;
-  color: var(--color-white);
-  font-weight: 500;
-  margin: 0;
-  letter-spacing: -0.3px;
-}
-
-.footer-location {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 0;
-}
-
-.footer-ctas {
-  display: flex;
-  gap: var(--space-4);
-}
-
-.footer-cta-primary {
-  font-size: 16px;
-  padding: 12px 28px;
-}
-
-.footer-ctas .button-primary {
-  background: var(--color-accent);
-}
-.footer-ctas .button-primary::before {
-  background: var(--color-ink);
-}
-
-.footer-cta-secondary {
-  font-size: 16px;
-  padding: 12px 28px;
-  /* Footer sits on a dark surface - keep the hairline pill legible there */
+.footer-nav a:hover,
+.footer-social a:hover {
   color: var(--color-on-dark);
-  border-color: rgba(243, 240, 234, 0.45);
-}
-
-.footer-cta-secondary:hover {
-  border-color: var(--color-on-dark);
-  background: rgba(243, 240, 234, 0.08);
-}
-
-/* Right side: copyright + social stacked */
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-5);
-}
-
-.footer-copyright {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.35);
-  margin: 0;
-  text-align: right;
-  line-height: 1.5;
 }
 
 .footer-social {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: 20px;
 }
 
-.footer-social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-  border: none;
-  z-index: 1;
-  transition: background var(--duration-normal) var(--ease-out);
+.footer-social a {
+  display: inline-flex;
 }
 
-.social-icon {
-  position: relative;
-  font-size: 20px;
-  color: rgba(255, 255, 255, 0.7);
-  transition: color var(--duration-normal) var(--ease-out), transform var(--duration-slow) var(--ease-out);
-  z-index: 3;
+.footer-location {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-on-dark-secondary);
+  margin: 0;
 }
 
-.footer-social-link:hover {
-  background: var(--color-accent);
+.footer-copyright {
+  font-size: var(--text-label);
+  color: var(--color-on-dark-secondary);
+  margin: 24px 0 0;
 }
 
-.footer-social-link:hover .social-icon {
-  color: var(--color-white);
-  transform: rotateY(360deg);
+/* Short viewports: bottom-anchored content could exceed 100lvh - top-align
+   and allow the footer itself to scroll as a safety valve */
+@media (max-height: 480px) {
+  .footer {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  .footer-inner {
+    padding-top: 24px;
+  }
+
+  .footer-cta-title {
+    margin-bottom: 32px;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -2642,10 +2580,6 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   padding: var(--space-20) 0 var(--section-gap);
 }
 
-.about-page .footer-outer {
-  background-color: var(--color-background);
-}
-
 @media (max-width: 900px) {
   .about-page-section {
     flex-direction: column;
@@ -2850,80 +2784,12 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   .project-hero-section {
     padding-top: 120px;
   }
-
-  .footer-nav {
-    gap: var(--space-6);
-  }
-
-  .footer-ctas {
-    flex-wrap: wrap;
-  }
-}
-
-@media (max-width: 661px) {
-  .footer-nav {
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  .footer-bottom-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-8);
-  }
-  
-  .footer-right {
-    align-items: flex-start;
-  }
-
-  .footer-copyright {
-    text-align: left;
-  }
-}
-
-@media (max-width: 520px) {
-  .footer-link {
-    font-size: clamp(24px, 8vw, 56px);
-  }
-
-  .footer-nav {
-    gap: clamp(var(--space-4), 3vw, var(--space-6));
-  }
 }
 
 @media (max-width: 445px) {
-  .footer-avatar {
-    width: 14vw;
-    height: 14vw;
-    min-width: 48px;
-  }
-
-  .footer-tagline {
-    font-size: clamp(18px, 5.5vw, 28px);
-  }
-
-  .footer-location {
-    font-size: clamp(12px, 3.5vw, 16px);
-  }
-
-  .footer-status {
-    font-size: clamp(12px, 3.5vw, 16px);
-  }
-
-  .footer-status-icon,
   .availability-icon {
     width: clamp(28px, 8vw, 40px);
     height: clamp(28px, 8vw, 40px);
-  }
-
-  .footer-cta-primary,
-  .footer-cta-secondary {
-    font-size: clamp(13px, 3.5vw, 16px);
-    padding: 10px 20px;
-  }
-
-  .footer-info {
-    gap: var(--space-4);
   }
 }
 /* ==========================================================================
