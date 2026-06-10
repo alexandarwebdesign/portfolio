@@ -173,6 +173,7 @@ h1, h2, h3,
   main {
     padding: 0 !important;
     margin: 0 !important;
+    background: none !important;
   }
   a {
     color: inherit;
@@ -1662,6 +1663,7 @@ main {
   position: relative;
   z-index: 1;
   background: var(--color-background);
+  min-height: 100lvh;
 }
 
 body.about-page main {
@@ -1700,6 +1702,8 @@ body.about-page main {
   .footer {
     height: 100vh;
   }
+
+  main { min-height: 100vh; }
 }
 
 .footer-inner {

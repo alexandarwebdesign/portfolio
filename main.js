@@ -1003,6 +1003,23 @@
     });
   }
 
+  // Sticky-reveal footer: focused links can be occluded by main - scroll to bottom on focus entry
+  function initFooterFocusReveal() {
+    const footer = document.querySelector('.footer');
+    if (!footer) return;
+    footer.addEventListener('focusin', () => {
+      const doc = document.documentElement;
+      const target = doc.scrollHeight - window.innerHeight;
+      if (window.scrollY >= target - 4) return; // already revealed
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (window.__lenis && !reduced) {
+        window.__lenis.scrollTo(target);
+      } else {
+        window.scrollTo({ top: target, behavior: reduced ? 'auto' : 'smooth' });
+      }
+    });
+  }
+
   function init() {
     initSmoothScrollLenis();
     initReducedMotionSvg();
@@ -1018,6 +1035,7 @@
     initImageMarquee();
     initCaseCarousels();
     initPlates();
+    initFooterFocusReveal();
   }
 
   /**
