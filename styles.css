@@ -131,7 +131,7 @@ p, li {
 }
 /* Balance headings so the last line never drops a single orphan word */
 h1, h2, h3,
-.hero-title, .section-title, .project-title,
+.hero-title, .section-title, .project-card-title,
 .case-title, .about-page-title,
 .project-section-title {
   text-wrap: balance;
@@ -286,19 +286,17 @@ h1, h2, h3,
   --border-radius-button: 9999px;
   --section-gap: clamp(120px, 18vh, 220px);
 
-  /* ---------- Components (legacy - keep until consuming rules are rebuilt) ---------- */
-  --card-gap: 28px;
+  /* ---------- Components ---------- */
+  --card-gap: 32px;
   --input-padding: 20px;
 
   /* ---------- Glass (Espacio recipe) ---------- */
   --glass-bg: rgba(128, 128, 128, 0.3);
   --glass-blur: blur(5px) saturate(1.1);
   --glass-radius: 999px;
-  /* Legacy glass aliases - keep until consuming rules are rebuilt */
-  --glass-bg-hover: rgba(128, 128, 128, 0.45);
+  /* Legacy glass aliases - still consumed by .image-marquee__item (Task 7) */
   --glass-border: rgba(243, 240, 234, 0.18);
   --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  --glass-accent-bg-strong: rgba(69, 92, 233, 0.15);
 }
 
 /* ==========================================================================
@@ -842,250 +840,64 @@ textarea:focus-visible {
    5.4 Project Cards
    -------------------------------------------------------------------------- */
 
-/* Flat surface + hairline border (guide 07): work is the hero, the card frame
-   recedes. No glass on cards - glass is reserved for the 5 allowed components. */
+/* Editorial cards: image is the surface, metadata sits below on the page.
+   No frame, no glass - just a rounded media block and a mono tags line. */
 .project-card {
-  position: relative; /* anchor the floating name pill */
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-subtle);
-  box-shadow: none;
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.project-card-media {
+  overflow: hidden;
   border-radius: var(--border-radius);
-  padding: 0; /* image is full-bleed; the pill carries the label */
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform var(--duration-normal) var(--ease-out),
-              border-color var(--duration-normal) var(--ease-out),
-              box-shadow var(--duration-normal) var(--ease-out);
+  aspect-ratio: 16 / 10;
+  background: var(--color-surface-subtle);
 }
 
-.project-card:hover {
-  border-color: var(--color-accent-muted);
-  box-shadow: var(--glass-shadow);
-}
-
-/* Project Card Link Wrapper */
-.project-card-link {
-  display: block;
-  color: inherit;
-  text-decoration: none;
-}
-
-.project-image-wrapper {
-  overflow: hidden;
-  border-radius: inherit; /* match card corners now that image is full-bleed */
-  margin-bottom: 0;
-}
-
-.project-image {
+.project-card-media img {
   width: 100%;
-  aspect-ratio: 400 / 284;
+  height: 100%;
   object-fit: cover;
-  transition: transform var(--duration-slow) var(--ease-out);
+  transition: transform var(--duration-slow) var(--ease);
 }
 
-/* Placeholder gradient for images */
-.project-image.placeholder,
-.project-hero-image.placeholder,
-.gallery-item .placeholder {
-  background: linear-gradient(
-    135deg,
-    rgba(194, 201, 214, 0.3) 0%,
-    rgba(41, 48, 61, 0.3) 50%,
-    rgba(0, 102, 255, 0.15) 100%
-  );
-  object-fit: none;
+.project-card:hover .project-card-media img {
+  transform: scale(1.03); /* restrained zoom, not a lunge */
 }
 
-.project-image.placeholder {
-  aspect-ratio: 400 / 284;
-  object-fit: cover;
-}
-
-.project-hero-image.placeholder {
-  aspect-ratio: 16 / 9;
-}
-
-.gallery-item img.placeholder {
-  aspect-ratio: 4 / 3;
-  min-height: 300px;
-}
-
-.project-card:hover .project-image {
-  transform: scale(1.03); /* guide 05/07: subtle image push, not a zoom */
-}
-
-.project-info {
+.project-card-meta {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.project-title-row {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 20px 4px 0;
 }
 
-.project-title {
-  font-family: var(--font-body);
+.project-card-title {
   font-size: var(--text-project);
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-/* Arrow Slide Animation Container */
-.arrow-content {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  width: 28px;
-  height: 20px;
-  z-index: 1;
-}
-
-.project-arrow {
-  width: 28px;
-  height: 20px;
-  transition: transform var(--duration-fast) var(--ease-out);
-}
-
-.arrow-default {
-  transform: translateX(0);
-}
-
-.arrow-hover {
-  position: absolute;
-  left: calc(-100% - 8px);
-  top: 0;
-  /* Accent color filter */
-  filter: brightness(0) saturate(100%) invert(26%) sepia(98%) saturate(2097%) hue-rotate(210deg) brightness(102%) contrast(104%);
-}
-
-.project-card:hover .arrow-default {
-  transform: translateX(calc(100% + 8px));
-}
-
-.project-card:hover .arrow-hover {
-  transform: translateX(calc(100% + 8px));
-}
-
-.project-category {
-  font-size: var(--text-body);
-  color: var(--color-text-muted);
-}
-
-/* --------------------------------------------------------------------------
-   Floating project pill (guide 06 #5 - the one allowed card overlay).
-   Always visible, bottom-center, reads "Name · Category" on one line.
-   -------------------------------------------------------------------------- */
-.project-pill {
-  position: absolute;
-  bottom: var(--space-5);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3; /* above the upcoming overlay (z-index 2) */
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  max-width: calc(100% - var(--space-8));
-  padding: var(--space-3) var(--space-5);
-  border-radius: var(--border-radius-button);
-  background: var(--glass-bg-hover);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  white-space: nowrap;
-  overflow: hidden;
-  transition: background var(--duration-normal) var(--ease-out),
-              box-shadow var(--duration-normal) var(--ease-out);
-}
-
-.project-pill-name {
-  flex-shrink: 0;
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--text-body-sm);
   font-weight: 600;
-  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
 }
 
-.project-pill-sep {
-  flex-shrink: 0;
-  color: var(--color-text-tertiary);
-}
-
-.project-pill-category {
-  min-width: 0; /* allow truncation when the combined label is long */
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--color-text-muted);
-}
-
-.project-card:hover .project-pill {
-  background: var(--glass-accent-bg-strong);
-}
-
-@media (max-width: 768px) {
-  .project-pill {
-    bottom: var(--space-4);
-    padding: var(--space-2) var(--space-4);
-  }
-}
-
-/* Upcoming Project Overlay */
-.project-image-wrapper {
-  position: relative;
-}
-
-.project-upcoming-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: inherit;
-  z-index: 2;
-}
-
-.project-upcoming-label {
-  font-family: var(--font-body);
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
+.project-card-tags {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 0.5rem 1.4rem;
-  border-radius: 999px;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
 }
 
-/* Disabled card (upcoming projects) */
-.project-card--upcoming {
-  cursor: default;
+/* Upcoming (non-link) cards: dimmed media, inert */
+.project-card.is-upcoming {
+  pointer-events: none;
 }
 
-.project-card--upcoming:hover {
-  background: var(--color-surface);
-  border-color: var(--color-border-subtle);
-  box-shadow: none;
-}
-
-.project-card--upcoming:hover .project-image {
-  transform: none;
-}
-
-.project-card-link--disabled {
-  display: block;
-  color: inherit;
-  text-decoration: none;
+.project-card.is-upcoming .project-card-media {
+  opacity: 0.55;
 }
 
 /* ==========================================================================
@@ -1174,10 +986,6 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
 
 
 
-.project-image--birse-cover {
-  object-position: center center;
-}
-
 /* --------------------------------------------------------------------------
    6.2 Work Section
    -------------------------------------------------------------------------- */
@@ -1208,7 +1016,7 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--card-gap);
+  gap: 56px var(--card-gap);
 }
 
 
@@ -3183,32 +2991,22 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
    ========================================================================== */
 
 @media (max-width: 768px) {
-  /* Project Card - Reduced padding and spacing */
-  .project-card {
-    padding: 16px;
-    border-radius: 12px;
-  }
-
-  .project-image-wrapper {
-    border-radius: inherit;
-    margin-bottom: 0;
-  }
-
-  .project-info {
-    gap: var(--space-1);
-  }
-
-  .project-title {
-    font-size: 20px;
-  }
-
-  .project-category {
-    font-size: 16px;
-  }
-
-  /* Project Grid - Reduced gap */
+  /* Project Grid - single column, tighter row rhythm */
   .project-grid {
-    gap: var(--space-6);
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  /* Stack meta: long mono tag lines would overflow a one-line baseline row */
+  .project-card-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding-top: 14px;
+  }
+
+  .project-card-tags {
+    white-space: normal;
   }
 
   /* Work Section - Reduced padding */
@@ -3220,39 +3018,9 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
 }
 
 @media (max-width: 480px) {
-  /* Project Card - Even smaller padding for small mobile */
-  .project-card {
-    padding: 12px;
-    border-radius: 10px;
-  }
-
-  .project-image-wrapper {
-    border-radius: 4px;
-    margin-bottom: var(--space-3);
-  }
-
-  .project-title {
-    font-size: 18px;
-  }
-
-  .project-category {
-    font-size: 14px;
-  }
-
-  /* Arrow - Smaller on mobile */
-  .arrow-content {
-    width: 24px;
-    height: 16px;
-  }
-
-  .project-arrow {
-    width: 24px;
-    height: 16px;
-  }
-
-  /* Project Grid - Smallest gap */
+  /* Project Grid - tighter rhythm on small mobile */
   .project-grid {
-    gap: var(--space-4);
+    gap: 32px;
   }
 
   /* Work Section - Minimal padding */
@@ -5736,7 +5504,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   .nav-link {
     text-decoration: underline;
   }
-  .project-card,
+  .project-card-media,
   .form-input {
     border: 1px solid var(--color-text);
   }
