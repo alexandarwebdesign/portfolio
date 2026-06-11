@@ -353,7 +353,10 @@
     <!-- Main Content -->
     <main id="main-content">
       <!-- Hero Section -->
-      <section id="hero" class="hero-section">
+      <section id="hero" class="hero-section hero-section--shader">
+        <div class="hero-shader" aria-hidden="true">
+          <canvas class="hero-shader__canvas"></canvas>
+        </div>
         <div class="hero-content">
           <p class="mono-label hero-eyebrow">UX/UI Design &amp; Development &mdash; Sofia, BG</p>
           <h1 class="hero-title">Pretty isn&rsquo;t<br>enough.</h1>
@@ -848,5 +851,6 @@
     <!-- Application Scripts -->
     <script src="vendor/lenis.min.js?v=1" defer></script>
     <script src="main.js?v=14" defer></script>
+    <script src="hero-shader.js?v=13" defer></script>
   </body>
 </html>

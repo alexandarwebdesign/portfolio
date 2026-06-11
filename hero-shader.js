@@ -110,8 +110,22 @@
 
       o = tanhApprox(o / max(uExposure, 0.0001));
 
-      float alpha = clamp(max(o.r, max(o.g, o.b)) * uAlphaBoost, 0.0, 1.0);
-      gl_FragColor = vec4(o.rgb, alpha);
+      // R2 brand grade: remap the raw spectral output onto the redesign
+      // palette. Shadows -> electric blue #455ce9, mids -> the teal kept
+      // from the original look, highlights -> warm paper #f3f0ea. A slice
+      // of the raw RGB is mixed back in so the original iridescent
+      // shimmer stays recognizable. Motion math above is untouched.
+      vec3 raw = clamp(o.rgb, 0.0, 1.0);
+      float lum = dot(raw, vec3(0.2126, 0.7152, 0.0722));
+      vec3 brandBlue = vec3(0.271, 0.361, 0.914);
+      vec3 brandTeal = vec3(0.125, 0.698, 0.667);
+      vec3 brandPaper = vec3(0.953, 0.941, 0.918);
+      vec3 graded = mix(brandBlue, brandTeal, smoothstep(0.10, 0.62, lum));
+      graded = mix(graded, brandPaper, smoothstep(0.58, 1.0, lum));
+      graded = mix(graded, raw, 0.22);
+
+      float alpha = clamp(max(raw.r, max(raw.g, raw.b)) * uAlphaBoost, 0.0, 1.0);
+      gl_FragColor = vec4(graded, alpha);
     }
   `;
 

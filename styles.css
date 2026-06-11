@@ -1056,6 +1056,14 @@ textarea:focus-visible {
   opacity: 1;
 }
 
+/* Reduced motion: hero-shader.js already skips the animation loop and renders
+   a single static frame; just drop the fade-in transition too. */
+@media (prefers-reduced-motion: reduce) {
+  .hero-shader__canvas {
+    transition: none;
+  }
+}
+
 /* Bottom-up paper scrim: shader runs full-strength up top, while the
    bottom-anchored editorial type, CTAs and hero-foot hairline sit on calm,
    near-solid paper ground (ink-on-paper contrast preserved). */
