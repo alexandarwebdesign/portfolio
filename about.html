@@ -103,46 +103,83 @@
     <main id="main-content">
 
       <section class="about-page-section" aria-label="About Aleksandar Pavlov">
+        <div class="container">
 
-        <!-- Left: portrait photo -->
-        <div class="about-page-photo">
-          <picture>
+          <!-- Page header -->
+          <div class="section-header reveal">
+            <p class="mono-label"><span class="index">(02)</span> About</p>
+            <h1 class="section-title">Design that works on people.</h1>
+          </div>
+
+          <div class="about-page-grid">
+
+            <!-- Portrait -->
+            <div class="about-page-photo reveal">
+              <picture>
   <source type="image/avif" srcset="/images/aleksandar-pavlov-ux-designer-500.avif 500w, /images/aleksandar-pavlov-ux-designer-720.avif 720w, /images/aleksandar-pavlov-ux-designer-800.avif 800w, /images/aleksandar-pavlov-ux-designer-1080.avif 1080w, /images/aleksandar-pavlov-ux-designer-1600.avif 1600w, /images/aleksandar-pavlov-ux-designer-2321.avif 2321w" sizes="(max-width: 900px) 100vw, 45vw">
   <source type="image/webp" srcset="/images/aleksandar-pavlov-ux-designer-500.webp 500w, /images/aleksandar-pavlov-ux-designer-720.webp 720w, /images/aleksandar-pavlov-ux-designer-800.webp 800w, /images/aleksandar-pavlov-ux-designer-1080.webp 1080w, /images/aleksandar-pavlov-ux-designer-1600.webp 1600w, /images/aleksandar-pavlov-ux-designer-2321.webp 2321w" sizes="(max-width: 900px) 100vw, 45vw">
   <img src="/images/aleksandar-pavlov-ux-designer-1080.jpg" srcset="/images/aleksandar-pavlov-ux-designer-500.jpg 500w, /images/aleksandar-pavlov-ux-designer-720.jpg 720w, /images/aleksandar-pavlov-ux-designer-800.jpg 800w, /images/aleksandar-pavlov-ux-designer-1080.jpg 1080w, /images/aleksandar-pavlov-ux-designer-1600.jpg 1600w, /images/aleksandar-pavlov-ux-designer-2321.jpg 2321w" sizes="(max-width: 900px) 100vw, 45vw" alt="Aleksandar Pavlov - UX/UI Designer and Website Developer based in Sofia, Bulgaria" width="864" height="1200" loading="eager" decoding="sync">
 </picture>
-        </div>
-
-        <!-- Right: content -->
-        <div class="about-page-content">
-
-          <!-- Heading -->
-          <div class="about-page-heading-block">
-            <div class="about-page-heading-border">
-              <p class="section-eyebrow">UX/UI Designer &amp; Web Developer</p>
-              <h1 class="about-page-title">About</h1>
             </div>
-          </div>
 
-          <!-- Body text -->
-          <div class="about-page-body-block">
-            <div class="about-page-body-border">
-              <p class="about-page-para">I'm Aleksandar - a UX/UI designer and web developer based in Bulgaria, working with clients worldwide.</p>
-              <p class="about-page-para">Most people assume web design is about making things look good. I spent years in UX/UI learning that it's about making things work on people - the psychology behind where the eye goes, how spacing builds or breaks trust, what micro-interactions make a product feel alive versus dead.</p>
-              <p class="about-page-para">At some point I made a decision: take everything I know about UX and UI - the research, the psychology, the craft - and apply it entirely to one thing: websites. Not apps, not general product design, not a bit of everything. Just websites, done at the highest level possible.</p>
-              <p class="about-page-para">The result is work that most web designers can't produce, because they don't have the foundation. I take projects from first concept to live site - design, development, and deployment in one place. No handoffs, no miscommunication, no compromises.</p>
-              <p class="about-page-para">I work best with clients who want a site that does something - not just one that looks good in a screenshot. If that's you, let's talk.</p>
+            <!-- Content -->
+            <div class="about-page-content">
+
+              <!-- Body text -->
+              <div class="about-page-bio reveal">
+                <p class="about-page-para">I'm Aleksandar - a UX/UI designer and web developer based in Bulgaria, working with clients worldwide.</p>
+                <p class="about-page-para">Most people assume web design is about making things look good. I spent years in UX/UI learning that it's about making things work on people - the psychology behind where the eye goes, how spacing builds or breaks trust, what micro-interactions make a product feel alive versus dead.</p>
+                <p class="about-page-para">At some point I made a decision: take everything I know about UX and UI - the research, the psychology, the craft - and apply it entirely to one thing: websites. Not apps, not general product design, not a bit of everything. Just websites, done at the highest level possible.</p>
+                <p class="about-page-para">The result is work that most web designers can't produce, because they don't have the foundation. I take projects from first concept to live site - design, development, and deployment in one place. No handoffs, no miscommunication, no compromises.</p>
+                <p class="about-page-para">I work best with clients who want a site that does something - not just one that looks good in a screenshot. If that's you, let's talk.</p>
+              </div>
+
+              <!-- Meta index (same dl pattern as the homepage about section) -->
+              <dl class="about-index reveal">
+                <div class="about-index-row">
+                  <dt>Role</dt>
+                  <dd>UX/UI Designer &amp; Web Developer</dd>
+                </div>
+                <div class="about-index-row">
+                  <dt>Based</dt>
+                  <dd>
+                    Sofia, Bulgaria · Worldwide
+                    <span class="about-index-globe" aria-hidden="true">
+                      <span class="globe-wrap">
+                        <span class="globe-circle"></span>
+                        <span class="globe-circle"></span>
+                        <span class="globe-circle"></span>
+                        <span class="globe-hor"></span>
+                        <span class="globe-hor-middle"></span>
+                      </span>
+                    </span>
+                  </dd>
+                </div>
+                <div class="about-index-row">
+                  <dt>Experience</dt>
+                  <dd>Since 2023</dd>
+                </div>
+                <div class="about-index-row">
+                  <dt>Status</dt>
+                  <dd><svg class="about-status-icon" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="9.5" cy="9.5" r="1.5" fill="#1f9c44"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="2.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="4.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
+                    <circle cx="9.5" cy="9.5" r="5.4" stroke="#1f9c44" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
+                  </svg>Available for work</dd>
+                </div>
+              </dl>
+
+              <!-- CTA -->
+              <div class="about-page-cta-row reveal">
+                <a href="/#contact" class="button-primary"><span class="btn-label">Start a Project</span></a>
+                <a href="/#faq" class="button-secondary"><span class="btn-label">See the Process</span></a>
+              </div>
+
             </div>
-          </div>
 
-          <!-- CTA -->
-          <div class="about-page-cta-row">
-            <a href="/#contact" class="button-primary"><span class="btn-label">Start a Project</span></a>
-            <a href="/#faq" class="button-secondary"><span class="btn-label">See the Process</span></a>
           </div>
-
         </div>
-
       </section>
 
       <!-- Studio imagery marquee -->

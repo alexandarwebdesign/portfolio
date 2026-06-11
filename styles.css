@@ -132,7 +132,7 @@ p, li {
 /* Balance headings so the last line never drops a single orphan word */
 h1, h2, h3,
 .hero-title, .section-title, .project-card-title,
-.case-title, .about-page-title,
+.case-title,
 .project-section-title {
   text-wrap: balance;
 }
@@ -224,7 +224,6 @@ h1, h2, h3,
   --color-on-dark-secondary: rgba(243, 240, 234, 0.6);
   --color-on-dark-border: rgba(243, 240, 234, 0.18);
   /* Legacy aliases - keep until consuming rules are rebuilt */
-  --color-about-bg: var(--color-surface-subtle);
   --color-section-alt: var(--color-surface-subtle);
   --color-danger: var(--color-error);
 
@@ -1023,21 +1022,6 @@ body.is-loaded .hero-foot    { animation-delay: 0.40s; }
 
 
 /* --------------------------------------------------------------------------
-   Section eyebrow (counter label) - guide 03/07
-   -------------------------------------------------------------------------- */
-
-.section-eyebrow {
-  display: block;
-  font-family: var(--font-body);
-  font-size: var(--text-xs);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-caps);
-  color: var(--color-text-tertiary);
-  margin-bottom: var(--space-3);
-}
-
-/* --------------------------------------------------------------------------
    6.3 About Section
    -------------------------------------------------------------------------- */
 
@@ -1661,10 +1645,6 @@ main {
   z-index: 1;
   background: var(--color-background);
   min-height: 100lvh;
-}
-
-body.about-page main {
-  background: var(--color-about-bg);
 }
 
 .footer-reveal {
@@ -2459,85 +2439,65 @@ body.is-loaded .case-meta { animation-delay: 0.3s; }
    6.8 About Page
    ========================================================================== */
 
-body.about-page {
-  background-color: var(--color-about-bg);
-}
-
 .about-page-section {
-  display: flex;
-  min-height: 100vh;
-  min-height: 100dvh;
+  padding: clamp(120px, 14vh, 180px) 0 var(--section-gap);
 }
 
-/* Entrance - staggered text rise on load, matching the homepage hero cadence.
-   Portrait is left instant (it's the LCP). Visible by default if JS fails. */
-body.is-loaded .about-page-content > * {
-  animation: heroRise 0.8s var(--ease-signature) both;
+.about-page-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(48px, 6vw, 96px);
+  align-items: start;
 }
-body.is-loaded .about-page-heading-block { animation-delay: 0.1s; }
-body.is-loaded .about-page-body-block { animation-delay: 0.22s; }
-body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
 
+/* Portrait - rounded editorial frame with the standard slow zoom on hover */
 .about-page-photo {
-  position: relative;
-  flex-shrink: 0;
-  width: 45%;
+  position: sticky;
+  top: clamp(96px, 12vh, 140px);
+  border-radius: var(--border-radius);
   overflow: hidden;
-  align-self: stretch;
+  isolation: isolate; /* Safari corner-bleed guard */
 }
 
 .about-page-photo img {
-  position: absolute;
-  top: -0.02%;
-  left: 0;
   width: 100%;
-  height: 108%;
-  object-fit: cover;
-  object-position: center top;
-  pointer-events: none;
+  height: auto;
   display: block;
+  transition: transform var(--duration-slow) var(--ease);
+}
+
+.about-page-photo:hover img {
+  transform: scale(1.03);
 }
 
 .about-page-content {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: var(--space-20) var(--space-16) var(--space-20) 72px;
 }
 
-.about-page-heading-block {
-  padding-bottom: var(--space-12);
-}
-
-.about-page-title {
-  font-family: var(--font-display);
-  font-size: clamp(64px, 8vw, 132px);
-  font-weight: 500;
-  letter-spacing: var(--tracking-display);
-  line-height: 1.0;
-  color: var(--color-text);
-  margin: 0;
-}
-
-.about-page-body-block {
-  padding-bottom: var(--space-16);
-}
-
-.about-page-body-border {
+.about-page-bio {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
 }
 
 .about-page-para {
-  font-family: var(--font-body);
-  font-size: var(--text-body);
+  font-size: var(--text-body-lg);
   font-weight: 400;
-  line-height: 30px;
+  line-height: 1.5;
   letter-spacing: -0.1px;
-  color: var(--color-text-soft);
+  max-width: 60ch;
+  color: var(--color-text-muted);
   margin: 0;
+}
+
+/* Lead paragraph in full ink */
+.about-page-bio .about-page-para:first-child {
+  color: var(--color-text);
+}
+
+.about-page-content .about-index {
+  margin-top: clamp(40px, 6vh, 64px);
 }
 
 .about-page-cta-row {
@@ -2545,6 +2505,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   align-items: center;
   gap: var(--space-4);
   flex-wrap: wrap;
+  margin-top: clamp(40px, 6vh, 64px);
 }
 /* Buttons in about-page row share same dimensions */
 .about-page-cta-row .button-primary,
@@ -2552,54 +2513,26 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   min-width: 200px;
 }
 
+/* Gentle stagger for the blocks that are in view on load */
+html.js .about-page-photo.reveal { transition-delay: 0.05s; }
+html.js .about-page-bio.reveal { transition-delay: 0.12s; }
+html.js .about-page-content .about-index.reveal { transition-delay: 0.2s; }
+html.js .about-page-cta-row.reveal { transition-delay: 0.28s; }
+
 /* Unhide next-project teaser on about page (it's hidden globally
    pending more case studies, but on /about we use it as the closer) */
 .about-page .project-next-teaser-section {
   display: block !important;
 }
 
-.about-work-section {
-  padding: var(--space-20) 0 var(--section-gap);
-}
-
 @media (max-width: 900px) {
-  .about-page-section {
-    flex-direction: column;
-    min-height: auto;
+  .about-page-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-10);
   }
 
   .about-page-photo {
-    width: 100%;
-    height: 50vh;
-    align-self: auto;
-  }
-
-  .about-page-photo img {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 10%;
-  }
-
-  .about-page-content {
-    padding: 56px var(--space-6) var(--space-20);
-    justify-content: flex-start;
-  }
-
-  .about-page-title {
-    font-size: clamp(48px, 13vw, 110px);
-    letter-spacing: var(--tracking-display);
-  }
-
-  .about-page-cta-row {
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .about-page-photo {
-    height: 50vh;
+    position: static;
   }
 }
 
