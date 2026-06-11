@@ -147,7 +147,7 @@ h2,
 h3,
 .hero-title,
 .section-title,
-.project-card-title,
+.project-title,
 .case-title,
 .project-section-title {
   text-wrap: balance;
@@ -318,12 +318,21 @@ h3,
 
   /* ---------- Components ---------- */
   --card-gap: 32px;
+  --card-padding: 32px;
   --input-padding: 20px;
 
   /* ---------- Glass (Espacio recipe) ---------- */
   --glass-bg: rgba(128, 128, 128, 0.3);
   --glass-blur: blur(40px) saturate(1.1);
   --glass-radius: 999px;
+
+  /* ---------- Glass project cards (restored pre-redesign recipe) ----------
+     Original master values; shadow tint migrated from old blue to accent. */
+  --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.45) 100%);
+  --glass-card-bg-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.55) 100%);
+  --glass-card-border: rgba(255, 255, 255, 0.9);
+  --glass-card-blur: blur(3rem);
+  --glass-card-shadow: 0 16px 40px rgba(69, 92, 233, 0.1), inset 0 2px 4px rgba(255, 255, 255, 1);
 }
 
 /* ==========================================================================
@@ -887,7 +896,7 @@ textarea:focus-visible {
   font-size: var(--text-body);
   background: var(--color-white);
   box-shadow:
-    0 12px 28px rgba(0, 30, 80, 0.06),
+    0 12px 28px rgba(69, 92, 233, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
   color: var(--color-text);
   transition:
@@ -945,67 +954,160 @@ textarea:focus-visible {
    5.4 Project Cards
    -------------------------------------------------------------------------- */
 
-/* Editorial cards: image is the surface, metadata sits below on the page.
-   No frame, no glass - just a rounded media block and a mono tags line. */
+/* Original glass cards (restored from pre-redesign master): white-gradient
+   panel, framed image, title row with sliding arrow, glass hover lift.
+   Recolored to the current accent (#455ce9); structure and feel unchanged. */
 .project-card {
-  position: relative;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-.project-card-media {
+  background: var(--glass-card-bg);
+  backdrop-filter: var(--glass-card-blur);
+  -webkit-backdrop-filter: var(--glass-card-blur);
+  border: 1px solid var(--glass-card-border);
+  box-shadow: var(--glass-card-shadow);
+  border-radius: 16px;
+  padding: var(--card-padding);
   overflow: hidden;
-  border-radius: var(--border-radius);
-  aspect-ratio: 16 / 10;
-  background: var(--color-surface-subtle);
-  isolation: isolate;
+  cursor: pointer;
+  transition: transform var(--duration-normal) var(--ease),
+    background var(--duration-normal) var(--ease),
+    box-shadow var(--duration-normal) var(--ease);
 }
 
-.project-card-media img {
+.project-card:hover {
+  background: var(--glass-card-bg-hover);
+  box-shadow: 0 16px 48px rgba(69, 92, 233, 0.08);
+}
+
+/* Project Card Link Wrapper */
+.project-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: var(--space-6);
+}
+
+.project-image {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 400 / 284;
   object-fit: cover;
   transition: transform var(--duration-slow) var(--ease);
 }
 
-.project-card:hover .project-card-media img {
-  transform: scale(1.03);
-  /* restrained zoom, not a lunge */
+.project-card:hover .project-image {
+  transform: scale(1.05);
 }
 
-.project-card-meta {
+.project-info {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.project-title-row {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  padding: 20px 4px 0;
 }
 
-.project-card-title {
+.project-title {
+  font-family: var(--font-body);
   font-size: var(--text-project);
-  font-weight: 600;
-  letter-spacing: var(--tracking-tight);
-  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
-.project-card-tags {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
+/* Arrow Slide Animation Container */
+.arrow-content {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  width: 28px;
+  height: 20px;
+  z-index: 1;
+}
+
+.project-arrow {
+  width: 28px;
+  height: 20px;
+  transition: transform var(--duration-fast) var(--ease);
+}
+
+.arrow-default {
+  transform: translateX(0);
+}
+
+.arrow-hover {
+  position: absolute;
+  left: calc(-100% - 8px);
+  top: 0;
+  /* Recolors the slate arrow SVG to the accent #455ce9 */
+  filter: brightness(0) saturate(100%) invert(52%) sepia(86%) saturate(2820%) hue-rotate(211deg) brightness(79%) contrast(140%);
+}
+
+.project-card:hover .arrow-default {
+  transform: translateX(calc(100% + 8px));
+}
+
+.project-card:hover .arrow-hover {
+  transform: translateX(calc(100% + 8px));
+}
+
+.project-category {
+  font-size: var(--text-body);
+  color: var(--color-text-muted);
+}
+
+/* Upcoming Project Overlay */
+.project-upcoming-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.project-upcoming-label {
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-caps);
-  color: var(--color-text-tertiary);
-  white-space: normal;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1.4rem;
+  border-radius: 999px;
 }
 
-/* Upcoming (non-link) cards: dimmed media, inert */
-.project-card.is-upcoming {
-  pointer-events: none;
+/* Disabled card (upcoming projects) */
+.project-card--upcoming {
+  cursor: default;
 }
 
-.project-card.is-upcoming .project-card-media {
-  opacity: 0.55;
+.project-card--upcoming:hover {
+  background: var(--glass-card-bg);
+  box-shadow: var(--glass-card-shadow);
+}
+
+.project-card--upcoming:hover .project-image {
+  transform: none;
+}
+
+.project-card-link--disabled {
+  display: block;
+  color: inherit;
+  text-decoration: none;
 }
 
 /* ==========================================================================
@@ -1207,7 +1309,7 @@ body.is-loaded .hero-foot {
 .project-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 56px var(--card-gap);
+  gap: var(--card-gap);
 }
 
 
@@ -2935,21 +3037,32 @@ html.js .reveal.visible {
 
 @media (max-width: 768px) {
 
-  /* Project Grid - tighter row rhythm (columns already 1fr from ≤900px rule) */
+  /* Project Card - Reduced padding and spacing */
+  .project-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .project-image-wrapper {
+    border-radius: 6px;
+    margin-bottom: var(--space-4);
+  }
+
+  .project-info {
+    gap: 4px;
+  }
+
+  .project-title {
+    font-size: 20px;
+  }
+
+  .project-category {
+    font-size: 16px;
+  }
+
+  /* Project Grid - Reduced gap (columns already 1fr from the 900px rule) */
   .project-grid {
-    gap: 40px;
-  }
-
-  /* Stack meta: long mono tag lines would overflow a one-line baseline row */
-  .project-card-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    padding-top: 14px;
-  }
-
-  .project-card-tags {
-    white-space: normal;
+    gap: var(--space-6);
   }
 
   /* Work Section - Reduced padding */
@@ -2962,9 +3075,40 @@ html.js .reveal.visible {
 
 @media (max-width: 480px) {
 
-  /* Project Grid - tighter rhythm on small mobile */
+  /* Project Card - Even smaller padding for small mobile */
+  .project-card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .project-image-wrapper {
+    border-radius: 4px;
+    margin-bottom: var(--space-3);
+  }
+
+  .project-title {
+    font-size: 18px;
+  }
+
+  /* 16px floor (master had 14px; text sizing rule forbids below 16px) */
+  .project-category {
+    font-size: 16px;
+  }
+
+  /* Arrow - Smaller on mobile */
+  .arrow-content {
+    width: 24px;
+    height: 16px;
+  }
+
+  .project-arrow {
+    width: 24px;
+    height: 16px;
+  }
+
+  /* Project Grid - Smallest gap */
   .project-grid {
-    gap: 32px;
+    gap: var(--space-4);
   }
 
   /* Work Section - Minimal padding */
@@ -5521,7 +5665,7 @@ html.js .reveal.visible {
     text-decoration: underline;
   }
 
-  .project-card-media,
+  .project-card,
   .form-input {
     border: 1px solid var(--color-text);
   }
