@@ -259,10 +259,6 @@ h1, h2, h3,
   --duration-fast: 450ms;
   --duration-normal: 600ms;
   --duration-slow: 900ms;
-  /* Legacy motion aliases - keep until consuming rules are rebuilt */
-  --motion-tempo-primary: var(--duration-normal);
-  --motion-ease-primary: var(--ease-out);
-  --motion-ease-accent: var(--ease);
 
   /* ---------- Spacing ---------- */
   --space-1: 4px;
@@ -330,16 +326,17 @@ body {
 
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: var(--motion-tempo-primary);
-  animation-timing-function: var(--motion-ease-primary);
+  animation-timing-function: var(--ease);
 }
 
 ::view-transition-old(root) {
   animation-name: page-fade-out;
+  animation-duration: var(--duration-fast);
 }
 
 ::view-transition-new(root) {
   animation-name: page-fade-in;
+  animation-duration: var(--duration-normal);
 }
 
 @keyframes page-fade-out {
@@ -1824,30 +1821,7 @@ body.about-page main {
   opacity: 0.5;
 }
 
-/* Content stream reveal animation */
-.content-text-block.reveal,
-.content-image-block.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity var(--duration-slow) var(--ease-signature),
-    transform var(--duration-slow) var(--ease-signature);
-}
-
-.content-text-block.reveal.visible,
-.content-image-block.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .content-text-block.reveal,
-  .content-image-block.reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
+/* Content stream blocks use the generic .reveal blur-up (section 7). */
 
 /* Case hero entrance - staggered rise on load (matches homepage hero). */
 body.is-loaded .case-header .conceptual-badge,
@@ -2650,18 +2624,21 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
 }
 
 /* Stagger children */
-/* Scroll Reveal */
+/* Scroll Reveal - blur-up */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(28px);
+  filter: blur(8px);
   transition:
-    opacity var(--duration-slow) var(--ease-signature),
-    transform var(--duration-slow) var(--ease-signature);
+    opacity var(--duration-slow) var(--ease),
+    transform var(--duration-slow) var(--ease),
+    filter var(--duration-slow) var(--ease);
 }
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  filter: none; /* none (not blur(0)) - releases the compositing layer */
 }
 
 /* Stagger reveal for project cards */
@@ -2701,6 +2678,8 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
+    transition: none;
   }
 
   /* Buttons & roll links: keep state changes, drop movement */
@@ -3658,7 +3637,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 320ms var(--motion-ease-primary), visibility 0s linear 320ms;
+  transition: opacity 320ms var(--ease-out), visibility 0s linear 320ms;
 }
 
 .case-carousel__slide.is-active {

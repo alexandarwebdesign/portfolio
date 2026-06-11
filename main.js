@@ -60,16 +60,7 @@
 
     return {
       tempo:
-        parseFloat(rootStyles.getPropertyValue("--motion-tempo-primary")) ||
-        436,
-      exitRatio:
-        parseFloat(rootStyles.getPropertyValue("--motion-exit-ratio")) || 0.63,
-      primaryEasing:
-        rootStyles.getPropertyValue("--motion-ease-primary").trim() ||
-        "cubic-bezier(0.33, 0.06, 0.12, 0.97)",
-      accentEasing:
-        rootStyles.getPropertyValue("--motion-ease-accent").trim() ||
-        "cubic-bezier(0.38, 0.10, 0.16, 0.98)",
+        parseFloat(rootStyles.getPropertyValue("--duration-normal")) || 600,
     };
   }
 
