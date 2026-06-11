@@ -6,6 +6,7 @@
   <title>404 - Page Not Found | Aleksandar Pavlov</title>
   <meta name="description" content="Page not found. Return to Aleksandar Pavlov's portfolio - UX/UI design and web development.">
   <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#f3f0ea">
   <link rel="icon" type="image/png" href="/favicon.png">
   
 
@@ -27,20 +28,21 @@
       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
     }
 
-    /* MASTER RULES - DESIGN TAGS */
+    /* Design tokens - mirrors styles.css */
     :root {
       /* Colors */
-      --color-background: #F4F9FA;
-      --color-text: #29303D;
-      --color-accent: #0066FF;
-      --color-white: #FFFFFF;
-      
+      --color-background: #f3f0ea;
+      --color-ink: #1c1d20;
+      --color-text: var(--color-ink);
+      --color-accent: #455ce9;
+      --color-on-dark: #f3f0ea;
+
       /* Typography */
-      --font-display: 'Manrope', sans-serif;
       --font-body: 'Manrope', sans-serif;
-      
-      /* Spacing/Shape */
-      --border-radius-button: 13.33px;
+
+      /* Motion/Shape */
+      --ease: cubic-bezier(0.55, 0, 0.1, 1);
+      --border-radius-button: 9999px;
     }
 
     * {
@@ -103,23 +105,27 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        padding: 16px 32px;
-        background: var(--color-accent); /* Master Rule: #0066FF */
-        color: var(--color-white);
+        padding: 18px 36px;
+        background: var(--color-ink);
+        color: var(--color-on-dark);
         text-decoration: none;
         font-family: var(--font-body);
         font-weight: 600;
-        font-size: 24px;
-        letter-spacing: 0.24px;
+        font-size: 18px;
         line-height: 1.5;
         border-radius: var(--border-radius-button);
-        box-shadow: inset 0px 4px 8px rgba(255, 255, 255, 0.2);
-        transition: transform 300ms cubic-bezier(0.0, 0, 0.2, 1), box-shadow 300ms cubic-bezier(0.0, 0, 0.2, 1);
+        border: 1px solid transparent;
+        transition: background 450ms var(--ease), transform 450ms var(--ease);
     }
 
     .home-btn:hover {
+        background: var(--color-accent);
         transform: translateY(-2px);
-        box-shadow: inset 0px 4px 8px rgba(255, 255, 255, 0.2), 0 12px 24px rgba(0, 102, 255, 0.24);
+    }
+
+    .home-btn:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 4px;
     }
     
     .spacer {
@@ -140,8 +146,8 @@
         }
 
         .home-btn {
-            padding: 14px 24px;
-            font-size: 18px;
+            padding: 14px 28px;
+            font-size: 16px;
             width: auto;
             min-width: 180px;
         }
@@ -183,12 +189,14 @@
 
 
     
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Settings matching Design System + Tunnel Vibe
     const settings = {
-      bgColor: 0xF4F9FA, // Master Rule Background
-      gridColor: 0x111111, // Darker grid lines
+      bgColor: 0xf3f0ea, // Warm paper background
+      gridColor: 0x1c1d20, // Ink grid lines
       gridOpacity: 0.2,
-      accentColor: 0x0066FF // Master Rule Accent
+      accentColor: 0x455ce9 // Brand accent
     };
     
     // Scene Setup
@@ -254,8 +262,10 @@
         scene.add(textMesh);
         
         // Initial intro animation
-        gsap.from(textMesh.scale, { x: 0, y: 0, z: 0, duration: 1.5, ease: "elastic.out(1, 0.3)" });
-        gsap.from(textMesh.rotation, { y: Math.PI * 2, duration: 2, ease: "power3.out" });
+        if (!reduceMotion) {
+          gsap.from(textMesh.scale, { x: 0, y: 0, z: 0, duration: 1.5, ease: "elastic.out(1, 0.3)" });
+          gsap.from(textMesh.rotation, { y: Math.PI * 2, duration: 2, ease: "power3.out" });
+        }
     });
 
     // Tunnel Construction
@@ -298,6 +308,7 @@
     function animate() {
         requestAnimationFrame(animate);
 
+        if (!reduceMotion) {
         // Rotating Tunnel
         tunnelGroup.rotation.z += 0.0035; // Much slower rotation
 
@@ -306,9 +317,10 @@
             grid.position.z += 0.08;
             if (grid.position.z > 2.5) grid.position.z = 0; // Seamless loop based on grid spacing
         });
+        }
 
         // Float 3D Text
-        if (textMesh) {
+        if (!reduceMotion && textMesh) {
             textMesh.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
             textMesh.rotation.y = Math.cos(Date.now() * 0.0015) * 0.15;
             // Counter-rotate text slightly for floaty feel vs tunnel
