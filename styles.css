@@ -147,7 +147,6 @@ h2,
 h3,
 .hero-title,
 .section-title,
-.project-title,
 .case-title,
 .project-section-title {
   text-wrap: balance;
@@ -326,13 +325,17 @@ h3,
   --glass-blur: blur(40px) saturate(1.1);
   --glass-radius: 999px;
 
-  /* ---------- Glass project cards (restored pre-redesign recipe) ----------
-     Original master values; shadow tint migrated from old blue to accent. */
-  --glass-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.45) 100%);
-  --glass-card-bg-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.55) 100%);
-  --glass-card-border: rgba(255, 255, 255, 0.9);
-  --glass-card-blur: blur(3rem);
-  --glass-card-shadow: 0 16px 40px rgba(69, 92, 233, 0.1), inset 0 2px 4px rgba(255, 255, 255, 1);
+  /* ---------- Glass pill (restored pre-plan checkpoint recipe) ----------
+     Used by the project-card pill chip. Navbar keeps --glass-bg/--glass-blur
+     above; the checkpoint's blur(12px) lives in --glass-blur-card to avoid
+     the name collision. Shadow/accent tints migrated from old blue to #455ce9. */
+  --glass-bg-hover: rgba(255, 255, 255, 0.80);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-blur-card: blur(12px);
+  --glass-shadow: 0 4px 24px rgba(69, 92, 233, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --glass-accent-bg-strong: rgba(255, 255, 255, 0.86); /* project pill hover */
+  --color-accent-muted: rgba(69, 92, 233, 0.4); /* soft accent - hover borders */
+  --text-sm: 14px; /* pill category (checkpoint value) */
 }
 
 /* ==========================================================================
@@ -954,27 +957,25 @@ textarea:focus-visible {
    5.4 Project Cards
    -------------------------------------------------------------------------- */
 
-/* Original glass cards (restored from pre-redesign master): white-gradient
-   panel, framed image, title row with sliding arrow, glass hover lift.
-   Recolored to the current accent (#455ce9); structure and feel unchanged. */
+/* Flat surface + hairline border (restored pre-plan checkpoint): work is the
+   hero, the card frame recedes. The floating glass pill carries the label. */
 .project-card {
-  background: var(--glass-card-bg);
-  backdrop-filter: var(--glass-card-blur);
-  -webkit-backdrop-filter: var(--glass-card-blur);
-  border: 1px solid var(--glass-card-border);
-  box-shadow: var(--glass-card-shadow);
-  border-radius: 16px;
-  padding: var(--card-padding);
+  position: relative; /* anchor the floating name pill */
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow: none;
+  border-radius: var(--border-radius);
+  padding: 0; /* image is full-bleed; the pill carries the label */
   overflow: hidden;
   cursor: pointer;
-  transition: transform var(--duration-normal) var(--ease),
-    background var(--duration-normal) var(--ease),
-    box-shadow var(--duration-normal) var(--ease);
+  transition: transform var(--duration-normal) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
 }
 
 .project-card:hover {
-  background: var(--glass-card-bg-hover);
-  box-shadow: 0 16px 48px rgba(69, 92, 233, 0.08);
+  border-color: var(--color-accent-muted);
+  box-shadow: var(--glass-shadow);
 }
 
 /* Project Card Link Wrapper */
@@ -985,85 +986,92 @@ textarea:focus-visible {
 }
 
 .project-image-wrapper {
-  position: relative;
   overflow: hidden;
-  border-radius: 8px;
-  margin-bottom: var(--space-6);
+  border-radius: inherit; /* match card corners now that image is full-bleed */
+  margin-bottom: 0;
 }
 
 .project-image {
   width: 100%;
   aspect-ratio: 400 / 284;
   object-fit: cover;
-  transition: transform var(--duration-slow) var(--ease);
+  transition: transform var(--duration-slow) var(--ease-out);
 }
 
 .project-card:hover .project-image {
-  transform: scale(1.05);
+  transform: scale(1.03); /* subtle image push, not a zoom */
 }
 
-.project-info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+.project-image--birse-cover {
+  object-position: center center;
 }
 
-.project-title-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.project-title {
-  font-family: var(--font-body);
-  font-size: var(--text-project);
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-/* Arrow Slide Animation Container */
-.arrow-content {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  width: 28px;
-  height: 20px;
-  z-index: 1;
-}
-
-.project-arrow {
-  width: 28px;
-  height: 20px;
-  transition: transform var(--duration-fast) var(--ease);
-}
-
-.arrow-default {
-  transform: translateX(0);
-}
-
-.arrow-hover {
+/* --------------------------------------------------------------------------
+   Floating project pill - the one allowed card overlay.
+   Always visible, bottom-center, reads "Name · Category" on one line.
+   -------------------------------------------------------------------------- */
+.project-pill {
   position: absolute;
-  left: calc(-100% - 8px);
-  top: 0;
-  /* Recolors the slate arrow SVG to the accent #455ce9 */
-  filter: brightness(0) saturate(100%) invert(52%) sepia(86%) saturate(2820%) hue-rotate(211deg) brightness(79%) contrast(140%);
+  bottom: var(--space-5);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3; /* above the upcoming overlay (z-index 2) */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: calc(100% - var(--space-8));
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--border-radius-button);
+  background: var(--glass-bg-hover);
+  backdrop-filter: var(--glass-blur-card);
+  -webkit-backdrop-filter: var(--glass-blur-card);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: background var(--duration-normal) var(--ease-out),
+              box-shadow var(--duration-normal) var(--ease-out);
 }
 
-.project-card:hover .arrow-default {
-  transform: translateX(calc(100% + 8px));
+.project-pill-name {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--color-text);
 }
 
-.project-card:hover .arrow-hover {
-  transform: translateX(calc(100% + 8px));
+.project-pill-sep {
+  flex-shrink: 0;
+  color: var(--color-text-tertiary);
 }
 
-.project-category {
-  font-size: var(--text-body);
+.project-pill-category {
+  min-width: 0; /* allow truncation when the combined label is long */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--text-sm);
+  font-weight: 500;
   color: var(--color-text-muted);
 }
 
+.project-card:hover .project-pill {
+  background: var(--glass-accent-bg-strong);
+}
+
+@media (max-width: 768px) {
+  .project-pill {
+    bottom: var(--space-4);
+    padding: var(--space-2) var(--space-4);
+  }
+}
+
 /* Upcoming Project Overlay */
+.project-image-wrapper {
+  position: relative;
+}
+
 .project-upcoming-overlay {
   position: absolute;
   inset: 0;
@@ -1096,8 +1104,9 @@ textarea:focus-visible {
 }
 
 .project-card--upcoming:hover {
-  background: var(--glass-card-bg);
-  box-shadow: var(--glass-card-shadow);
+  background: var(--color-surface);
+  border-color: var(--color-border-subtle);
+  box-shadow: none;
 }
 
 .project-card--upcoming:hover .project-image {
@@ -3044,20 +3053,8 @@ html.js .reveal.visible {
   }
 
   .project-image-wrapper {
-    border-radius: 6px;
-    margin-bottom: var(--space-4);
-  }
-
-  .project-info {
-    gap: 4px;
-  }
-
-  .project-title {
-    font-size: 20px;
-  }
-
-  .project-category {
-    font-size: 16px;
+    border-radius: inherit;
+    margin-bottom: 0;
   }
 
   /* Project Grid - Reduced gap (columns already 1fr from the 900px rule) */
@@ -3084,26 +3081,6 @@ html.js .reveal.visible {
   .project-image-wrapper {
     border-radius: 4px;
     margin-bottom: var(--space-3);
-  }
-
-  .project-title {
-    font-size: 18px;
-  }
-
-  /* 16px floor (master had 14px; text sizing rule forbids below 16px) */
-  .project-category {
-    font-size: 16px;
-  }
-
-  /* Arrow - Smaller on mobile */
-  .arrow-content {
-    width: 24px;
-    height: 16px;
-  }
-
-  .project-arrow {
-    width: 24px;
-    height: 16px;
   }
 
   /* Project Grid - Smallest gap */
