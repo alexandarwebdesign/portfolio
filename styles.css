@@ -2625,7 +2625,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
 
 /* Stagger children */
 /* Scroll Reveal - blur-up */
-.reveal {
+html.js .reveal {
   opacity: 0;
   transform: translateY(28px);
   filter: blur(8px);
@@ -2635,7 +2635,7 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
     filter var(--duration-slow) var(--ease);
 }
 
-.reveal.visible {
+html.js .reveal.visible {
   opacity: 1;
   transform: none;
   filter: none; /* none (not blur(0)) - releases the compositing layer */
@@ -2675,11 +2675,16 @@ body.is-loaded .about-page-cta-row { animation-delay: 0.34s; }
     scroll-behavior: auto !important;
   }
 
-  .reveal {
+  html.js .reveal {
     opacity: 1;
     transform: none;
     filter: none;
     transition: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
 
   /* Buttons & roll links: keep state changes, drop movement */
