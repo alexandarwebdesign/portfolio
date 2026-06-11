@@ -142,8 +142,7 @@ h1, h2, h3,
 .faq-section,
 .contact-section,
 .project-dynamic-body-section,
-.project-next-teaser-section,
-.about-page-section .about-page-content {
+.project-next-teaser-section {
   content-visibility: auto;
   contain-intrinsic-size: 0 1200px;
 }
