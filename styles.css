@@ -1678,7 +1678,7 @@ body.is-loaded .hero-foot {
 .contact-info {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: var(--space-5);
 }
 
 .contact-subtitle {
@@ -1687,24 +1687,14 @@ body.is-loaded .hero-foot {
   max-width: 38ch;
 }
 
-.contact-email {
-  margin-top: var(--space-16);
-}
-
-.email-label {
-  font-size: var(--text-body);
-  color: var(--color-text-light);
-  margin-bottom: var(--space-2);
-}
-
 .email-link {
-  font-size: var(--text-body);
-  color: var(--color-ink);
-  transition: opacity var(--duration-fast) var(--ease);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  transition: color var(--duration-fast) var(--ease);
 }
 
 .email-link:hover {
-  opacity: 0.7;
+  color: var(--color-ink);
 }
 
 /* --------------------------------------------------------------------------
