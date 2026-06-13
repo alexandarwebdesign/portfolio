@@ -736,7 +736,8 @@ textarea:focus-visible {
 }
 
 .nav-home:hover {
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--color-accent);
+  color: var(--color-on-dark);
 }
 
 /* Rotating shine ring on home circle (same as pill) */
@@ -809,6 +810,7 @@ textarea:focus-visible {
   z-index: 1;
 }
 
+.nav-link:hover { color: var(--color-accent); }
 
 
 /* Active-page dot (Dennis pattern) */
