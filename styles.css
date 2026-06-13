@@ -2099,30 +2099,7 @@ main {
   margin: 0;
 }
 
-.footer-ctas {
-  display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-}
 
-.footer-cta-primary {
-  background: var(--color-accent);
-}
-
-.footer-cta-primary::before {
-  background: var(--color-ink);
-}
-
-.footer-cta-secondary {
-  color: var(--color-on-dark-secondary);
-  border-color: var(--color-on-dark-border);
-}
-
-.footer-cta-secondary:hover {
-  border-color: var(--color-on-dark);
-  background: transparent;
-  color: var(--color-on-dark);
-}
 
 .footer-right {
   display: flex;
@@ -2141,16 +2118,17 @@ main {
 .footer-social {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: var(--space-5);
 }
 
-.footer-social a {
-  display: inline-flex;
+.footer-social-link {
+  font-size: var(--text-body-sm);
   color: var(--color-on-dark-secondary);
+  text-decoration: none;
   transition: color var(--duration-fast) var(--ease);
 }
 
-.footer-social a:hover { color: var(--color-on-dark); }
+.footer-social-link:hover { color: var(--color-on-dark); }
 
 /* Short viewports: bottom-anchored content could exceed 100lvh - top-align
    and allow the footer itself to scroll as a safety valve */
