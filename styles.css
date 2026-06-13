@@ -711,7 +711,7 @@ textarea:focus-visible {
   z-index: 100;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: 0;
 }
 
 /* Home icon circle button */
@@ -729,6 +729,8 @@ textarea:focus-visible {
   color: var(--color-ink);
   text-decoration: none;
   flex-shrink: 0;
+  margin-right: -4px;
+  z-index: 1;
   transition: background var(--duration-fast) var(--ease),
               transform var(--duration-fast) var(--ease-out);
 }
