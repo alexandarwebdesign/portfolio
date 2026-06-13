@@ -3214,17 +3214,6 @@ html.js .reveal.visible {
 
 @media (max-width: 768px) {
 
-  /* Project Card - Reduced padding and spacing */
-  .project-card {
-    padding: 16px;
-    border-radius: 12px;
-  }
-
-  .project-image-wrapper {
-    border-radius: inherit;
-    margin-bottom: 0;
-  }
-
   /* Project Grid - Reduced gap (columns already 1fr from the 900px rule) */
   .project-grid {
     gap: var(--space-6);
@@ -3239,17 +3228,6 @@ html.js .reveal.visible {
 }
 
 @media (max-width: 480px) {
-
-  /* Project Card - Even smaller padding for small mobile */
-  .project-card {
-    padding: 12px;
-    border-radius: 10px;
-  }
-
-  .project-image-wrapper {
-    border-radius: 4px;
-    margin-bottom: var(--space-3);
-  }
 
   /* Project Grid - Smallest gap */
   .project-grid {
