@@ -1668,38 +1668,34 @@ body.is-loaded .hero-foot {
   border-radius: var(--border-radius) var(--border-radius) 0 0;
 }
 
-.contact-context {
-  display: flex;
-  align-items: center;
-  gap: var(--space-5);
-  flex-wrap: wrap;
-  padding-bottom: var(--space-8);
-  border-bottom: 1px solid var(--color-border-subtle);
-  margin-bottom: var(--space-8);
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 522px;
+  gap: var(--space-16);
+  align-items: flex-start;
 }
 
-.contact-context-sep {
-  color: var(--color-text-tertiary);
-  flex-shrink: 0;
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
 }
 
 .contact-subtitle {
-  font-size: var(--text-body-sm);
-  color: var(--color-text-muted);
-  flex: 1;
-  min-width: 20ch;
-  margin: 0;
+  font-size: var(--text-body);
+  color: var(--color-text-light);
+  max-width: 38ch;
 }
 
-.contact-context-email {
-  font-size: var(--text-body-sm);
-  color: var(--color-ink);
-  margin-left: auto;
-  white-space: nowrap;
-  transition: opacity var(--duration-fast) var(--ease);
+.contact-email {
+  margin-top: var(--space-16);
 }
 
-.contact-context-email:hover { opacity: 0.65; }
+.email-label {
+  font-size: var(--text-body);
+  color: var(--color-text-light);
+  margin-bottom: var(--space-2);
+}
 
 .email-link {
   font-size: var(--text-body);
@@ -1707,18 +1703,8 @@ body.is-loaded .hero-foot {
   transition: opacity var(--duration-fast) var(--ease);
 }
 
-.email-link:hover { opacity: 0.7; }
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-6);
-}
-
-.form-footer-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
+.email-link:hover {
+  opacity: 0.7;
 }
 
 /* --------------------------------------------------------------------------
@@ -2960,17 +2946,9 @@ html.js .reveal.visible {
    ========================================================================== */
 
 @media (max-width: 1100px) {
-  .form-row {
+  .contact-grid {
     grid-template-columns: 1fr;
-  }
-
-  .contact-context-email {
-    margin-left: 0;
-  }
-
-  .form-footer-row {
-    flex-direction: column;
-    align-items: flex-start;
+    gap: var(--space-16);
   }
 
   .project-overview-grid {
