@@ -731,13 +731,12 @@ textarea:focus-visible {
   flex-shrink: 0;
   margin-right: -4px;
   z-index: 1;
-  transition: background var(--duration-fast) var(--ease),
+  transition: color var(--duration-fast) var(--ease), background var(--duration-fast) var(--ease),
               transform var(--duration-fast) var(--ease-out);
 }
 
 .nav-home:hover {
-  background: var(--color-accent);
-  color: var(--color-on-dark);
+  color: var(--color-accent);
 }
 
 /* Rotating shine ring on home circle (same as pill) */
