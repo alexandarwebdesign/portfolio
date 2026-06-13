@@ -622,9 +622,8 @@ textarea:focus-visible {
 
 .button-secondary {
   border: 1px solid var(--color-border);
-  background: var(--color-white);
+  background: transparent;
   color: var(--color-ink);
-  box-shadow: 0 8px 18px rgba(28, 29, 32, 0.08);
 }
 
 .button-secondary:hover {
@@ -2964,6 +2963,7 @@ body.is-loaded .case-meta {
 .about-page-cta-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-4);
   flex-wrap: wrap;
   margin-top: clamp(40px, 6vh, 64px);
