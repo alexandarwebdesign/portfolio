@@ -1130,13 +1130,17 @@ textarea:focus-visible {
 .hero-section {
   min-height: 100svh;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: clamp(96px, 12vh, 140px) clamp(20px, 4vw, 64px) 40px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 120px;
+  padding-bottom: var(--space-20);
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
 
-/* Full-bleed WebGL backdrop (hero-shader.js). Decorative: aria-hidden markup,
-   so no JS / no WebGL simply leaves the warm paper background. */
 .hero-section--shader {
   position: relative;
   isolation: isolate;
@@ -1149,10 +1153,8 @@ textarea:focus-visible {
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  /* Soft brand glow doubles as the no-WebGL fallback and prevents any dark
-     flash while the alpha canvas boots. */
   background:
-    radial-gradient(circle at 70% 24%, rgba(69, 92, 233, 0.10) 0%, rgba(32, 178, 170, 0.07) 34%, rgba(243, 240, 234, 0) 62%);
+    radial-gradient(circle at 50% 52%, rgba(32, 178, 170, 0.22) 0%, rgba(69, 92, 233, 0.14) 22%, rgba(187, 171, 255, 0.1) 36%, rgba(243, 240, 234, 0) 62%);
 }
 
 .hero-shader__canvas {
@@ -1161,43 +1163,39 @@ textarea:focus-visible {
   height: 100%;
   opacity: 0;
   transition: opacity 0.9s ease;
+  mix-blend-mode: screen;
 }
 
 .hero-section--shader.is-shader-ready .hero-shader__canvas {
   opacity: 1;
 }
 
-/* Reduced motion: hero-shader.js already skips the animation loop and renders
-   a single static frame; just drop the fade-in transition too. */
 @media (prefers-reduced-motion: reduce) {
   .hero-shader__canvas {
     transition: none;
   }
 }
 
-/* Bottom-up paper scrim: shader runs full-strength up top, while the
-   bottom-anchored editorial type, CTAs and hero-foot hairline sit on calm,
-   near-solid paper ground (ink-on-paper contrast preserved). */
-.hero-shader::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(243, 240, 234, 0) 30%, rgba(243, 240, 234, 0.85) 78%, #f3f0ea 100%);
-}
-
-.hero-section--shader .hero-content,
-.hero-section--shader .hero-foot {
+.hero-section--shader .hero-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .hero-content {
-  margin-bottom: clamp(48px, 8vh, 96px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-6);
+  max-width: 1160px;
 }
 
 .hero-eyebrow {
-  margin-bottom: 24px;
+  color: var(--color-accent);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
 }
 
 .hero-title {
@@ -1205,49 +1203,21 @@ textarea:focus-visible {
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
   font-weight: 500;
-  margin: 0 0 clamp(32px, 5vh, 56px);
-}
-
-.hero-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 48px;
-  flex-wrap: wrap;
+  margin-top: var(--space-4);
+  text-align: center;
+  max-width: 1280px;
 }
 
 .hero-subtitle {
   font-size: var(--text-body-lg);
   color: var(--color-text-muted);
-  max-width: 46ch;
-  margin: 0;
+  max-width: 512px;
+  text-align: center;
+  line-height: 1.6;
 }
 
-.hero-ctas {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-
-.hero-foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-top: 24px;
-  border-top: 1px solid var(--color-border-subtle);
-}
-
-.badge-availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 16px;
-  border-radius: var(--glass-radius);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+.hero-cta {
+  margin-top: var(--space-8);
 }
 
 /* Staggered entrance - visible by default; animates only once the page-load
@@ -1265,8 +1235,7 @@ textarea:focus-visible {
   }
 }
 
-body.is-loaded .hero-content>*,
-body.is-loaded .hero-foot {
+body.is-loaded .hero-content > * {
   animation: heroRise 0.8s var(--ease) both;
 }
 
@@ -1278,11 +1247,11 @@ body.is-loaded .hero-title {
   animation-delay: 0.15s;
 }
 
-body.is-loaded .hero-row {
+body.is-loaded .hero-subtitle {
   animation-delay: 0.28s;
 }
 
-body.is-loaded .hero-foot {
+body.is-loaded .hero-cta {
   animation-delay: 0.40s;
 }
 
