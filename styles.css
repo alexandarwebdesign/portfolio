@@ -830,23 +830,6 @@ textarea:focus-visible {
    -------------------------------------------------------------------------- */
 
 /* Mobile: reposition nav to top-right, show only burger */
-@media (max-width: 480px) {
-  .nav {
-    left: auto;
-    right: clamp(20px, 5vw, 40px);
-    transform: none;
-  }
-
-  .nav-home,
-  .nav-pill {
-    display: none;
-  }
-
-  .nav-burger {
-    display: flex;
-  }
-}
-
 /* Hamburger button — glass circle matching nav-home */
 .nav-burger {
   display: none; /* shown only on mobile via media query above */
@@ -956,6 +939,23 @@ textarea:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   .nav-mobile-menu { transition: none; }
   .nav-burger-bar { transition: none; }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    left: auto;
+    right: clamp(20px, 5vw, 40px);
+    transform: none;
+  }
+
+  .nav-home,
+  .nav-pill {
+    display: none;
+  }
+
+  .nav-burger {
+    display: flex;
+  }
 }
 
 /* --------------------------------------------------------------------------
