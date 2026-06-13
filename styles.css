@@ -152,11 +152,8 @@ h3,
   text-wrap: balance;
 }
 
-/* Craft-pass perf: skip layout/paint for off-screen long sections.
-   contact-section excluded: it sits directly above the sticky-reveal footer,
-   and content-visibility height estimates cause scroll jumps on reveal. */
-.services-section,
-.faq-section,
+/* content-visibility only on case-page sections far from the footer.
+   All index sections excluded: height estimation mismatches shift scroll. */
 .project-dynamic-body-section,
 .project-next-teaser-section {
   content-visibility: auto;
@@ -1860,22 +1857,22 @@ main {
   position: relative;
   z-index: 1;
   background: var(--color-background);
-  min-height: 100dvh;
+  min-height: 100svh;
 }
 
 .footer-reveal {
   position: relative;
-  height: 200dvh;
-  margin-top: -100dvh;
+  height: 200svh;
+  margin-top: -100svh;
   pointer-events: none;
   z-index: 0;
-  transform: translateZ(0);
+  /* no transform — transform on a sticky ancestor breaks sticky positioning */
 }
 
 .footer {
   position: sticky;
   top: 0;
-  height: 100dvh;
+  height: 100svh;
   display: flex;
   align-items: flex-end;
   /* Semi-glassy: diagonal white-alpha sheen + faint top rim-light over deep ink */
@@ -1887,7 +1884,7 @@ main {
   pointer-events: auto;
 }
 
-@supports not (height: 100dvh) {
+@supports not (height: 100svh) {
   .footer-reveal { height: 200lvh; margin-top: -100lvh; }
   .footer { height: 100lvh; }
   main { min-height: 100lvh; }
