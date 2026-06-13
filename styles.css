@@ -729,7 +729,8 @@ textarea:focus-visible {
   color: var(--color-ink);
   text-decoration: none;
   flex-shrink: 0;
-  transition: opacity var(--duration-fast) var(--ease);
+  transition: opacity var(--duration-fast) var(--ease),
+              transform var(--duration-normal) var(--ease);
 }
 
 .nav-home:hover { opacity: 0.65; }
@@ -826,20 +827,39 @@ textarea:focus-visible {
 }
 
 /* Scroll-aware: condense on scroll-down, surface on scroll-up */
-.nav.is-scrolled-down {
-  transition: transform var(--duration-normal) var(--ease), opacity var(--duration-normal) var(--ease);
-  transform: translateX(-50%) translateY(-6px) scale(0.93);
-  opacity: 0.82;
+.nav {
+  transition: transform var(--duration-normal) var(--ease),
+              opacity var(--duration-normal) var(--ease),
+              gap var(--duration-normal) var(--ease);
 }
 
-.nav.is-scrolled-up {
-  transition: transform var(--duration-normal) var(--ease), opacity var(--duration-normal) var(--ease);
-  transform: translateX(-50%) translateY(0) scale(1);
-  opacity: 1;
+.nav.is-scrolled-down {
+  transform: translateX(-50%) translateY(-6px) scale(0.93);
+  opacity: 0.82;
+  gap: 4px; /* cluster home + pill tighter */
 }
 
 .nav.is-scrolled-down .nav-home {
-  opacity: 0.5;
+  transform: translateX(4px); /* home slides toward pill */
+  transition: transform var(--duration-normal) var(--ease), opacity var(--duration-fast) var(--ease);
+}
+
+.nav.is-scrolled-up {
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+  gap: var(--space-2);
+}
+
+/* Hover anywhere on nav: instantly restore full state */
+.nav:hover {
+  transform: translateX(-50%) translateY(0) scale(1) !important;
+  opacity: 1 !important;
+  gap: var(--space-2) !important;
+}
+
+.nav:hover .nav-home {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
 }
 
 /* Active-page dot (Dennis pattern) */
