@@ -152,10 +152,11 @@ h3,
   text-wrap: balance;
 }
 
-/* Craft-pass perf: skip layout/paint for off-screen long sections */
+/* Craft-pass perf: skip layout/paint for off-screen long sections.
+   contact-section excluded: it sits directly above the sticky-reveal footer,
+   and content-visibility height estimates cause scroll jumps on reveal. */
 .services-section,
 .faq-section,
-.contact-section,
 .project-dynamic-body-section,
 .project-next-teaser-section {
   content-visibility: auto;
@@ -1884,7 +1885,6 @@ main {
     var(--color-ink-deep);
   color: var(--color-on-dark);
   pointer-events: auto;
-  will-change: transform;
 }
 
 @supports not (height: 100dvh) {
