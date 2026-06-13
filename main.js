@@ -785,6 +785,69 @@
     });
   }
 
+  // ==========================================================================
+  // NAV INTERACTIVITY: sliding hover indicator + scroll-aware condensing
+  // ==========================================================================
+  function initNavInteractivity() {
+    const nav      = document.querySelector('.nav');
+    const pill     = document.querySelector('.nav-pill');
+    const homeBtn  = document.querySelector('.nav-home');
+    if (!nav || !pill) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── Sliding hover indicator ──────────────────────────────────────────────
+    const indicator = document.createElement('div');
+    indicator.className = 'nav-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    pill.insertBefore(indicator, pill.firstChild);
+
+    const links = pill.querySelectorAll('.nav-link');
+
+    function moveIndicator(link) {
+      const pillRect = pill.getBoundingClientRect();
+      const linkRect = link.getBoundingClientRect();
+      indicator.style.left  = (linkRect.left  - pillRect.left)  + 'px';
+      indicator.style.width = linkRect.width + 'px';
+      indicator.style.opacity = '1';
+    }
+
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => moveIndicator(link));
+      link.addEventListener('focus',      () => moveIndicator(link));
+    });
+
+    pill.addEventListener('mouseleave', () => { indicator.style.opacity = '0'; });
+    pill.addEventListener('focusout', e => {
+      if (!pill.contains(e.relatedTarget)) indicator.style.opacity = '0';
+    });
+
+    // ── Scroll-aware condensing ──────────────────────────────────────────────
+    if (reduced) return;
+
+    let lastY   = window.scrollY;
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y    = window.scrollY;
+        const down = y > lastY;
+        lastY = y;
+
+        if (y > 60) {
+          nav.classList.add('is-scrolled');
+          nav.classList.toggle('is-scrolled-down', down);
+          nav.classList.toggle('is-scrolled-up', !down);
+        } else {
+          nav.classList.remove('is-scrolled', 'is-scrolled-down', 'is-scrolled-up');
+        }
+        ticking = false;
+      });
+    }, { passive: true });
+  }
+
   function init() {
     initSmoothScrollLenis();
     initReducedMotionSvg();
@@ -800,6 +863,7 @@
     initCaseCarousels();
     initPlates();
     initFooterFocusReveal();
+    initNavInteractivity();
   }
 
   /**

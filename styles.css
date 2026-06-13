@@ -319,8 +319,8 @@ h3,
   --input-padding: 20px;
 
   /* ---------- Glass (Espacio recipe) ---------- */
-  --glass-bg: rgba(128, 128, 128, 0.3);
-  --glass-blur: blur(40px) saturate(1.1);
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-blur: blur(12px) saturate(3) hue-rotate(180deg);
   --glass-radius: 999px;
 
   /* ---------- Glass pill (restored pre-plan checkpoint recipe) ----------
@@ -800,11 +800,46 @@ textarea:focus-visible {
   color: rgba(28, 29, 32, 0.9);
   text-decoration: none;
   cursor: pointer;
-  transition: color var(--duration-fast) var(--ease);
+  transition: color var(--duration-fast) var(--ease), opacity var(--duration-fast) var(--ease);
+  z-index: 1;
 }
 
-.nav-link:hover {
-  color: rgba(28, 29, 32, 0.72);
+/* Dim siblings when one link is hovered — focus effect */
+.nav-pill:hover .nav-link:not(:hover) {
+  opacity: 0.45;
+}
+
+/* Sliding hover indicator */
+.nav-indicator {
+  position: absolute;
+  top: 6px;
+  left: 0;
+  height: calc(100% - 12px);
+  border-radius: var(--glass-radius);
+  background: rgba(255, 255, 255, 0.72);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    left var(--duration-fast) var(--ease),
+    width var(--duration-fast) var(--ease),
+    opacity var(--duration-fast) var(--ease);
+}
+
+/* Scroll-aware: condense on scroll-down, surface on scroll-up */
+.nav.is-scrolled-down {
+  transition: transform var(--duration-normal) var(--ease), opacity var(--duration-normal) var(--ease);
+  transform: translateX(-50%) translateY(-6px) scale(0.93);
+  opacity: 0.82;
+}
+
+.nav.is-scrolled-up {
+  transition: transform var(--duration-normal) var(--ease), opacity var(--duration-normal) var(--ease);
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+}
+
+.nav.is-scrolled-down .nav-home {
+  opacity: 0.5;
 }
 
 /* Active-page dot (Dennis pattern) */
