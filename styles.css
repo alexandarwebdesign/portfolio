@@ -1185,7 +1185,7 @@ textarea:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-5);
+  gap: 0;
   padding: 0 var(--space-6);
   max-width: 1160px;
 }
@@ -1196,7 +1196,7 @@ textarea:focus-visible {
   font-weight: 600;
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
-  margin-bottom: calc(var(--space-4) * -1);
+  margin: 0;
 }
 
 .hero-title {
@@ -1206,7 +1206,7 @@ textarea:focus-visible {
   font-weight: 500;
   text-align: center;
   max-width: 1280px;
-  margin: 0;
+  margin: var(--space-3) 0 0; /* eyebrow → title: tight, they're a unit */
 }
 
 .hero-subtitle {
@@ -1215,11 +1215,11 @@ textarea:focus-visible {
   max-width: 512px;
   text-align: center;
   line-height: 1.6;
-  margin: 0;
+  margin: var(--space-6) 0 0; /* title → subtitle: moderate */
 }
 
 .hero-cta {
-  margin-top: var(--space-4);
+  margin-top: var(--space-10); /* subtitle → CTA: generous, action needs room */
 }
 
 /* Staggered entrance - visible by default; animates only once the page-load
