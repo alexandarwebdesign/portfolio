@@ -1584,12 +1584,12 @@ body.is-loaded .hero-foot {
   margin-bottom: var(--space-16);
 }
 
-/* Full-width hairline rows: index | title | description. No boxes, no icons. */
+/* Full-width hairline rows: index | title | description | icon */
 .service-row {
   display: grid;
-  grid-template-columns: auto 1fr minmax(0, 38ch);
+  grid-template-columns: auto 1fr minmax(0, 38ch) auto;
   gap: 32px;
-  align-items: baseline;
+  align-items: center;
   padding: 40px 0;
   border-top: 1px solid var(--color-border-subtle);
 }
@@ -1618,6 +1618,14 @@ body.is-loaded .hero-foot {
   margin: 0;
 }
 
+.service-icon {
+  width: 56px;
+  height: 56px;
+  opacity: 0.5;
+  flex-shrink: 0;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .service-row {
     grid-template-columns: auto 1fr;
@@ -1626,6 +1634,10 @@ body.is-loaded .hero-foot {
   .service-desc {
     grid-column: 2;
     max-width: none;
+  }
+
+  .service-icon {
+    display: none;
   }
 }
 
