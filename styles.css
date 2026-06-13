@@ -2002,6 +2002,7 @@ main {
   line-height: 1.1;
   color: var(--color-on-dark);
   margin: 16px 0 clamp(32px, 5vh, 56px);
+  padding-bottom: 0.15em;
 }
 
 .footer-divider {
