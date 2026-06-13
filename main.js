@@ -39,21 +39,28 @@
     });
   }
 
+  /**
+   * SMIL <animate> ignores prefers-reduced-motion; pause it for users who opt
+   * out (footer / contact / about status icons).
+   */
+  function initReducedMotionSvg() {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.querySelectorAll("svg").forEach((svg) => {
+      if (
+        typeof svg.pauseAnimations === "function" &&
+        svg.querySelector("animate, animateTransform, animateMotion")
+      ) {
+        svg.pauseAnimations();
+      }
+    });
+  }
+
   function getMotionSettings() {
     const rootStyles = window.getComputedStyle(document.documentElement);
 
     return {
       tempo:
-        parseFloat(rootStyles.getPropertyValue("--motion-tempo-primary")) ||
-        436,
-      exitRatio:
-        parseFloat(rootStyles.getPropertyValue("--motion-exit-ratio")) || 0.63,
-      primaryEasing:
-        rootStyles.getPropertyValue("--motion-ease-primary").trim() ||
-        "cubic-bezier(0.33, 0.06, 0.12, 0.97)",
-      accentEasing:
-        rootStyles.getPropertyValue("--motion-ease-accent").trim() ||
-        "cubic-bezier(0.38, 0.10, 0.16, 0.98)",
+        parseFloat(rootStyles.getPropertyValue("--duration-normal")) || 600,
     };
   }
 
@@ -79,6 +86,33 @@
   // ==========================================================================
 
   /**
+   * Lenis smooth scroll (vendored). Skipped for reduced-motion users and if the
+   * library failed to load. Other scroll helpers route through window.__lenis
+   * when present so anchor offsets + focus still work.
+   */
+  function initSmoothScrollLenis() {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (reduceMotion || typeof window.Lenis === "undefined") return;
+
+    const lenis = new window.Lenis({
+      duration: 0.6,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      syncTouch: false,
+      touchMultiplier: 1,
+    });
+    window.__lenis = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      window.requestAnimationFrame(raf);
+    }
+    window.requestAnimationFrame(raf);
+  }
+
+  /**
    * Handle smooth scrolling for navigation links
    */
   function scrollToAnchorTarget(targetElement, navbarHeight) {
@@ -86,6 +120,11 @@
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
+
+    if (window.__lenis && !reduceMotion) {
+      window.__lenis.scrollTo(targetElement, { offset: -navbarHeight });
+      return tempo;
+    }
 
     const targetPosition =
       targetElement.getBoundingClientRect().top +
@@ -116,7 +155,7 @@
         if (targetElement) {
           e.preventDefault();
 
-          // Calculate offset for fixed navbar
+          // Calculate offset for the fixed nav pill
           const navbarHeight = 120;
           const focusDelay = scrollToAnchorTarget(targetElement, navbarHeight);
 
@@ -156,54 +195,49 @@
   }
 
   // ==========================================================================
-  // 3. ACTIVE NAVIGATION STATE
+  // 3. SERVICE ROW CLICK — preselect + focus contact form
   // ==========================================================================
 
-  /**
-   * Highlight active navigation link based on scroll position
-   */
-  function initActiveNavigation() {
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll(".nav-link");
+  function initServiceClick() {
+    const rows = document.querySelectorAll('.service-row[data-service]');
+    if (!rows.length) return;
+    const serviceSelect = document.getElementById('service');
+    const nameInput = document.getElementById('name');
+    const contactSection = document.getElementById('contact');
+    if (!serviceSelect || !nameInput || !contactSection) return;
 
-    if (!sections.length || !navLinks.length) return;
-
-    function updateActiveLink() {
-      const scrollPosition = window.scrollY + 200;
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        const sectionId = section.getAttribute("id");
-
-        if (
-          scrollPosition >= sectionTop &&
-          scrollPosition < sectionTop + sectionHeight
-        ) {
-          navLinks.forEach((link) => {
-            link.classList.remove("active");
-            if (link.getAttribute("href") === `#${sectionId}`) {
-              link.classList.add("active");
-            }
-          });
-        }
-      });
+    function activateService(serviceValue) {
+      serviceSelect.value = serviceValue;
+      const scrollTarget = contactSection.getBoundingClientRect().top + window.scrollY - 80;
+      if (window.__lenis) {
+        window.__lenis.scrollTo(scrollTarget, { duration: 0.8 });
+      } else {
+        window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+      }
+      setTimeout(() => nameInput.focus(), 600);
     }
 
-    // Throttle scroll event for performance
-    let ticking = false;
-    window.addEventListener("scroll", () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateActiveLink();
-          ticking = false;
-        });
-        ticking = true;
+    rows.forEach(row => {
+      row.addEventListener('click', () => activateService(row.dataset.service));
+      row.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateService(row.dataset.service); }
+      });
+
+      // Forward row hover to the exact SMIL target elements.
+      // SMIL begin="mouseover" fires on the animate's parent (the path/circle).
+      // begin="hoverAreaEllipse.mouseover" fires on #hoverAreaEllipse specifically.
+      const svg = row.querySelector('.service-icon svg');
+      if (svg) {
+        // hoverArea circle (ellipse icon) OR the path (triangle/hexagon)
+        const smilTarget = svg.querySelector('[id^="hoverArea"]') || svg.querySelector('path[stroke-dasharray]');
+        if (smilTarget) {
+          row.addEventListener('mouseenter', () =>
+            smilTarget.dispatchEvent(new MouseEvent('mouseover', { bubbles: false })));
+          row.addEventListener('mouseleave', () =>
+            smilTarget.dispatchEvent(new MouseEvent('mouseout', { bubbles: false })));
+        }
       }
     });
-
-    // Initial check
-    updateActiveLink();
   }
 
   // ==========================================================================
@@ -382,153 +416,6 @@
   }
 
   // ==========================================================================
-  // 5. NAVBAR SCROLL EFFECT
-  // ==========================================================================
-
-  /**
-   * Add/remove class on navbar based on scroll position
-   */
-  function initNavbarScroll() {
-    const navbar = document.querySelector(".navbar");
-
-    if (!navbar) return;
-
-    let lastScrollY = 0;
-
-    function updateNavbarAtY(currentScrollY) {
-      if (currentScrollY > 100) {
-        navbar.classList.add("scrolled");
-      } else {
-        navbar.classList.remove("scrolled");
-      }
-
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        navbar.classList.add("navbar--hidden");
-      } else {
-        navbar.classList.remove("navbar--hidden");
-      }
-
-      lastScrollY = currentScrollY;
-    }
-
-    let ticking2 = false;
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking2) {
-          window.requestAnimationFrame(() => {
-            updateNavbarAtY(window.scrollY);
-            ticking2 = false;
-          });
-          ticking2 = true;
-        }
-      },
-      { passive: true },
-    );
-
-    updateNavbarAtY(window.scrollY);
-  }
-
-  // ==========================================================================
-  // 6. MOBILE NAVIGATION - Lightweight Overlay Transition
-  // ==========================================================================
-
-  function initMobileNav() {
-    const toggle = document.querySelector(".nav-toggle");
-    const mobileNav = document.getElementById("mobile-nav");
-    if (!toggle || !mobileNav) return;
-
-    const mobileViewport = window.matchMedia("(max-width: 900px)");
-    const { tempo, exitRatio } = getMotionSettings();
-    const navOpenDuration = Math.max(280, Math.round(tempo * 0.82));
-    const navCloseDuration = Math.max(
-      180,
-      Math.round(navOpenDuration * Math.max(exitRatio, 0.7)),
-    );
-
-    mobileNav.style.setProperty(
-      "--mobile-nav-open-duration",
-      `${navOpenDuration}ms`,
-    );
-    mobileNav.style.setProperty(
-      "--mobile-nav-close-duration",
-      `${navCloseDuration}ms`,
-    );
-
-    function setOpenState(isOpen) {
-      toggle.classList.toggle("is-open", isOpen);
-      toggle.setAttribute("aria-expanded", String(isOpen));
-      toggle.setAttribute(
-        "aria-label",
-        isOpen ? "Close navigation menu" : "Open navigation menu",
-      );
-      mobileNav.classList.toggle("is-open", isOpen);
-      mobileNav.setAttribute("aria-hidden", String(!isOpen));
-      document.body.style.overflow = isOpen ? "hidden" : "";
-      document.documentElement.style.overflow = isOpen ? "hidden" : "";
-      // a11y: make background content inert while menu is open so screen
-      // readers + keyboard cannot interact with content behind the dialog.
-      // Skip <header> - it contains the nav-toggle which must stay live
-      // to close the menu.
-      const mainEl = document.getElementById("main-content");
-      const footerEl = document.querySelector("footer");
-      [mainEl, footerEl].forEach((el) => {
-        if (!el) return;
-        if (isOpen) el.setAttribute("inert", "");
-        else el.removeAttribute("inert");
-      });
-    }
-
-    function openNav() {
-      if (!mobileViewport.matches) return;
-      setOpenState(true);
-    }
-
-    function closeNav() {
-      setOpenState(false);
-    }
-
-    function closeNavOnDesktop(event) {
-      const matches =
-        typeof event?.matches === "boolean"
-          ? event.matches
-          : mobileViewport.matches;
-      if (!matches) {
-        closeNav();
-      }
-    }
-
-    setOpenState(false);
-
-    toggle.addEventListener("click", () => {
-      toggle.classList.contains("is-open") ? closeNav() : openNav();
-    });
-
-    mobileNav
-      .querySelectorAll(".mobile-nav-link, .mobile-nav-cta")
-      .forEach((link) => {
-        link.addEventListener("click", closeNav);
-      });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && toggle.classList.contains("is-open"))
-        closeNav();
-    });
-
-    mobileNav.addEventListener("click", (e) => {
-      if (e.target === mobileNav) {
-        closeNav();
-      }
-    });
-
-    if (typeof mobileViewport.addEventListener === "function") {
-      mobileViewport.addEventListener("change", closeNavOnDesktop);
-    } else if (typeof mobileViewport.addListener === "function") {
-      mobileViewport.addListener(closeNavOnDesktop);
-    }
-  }
-
-  // ==========================================================================
   // 7. FAQ ACCORDION (Single Open)
   // ==========================================================================
 
@@ -589,237 +476,8 @@
     }
   }
 
-  // ==========================================================================
-  // 8. SERVICE CARD SVG HOVER BRIDGE
-  // Inline decorative SVGs so the parent card hover can control their strokes.
-  // ==========================================================================
-
-  function updateServiceCardIconHeights() {
-    document.querySelectorAll(".service-item").forEach((item) => {
-      const title = item.querySelector(".service-title");
-      const description = item.querySelector(".service-description");
-      const icon = item.querySelector(".service-bg-icon");
-
-      if (!title || !description || !icon) return;
-
-      const titleHeight = title.getBoundingClientRect().height;
-      const descriptionHeight = description.getBoundingClientRect().height;
-      const iconHeight = Math.ceil(titleHeight + descriptionHeight + 20);
-
-      item.style.setProperty("--service-icon-height", `${iconHeight}px`);
-    });
-  }
-
-  function updateServiceCardViewportPriority() {
-    const serviceItems = Array.from(document.querySelectorAll(".service-item"));
-
-    if (!serviceItems.length) return;
-
-    const viewportCenterY = window.innerHeight / 2;
-    let closestItem = null;
-    let closestDistance = Number.POSITIVE_INFINITY;
-
-    serviceItems.forEach((item) => {
-      const rect = item.getBoundingClientRect();
-      const itemCenterY = rect.top + rect.height / 2;
-      const distance = Math.abs(itemCenterY - viewportCenterY);
-
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestItem = item;
-      }
-    });
-
-    const threshold = window.innerHeight * 0.4;
-    const activeItem = closestDistance <= threshold ? closestItem : null;
-
-    serviceItems.forEach((item) => {
-      item.classList.toggle("is-viewport-active", item === activeItem);
-    });
-  }
-
-  function initServiceCardIcons() {
-    const serviceItems = document.querySelectorAll(".service-item");
-    if (!serviceItems.length) return;
-    const servicesList = serviceItems[0].closest(".services-list");
-
-    const serviceIcons = document.querySelectorAll(
-      'img.service-bg-icon[src$=".svg"]',
-    );
-
-    let serviceCardFrame = null;
-    const scheduleServiceCardUpdate = () => {
-      if (serviceCardFrame) {
-        cancelAnimationFrame(serviceCardFrame);
-      }
-
-      serviceCardFrame = requestAnimationFrame(() => {
-        updateServiceCardIconHeights();
-        updateServiceCardViewportPriority();
-      });
-    };
-
-    let serviceCardInteractionFrame = null;
-    const scheduleServiceCardInteractionUpdate = () => {
-      if (serviceCardInteractionFrame) {
-        cancelAnimationFrame(serviceCardInteractionFrame);
-      }
-
-      serviceCardInteractionFrame = requestAnimationFrame(() => {
-        const activeItem = Array.from(serviceItems).find((item) =>
-          item.matches(":hover, :focus-within"),
-        );
-
-        if (servicesList) {
-          servicesList.classList.toggle(
-            "has-service-interaction",
-            Boolean(activeItem),
-          );
-        }
-
-        serviceItems.forEach((item) => {
-          item.classList.toggle("is-interaction-active", item === activeItem);
-        });
-      });
-    };
-
-    window.addEventListener("resize", scheduleServiceCardUpdate, {
-      passive: true,
-    });
-    window.addEventListener("scroll", scheduleServiceCardUpdate, {
-      passive: true,
-    });
-    window._serviceCardViewportUpdate = scheduleServiceCardUpdate;
-
-    serviceItems.forEach((item) => {
-      item.addEventListener("mouseenter", scheduleServiceCardInteractionUpdate);
-      item.addEventListener("mouseleave", scheduleServiceCardInteractionUpdate);
-      item.addEventListener("focusin", scheduleServiceCardInteractionUpdate);
-      item.addEventListener("focusout", scheduleServiceCardInteractionUpdate);
-    });
-
-    if (!serviceIcons.length) {
-      scheduleServiceCardUpdate();
-      scheduleServiceCardInteractionUpdate();
-      return;
-    }
-
-    serviceIcons.forEach((icon) => {
-      const src = icon.getAttribute("src");
-      if (!src) return;
-
-      fetch(src)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Failed to load SVG: ${src}`);
-          }
-
-          return response.text();
-        })
-        .then((svgMarkup) => {
-          const svgDocument = new DOMParser().parseFromString(
-            svgMarkup,
-            "image/svg+xml",
-          );
-          const svg = svgDocument.documentElement;
-
-          if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
-
-          const hoverArea = svg.querySelector("#hoverArea");
-          if (hoverArea) {
-            hoverArea.remove();
-          }
-
-          svg
-            .querySelectorAll("animate, animateTransform")
-            .forEach((animation) => {
-              const begin = animation.getAttribute("begin");
-
-              if (begin && /(mouseover|mouseout)/i.test(begin)) {
-                animation.remove();
-              }
-            });
-
-          svg.classList.add("service-bg-icon-svg");
-          svg.setAttribute("aria-hidden", "true");
-          svg.setAttribute("focusable", "false");
-          svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-
-          svg
-            .querySelectorAll(
-              "circle:not(#hoverArea), path, polygon, polyline, rect, ellipse",
-            )
-            .forEach((shape) => {
-              shape.classList.add("service-icon-shape");
-            });
-
-          const wrapper = document.createElement("div");
-          wrapper.className = icon.className;
-          wrapper.setAttribute("aria-hidden", "true");
-          wrapper.appendChild(svg);
-
-          icon.replaceWith(wrapper);
-          scheduleServiceCardUpdate();
-          scheduleServiceCardInteractionUpdate();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    });
-
-    if (document.fonts && typeof document.fonts.ready?.then === "function") {
-      document.fonts.ready.then(scheduleServiceCardUpdate).catch(() => {});
-    }
-
-    window.addEventListener(
-      "load",
-      () => {
-        scheduleServiceCardUpdate();
-        scheduleServiceCardInteractionUpdate();
-      },
-      { once: true },
-    );
-
-    serviceItems.forEach((item) => {
-      const serviceValue = item.dataset.service;
-      if (!serviceValue) return;
-
-      const activate = () => {
-        const select = document.getElementById("service");
-        const nameField = document.getElementById("name");
-        const contact = document.getElementById("contact");
-
-        if (select) {
-          select.value = serviceValue;
-          select.dispatchEvent(new Event("change", { bubbles: true }));
-        }
-
-        const reduceMotion = window.matchMedia(
-          "(prefers-reduced-motion: reduce)",
-        ).matches;
-        if (contact) {
-          contact.scrollIntoView({
-            behavior: reduceMotion ? "auto" : "smooth",
-            block: "start",
-          });
-        }
-
-        const focusName = () => {
-          if (nameField) nameField.focus({ preventScroll: true });
-        };
-        if (reduceMotion) focusName();
-        else setTimeout(focusName, 700);
-      };
-
-      item.addEventListener("click", activate);
-      item.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          activate();
-        }
-      });
-    });
-  }
+  // (Section 8, the service-card SVG hover bridge, was removed with the
+  // services redesign - no .service-item markup remains.)
 
   // ==========================================================================
   // 9. SCROLL PARALLAX (data-parallax-speed)
@@ -886,19 +544,6 @@
   }
 
   // ==========================================================================
-
-  function initAboutPhotoInteraction() {
-    const cta = document.querySelector("#about .about-cta-btn");
-    const circle = document.querySelector("#about .about-photo-circle");
-    if (!cta || !circle) return;
-
-    cta.addEventListener("mouseenter", () =>
-      circle.classList.add("about-photo-circle--square"),
-    );
-    cta.addEventListener("mouseleave", () =>
-      circle.classList.remove("about-photo-circle--square"),
-    );
-  }
 
   /**
    * Initialize all modules when DOM is ready
@@ -1123,22 +768,81 @@
     });
   }
 
+  // Sticky-reveal footer: focused links can be occluded by main - scroll to bottom on focus entry
+  function initFooterFocusReveal() {
+    const footer = document.querySelector('.footer');
+    if (!footer) return;
+    footer.addEventListener('focusin', () => {
+      const doc = document.documentElement;
+      const target = doc.scrollHeight - window.innerHeight;
+      if (window.scrollY >= target - 4) return; // already revealed
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (window.__lenis && !reduced) {
+        window.__lenis.scrollTo(target);
+      } else {
+        window.scrollTo({ top: target, behavior: reduced ? 'auto' : 'smooth' });
+      }
+    });
+  }
+
+  function initMobileNav() {
+    const burger = document.querySelector('.nav-burger');
+    const menu   = document.getElementById('nav-mobile-menu');
+    if (!burger || !menu) return;
+
+    function open() {
+      menu.classList.add('is-open');
+      burger.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      menu.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    burger.addEventListener('click', () => {
+      burger.getAttribute('aria-expanded') === 'true' ? close() : open();
+    });
+
+    // Close on link click
+    menu.querySelectorAll('.nav-mobile-link').forEach(link => {
+      link.addEventListener('click', close);
+    });
+
+    // Close on backdrop click (empty space)
+    menu.addEventListener('click', e => {
+      if (e.target === menu) close();
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+        close();
+        burger.focus();
+      }
+    });
+  }
+
   function init() {
+    initSmoothScrollLenis();
+    initReducedMotionSvg();
     initPageLoadSequence();
     initScrollReveal();
-    initServiceCardIcons();
     initSmoothScroll();
-    initActiveNavigation();
+    initServiceClick();
     initFormHandling();
-    initNavbarScroll();
-    initMobileNav();
     initFaqAccordion();
     initContactHashFocus();
     initParallax();
-    initAboutPhotoInteraction();
     initImageMarquee();
     initCaseCarousels();
     initPlates();
+    initFooterFocusReveal();
+    initMobileNav();
   }
 
   /**

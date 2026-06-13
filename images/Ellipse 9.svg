@@ -15,8 +15,8 @@
       <animate attributeName="stroke-dasharray" values="1 8; 100 0" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
       <animate attributeName="stroke-dasharray" values="100 0; 1 8" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
 
-      <animate attributeName="stroke" values="#464646; #3b82f6" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
-      <animate attributeName="stroke" values="#3b82f6; #464646" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
+      <animate attributeName="stroke" values="#464646; #455ce9" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
+      <animate attributeName="stroke" values="#455ce9; #464646" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
 
       <animate attributeName="stroke-width" values="12; 18" dur="0.4s" begin="hoverArea.mouseover" fill="freeze" />
       <animate attributeName="stroke-width" values="18; 12" dur="0.4s" begin="hoverArea.mouseout" fill="freeze" />
