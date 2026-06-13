@@ -222,6 +222,16 @@
       row.addEventListener('keydown', e => {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateService(row.dataset.service); }
       });
+
+      // Forward mouseenter/mouseleave to the SVG so SMIL begin="mouseover/mouseout"
+      // animations fire from parent row hover, not just direct icon hover.
+      const svg = row.querySelector('.service-icon svg');
+      if (svg) {
+        row.addEventListener('mouseenter', () =>
+          svg.dispatchEvent(new MouseEvent('mouseover', { bubbles: true })));
+        row.addEventListener('mouseleave', () =>
+          svg.dispatchEvent(new MouseEvent('mouseout', { bubbles: true })));
+      }
     });
   }
 

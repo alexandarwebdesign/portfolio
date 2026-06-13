@@ -1514,8 +1514,22 @@ body.is-loaded .hero-cta {
   border-bottom: 1px solid var(--color-border-subtle);
 }
 
-.service-row[data-service] { cursor: pointer; }
-.service-row[data-service]:hover .service-title { color: var(--color-accent); transition: color var(--duration-fast) var(--ease); }
+.service-row[data-service] {
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  padding-inline: var(--space-4);
+  margin-inline: calc(var(--space-4) * -1);
+  transition: background var(--duration-fast) var(--ease);
+}
+
+.service-row[data-service]:hover {
+  background: var(--color-surface-subtle);
+}
+
+.service-row[data-service]:hover .service-title {
+  color: var(--color-accent);
+  transition: color var(--duration-fast) var(--ease);
+}
 
 .service-index {
   font-family: var(--font-mono);
@@ -1540,7 +1554,7 @@ body.is-loaded .hero-cta {
 .service-icon {
   width: clamp(88px, 9vw, 136px);
   height: clamp(88px, 9vw, 136px);
-  opacity: 0.45;
+  opacity: 0.7;
   flex-shrink: 0;
   display: flex;
   align-items: center;
