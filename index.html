@@ -752,122 +752,74 @@
             <p class="mono-label"><span class="index">(05)</span> Contact</p>
             <h2 class="section-title">Have a project in mind?</h2>
           </div>
-          <div class="contact-grid">
-            <!-- Left Column -->
-            <div class="contact-info reveal">
-              <div class="availability-signal">
-                <svg class="availability-icon" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <circle cx="9.5" cy="9.5" r="1.5" fill="#1f9c44"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
-                  <circle cx="9.5" cy="9.5" r="2.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
-                  <circle cx="9.5" cy="9.5" r="4.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
-                  <circle cx="9.5" cy="9.5" r="5.4" stroke="#1f9c44" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
-                </svg>
-                <span>Currently available for new projects</span>
+          <!-- Context strip: one scannable line before the form -->
+          <div class="contact-context reveal">
+            <div class="availability-signal">
+              <svg class="availability-icon" width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="9.5" cy="9.5" r="1.5" fill="#1f9c44"><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"/></circle>
+                <circle cx="9.5" cy="9.5" r="2.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/></circle>
+                <circle cx="9.5" cy="9.5" r="4.25" stroke="#1f9c44" stroke-width="0.5" fill="none"><animate attributeName="r" values="4.25;5.2;4.25" dur="2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
+                <circle cx="9.5" cy="9.5" r="5.4" stroke="#1f9c44" stroke-width="0.2" fill="none"><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
+              </svg>
+              <span>Available for new projects</span>
+            </div>
+            <span class="contact-context-sep" aria-hidden="true">·</span>
+            <p class="contact-subtitle">Tell me what you're building. I'll tell you exactly how I'd approach it.</p>
+            <a href="mailto:alexandar.webdesign@gmail.com" class="email-link contact-context-email" aria-label="Send email to Aleksandar">alexandar.webdesign@gmail.com</a>
+          </div>
+
+          <!-- Full-width form: name+email side by side, then service, then message -->
+          <form
+            class="contact-form reveal"
+            id="contact-form"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            aria-label="Contact form"
+          >
+            <!-- Web3Forms Config -->
+            <input type="hidden" name="access_key" value="6ce81dbe-3381-4f14-b653-191cd30ba5f3">
+            <input type="hidden" name="subject" value="New Project Inquiry from Portfolio">
+            <input type="hidden" name="from_name" value="Portfolio Contact Form">
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name" class="form-label">Full name</label>
+                <input type="text" id="name" name="name" class="form-input" placeholder="Your full name" autocomplete="name" required aria-required="true" aria-describedby="name-error" />
+                <span id="name-error" class="form-error" role="alert" hidden></span>
               </div>
-
-              <p class="contact-subtitle">Tell me what you're building. I'll tell you exactly how I'd approach it.</p>
-
-              <div class="contact-email">
-                <p class="email-label">Prefer Email?</p>
-                <a href="mailto:alexandar.webdesign@gmail.com" class="email-link" aria-label="Send email to Aleksandar">
-                  alexandar.webdesign@gmail.com
-                </a>
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-input" placeholder="you@company.com" autocomplete="email" required aria-required="true" aria-describedby="email-error" />
+                <span id="email-error" class="form-error" role="alert" hidden></span>
               </div>
             </div>
 
-            <!-- Right Column - Form -->
-            <form
-              class="contact-form reveal"
-              id="contact-form"
-              action="https://api.web3forms.com/submit"
-              method="POST"
-              aria-label="Contact form"
-            >
-              <!-- Web3Forms Config -->
-              <input type="hidden" name="access_key" value="6ce81dbe-3381-4f14-b653-191cd30ba5f3">
-              <input type="hidden" name="subject" value="New Project Inquiry from Portfolio">
-              <input type="hidden" name="from_name" value="Portfolio Contact Form">
-              <!-- Optional: Redirect to success page or stay on page (handled by JS) -->
-              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-              <div class="form-group">
-                <label for="name" class="form-label">Full name</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  class="form-input"
-                  placeholder="Your full name"
-                  autocomplete="name"
-                  required
-                  aria-required="true"
-                  aria-describedby="name-error"
-                />
-                <span id="name-error" class="form-error" role="alert" hidden></span>
+            <div class="form-group">
+              <label for="service" class="form-label">What do you need?</label>
+              <div class="select-wrapper">
+                <select id="service" name="service" class="form-input form-select" autocomplete="off" required aria-required="true" aria-describedby="service-error">
+                  <option value="" disabled selected>Select Service</option>
+                  <option value="web-design">Web Design & UX Strategy</option>
+                  <option value="website-dev">Website Development</option>
+                  <option value="end-to-end">End-to-End Solutions</option>
+                </select>
               </div>
+              <span id="service-error" class="form-error" role="alert" hidden></span>
+            </div>
 
-              <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  class="form-input"
-                  placeholder="you@company.com"
-                  autocomplete="email"
-                  required
-                  aria-required="true"
-                  aria-describedby="email-error"
-                />
-                <span id="email-error" class="form-error" role="alert" hidden></span>
-              </div>
+            <div class="form-group">
+              <label for="message" class="form-label">Tell me about your project</label>
+              <textarea id="message" name="message" class="form-input form-textarea" autocomplete="off" placeholder="Tell me about your project - goals, timeline, any existing brand assets..." rows="5" required aria-required="true" aria-describedby="message-error"></textarea>
+              <span id="message-error" class="form-error" role="alert" hidden></span>
+            </div>
 
-              <div class="form-group">
-                <label for="service" class="form-label"
-                  >What do you need?</label
-                >
-                <div class="select-wrapper">
-                  <select
-                    id="service"
-                    name="service"
-                    class="form-input form-select"
-                    autocomplete="off"
-                    required
-                    aria-required="true"
-                    aria-describedby="service-error"
-                  >
-                    <option value="" disabled selected>Select Service</option>
-                    <option value="web-design">Web Design & UX Strategy</option>
-                    <option value="website-dev">Website Development</option>
-                    <option value="end-to-end">End-to-End Solutions</option>
-                  </select>
-                </div>
-                <span id="service-error" class="form-error" role="alert" hidden></span>
-              </div>
-
-              <div class="form-group">
-                <label for="message" class="form-label"
-                  >Tell me about your project</label
-                >
-                <textarea
-                  id="message"
-                  name="message"
-                  class="form-input form-textarea"
-                  autocomplete="off"
-                  placeholder="Tell me about your project - goals, timeline, any existing brand assets..."
-                  rows="5"
-                  required
-                  aria-required="true"
-                  aria-describedby="message-error"
-                ></textarea>
-                <span id="message-error" class="form-error" role="alert" hidden></span>
-              </div>
-
+            <div class="form-footer-row">
               <button type="submit" class="button-primary form-submit"><span class="btn-content"><span class="btn-text">Send Message</span><span class="btn-hover-text" aria-hidden="true">Send Message</span></span></button>
-
               <p class="form-helper">I typically respond within 24 hours</p>
-              <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
-            </form>
-          </div>
+            </div>
+            <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          </form>
         </div>
       </section>
     </main>
