@@ -4218,6 +4218,7 @@ html.js .reveal.visible {
   width: 100%;
   padding: 12vh 0;
   overflow: visible;
+  background: #E8E4DF;
   border-top: 1px solid var(--color-border-subtle);
   border-bottom: 1px solid var(--color-border-subtle);
 }
