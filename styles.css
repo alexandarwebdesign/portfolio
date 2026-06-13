@@ -1619,8 +1619,8 @@ body.is-loaded .hero-foot {
 }
 
 .service-icon {
-  width: clamp(64px, 7vw, 104px);
-  height: clamp(64px, 7vw, 104px);
+  width: clamp(88px, 9vw, 136px);
+  height: clamp(88px, 9vw, 136px);
   opacity: 0.45;
   flex-shrink: 0;
   display: flex;
