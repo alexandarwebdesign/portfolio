@@ -223,14 +223,19 @@
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateService(row.dataset.service); }
       });
 
-      // Forward mouseenter/mouseleave to the SVG so SMIL begin="mouseover/mouseout"
-      // animations fire from parent row hover, not just direct icon hover.
+      // Forward row hover to the exact SMIL target elements.
+      // SMIL begin="mouseover" fires on the animate's parent (the path/circle).
+      // begin="hoverAreaEllipse.mouseover" fires on #hoverAreaEllipse specifically.
       const svg = row.querySelector('.service-icon svg');
       if (svg) {
-        row.addEventListener('mouseenter', () =>
-          svg.dispatchEvent(new MouseEvent('mouseover', { bubbles: true })));
-        row.addEventListener('mouseleave', () =>
-          svg.dispatchEvent(new MouseEvent('mouseout', { bubbles: true })));
+        // hoverArea circle (ellipse icon) OR the path (triangle/hexagon)
+        const smilTarget = svg.querySelector('[id^="hoverArea"]') || svg.querySelector('path[stroke-dasharray]');
+        if (smilTarget) {
+          row.addEventListener('mouseenter', () =>
+            smilTarget.dispatchEvent(new MouseEvent('mouseover', { bubbles: false })));
+          row.addEventListener('mouseleave', () =>
+            smilTarget.dispatchEvent(new MouseEvent('mouseout', { bubbles: false })));
+        }
       }
     });
   }
