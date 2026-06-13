@@ -711,7 +711,7 @@ textarea:focus-visible {
   z-index: 100;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
 }
 
 /* Home icon circle button */
@@ -720,8 +720,8 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: var(--space-16);
+  height: var(--space-16);
   border-radius: 50%;
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
@@ -730,7 +730,7 @@ textarea:focus-visible {
   text-decoration: none;
   flex-shrink: 0;
   transition: background var(--duration-fast) var(--ease),
-              transform var(--duration-normal) var(--ease);
+              transform var(--duration-fast) var(--ease-out);
 }
 
 .nav-home:hover {
@@ -763,7 +763,7 @@ textarea:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 6px;
+  padding: var(--space-2);
   border-radius: var(--glass-radius);
   background: var(--glass-bg);
   backdrop-filter: var(--glass-blur);
@@ -795,7 +795,7 @@ textarea:focus-visible {
 .nav-link {
   position: relative;
   display: inline-block;
-  padding: 10px 20px;
+  padding: var(--space-3) var(--space-6);
   border-radius: var(--glass-radius);
   border: 0;
   background: transparent;
@@ -807,49 +807,7 @@ textarea:focus-visible {
   z-index: 1;
 }
 
-/* Dim siblings when one link is hovered — focus effect */
-.nav-pill:hover .nav-link:not(:hover) {
-  opacity: 0.45;
-}
 
-/* Sliding hover indicator */
-.nav-indicator {
-  position: absolute;
-  top: 6px;
-  left: 0;
-  height: calc(100% - 12px);
-  border-radius: var(--glass-radius);
-  background: rgba(255, 255, 255, 0.72);
-  pointer-events: none;
-  opacity: 0;
-  transition:
-    left var(--duration-fast) var(--ease),
-    width var(--duration-fast) var(--ease),
-    opacity var(--duration-fast) var(--ease);
-}
-
-/* Scroll: only the gap tightens — home slides into pill by 4px overlap */
-.nav {
-  transition: gap var(--duration-normal) var(--ease);
-}
-
-.nav.is-scrolled-down {
-  gap: 0; /* close gap… */
-}
-
-.nav.is-scrolled-down .nav-home {
-  transform: translateX(4px); /* …then nudge 4px past = overlap */
-}
-
-.nav.is-scrolled-up,
-.nav:hover {
-  gap: var(--space-2);
-}
-
-.nav:hover .nav-home,
-.nav.is-scrolled-up .nav-home {
-  transform: translateX(0);
-}
 
 /* Active-page dot (Dennis pattern) */
 .nav-link[aria-current="page"]::after {
@@ -1008,7 +966,7 @@ textarea:focus-visible {
   z-index: 3; /* above the upcoming overlay (z-index 2) */
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--space-3);
   max-width: calc(100% - var(--space-8));
   padding: var(--space-3) var(--space-5);
   border-radius: var(--border-radius-button);
@@ -1857,7 +1815,7 @@ body.is-loaded .hero-cta {
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity var(--duration-normal) var(--ease) 74ms,
-    transform var(--duration-normal) var(--ease) 74ms;
+    transform var(--duration-fast) var(--ease-out) 74ms;
 }
 
 .faq-item.is-open .faq-answer p {
