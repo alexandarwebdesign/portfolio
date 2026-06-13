@@ -785,6 +785,43 @@
     });
   }
 
+  function initMobileNav() {
+    const burger = document.querySelector('.nav-burger');
+    const menu   = document.getElementById('nav-mobile-menu');
+    if (!burger || !menu) return;
+
+    function open() {
+      menu.classList.add('is-open');
+      burger.setAttribute('aria-expanded', 'true');
+      menu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      menu.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+      menu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    burger.addEventListener('click', () => {
+      burger.getAttribute('aria-expanded') === 'true' ? close() : open();
+    });
+
+    // Close on link click
+    menu.querySelectorAll('.nav-mobile-link').forEach(link => {
+      link.addEventListener('click', close);
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) {
+        close();
+        burger.focus();
+      }
+    });
+  }
+
   function init() {
     initSmoothScrollLenis();
     initReducedMotionSvg();
@@ -800,6 +837,7 @@
     initCaseCarousels();
     initPlates();
     initFooterFocusReveal();
+    initMobileNav();
   }
 
   /**
