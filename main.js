@@ -193,68 +193,34 @@
   }
 
   // ==========================================================================
-  // 3. CONTACT POPOVER
-  // Espacio pattern: closes on outside click, scroll, or Escape. The popover
-  // ships with [hidden] for no-JS users; JS removes it on first open.
+  // 3. SERVICE ROW CLICK — preselect + focus contact form
   // ==========================================================================
 
-  function initContactPopover() {
-    const btn = document.querySelector(".nav-contact-btn");
-    const pop = document.getElementById("nav-popover");
-    if (!btn || !pop) return;
+  function initServiceClick() {
+    const rows = document.querySelectorAll('.service-row[data-service]');
+    if (!rows.length) return;
+    const serviceSelect = document.getElementById('service');
+    const nameInput = document.getElementById('name');
+    const contactSection = document.getElementById('contact');
+    if (!serviceSelect || !nameInput || !contactSection) return;
 
-    let openScrollY = 0;
+    function activateService(serviceValue) {
+      serviceSelect.value = serviceValue;
+      const scrollTarget = contactSection.getBoundingClientRect().top + window.scrollY - 80;
+      if (window.__lenis) {
+        window.__lenis.scrollTo(scrollTarget, { duration: 0.8 });
+      } else {
+        window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+      }
+      setTimeout(() => nameInput.focus(), 600);
+    }
 
-    function close() {
-      pop.classList.remove("is-open");
-      btn.setAttribute("aria-expanded", "false");
-      pop.addEventListener("transitionend", function onEnd(e) {
-        if (e.target === pop && !pop.classList.contains("is-open")) pop.hidden = true;
-        pop.removeEventListener("transitionend", onEnd);
+    rows.forEach(row => {
+      row.addEventListener('click', () => activateService(row.dataset.service));
+      row.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activateService(row.dataset.service); }
       });
-      // Fallback: transitionend may never fire (e.g. prefers-reduced-motion)
-      setTimeout(() => {
-        if (!pop.classList.contains("is-open")) pop.hidden = true;
-      }, 700);
-      document.removeEventListener("click", onDocClick, true);
-      window.removeEventListener("scroll", onScroll, { passive: true });
-      document.removeEventListener("keydown", onKey);
-    }
-
-    function onScroll() {
-      if (Math.abs(window.scrollY - openScrollY) > 12) close();
-    }
-
-    function onDocClick(e) {
-      if (!pop.contains(e.target) && !btn.contains(e.target)) close();
-    }
-
-    function onKey(e) {
-      if (e.key === "Escape") {
-        close();
-        btn.focus();
-      }
-    }
-
-    btn.addEventListener("click", () => {
-      if (pop.classList.contains("is-open")) {
-        close();
-        return;
-      }
-      pop.hidden = false;
-      void pop.offsetWidth; // force reflow so the fade-in transition runs
-      pop.classList.add("is-open");
-      btn.setAttribute("aria-expanded", "true");
-      openScrollY = window.scrollY;
-      document.addEventListener("click", onDocClick, true);
-      window.addEventListener("scroll", onScroll, { passive: true });
-      document.addEventListener("keydown", onKey);
     });
-
-    // Close after navigating to #contact from the popover CTA
-    pop
-      .querySelectorAll('a[href*="#"]')
-      .forEach((a) => a.addEventListener("click", close));
   }
 
   // ==========================================================================
@@ -808,7 +774,7 @@
     initPageLoadSequence();
     initScrollReveal();
     initSmoothScroll();
-    initContactPopover();
+    initServiceClick();
     initFormHandling();
     initFaqAccordion();
     initContactHashFocus();

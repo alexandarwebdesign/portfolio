@@ -344,18 +344,8 @@
   <nav class="nav-pill" aria-label="Main navigation">
           <a href="#work" class="nav-link">Work</a>
           <a href="/about" class="nav-link">About</a>
-          <button type="button" class="nav-link nav-contact-btn" aria-expanded="false" aria-controls="nav-popover">Contact</button>
+          <a href="#contact" class="nav-link nav-contact-link" data-focus-target="#name">Contact</a>
         </nav>
-        <div class="nav-popover" id="nav-popover" hidden>
-          <p class="mono-label nav-popover-status"><span class="status-dot" aria-hidden="true"></span>Available for new projects</p>
-          <a class="nav-popover-mail" href="mailto:alexandar.webdesign@gmail.com">alexandar.webdesign@gmail.com</a>
-          <a class="nav-popover-cta" href="#contact">Start a project</a>
-          <div class="nav-popover-social">
-            <a href="https://x.com/pavvlov_16" target="_blank" rel="noopener">X</a>
-            <a href="https://dribbble.com/alexandar-webdesign" target="_blank" rel="noopener">Dribbble</a>
-            <a href="https://www.linkedin.com/in/alexander-pavlov-370261342/" target="_blank" rel="noopener">LinkedIn</a>
-          </div>
-        </div>
       </div>
     </header>
 
@@ -598,7 +588,7 @@
           </div>
 
           <div class="services-list">
-            <div class="service-row reveal">
+            <div class="service-row reveal" data-service="web-design" role="button" tabindex="0">
               <span class="service-index" aria-hidden="true">(01)</span>
               <h3 class="service-title">Web Design &amp; UX Strategy</h3>
               <p class="service-desc">This isn't web design with a UX layer on top. It's UX-first thinking applied to every layout, flow, and visual decision from the start. Most designers pick colours and call it a strategy. I map user psychology, eliminate friction, and engineer the journey - then make it look exceptional.</p>
@@ -619,7 +609,7 @@
 </svg></div>
             </div>
 
-            <div class="service-row reveal">
+            <div class="service-row reveal" data-service="website-dev" role="button" tabindex="0">
               <span class="service-index" aria-hidden="true">(02)</span>
               <h3 class="service-title">Website Development</h3>
               <p class="service-desc">Beautiful design means nothing if the build lets it down. Every interaction, animation, and transition is coded exactly as designed - no compromises, no workarounds, no "that looked different in Figma." Pixel-perfect, fast, and built to last.</p>
@@ -639,7 +629,7 @@
 </svg></div>
             </div>
 
-            <div class="service-row reveal">
+            <div class="service-row reveal" data-service="end-to-end" role="button" tabindex="0">
               <span class="service-index" aria-hidden="true">(03)</span>
               <h3 class="service-title">End-to-End Solutions</h3>
               <p class="service-desc">Strategy, design, development, and deployment - handled by one person who owns the outcome. The UX thinking that shaped the design is the same thinking that shaped the code. No handoffs. No lost-in-translation. No version gaps. One person, one standard, one result.</p>
