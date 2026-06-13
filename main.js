@@ -813,6 +813,11 @@
       link.addEventListener('click', close);
     });
 
+    // Close on backdrop click (empty space)
+    menu.addEventListener('click', e => {
+      if (e.target === menu) close();
+    });
+
     // Close on Escape
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape' && menu.classList.contains('is-open')) {
