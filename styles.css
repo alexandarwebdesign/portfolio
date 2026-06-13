@@ -919,13 +919,6 @@ textarea:focus-visible {
   transition-delay: 0ms;
 }
 
-.nav-mobile-menu nav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-6);
-}
-
 /* Links stagger up on open */
 .nav-mobile-link {
   font-size: clamp(40px, 10vw, 64px);
@@ -952,6 +945,11 @@ textarea:focus-visible {
 
 .nav-mobile-link:hover,
 .nav-mobile-link[aria-current="page"] {
+  color: var(--color-accent);
+}
+
+.nav-mobile-cta {
+  margin-top: var(--space-8);
   color: var(--color-accent);
 }
 
