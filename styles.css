@@ -1199,7 +1199,7 @@ textarea:focus-visible {
 }
 
 .hero-title {
-  font-size: var(--text-hero);
+  font-size: clamp(48px, calc(5vw + 16px), 96px);
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
   font-weight: 500;
