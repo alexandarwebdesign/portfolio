@@ -874,16 +874,17 @@ textarea:focus-visible {
   --degshine: 156deg;
 }
 
-.nav-burger-icon {
-  transition: opacity var(--duration-fast) var(--ease),
-              transform var(--duration-fast) var(--ease);
+.nav-burger-icon .bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--duration-fast) var(--ease),
+              opacity var(--duration-fast) var(--ease);
 }
 
-/* Rotate icon to X on open */
-.nav-burger[aria-expanded="true"] .nav-burger-icon {
-  transform: rotate(90deg);
-  opacity: 0.6;
-}
+/* Morph to X when open */
+.nav-burger[aria-expanded="true"] .bar-1 { transform: translateY(6px) rotate(45deg); }
+.nav-burger[aria-expanded="true"] .bar-2 { opacity: 0; }
+.nav-burger[aria-expanded="true"] .bar-3 { transform: translateY(-6px) rotate(-45deg); }
 
 /* Full-screen overlay */
 .nav-mobile-menu {
