@@ -349,7 +349,9 @@ h3,
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth removed — Lenis handles all smooth scroll via
+     window.scrollTo() calls; CSS smooth-scroll on top causes double-smoothing
+     that overshoots and snaps = the ~navbar-height jump on footer reveal. */
   /* Defensive: prevent any wide child from causing page-level horizontal scroll
      on mobile. overflow-x: clip (vs hidden) does not break position: sticky. */
   overflow-x: clip;
