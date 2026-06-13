@@ -2022,7 +2022,7 @@ main {
 }
 
 .footer-big-link {
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(18px, 2.2vw, 28px);
   font-weight: 500;
   letter-spacing: var(--tracking-tight);
   color: var(--color-on-dark);
@@ -2167,7 +2167,7 @@ main {
 
 @media (max-width: 768px) {
   .footer-big-link {
-    font-size: clamp(24px, 8vw, 40px);
+    font-size: clamp(16px, 5vw, 22px);
   }
 
   .footer-bottom-row {
