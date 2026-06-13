@@ -2118,17 +2118,34 @@ main {
 .footer-social {
   display: flex;
   align-items: center;
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 
 .footer-social-link {
-  font-size: var(--text-body-sm);
-  color: var(--color-on-dark-secondary);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  overflow: hidden;
+  transition: background var(--duration-normal) var(--ease);
 }
 
-.footer-social-link:hover { color: var(--color-on-dark); }
+.social-icon {
+  color: var(--color-on-dark-secondary);
+  transition: color var(--duration-normal) var(--ease), transform var(--duration-slow) var(--ease);
+}
+
+.footer-social-link:hover {
+  background: var(--color-accent);
+}
+
+.footer-social-link:hover .social-icon {
+  color: var(--color-on-dark);
+  transform: rotateY(360deg);
+}
 
 /* Short viewports: bottom-anchored content could exceed 100lvh - top-align
    and allow the footer itself to scroll as a safety valve */
