@@ -1,4 +1,4 @@
-/* ==========================================================================
+﻿/* ==========================================================================
    ALEXANDAR PAVLOV PORTFOLIO - STYLES
    Design System + Components + Animations + Accessibility
    ========================================================================== */
@@ -2135,7 +2135,7 @@ main {
 
 .social-icon {
   color: var(--color-on-dark-secondary);
-  transition: color var(--duration-normal) var(--ease), transform var(--duration-slow) var(--ease);
+  transition: color var(--duration-normal) var(--ease);
 }
 
 .footer-social-link:hover {
@@ -2144,7 +2144,6 @@ main {
 
 .footer-social-link:hover .social-icon {
   color: var(--color-on-dark);
-  transform: rotateY(360deg);
 }
 
 /* Short viewports: bottom-anchored content could exceed 100lvh - top-align
