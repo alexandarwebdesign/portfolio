@@ -690,17 +690,7 @@ textarea:focus-visible {
 
 /* Brand wordmark - inverts over dark sections via blend mode */
 .brand {
-  position: fixed;
-  top: 32px;
-  left: clamp(20px, 4vw, 64px);
-  z-index: 90;
-  font-size: var(--text-label);
-  font-weight: 700;
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #fff;
-  mix-blend-mode: difference;
+  display: none; /* home icon in nav circle replaces the wordmark */
 }
 
 @media (max-width: 719px) {
@@ -716,6 +706,50 @@ textarea:focus-visible {
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Home icon circle button */
+.nav-home {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  color: var(--color-ink);
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity var(--duration-fast) var(--ease);
+}
+
+.nav-home:hover { opacity: 0.65; }
+
+/* Rotating shine ring on home circle (same as pill) */
+.nav-home::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid transparent;
+  background: linear-gradient(var(--degshine),
+      rgba(255, 255, 255, 0.5) 2%,
+      rgba(255, 255, 255, 0.001) 40%,
+      rgba(255, 255, 255, 0.001) 55%,
+      rgba(255, 255, 255, 0.15) 93%) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: shine-rotate 8s linear infinite;
+  --degshine: 156deg;
 }
 
 .nav-pill {
