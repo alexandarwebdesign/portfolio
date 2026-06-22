@@ -1725,7 +1725,6 @@ body.is-loaded .hero-cta {
 
 .service-row[data-service] {
   cursor: pointer;
-  border-radius: var(--border-radius);
   padding-inline: var(--space-4);
   margin-inline: calc(var(--space-4) * -1);
   transition: background var(--duration-fast) var(--ease);
