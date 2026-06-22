@@ -177,8 +177,19 @@
 
       this.gl = gl;
 
-      if (!this.setupProgram()) return;
+      // Async, non-blocking program build. The 80-iteration raymarch loop makes
+      // GLSL compile+link the single most expensive synchronous task on the page
+      // (~870ms long task). KHR_parallel_shader_compile lets the driver build off
+      // the main thread; we poll COMPLETION_STATUS_KHR instead of stalling on
+      // linkProgram(). finishInit() runs once the program is genuinely ready, and
+      // is-shader-ready (which triggers the CSS reveal) is only added then.
+      this.parallelExt = gl.getExtension("KHR_parallel_shader_compile");
 
+      if (!this.beginProgram()) return;
+      this.waitForProgram();
+    }
+
+    finishInit() {
       this.setupGeometry();
       this.isInView = this.checkInView();
       this.handleResize();
@@ -188,11 +199,17 @@
 
       this.gl.enable(this.gl.BLEND);
       this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+
+      // Paint one frame before revealing so the CSS transition fades in actual
+      // shader output, never a blank canvas.
+      this.render(performance.now(), !this.shouldAnimate());
       this.section.classList.add("is-shader-ready");
       this.updateAnimationState();
     }
 
-    setupProgram() {
+    // Kicks off compile + link without reading any status (status reads force a
+    // synchronous GPU flush — the very stall we are avoiding).
+    beginProgram() {
       const vertexShader = this.compileShader(this.gl.VERTEX_SHADER, VERTEX_SHADER_SOURCE);
       const fragmentShader = this.compileShader(this.gl.FRAGMENT_SHADER, FRAGMENT_SHADER_SOURCE);
 
@@ -203,8 +220,35 @@
       this.gl.attachShader(program, fragmentShader);
       this.gl.linkProgram(program);
 
+      this._pendingProgram = program;
+      this._pendingShaders = [vertexShader, fragmentShader];
+      return true;
+    }
+
+    waitForProgram() {
+      const program = this._pendingProgram;
+      const ready =
+        !this.parallelExt ||
+        this.gl.getProgramParameter(program, this.parallelExt.COMPLETION_STATUS_KHR);
+
+      if (!ready) {
+        window.requestAnimationFrame(() => this.waitForProgram());
+        return;
+      }
+
+      if (this.finalizeProgram()) {
+        this.finishInit();
+      }
+    }
+
+    finalizeProgram() {
+      const program = this._pendingProgram;
+      const [vertexShader, fragmentShader] = this._pendingShaders;
+
       this.gl.deleteShader(vertexShader);
       this.gl.deleteShader(fragmentShader);
+      this._pendingShaders = null;
+      this._pendingProgram = null;
 
       if (!this.gl.getProgramParameter(program, this.gl.LINK_STATUS)) {
         console.warn("Hero shader program link failed:", this.gl.getProgramInfoLog(program));
@@ -239,16 +283,13 @@
     }
 
     compileShader(type, source) {
+      // No COMPILE_STATUS read here on purpose — getShaderParameter forces a
+      // synchronous flush that blocks the main thread, defeating parallel
+      // compile. A genuine compile error surfaces at finalizeProgram() via the
+      // program LINK_STATUS check (read only after the completion poll).
       const shader = this.gl.createShader(type);
       this.gl.shaderSource(shader, source);
       this.gl.compileShader(shader);
-
-      if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-        console.warn("Hero shader compile failed:", this.gl.getShaderInfoLog(shader));
-        this.gl.deleteShader(shader);
-        return null;
-      }
-
       return shader;
     }
 
