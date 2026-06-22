@@ -1445,6 +1445,11 @@ body.is-loaded .hero-cta {
    -------------------------------------------------------------------------- */
 
 .about-section {
+  /* Top breathing room after the full-bleed marquee band (which has its own
+     12vh internal padding + hard border). Without this the about content butts
+     straight against the marquee. Kept below --section-gap so it doesn't double
+     up with the band's padding. */
+  padding-top: clamp(64px, 9vh, 120px);
   padding-bottom: var(--section-gap);
 }
 
