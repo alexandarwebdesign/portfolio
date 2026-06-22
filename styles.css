@@ -1380,7 +1380,22 @@ body.is-loaded .hero-subtitle {
   animation-delay: 0.28s;
 }
 
+/* CTA rises without fading from opacity 0. The white-on-blue button would
+   composite over the light hero background while transparent (axe flags the
+   transient frame as 1.08:1 contrast). Keeping opacity at 1 throughout means
+   the button is always an opaque blue -> AA-clean at every frame. */
+@keyframes heroRiseSolid {
+  from {
+    transform: translateY(24px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 body.is-loaded .hero-cta {
+  animation-name: heroRiseSolid;
   animation-delay: 0.40s;
 }
 

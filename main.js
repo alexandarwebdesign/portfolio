@@ -345,7 +345,7 @@
           if (response.status === 200) {
             submitBtn.classList.remove("loading");
             submitBtn.classList.add("success");
-            submitBtn.innerHTML = "Thanks for applying 💙";
+            submitBtn.innerHTML = "Message sent";
 
             form.reset();
             setStatus("Message sent. I'll reply within 24 hours.", "success");
