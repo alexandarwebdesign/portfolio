@@ -185,7 +185,7 @@ The redesign is in development; targets are set, not yet measured. Guest checkou
 
 ### Creative Asset (2026) - 3D / Interactive Experience (Upcoming)
 
-**URL:** https://aleksandarpavlov.com/creative-asset
+**URL:** Not yet published (in development)
 **Category:** 3D / Interactive Experience
 **Description:** An interactive 3D creative asset tool with real-time shader controls and immersive visual experience. Currently in production.
 
@@ -193,7 +193,7 @@ The redesign is in development; targets are set, not yet measured. Guest checkou
 
 ### Swis SaaS (2026) - SaaS / Productivity Platform (Upcoming)
 
-**URL:** https://aleksandarpavlov.com/swis-saas
+**URL:** Not yet published (in development)
 **Category:** SaaS / Productivity Platform
 **Description:** A SaaS productivity platform designed to cut through digital noise - trust-building design, clear value hierarchy, high-conversion onboarding UI. Currently in production.
 

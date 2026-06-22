@@ -17,8 +17,8 @@ UX/UI design applied exclusively to websites. Industries: luxury architecture, l
 - [All Work](https://aleksandarpavlov.com/#work): Featured projects spanning architecture, SaaS, e-commerce, luxury brands, and portfolios.
 - [FORMA Architects](https://aleksandarpavlov.com/forma-architects): Luxury architecture website - refined UX, premium quiet-luxury visual language, conversion-focused for high-net-worth clients. Live: https://forma-architetects.netlify.app/
 - [Birsé](https://aleksandarpavlov.com/birse): Mobile-first UX/UI redesign of BirSé, a Bulgarian fine-jewelry store (online since 2013) - storefront, product pages, and a rebuilt checkout designed around the 80% mobile audience, with EU-Omnibus dual-currency pricing. Tags: Web Design, UX Design, UI Design, E-Commerce, Conversion Optimization. Live (current site): https://www.birse.bg/. Redesign in development with PFG Bulgaria.
-- [Creative Asset](https://aleksandarpavlov.com/creative-asset): Interactive 3D experience with real-time shader controls. Tags: 3D, Interactive, Web Design. (Upcoming)
-- [Swis SaaS](https://aleksandarpavlov.com/swis-saas): SaaS productivity platform - trust-building design, high-conversion onboarding UI. Tags: SaaS, Web Design, UI Design, Productivity. (Upcoming)
+- Creative Asset (in development, not yet published): Interactive 3D experience with real-time shader controls. Tags: 3D, Interactive, Web Design.
+- Swis SaaS (in development, not yet published): SaaS productivity platform - trust-building design, high-conversion onboarding UI. Tags: SaaS, Web Design, UI Design, Productivity.
 
 ## Process
 
