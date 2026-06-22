@@ -265,7 +265,7 @@ h3,
   --color-text-muted: rgba(28, 29, 32, 0.62);
   --color-text-soft: rgba(28, 29, 32, 0.62);
   --color-text-light: rgba(28, 29, 32, 0.55);
-  --color-text-tertiary: rgba(28, 29, 32, 0.55);
+  --color-text-tertiary: rgba(28, 29, 32, 0.72);
   --color-border: rgba(28, 29, 32, 0.45);
   --color-border-subtle: rgba(28, 29, 32, 0.14);
   --color-white: #ffffff;
@@ -4223,7 +4223,7 @@ html.js .reveal.visible {
   gap: 14px;
 }
 
-.case-meta-col h5 {
+.case-meta-col .case-meta-label {
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--text-label);
@@ -4269,7 +4269,7 @@ html.js .reveal.visible {
   margin: 0 auto;
 }
 
-.case-palette-row h5 {
+.case-palette-row .case-meta-label {
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--text-label);
@@ -4447,7 +4447,7 @@ html.js .reveal.visible {
   margin: 0;
   font-size: var(--text-body-sm);
   line-height: 1.55;
-  color: var(--color-text-soft);
+  color: var(--color-text-tertiary);
 }
 
 /* Peak-end CTA - restrained */

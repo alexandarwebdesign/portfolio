@@ -828,21 +828,35 @@
   }
 
   function init() {
+    // Critical path: anything affecting first paint, above-the-fold content, or
+    // immediate interaction. Runs synchronously on DOM ready.
     initSmoothScrollLenis();
     initReducedMotionSvg();
     initPageLoadSequence();
     initScrollReveal();
     initSmoothScroll();
-    initServiceClick();
-    initFormHandling();
-    initFaqAccordion();
-    initContactHashFocus();
-    initParallax();
-    initImageMarquee();
-    initCaseCarousels();
-    initPlates();
-    initFooterFocusReveal();
     initMobileNav();
+    initFormHandling();
+    initContactHashFocus();
+
+    // Non-critical: heavy DOM work (node cloning, layout reads) and below-the-
+    // fold behaviour. Deferred to idle time so it doesn't extend the load long
+    // task / TBT. Same behaviour, just initialised a beat later.
+    const deferred = () => {
+      initServiceClick();
+      initFaqAccordion();
+      initParallax();
+      initImageMarquee();
+      initCaseCarousels();
+      initPlates();
+      initFooterFocusReveal();
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      window.requestIdleCallback(deferred, { timeout: 1500 });
+    } else {
+      window.setTimeout(deferred, 1);
+    }
   }
 
   /**
