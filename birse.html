@@ -7,15 +7,15 @@
     <title>Birsé - Jewelry E-Commerce UX Redesign | Aleksandar Pavlov</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/marcellus-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" as="image" href="/images/projects/birse-hero-1600.jpg" imagesrcset="/images/projects/birse-hero-800.avif 800w, /images/projects/birse-hero-1080.avif 1080w, /images/projects/birse-hero-1600.avif 1600w, /images/projects/birse-hero-2400.avif 2400w" imagesizes="100vw" type="image/avif" fetchpriority="high">
-    <link rel="preload" href="styles.css?v=73" as="style">
+    <link rel="preload" href="styles.min.css?v=75" as="style">
     <script>document.documentElement.classList.add('js');</script>
-    <link rel="stylesheet" href="styles.css?v=73" />
+    <link rel="stylesheet" href="styles.min.css?v=75" />
 
     <!-- Meta Tags -->
     <meta name="description" content="Case study: UX/UI redesign of BirSé, a Bulgarian fine-jewelry store - mobile-first storefront, rebuilt checkout, and dual-currency price cards. By Aleksandar Pavlov.">
@@ -53,14 +53,13 @@
       "description": "A mobile-first UX/UI redesign for BirSé, a Bulgarian fine-jewelry store online since 2013. Because 80% of traffic is mobile (largely women aged 45-64), every screen was designed at 375px first: a full-screen navigation drawer, filters moved into a slide-up bottom sheet, a conversion-focused product page with installment pricing, and a true multi-step checkout built around Bulgarian delivery and cash-on-delivery norms. Dual-currency price cards meet Bulgaria's 2026 euro-adoption and EU Omnibus pricing law. A strategic visual elevation of a live store - not a rebuild.",
       "url": "https://aleksandarpavlov.com/birse",
       "sameAs": "https://www.birse.bg/",
-      "creator": {
-        "@type": "Person",
-        "name": "Aleksandar Pavlov",
-        "url": "https://aleksandarpavlov.com",
-        "jobTitle": "UX/UI Designer & Web Developer",
-        "email": "alexandar.webdesign@gmail.com",
-        "address": {"@type": "PostalAddress", "addressLocality": "Sofia", "addressCountry": "Bulgaria"}
-      },
+      "author": { "@id": "https://aleksandarpavlov.com/#person" },
+      "creator": { "@id": "https://aleksandarpavlov.com/#person" },
+      "publisher": { "@id": "https://aleksandarpavlov.com/#organization" },
+      "datePublished": "2026-03-01",
+      "dateModified": "2026-06-26",
+      "mainEntityOfPage": "https://aleksandarpavlov.com/birse",
+      "image": "https://aleksandarpavlov.com/images/projects/birse.webp",
       "dateCreated": "2026",
       "genre": ["Web Design", "UX Design", "E-Commerce", "Jewelry"],
       "keywords": "jewelry e-commerce UX, mobile-first redesign, UX design, UI design, conversion optimization, web design Bulgaria, e-commerce checkout UX, dual-currency pricing, BirSé",
@@ -107,7 +106,7 @@
           <a href="/about" class="nav-link">About</a>
           <a href="/#contact" class="nav-link nav-contact-link" data-focus-target="#name">Contact</a>
         </nav>
-        <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
+        <button type="button" class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
           <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="nav-burger-icon">
             <line class="bar bar-1" x1="0" y1="1" x2="20" y2="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             <line class="bar bar-2" x1="0" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -135,7 +134,7 @@
             <span>All Work</span>
           </a>
           <h1 class="case-title" id="project-title">Birsé</h1>
-          <span class="conceptual-badge" aria-label="This redesign is currently in development">Redesign in development</span>
+          <span class="conceptual-badge">Redesign in development</span>
         </div>
       </section>
 
@@ -223,7 +222,7 @@
             </div>
             <div class="case-block case-block--device case-block--bare" style="--case-tint:#E8E4DF;">
               <div class="content-image-block image-layout-block layout-full_width reveal">
-                <div class="device device-macprohigher" aria-label="BirSé redesigned storefront on desktop">
+                <div class="device device-macprohigher">
                   <div class="single-image">
                     <picture>
   <source type="image/avif" srcset="/images/projects/birse-storefront-desktop-500.avif 500w, /images/projects/birse-storefront-desktop-800.avif 800w, /images/projects/birse-storefront-desktop-1080.avif 1080w, /images/projects/birse-storefront-desktop-1600.avif 1600w, /images/projects/birse-storefront-desktop-2400.avif 2400w, /images/projects/birse-storefront-desktop-3200.avif 3200w" sizes="(max-width: 900px) 92vw, 1600px">
@@ -245,7 +244,7 @@
               <p>The product page puts trust chips, installment context, gallery depth, and the add-to-cart path in the same decision zone. The goal is not decoration; it is removing doubt before the shopper leaves the page.</p>
             </div>
             <div class="case-block case-block--device case-block--bare" style="--case-tint:#E8E4DF;">
-              <div class="case-figure reveal" aria-label="BirSé product detail page on desktop">
+              <div class="case-figure reveal">
                 <picture>
   <source type="image/avif" srcset="/images/projects/birse-pdp-desktop-500.avif 500w, /images/projects/birse-pdp-desktop-800.avif 800w, /images/projects/birse-pdp-desktop-1080.avif 1080w, /images/projects/birse-pdp-desktop-1600.avif 1600w, /images/projects/birse-pdp-desktop-2400.avif 2400w, /images/projects/birse-pdp-desktop-3200.avif 3200w" sizes="(max-width: 900px) 92vw, 1600px">
   <source type="image/webp" srcset="/images/projects/birse-pdp-desktop-500.webp 500w, /images/projects/birse-pdp-desktop-800.webp 800w, /images/projects/birse-pdp-desktop-1080.webp 1080w, /images/projects/birse-pdp-desktop-1600.webp 1600w, /images/projects/birse-pdp-desktop-2400.webp 2400w, /images/projects/birse-pdp-desktop-3200.webp 3200w" sizes="(max-width: 900px) 92vw, 1600px">
@@ -263,7 +262,7 @@
               <p>Delivery method comes first because many local orders go to Еконт, Спиди, BoxNow, or pickup offices. Cash-on-delivery stays easy to find, and each step collapses into a summary so the flow feels controlled instead of long.</p>
             </div>
             <div class="case-block case-block--device case-block--bare" style="--case-tint:#E8E4DF;">
-              <div class="case-figure reveal" aria-label="Redesigned checkout on desktop">
+              <div class="case-figure reveal">
                 <picture>
   <source type="image/avif" srcset="/images/projects/birse-checkout-desktop-500.avif 500w, /images/projects/birse-checkout-desktop-800.avif 800w, /images/projects/birse-checkout-desktop-1080.avif 1080w, /images/projects/birse-checkout-desktop-1600.avif 1600w, /images/projects/birse-checkout-desktop-2400.avif 2400w, /images/projects/birse-checkout-desktop-3200.avif 3200w" sizes="(max-width: 900px) 92vw, 1600px">
   <source type="image/webp" srcset="/images/projects/birse-checkout-desktop-500.webp 500w, /images/projects/birse-checkout-desktop-800.webp 800w, /images/projects/birse-checkout-desktop-1080.webp 1080w, /images/projects/birse-checkout-desktop-1600.webp 1600w, /images/projects/birse-checkout-desktop-2400.webp 2400w, /images/projects/birse-checkout-desktop-3200.webp 3200w" sizes="(max-width: 900px) 92vw, 1600px">
@@ -300,7 +299,7 @@
                     </div>
                   </div>
                   <div class="mobile-col">
-                    <div class="mobile-device" aria-label="BirSé mobile category page">
+                    <div class="mobile-device">
                       <div class="mobile-screen mobile-screen--img">
                         <picture>
   <source type="image/avif" srcset="/images/projects/birse-screen-2-500.avif?v=54 500w, /images/projects/birse-screen-2-800.avif?v=54 800w, /images/projects/birse-screen-2-1080.avif?v=54 1080w, /images/projects/birse-screen-2-1280.avif?v=54 1280w" sizes="33vw">
@@ -360,7 +359,7 @@
                     </div>
                   </div>
                   <div class="mobile-col">
-                    <div class="mobile-device" aria-label="BirSé mobile navigation drawer">
+                    <div class="mobile-device">
                       <div class="mobile-screen mobile-screen--img">
                         <picture>
   <source type="image/avif" srcset="/images/projects/birse-screen-5-500.avif?v=54 500w, /images/projects/birse-screen-5-800.avif?v=54 800w, /images/projects/birse-screen-5-1080.avif?v=54 1080w, /images/projects/birse-screen-5-1280.avif?v=54 1280w" sizes="33vw">
@@ -405,7 +404,7 @@
               <div class="carousel-outer" style="position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);">
                 <div class="single-block block-device block-padding-bottom" style="clip-path:polygon(0% 4%, 100% 0%, 100% 96%, 0% 100%);">
                   <div class="row device-mbp15"><div class="flex-col">
-                    <div class="device reveal" aria-label="BirSé desktop screens carousel">
+                    <div class="device reveal">
                       <div class="single-image">
                         <div id="case-carousel-birse" class="case-carousel" data-case-carousel aria-live="polite">
                           <figure class="case-carousel__slide is-active" data-carousel-slide>
@@ -436,12 +435,12 @@
                   </div></div>
                 </div>
                 <div class="carousel-btn-track">
-                  <button class="carousel-btn carousel-btn--prev" data-carousel="case-carousel-birse" data-dir="prev" aria-label="Previous image">
+                  <button type="button" class="carousel-btn carousel-btn--prev" data-carousel="case-carousel-birse" data-dir="prev" aria-label="Previous image">
                     <svg width="80" height="80" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
-                  <button class="carousel-btn carousel-btn--next" data-carousel="case-carousel-birse" data-dir="next" aria-label="Next image">
+                  <button type="button" class="carousel-btn carousel-btn--next" data-carousel="case-carousel-birse" data-dir="next" aria-label="Next image">
                     <svg width="80" height="80" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -576,6 +575,6 @@
     </div>
 
     <script src="vendor/lenis.min.js?v=1" defer></script>
-    <script src="main.js?v=17" defer></script>
+    <script src="main.min.js?v=20" defer></script>
   </body>
 </html>

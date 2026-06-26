@@ -7,15 +7,15 @@
     <title>FORMA Architects - Luxury Architecture Website Design | Aleksandar Pavlov</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/marcellus-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" as="image" href="/images/projects/keep_the_image_202604171721-1600.jpg" imagesrcset="/images/projects/keep_the_image_202604171721-800.avif 800w, /images/projects/keep_the_image_202604171721-1080.avif 1080w, /images/projects/keep_the_image_202604171721-1600.avif 1600w, /images/projects/keep_the_image_202604171721-2400.avif 2400w, /images/projects/keep_the_image_202604171721-2752.avif 2752w" imagesizes="100vw" type="image/avif" fetchpriority="high">
-    <link rel="preload" href="styles.css?v=73" as="style">
+    <link rel="preload" href="styles.min.css?v=75" as="style">
     <script>document.documentElement.classList.add('js');</script>
-    <link rel="stylesheet" href="styles.css?v=73" />
+    <link rel="stylesheet" href="styles.min.css?v=75" />
 
     <!-- Meta Tags -->
     <meta name="description" content="Case study: quiet-luxury website for FORMA Architects, a boutique studio in Miami, Dubai & the Greek Islands. UX and conversion design by Aleksandar Pavlov.">
@@ -53,21 +53,21 @@
       "description": "A luxury architecture website for FORMA Architects, a boutique studio specialising in ultra-modern luxury residences ($2M–$15M+) across Miami, Dubai, and the Greek Islands. Designed around the principle of quiet luxury: generous whitespace, oversized photography, refined typography, and a muted gold accent (#B8956A) used with strict restraint. The site functions as a credibility machine for high-net-worth clients.",
       "url": "https://aleksandarpavlov.com/forma-architects",
       "sameAs": "https://forma-architetects.netlify.app/",
-      "creator": {
-        "@type": "Person",
-        "name": "Aleksandar Pavlov",
-        "url": "https://aleksandarpavlov.com",
-        "jobTitle": "UX/UI Designer & Web Developer",
-        "email": "alexandar.webdesign@gmail.com",
-        "address": {"@type": "PostalAddress", "addressLocality": "Sofia", "addressCountry": "Bulgaria"}
-      },
+      "author": { "@id": "https://aleksandarpavlov.com/#person" },
+      "creator": { "@id": "https://aleksandarpavlov.com/#person" },
+      "publisher": { "@id": "https://aleksandarpavlov.com/#organization" },
+      "datePublished": "2026-03-01",
+      "dateModified": "2026-06-26",
+      "creativeWorkStatus": "Conceptual / self-initiated spec project",
+      "mainEntityOfPage": "https://aleksandarpavlov.com/forma-architects",
+      "image": "https://aleksandarpavlov.com/images/projects/forma-architects.webp",
       "dateCreated": "2026",
       "genre": ["Web Design", "Luxury Architecture", "Conversion Optimization"],
       "keywords": "luxury architecture website, quiet luxury design, UX design, UI design, conversion optimization, web design Bulgaria, architecture website designer, high-net-worth clients, boutique architecture studio",
       "about": {
         "@type": "Organization",
         "name": "FORMA Architects",
-        "description": "Boutique architecture studio specialising in ultra-modern luxury residences ($2M–$15M+) across Miami, Dubai, and the Greek Islands",
+        "description": "Fictional studio created for a conceptual design exercise. Concept: a boutique architecture studio specialising in ultra-modern luxury residences across Miami, Dubai, and the Greek Islands.",
         "url": "https://forma-architetects.netlify.app/"
       }
     }
@@ -107,7 +107,7 @@
           <a href="/about" class="nav-link">About</a>
           <a href="/#contact" class="nav-link nav-contact-link" data-focus-target="#name">Contact</a>
         </nav>
-        <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
+        <button type="button" class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
           <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="nav-burger-icon">
             <line class="bar bar-1" x1="0" y1="1" x2="20" y2="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             <line class="bar bar-2" x1="0" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -135,7 +135,7 @@
             <span>All Work</span>
           </a>
           <h1 class="case-title" id="project-title">FORMA Architects</h1>
-          <span class="conceptual-badge" aria-label="This is a conceptual project">Conceptual Project</span>
+          <span class="conceptual-badge">Conceptual Project</span>
         </div>
       </section>
 
@@ -232,9 +232,14 @@
             </div>
             <div class="case-block case-block--device case-block--bare" style="--case-tint:#E8E4DF;">
               <div class="content-image-block image-layout-block layout-full_width reveal">
-                <div class="device device-macprohigher video-toggle" aria-label="FORMA Architects website shown on a desktop">
+                <div class="device device-macprohigher video-toggle">
                   <div class="single-image">
-                    <video src="images/projects/forma-architects-gallery-hero.webm" poster="images/projects/forma-architects-gallery-hero.webp" autoplay muted loop playsinline preload="metadata" class="overlay screen-video" aria-label="Walkthrough video of the FORMA Architects homepage and portfolio"></video>
+                    <video poster="images/projects/forma-architects-gallery-hero.webp" autoplay muted loop playsinline preload="metadata" width="1920" height="1088" class="overlay screen-video" aria-label="Walkthrough video of the FORMA Architects homepage and portfolio">
+                      <source src="images/projects/forma-architects-gallery-hero.av1.mp4" type="video/mp4; codecs=av01.0.05M.08">
+                      <source src="images/projects/forma-architects-gallery-hero.webm" type="video/webm; codecs=vp9">
+                      <source src="images/projects/forma-architects-gallery-hero.h264.mp4" type="video/mp4">
+                      <img src="images/projects/forma-architects-gallery-hero.webp" alt="The FORMA Architects homepage and portfolio walkthrough" loading="lazy" decoding="async">
+                    </video>
                   </div>
                   <div class="overlay-device-image" aria-hidden="true">
                     <div class="overlay overlay-device"></div>
@@ -252,8 +257,13 @@
               <p>Luxury prospects buy into atmosphere before details. The full-width hero video gives the page a quiet architectural presence, then lets the work lead instead of explaining too much too early.</p>
             </div>
             <div class="case-block case-block--fullbleed">
-              <div class="content-wide-video video-toggle" aria-label="Full-width hero animation from the FORMA Architects website">
-                <video class="screen-video" src="images/projects/forma-architects-gallery-hero.webm" poster="images/projects/forma-architects-gallery-hero.webp" autoplay muted loop playsinline preload="metadata" aria-label="FORMA Architects full-width hero walkthrough"></video>
+              <div class="content-wide-video video-toggle">
+                <video class="screen-video" poster="images/projects/forma-architects-gallery-hero.webp" autoplay muted loop playsinline preload="metadata" width="1920" height="1088" aria-label="FORMA Architects full-width hero walkthrough">
+                  <source src="images/projects/forma-architects-gallery-hero.av1.mp4" type="video/mp4; codecs=av01.0.05M.08">
+                  <source src="images/projects/forma-architects-gallery-hero.webm" type="video/webm; codecs=vp9">
+                  <source src="images/projects/forma-architects-gallery-hero.h264.mp4" type="video/mp4">
+                  <img src="images/projects/forma-architects-gallery-hero.webp" alt="FORMA Architects full-width hero walkthrough" loading="lazy" decoding="async">
+                </video>
                 <div class="wide-video-label" data-parallax-speed="2" aria-hidden="true">
                   <img src="images/projects/Forma-Favicon.svg" class="wide-video-label__icon" alt="" />
                   <p class="wide-video-label__eyebrow">FULL WIDTH HERO</p>
@@ -274,7 +284,7 @@
               <div class="carousel-outer" style="position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);">
                 <div class="single-block block-device block-padding-bottom" style="clip-path:polygon(0% 4%, 100% 0%, 100% 96%, 0% 100%);">
                   <div class="row device-mbp15"><div class="flex-col">
-                    <div class="device" aria-label="FORMA desktop screens carousel">
+                    <div class="device">
                       <div class="single-image">
                         <div id="case-carousel-forma" class="case-carousel" data-case-carousel aria-live="polite">
                           <figure class="case-carousel__slide is-active" data-carousel-slide>
@@ -333,12 +343,12 @@
                   </div></div>
                 </div>
                 <div class="carousel-btn-track">
-                  <button class="carousel-btn carousel-btn--prev" data-carousel="case-carousel-forma" data-dir="prev" aria-label="Previous image">
+                  <button type="button" class="carousel-btn carousel-btn--prev" data-carousel="case-carousel-forma" data-dir="prev" aria-label="Previous image">
                     <svg width="80" height="80" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </button>
-                  <button class="carousel-btn carousel-btn--next" data-carousel="case-carousel-forma" data-dir="next" aria-label="Next image">
+                  <button type="button" class="carousel-btn carousel-btn--next" data-carousel="case-carousel-forma" data-dir="next" aria-label="Next image">
                     <svg width="80" height="80" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -374,9 +384,14 @@
                     </div>
                   </div>
                   <div class="mobile-col">
-                    <div class="mobile-device video-toggle" aria-label="FORMA Architects mobile walkthrough video">
+                    <div class="mobile-device video-toggle">
                       <div class="mobile-screen">
-                        <video class="overlay screen-video" src="images/projects/forma-architects-gallery-mobile.webm" poster="images/projects/forma-architects-gallery-mobile.webp" autoplay muted loop playsinline preload="metadata" aria-label="Walkthrough of the FORMA Architects mobile site"></video>
+                        <video class="overlay screen-video" poster="images/projects/forma-architects-gallery-mobile.webp" autoplay muted loop playsinline preload="metadata" width="606" height="1190" aria-label="Walkthrough of the FORMA Architects mobile site">
+                          <source src="images/projects/forma-architects-gallery-mobile.av1.mp4" type="video/mp4; codecs=av01.0.05M.08">
+                          <source src="images/projects/forma-architects-gallery-mobile.webm" type="video/webm; codecs=vp9">
+                          <source src="images/projects/forma-architects-gallery-mobile.h264.mp4" type="video/mp4">
+                          <img src="images/projects/forma-architects-gallery-mobile.webp" alt="The FORMA Architects mobile site walkthrough" loading="lazy" decoding="async">
+                        </video>
                       </div>
                     </div>
                     <div class="case-device-note">
@@ -529,6 +544,6 @@
     </div>
 
     <script src="vendor/lenis.min.js?v=1" defer></script>
-    <script src="main.js?v=17" defer></script>
+    <script src="main.min.js?v=20" defer></script>
   </body>
 </html>

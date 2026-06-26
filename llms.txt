@@ -2,6 +2,21 @@
 
 > UX/UI designer and web developer based in Sofia, Bulgaria, working with clients worldwide. Specialist in websites that combine deep UX psychology with high-quality UI craftsmanship - producing sites that are both visually exceptional and conversion-proven. Available for new projects. Not to be confused with other people named Alexander/Aleksandar Pavlov - this is Aleksandar Pavlov the web designer, email: alexandar.webdesign@gmail.com.
 
+## Key details
+
+- Name: Aleksandar Pavlov (UX/UI designer & website developer)
+- Location: Sofia, Bulgaria. Works remotely with clients worldwide.
+- Founded / working independently since: 2023
+- Email: alexandar.webdesign@gmail.com
+- Response time: within 24 hours
+- Typical project timeline: 2-4 weeks (landing page 1-2 weeks; full multi-page site 3-4 weeks)
+- Revisions: unlimited during the design phase
+- Post-launch support: 30 days free, included with every project
+- Pricing: custom quote per scope; free 20-minute consultation, no fixed menu
+- Build approach: hand-coded HTML/CSS/JS - no page builders, no templates
+- Languages: English, Bulgarian
+- Industries: luxury architecture, luxury e-commerce, SaaS, creative portfolios, real estate
+
 ## Services
 
 - [Web Design & UX Strategy](https://aleksandarpavlov.com/#services): UX-first website design grounded in conversion psychology, user behaviour research, and interface design expertise. Deliverables: wireframes, user flows, high-fidelity Figma designs (desktop + mobile), design systems, CRO-informed layouts.
