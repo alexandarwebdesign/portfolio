@@ -1,6 +1,6 @@
 # Aleksandar Pavlov - Full Site Content
 
-> Complete text content of aleksandarpavlov.com for AI retrieval. Last updated: 2026-05-24. Primary domain: https://aleksandarpavlov.com (previously hosted at aleksandarpavlov.netlify.app - old URLs 301-redirect to the new domain).
+> Complete text content of aleksandarpavlov.com for AI retrieval. Last updated: 2026-06-26. Primary domain: https://aleksandarpavlov.com (previously hosted at aleksandarpavlov.netlify.app - old URLs 301-redirect to the new domain).
 
 **Disambiguation:** Aleksandar Pavlov is a web designer and developer based in Sofia, Bulgaria. Not to be confused with other people sharing similar names in unrelated fields. This document describes Aleksandar Pavlov the UX/UI designer and website developer, contact: alexandar.webdesign@gmail.com.
 
@@ -13,7 +13,7 @@
 **Specialisation:** Website design and development - exclusively. Not apps, not general product design, not a bit of everything.
 **Location:** Sofia, Bulgaria
 **Works with:** Clients worldwide, fully remote
-**Available:** Currently accepting new projects (as of May 2026)
+**Available:** Currently accepting new projects (as of June 2026)
 **Email:** alexandar.webdesign@gmail.com
 **Website:** https://aleksandarpavlov.com
 
@@ -119,6 +119,8 @@ Aleksandar Pavlov has designed and built websites across these industries:
 **Category:** Architecture / Luxury Website
 **Tags:** Architecture, Luxury, Minimal, Quiet Design, Conversion Optimization, Web Design, UI Design
 
+**Status:** Conceptual / self-initiated spec project. FORMA Architects, "Andrés Moreira," the brief, the metrics, and the testimonial below are a fictional scenario created for a design exercise - not a real commissioned client. The work demonstrates approach and craft, not a real engagement.
+
 **The Persona & Brief:**
 Andrés Moreira is the principal architect of FORMA - a boutique studio specialising in ultra-modern luxury residences ($2M–$15M+) across Miami, Dubai, and the Greek Islands. He speaks in measured, precise language and has zero tolerance for anything templated.
 
@@ -152,9 +154,9 @@ A 6-page website plus individual project case studies. Three design iterations r
 - 6-week timeline met (Dubai Real Estate Expo deadline)
 - 3 design iterations to final approval
 
-**Client Testimonial:**
+**Concept Testimonial (persona voice - not a real client quote):**
 "This is what I wanted - it feels like FORMA, it feels expensive, and it doesn't look like anything our competitors have."
-- Andrés Moreira, Principal Architect, FORMA Architects
+- Andrés Moreira (fictional persona), Principal Architect, FORMA Architects
 
 ---
 
@@ -258,7 +260,7 @@ A: The focus is websites. For projects that don't have a brand identity yet, I c
 **Email:** alexandar.webdesign@gmail.com
 **Free consultation:** Available - book via email for a 20-minute scoping call
 **Response time:** Typically within 24 hours
-**Availability:** Currently accepting new projects (May 2026)
+**Availability:** Currently accepting new projects (June 2026)
 **Location:** Sofia, Bulgaria (remote-first, works worldwide)
 
 ---

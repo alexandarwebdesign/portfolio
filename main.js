@@ -55,6 +55,18 @@
     });
   }
 
+  /**
+   * Autoplay loops ignore prefers-reduced-motion; for users who opt out, drop
+   * autoplay and pause so the poster frame shows instead of looping motion.
+   */
+  function initReducedMotionVideo() {
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document.querySelectorAll("video[autoplay]").forEach((v) => {
+      v.removeAttribute("autoplay");
+      v.pause();
+    });
+  }
+
   function getMotionSettings() {
     const rootStyles = window.getComputedStyle(document.documentElement);
 
@@ -540,7 +552,6 @@
     refreshParallaxItems();
     window.addEventListener("scroll", requestParallaxUpdate, { passive: true });
     window.addEventListener("resize", refreshParallaxItems, { passive: true });
-    window.addEventListener("portfolio:content-updated", refreshParallaxItems);
   }
 
   // ==========================================================================
@@ -607,7 +618,6 @@
       let inView = false;
 
       let isDragging = false;
-      let dragStartX = 0;
       let dragLastX = 0;
       let dragLastT = 0;
       let velocity = 0;
@@ -652,7 +662,6 @@
         if (e.button !== undefined && e.button !== 0) return;
         isDragging = true;
         activePointerId = e.pointerId;
-        dragStartX = e.clientX;
         dragLastX = e.clientX;
         dragLastT = performance.now();
         velocity = 0;
@@ -832,6 +841,7 @@
     // immediate interaction. Runs synchronously on DOM ready.
     initSmoothScrollLenis();
     initReducedMotionSvg();
+    initReducedMotionVideo();
     initPageLoadSequence();
     initScrollReveal();
     initSmoothScroll();
@@ -848,7 +858,6 @@
       initParallax();
       initImageMarquee();
       initCaseCarousels();
-      initPlates();
       initFooterFocusReveal();
     };
 
@@ -856,85 +865,6 @@
       window.requestIdleCallback(deferred, { timeout: 1500 });
     } else {
       window.setTimeout(deferred, 1);
-    }
-  }
-
-  /**
-   * Initialize the "Plates" presentation system used on case-study pages.
-   * - Updates the sticky page counter as each plate enters the viewport.
-   * - Adds .is-in-view to each plate the first time it crosses 18% from the
-   *   top, triggering the CSS entrance animation.
-   * - Hides the counter on plates whose chrome would clash (only the final
-   *   CTA plate currently - it removes itself).
-   */
-  function initPlates() {
-    const plates = document.querySelectorAll(".plate");
-    if (!plates.length) return;
-
-    const counterEl = document.getElementById("plates-counter");
-    const counterNumEl = document.getElementById("plates-counter-num");
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    // Reveal-on-view: one-shot, fires once per plate
-    const revealIO = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-in-view");
-            revealIO.unobserve(entry.target);
-          }
-        }
-      },
-      { threshold: reduceMotion ? 0 : 0.16, rootMargin: "0px 0px -8% 0px" },
-    );
-
-    plates.forEach((p) => {
-      if (reduceMotion) p.classList.add("is-in-view");
-      else revealIO.observe(p);
-    });
-
-    // Counter tracking - pick the plate whose centerline is closest to the
-    // viewport center, then mirror its data-plate.
-    if (counterEl && counterNumEl) {
-      let rafId = null;
-      const candidates = Array.from(plates).filter((p) => p.dataset.plate);
-
-      function updateCounter() {
-        rafId = null;
-        const viewportMid = window.innerHeight * 0.45;
-        let bestPlate = null;
-        let bestDistance = Infinity;
-
-        for (const p of candidates) {
-          const rect = p.getBoundingClientRect();
-          const center = rect.top + rect.height / 2;
-          const distance = Math.abs(center - viewportMid);
-          if (rect.bottom < 0 || rect.top > window.innerHeight) continue;
-          if (distance < bestDistance) {
-            bestDistance = distance;
-            bestPlate = p;
-          }
-        }
-
-        if (bestPlate) {
-          const num = bestPlate.dataset.plate;
-          if (counterNumEl.textContent !== num) counterNumEl.textContent = num;
-          counterEl.classList.add("is-visible");
-        } else {
-          counterEl.classList.remove("is-visible");
-        }
-      }
-
-      function onScroll() {
-        if (rafId !== null) return;
-        rafId = requestAnimationFrame(updateCounter);
-      }
-
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onScroll, { passive: true });
-      updateCounter();
     }
   }
 

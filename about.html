@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="light">
-    <title>About - Aleksandar Pavlov | UX/UI Designer & Website Developer</title>
+    <title>About - Aleksandar Pavlov | UX/UI Designer &amp; Website Developer</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
-    <link rel="apple-touch-icon" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/marcellus-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" as="image" href="/images/aleksandar-pavlov-ux-designer-1080.jpg" imagesrcset="/images/aleksandar-pavlov-ux-designer-500.avif 500w, /images/aleksandar-pavlov-ux-designer-800.avif 800w, /images/aleksandar-pavlov-ux-designer-1080.avif 1080w, /images/aleksandar-pavlov-ux-designer-1600.avif 1600w, /images/aleksandar-pavlov-ux-designer-2321.avif 2321w" imagesizes="(max-width: 900px) 100vw, 45vw" type="image/avif" fetchpriority="high">
-    <link rel="preload" href="styles.css?v=73" as="style">
+    <link rel="preload" href="styles.min.css?v=75" as="style">
     <script>document.documentElement.classList.add('js');</script>
-    <link rel="stylesheet" href="styles.css?v=73" />
+    <link rel="stylesheet" href="styles.min.css?v=75" />
 
     <!-- Meta Tags -->
     <meta name="description" content="About Aleksandar Pavlov - UX/UI designer and website developer based in Bulgaria, working with clients worldwide. From first concept to live site.">
@@ -49,6 +49,7 @@
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": "https://aleksandarpavlov.com/#person",
       "name": "Aleksandar Pavlov",
       "jobTitle": "UX/UI Designer & Website Developer",
       "description": "UX/UI designer and website developer based in Bulgaria, working with clients worldwide. Specialising in websites - from first concept to live site.",
@@ -61,6 +62,17 @@
         "https://dribbble.com/alexandar-webdesign",
         "https://www.linkedin.com/in/alexander-pavlov-370261342/"
       ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "@id": "https://aleksandarpavlov.com/#aboutpage",
+      "url": "https://aleksandarpavlov.com/about",
+      "isPartOf": { "@id": "https://aleksandarpavlov.com/#website" },
+      "mainEntity": { "@id": "https://aleksandarpavlov.com/#person" },
+      "dateModified": "2026-06-26"
     }
     </script>
     <script type="application/ld+json">
@@ -97,7 +109,7 @@
           <a href="/about" class="nav-link" aria-current="page">About</a>
           <a href="/#contact" class="nav-link nav-contact-link" data-focus-target="#name">Contact</a>
         </nav>
-        <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
+        <button type="button" class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
           <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="nav-burger-icon">
             <line class="bar bar-1" x1="0" y1="1" x2="20" y2="1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
             <line class="bar bar-2" x1="0" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -327,6 +339,6 @@
     </div>
 
     <script src="vendor/lenis.min.js?v=1" defer></script>
-    <script src="main.js?v=17" defer></script>
+    <script src="main.min.js?v=20" defer></script>
   </body>
 </html>
