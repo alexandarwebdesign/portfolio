@@ -112,7 +112,7 @@
 
       // R2 brand grade: remap the raw spectral output onto the redesign
       // palette. Shadows -> electric blue #455ce9, mids -> the teal kept
-      // from the original look, highlights -> cool paper #eaeef3. A slice
+      // from the original look, highlights -> paper #eff0f1. A slice
       // of the raw RGB is mixed back in so the original iridescent
       // shimmer stays recognizable. Motion math above is untouched.
       vec3 raw = clamp(o.rgb, 0.0, 1.0);

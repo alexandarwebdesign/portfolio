@@ -255,15 +255,15 @@ h3,
   color-scheme: light;
 
   /* ---------- Color: warm paper + ink + single interactive accent ---------- */
-  --color-background: #eaeef3;
-  --color-surface: #faf8f4;
-  --color-surface-subtle: #ebe7df;
+  --color-background: #eff0f1;
+  --color-surface: #f8f7f5;
+  --color-surface-subtle: #e8e6e4;
   --color-ink: #1c1d20;
   --color-ink-deep: #141517;
   --color-text: var(--color-ink);
   --color-text-muted: rgba(28, 29, 32, 0.62);
   --color-text-soft: rgba(28, 29, 32, 0.62);
-  --color-text-light: rgba(28, 29, 32, 0.55);
+  --color-text-light: rgba(28, 29, 32, 0.68);
   --color-text-tertiary: rgba(28, 29, 32, 0.72);
   --color-border: rgba(28, 29, 32, 0.45);
   --color-border-subtle: rgba(28, 29, 32, 0.14);
@@ -273,9 +273,9 @@ h3,
   --color-success: #1f9c44;
   --color-error: #cf2820;
   /* On-dark (footer, contact band) */
-  --color-on-dark: #f3f0ea;
-  --color-on-dark-secondary: rgba(243, 240, 234, 0.6);
-  --color-on-dark-border: rgba(243, 240, 234, 0.18);
+  --color-on-dark: #f4f3f2;
+  --color-on-dark-secondary: rgba(244, 243, 242, 0.6);
+  --color-on-dark-border: rgba(244, 243, 242, 0.18);
   /* Legacy alias - keep until consuming rules are rebuilt */
   --color-danger: var(--color-error);
 
@@ -906,7 +906,7 @@ textarea:focus-visible {
   position: fixed;
   inset: 0;
   z-index: 99;
-  background: rgba(243, 240, 234, 0.97); /* --color-background at near-opacity */
+  background: rgba(239, 240, 241, 0.97); /* --color-background at near-opacity */
   backdrop-filter: blur(12px) saturate(1.2);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
   display: flex;
@@ -1266,8 +1266,6 @@ textarea:focus-visible {
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(circle at 50% 52%, rgba(32, 178, 170, 0.22) 0%, rgba(69, 92, 233, 0.14) 22%, rgba(187, 171, 255, 0.1) 36%, rgba(243, 240, 234, 0) 62%);
 }
 
 .hero-shader__canvas {
@@ -2117,8 +2115,8 @@ main {
   align-items: flex-end;
   /* Semi-glassy: diagonal white-alpha sheen + faint top rim-light over deep ink */
   background:
-    linear-gradient(160deg, rgba(243, 240, 234, 0.07) 0%, rgba(243, 240, 234, 0.015) 38%, rgba(243, 240, 234, 0) 60%),
-    linear-gradient(180deg, rgba(243, 240, 234, 0.09) 0, rgba(243, 240, 234, 0) 2px),
+    linear-gradient(160deg, rgba(244, 243, 242, 0.07) 0%, rgba(244, 243, 242, 0.015) 38%, rgba(244, 243, 242, 0) 60%),
+    linear-gradient(180deg, rgba(244, 243, 242, 0.09) 0, rgba(244, 243, 242, 0) 2px),
     var(--color-ink-deep);
   color: var(--color-on-dark);
   pointer-events: auto;
@@ -3748,7 +3746,7 @@ html.js .reveal.visible {
   width: 100%;
   padding: 12vh 0;
   overflow: visible;
-  background: #E8E4DF;
+  background: var(--color-surface-subtle);
   border-top: 1px solid var(--color-border-subtle);
   border-bottom: 1px solid var(--color-border-subtle);
 }
