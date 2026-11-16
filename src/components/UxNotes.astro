@@ -1,0 +1,271 @@
+---
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { ui, type Lang } from '../i18n/ui';
+
+export interface Note {
+  title: string;
+  problem: string;
+  solution: string;
+  why: string;
+}
+
+interface Props {
+  lang: Lang;
+  /** Unique on the page; prefixes the note ids. */
+  id: string;
+  image: ImageMetadata;
+  alt: string;
+  /** Marker positions in percent of the image, [x, y], in the order of `notes`. */
+  points: [number, number][];
+  notes: Note[];
+  /** Phone screenshots render narrower. */
+  narrow?: boolean;
+}
+
+const { lang, id, image, alt, points, notes, narrow = false } = Astro.props;
+const t = ui[lang].caseStudy;
+---
+
+<!--
+  Signature of the case studies: numbered notes over the screen, like design
+  comments. The switch is a checkbox styled with :has(), so it needs no
+  JavaScript; the same notes are always readable as the list below.
+-->
+<figure class:list={['ux-notes', { narrow }]}>
+  <label class="switch">
+    <input type="checkbox" role="switch" checked />
+    <span class="track" aria-hidden="true"></span>
+    {t.showNotes}
+  </label>
+  <div class="stage">
+    <Picture
+      src={image}
+      formats={['avif', 'webp']}
+      widths={narrow ? [400, 720] : [640, 1080, 1600]}
+      sizes={narrow ? '(width >= 48rem) 24rem, 100vw' : '(width >= 90rem) 60rem, 100vw'}
+      {alt}
+      loading="lazy"
+    />
+    {
+      points.map(([x, y], i) => (
+        <a class="marker" href={`#${id}-${i + 1}`} style={`left: ${x}%; top: ${y}%`}>
+          <span aria-hidden="true">{i + 1}</span>
+          <span class="visually-hidden">
+            {t.note} {i + 1}: {notes[i].title}
+          </span>
+        </a>
+      ))
+    }
+  </div>
+  <figcaption>
+    <ol class="notes">
+      {
+        notes.map((note, i) => (
+          <li id={`${id}-${i + 1}`}>
+            <span class="number" aria-hidden="true">
+              {i + 1}
+            </span>
+            <div>
+              <h4>{note.title}</h4>
+              <dl>
+                <dt>{t.problem}</dt>
+                <dd>{note.problem}</dd>
+                <dt>{t.solution}</dt>
+                <dd>{note.solution}</dd>
+                <dt>{t.why}</dt>
+                <dd>{note.why}</dd>
+              </dl>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </figcaption>
+</figure>
+
+<style>
+  .ux-notes {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .switch {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: fit-content;
+    min-height: var(--target);
+    font-size: var(--text-small);
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .switch input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .track {
+    position: relative;
+    width: 2.5rem;
+    height: 1.5rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--line-strong);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .track::after {
+    content: '';
+    position: absolute;
+    top: 0.1875rem;
+    left: 0.1875rem;
+    width: 1.125rem;
+    height: 1.125rem;
+    border-radius: 50%;
+    background-color: var(--bg);
+    transition: translate var(--dur-fast) var(--ease-out);
+  }
+
+  .switch:has(:checked) .track {
+    background-color: var(--accent);
+  }
+
+  .switch:has(:checked) .track::after {
+    translate: 1rem 0;
+  }
+
+  .switch:has(:focus-visible) .track {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+
+  .stage {
+    position: relative;
+  }
+
+  .stage :global(img) {
+    width: 100%;
+    border: var(--hairline);
+    border-radius: var(--radius);
+  }
+
+  .narrow .stage,
+  .narrow figcaption {
+    max-width: 24rem;
+  }
+
+  /* 44px target around a 32px dot. */
+  .marker {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: var(--target);
+    height: var(--target);
+    translate: -50% -50%;
+    color: var(--on-accent);
+    font-size: var(--text-label);
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      opacity var(--dur) var(--ease-out),
+      scale var(--dur) var(--ease-out);
+  }
+
+  .marker > span:first-child {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50% 50% 50% 0;
+    background-color: var(--cobalt);
+    color: #fff;
+    box-shadow:
+      0 0 0 3px rgb(255 255 255 / 0.9),
+      0 6px 16px -4px rgb(20 21 23 / 0.5);
+  }
+
+  .marker:hover {
+    scale: 1.1;
+  }
+
+  .ux-notes:not(:has(.switch :checked)) .marker {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .notes {
+    display: grid;
+    gap: var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .notes li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    scroll-margin-top: var(--space-9);
+  }
+
+  .notes li:target h4 {
+    color: var(--accent);
+  }
+
+  .number {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50% 50% 50% 0;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    font-size: var(--text-label);
+    font-weight: 700;
+  }
+
+  h4 {
+    margin-bottom: var(--space-2);
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    font-weight: 400;
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-heading);
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-1) var(--space-4);
+    font-size: var(--text-small);
+  }
+
+  dt {
+    color: var(--fg-muted);
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  @media (width >= 64rem) {
+    .notes:has(li:nth-child(2)) {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    }
+
+    .narrow {
+      grid-template-columns: 24rem 1fr;
+      align-items: start;
+      gap: var(--space-4) var(--space-8);
+    }
+
+    .narrow .switch {
+      grid-column: 1 / -1;
+    }
+
+    .narrow .notes {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
