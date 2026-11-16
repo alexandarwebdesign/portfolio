@@ -1,0 +1,63 @@
+---
+interface Props {
+  steps: { title: string; text: string }[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="process">
+  {
+    steps.map((step, i) => (
+      <li>
+        <span class="index">{String(i + 1).padStart(2, '0')}</span>
+        <h3>{step.title}</h3>
+        <p>{step.text}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .process {
+    display: grid;
+    gap: var(--space-6) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .index {
+    color: var(--accent);
+    font-size: var(--text-small);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  h3 {
+    font-size: var(--text-title);
+  }
+
+  p {
+    color: var(--fg-muted);
+  }
+
+  @media (width >= 48rem) {
+    .process {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .process {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+</style>

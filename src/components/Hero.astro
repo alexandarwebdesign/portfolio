@@ -1,0 +1,149 @@
+---
+import Button from './Button.astro';
+import HeroShader from './HeroShader.astro';
+import { ui, type Lang } from '../i18n/ui';
+import { home } from '../data/home';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = home[lang].hero;
+const [first, second] = t.title;
+---
+
+<section class="hero">
+  <HeroShader />
+  <div class="inner">
+    <p class="eyebrow">{t.eyebrow}</p>
+    <h1>
+      <span>{first}</span>
+      <span class="offset">{second}</span>
+    </h1>
+    <div class="intro">
+      <p class="lead">{t.lead}</p>
+      <div class="actions">
+        <Button href="#contact" arrow>{ui[lang].cta}</Button>
+        <Button href="#work" variant="secondary">{t.work}</Button>
+      </div>
+    </div>
+    <ul class="facts">
+      {
+        t.facts.map((fact, i) => (
+          <li class:list={{ available: i === t.facts.length - 1 }}>{fact}</li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    min-height: 100svh;
+    padding: calc(var(--space-9) + var(--space-4)) var(--gutter) var(--space-7);
+  }
+
+  .inner {
+    display: grid;
+    align-content: end;
+    gap: var(--space-6);
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+  }
+
+  .eyebrow {
+    color: var(--fg-muted);
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+  }
+
+  h1 {
+    display: grid;
+    font-size: var(--text-hero);
+    line-height: var(--leading-display);
+    text-wrap: nowrap;
+  }
+
+  .offset {
+    padding-inline-start: 0.5em;
+  }
+
+  .intro {
+    display: grid;
+    gap: var(--space-5);
+    max-width: 36rem;
+  }
+
+  .lead {
+    font-size: var(--text-lead);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  /* Legible over the shader. */
+  .actions :global(.secondary) {
+    background-color: color-mix(in srgb, var(--paper-raised) 80%, transparent);
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: var(--space-4) 0 0;
+    border-top: var(--hairline);
+    color: var(--fg-muted);
+    font-size: var(--text-small);
+    list-style: none;
+  }
+
+  .available {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--fg);
+  }
+
+  .available::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: #1f9d55;
+    box-shadow: 0 0 0 3px rgb(31 157 85 / 0.2);
+  }
+
+  @media (width >= 64rem) {
+    .hero {
+      padding-top: var(--space-10);
+    }
+
+    .offset {
+      padding-inline-start: 1.2em;
+    }
+
+    .intro {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: var(--space-7);
+      max-width: none;
+    }
+
+    .lead {
+      max-width: 34rem;
+    }
+
+    .facts {
+      justify-content: space-between;
+    }
+  }
+</style>

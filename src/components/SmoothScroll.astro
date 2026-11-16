@@ -1,0 +1,56 @@
+---
+// Lenis smooth scrolling and one-time reveal on entering the viewport.
+// Both are skipped with reduced motion; without JavaScript nothing is hidden.
+---
+
+<script>
+  import Lenis from 'lenis';
+
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Same offsets as scroll-padding in base.css: clear of the top pill on desktop.
+    new Lenis({ autoRaf: true, anchors: { offset: innerWidth >= 1024 ? -96 : -16 } });
+
+    const items = document.querySelectorAll('[data-reveal]');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    );
+    for (const item of items) {
+      // Only elements below the fold animate; the first screen is never hidden.
+      if (item.getBoundingClientRect().top > innerHeight) {
+        item.classList.add('will-reveal');
+        observer.observe(item);
+      }
+    }
+  }
+</script>
+
+<style is:global>
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis:not(.lenis-autoToggle).lenis-stopped {
+    overflow: clip;
+  }
+
+  .will-reveal {
+    opacity: 0;
+    translate: 0 1.5rem;
+    transition:
+      opacity var(--dur-slow) var(--ease-out),
+      translate var(--dur-slow) var(--ease-out);
+  }
+
+  .will-reveal.is-revealed {
+    opacity: 1;
+    translate: 0;
+  }
+</style>

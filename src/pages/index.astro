@@ -1,10 +1,10 @@
 ---
-// Placeholder until the page view is built (step 6).
 import Base from '../layouts/Base.astro';
+import Home from '../views/Home.astro';
 import { ui } from '../i18n/ui';
 const meta = ui.bg.meta.home;
 ---
 
 <Base title={meta.title} description={meta.description} route="home">
-  <h1 style="padding: 8rem var(--gutter); font-size: var(--text-display)">Александър Павлов</h1>
+  <Home lang="bg" />
 </Base>

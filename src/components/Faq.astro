@@ -1,0 +1,71 @@
+---
+interface Props {
+  items: { q: string; a: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq">
+  {
+    items.map((item) => (
+      <details name="faq">
+        <summary>
+          <span>{item.q}</span>
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path d="M3 8h10M8 3v10" fill="none" stroke="currentColor" stroke-width="1.5" />
+          </svg>
+        </summary>
+        <p>{item.a}</p>
+      </details>
+    ))
+  }
+</div>
+
+<style>
+  details {
+    border-top: var(--hairline);
+  }
+
+  details:last-child {
+    border-bottom: var(--hairline);
+  }
+
+  summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-5);
+    min-height: var(--target);
+    padding-block: var(--space-5);
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    letter-spacing: var(--tracking-display);
+    line-height: var(--leading-heading);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:hover {
+    color: var(--accent);
+  }
+
+  svg {
+    flex: none;
+    transition: rotate var(--dur) var(--ease-out);
+  }
+
+  details[open] svg {
+    rotate: 45deg;
+  }
+
+  p {
+    max-width: var(--measure);
+    padding-bottom: var(--space-5);
+    color: var(--fg-muted);
+  }
+</style>
