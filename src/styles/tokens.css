@@ -1,0 +1,101 @@
+/*
+ * Design tokens. Components use only the semantic tokens (--bg, --fg, --accent…),
+ * so a section switches to the dark palette by adding the class `dark`.
+ *
+ * Breakpoints (custom properties cannot be used inside @media):
+ *   48rem  (768px)  tablet
+ *   64rem  (1024px) desktop
+ *   90rem  (1440px) wide
+ */
+
+:root {
+  /* Palette */
+  --paper: #eff0f1;
+  --paper-raised: #f8f8f9;
+  --ink: #141517;
+  --ink-raised: #1d1e22;
+  --ink-muted: #585b63; /* 5.9:1 on paper */
+  --mist: #eceef0;
+  --mist-muted: #a2a6ae; /* 7.5:1 on ink */
+  --cobalt: #3346dc; /* 6.0:1 on paper, white text on it 6.9:1 */
+  --cobalt-light: #97a3ff; /* 7.9:1 on ink */
+  --red: #b3261e;
+  --red-light: #ff8a80;
+
+  /* Semantic colours, light surface (default) */
+  --bg: var(--paper);
+  --bg-raised: var(--paper-raised);
+  --fg: var(--ink);
+  --fg-muted: var(--ink-muted);
+  --line: rgb(20 21 23 / 0.14);
+  --line-strong: rgb(20 21 23 / 0.45);
+  --accent: var(--cobalt);
+  --on-accent: #ffffff;
+  --error: var(--red);
+  --focus: var(--cobalt);
+
+  /* Type */
+  --font-display: var(--font-forum);
+  --font-body: var(--font-manrope);
+
+  --text-hero: clamp(3.25rem, 11vw + 0.5rem, 12rem);
+  --text-display: clamp(2.5rem, 6vw + 0.5rem, 7rem);
+  --text-heading: clamp(2rem, 3vw + 1rem, 4rem);
+  --text-title: clamp(1.375rem, 1vw + 1rem, 1.875rem);
+  --text-lead: clamp(1.125rem, 0.5vw + 1rem, 1.375rem);
+  --text-body: 1.0625rem;
+  --text-small: 0.9375rem;
+  --text-label: 0.8125rem;
+
+  --leading-display: 0.92;
+  --leading-heading: 1.05;
+  --leading-body: 1.6;
+  --tracking-display: -0.025em;
+  --tracking-label: 0.04em;
+
+  /* Space (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --gutter: clamp(1rem, 3vw + 0.25rem, 3rem);
+  --section: clamp(5rem, 8vw + 2rem, 10rem);
+  --page-max: 100rem;
+  --measure: 38rem;
+
+  /* Shape */
+  --radius-sm: 0.5rem;
+  --radius: 0.875rem;
+  --radius-pill: 999px;
+  --hairline: 1px solid var(--line);
+  --target: 2.75rem; /* 44px minimum touch target */
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 200ms;
+  --dur: 320ms;
+  --dur-slow: 400ms;
+}
+
+.dark {
+  --bg: var(--ink);
+  --bg-raised: var(--ink-raised);
+  --fg: var(--mist);
+  --fg-muted: var(--mist-muted);
+  --line: rgb(236 238 240 / 0.16);
+  --line-strong: rgb(236 238 240 / 0.5);
+  --accent: var(--cobalt-light);
+  --on-accent: var(--ink);
+  --error: var(--red-light);
+  --focus: var(--cobalt-light);
+
+  background-color: var(--bg);
+  color: var(--fg);
+}

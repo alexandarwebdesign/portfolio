@@ -1,0 +1,209 @@
+---
+// Temporary token showcase for the migration review. Deleted before merge.
+import { Font } from 'astro:assets';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+const swatches = [
+  ['--paper', '#eff0f1'],
+  ['--paper-raised', '#f8f8f9'],
+  ['--ink', '#141517'],
+  ['--ink-muted', '#585b63'],
+  ['--cobalt', '#3346dc'],
+  ['--cobalt-light', '#97a3ff'],
+  ['--mist', '#eceef0'],
+  ['--mist-muted', '#a2a6ae'],
+];
+const sizes = ['hero', 'display', 'heading', 'title', 'lead', 'body', 'small', 'label'];
+const serifSizes = ['hero', 'display', 'heading', 'title'];
+---
+
+<!doctype html>
+<html lang="bg">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Токени</title>
+    <Font cssVariable="--font-forum" />
+    <Font cssVariable="--font-manrope" />
+  </head>
+  <body>
+    <main>
+      <section class="block">
+        <p class="label">01 — Типография</p>
+        <h1 class="hero">Сайтове, които<br /><span class="offset">печелят доверие</span></h1>
+        <h1 class="hero" lang="en">Websites that<br /><span class="offset">earn trust</span></h1>
+      </section>
+
+      <section class="block">
+        <p class="label">02 — Скала</p>
+        {
+          sizes.map((s) => (
+            <div class="row">
+              <code>--text-{s}</code>
+              <p
+                class={serifSizes.includes(s) ? 'serif' : undefined}
+                style={`font-size: var(--text-${s})`}
+              >
+                Уеб дизайн за бизнеса · Web design ёжЩщ
+              </p>
+            </div>
+          ))
+        }
+      </section>
+
+      <section class="block">
+        <p class="label">03 — Текст</p>
+        <p class="lead">
+          Проектирам и изграждам сайтове за малки и средни бизнеси в България и Европа — от
+          проучването до пускането.
+        </p>
+        <p class="measure">
+          Всеки проект започва с разговор: какво трябва да постигне сайтът, за кого е и как ще
+          разберем, че работи. <strong>Удебелен текст 700</strong>, <a href="#">линк в текста</a>,
+          „кавички“ и тире – правилно.
+        </p>
+        <p class="measure" lang="en">
+          I design and build websites for small and mid-sized businesses — from research to launch.
+          <strong>Bold 700</strong>, <a href="#">inline link</a>.
+        </p>
+      </section>
+
+      <section class="block">
+        <p class="label">04 — Цветове</p>
+        <ul class="swatches">
+          {
+            swatches.map(([name, hex]) => (
+              <li>
+                <span style={`background: var(${name})`} />
+                <code>{name}</code>
+                <code>{hex}</code>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="block dark">
+        <p class="label">05 — Тъмна секция</p>
+        <h2 class="display">Да направим нещо<br /><span class="offset">заедно</span></h2>
+        <p class="measure muted">
+          Вторичен текст на тъмен фон, <a href="#">линк</a> и акцент
+          <span class="accent">кобалт</span>.
+        </p>
+      </section>
+
+      <section class="block">
+        <p class="label">06 — Форма, радиус, линия</p>
+        <div class="shapes">
+          <span class="pill">Безплатна консултация</span>
+          <span class="card">Карта, радиус 14 px</span>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  .block {
+    padding: var(--section) var(--gutter);
+    max-width: var(--page-max);
+    margin-inline: auto;
+    border-top: var(--hairline);
+  }
+  .dark {
+    max-width: none;
+  }
+  .label {
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+    color: var(--fg-muted);
+    margin-bottom: var(--space-6);
+  }
+  .hero {
+    font-size: var(--text-hero);
+    line-height: var(--leading-display);
+    margin-bottom: var(--space-7);
+  }
+  .display {
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    margin-bottom: var(--space-6);
+  }
+  .offset {
+    display: inline-block;
+    padding-inline-start: 0.6em;
+  }
+  .row {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-4);
+    border-bottom: var(--hairline);
+  }
+  .row p {
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+  code {
+    font-size: var(--text-label);
+    color: var(--fg-muted);
+  }
+  .serif {
+    font-family: var(--font-display);
+    letter-spacing: var(--tracking-display);
+  }
+  .lead {
+    font-size: var(--text-lead);
+    max-width: var(--measure);
+    margin-bottom: var(--space-5);
+  }
+  .measure {
+    max-width: var(--measure);
+    margin-bottom: var(--space-4);
+  }
+  .muted {
+    color: var(--fg-muted);
+  }
+  .accent {
+    color: var(--accent);
+  }
+  .swatches {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: var(--space-5);
+  }
+  .swatches li {
+    display: grid;
+    gap: var(--space-1);
+  }
+  .swatches span {
+    height: 5rem;
+    border-radius: var(--radius);
+    border: var(--hairline);
+  }
+  .shapes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    align-items: center;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target);
+    padding-inline: var(--space-5);
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+  }
+  .card {
+    padding: var(--space-6);
+    border-radius: var(--radius);
+    background: var(--bg-raised);
+    border: var(--hairline);
+  }
+</style>
