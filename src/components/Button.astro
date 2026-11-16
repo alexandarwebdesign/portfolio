@@ -1,0 +1,82 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  variant?: 'primary' | 'secondary';
+  arrow?: boolean;
+} & (
+  | ({ href: string } & Omit<HTMLAttributes<'a'>, 'href'>)
+  | ({ href?: undefined } & HTMLAttributes<'button'>)
+);
+
+const { variant = 'primary', arrow = false, class: className, ...rest } = Astro.props;
+const classes = ['button', variant, className];
+---
+
+{
+  rest.href === undefined ? (
+    <button class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
+      <slot />
+      {arrow && (
+        <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+      )}
+    </button>
+  ) : (
+    <a class:list={classes} {...rest}>
+      <slot />
+      {arrow && (
+        <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" />
+        </svg>
+      )}
+    </a>
+  )
+}
+
+<style>
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--target);
+    padding: var(--space-2) var(--space-5);
+    border: 1px solid transparent;
+    border-radius: var(--radius-pill);
+    font-size: var(--text-small);
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out);
+  }
+  .primary {
+    background-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .primary:hover {
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+  .secondary {
+    border-color: var(--line-strong);
+    color: var(--fg);
+  }
+  .secondary:hover {
+    border-color: var(--fg);
+    background-color: var(--fg);
+    color: var(--bg);
+  }
+  .arrow {
+    flex: none;
+    transition: translate var(--dur-fast) var(--ease-out);
+  }
+  .button:hover .arrow {
+    translate: 3px 0;
+  }
+</style>

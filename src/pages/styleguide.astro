@@ -3,6 +3,10 @@
 import { Font } from 'astro:assets';
 import '../styles/tokens.css';
 import '../styles/base.css';
+import Button from '../components/Button.astro';
+import Tag from '../components/Tag.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import LangSwitch from '../components/LangSwitch.astro';
 
 const swatches = [
   ['--paper', '#eff0f1'],
@@ -94,13 +98,32 @@ const serifSizes = ['hero', 'display', 'heading', 'title'];
         </p>
       </section>
 
-      <section class="block">
-        <p class="label">06 — Форма, радиус, линия</p>
-        <div class="shapes">
-          <span class="pill">Безплатна консултация</span>
-          <span class="card">Карта, радиус 14 px</span>
-        </div>
-      </section>
+      {
+        ['light', 'dark'].map((surface) => (
+          <section class:list={['block', surface]}>
+            <SectionLabel index={6}>Атоми · {surface}</SectionLabel>
+            <div class="shapes">
+              <Button href="#" arrow>
+                Безплатна консултация
+              </Button>
+              <Button href="#" variant="secondary">
+                Вижте проектите
+              </Button>
+              <Button type="button" lang="en" arrow>
+                Free consultation
+              </Button>
+              <Tag>Електронен магазин</Tag>
+              <Tag>Концепция</Tag>
+              <LangSwitch lang="en" href="/en" />
+              <LangSwitch lang="bg" href="/" />
+            </div>
+            <div class="shapes">
+              <SectionLabel>Избрани проекти</SectionLabel>
+              <span class="card">Карта, радиус 14 px</span>
+            </div>
+          </section>
+        ))
+      }
     </main>
   </body>
 </html>
@@ -189,16 +212,7 @@ const serifSizes = ['hero', 'display', 'heading', 'title'];
     flex-wrap: wrap;
     gap: var(--space-5);
     align-items: center;
-  }
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--target);
-    padding-inline: var(--space-5);
-    border-radius: var(--radius-pill);
-    background: var(--accent);
-    color: var(--on-accent);
-    font-weight: 600;
+    margin-bottom: var(--space-6);
   }
   .card {
     padding: var(--space-6);
