@@ -13,9 +13,11 @@ interface Props {
   description: string;
   route: RouteId;
   noindex?: boolean;
+  schema?: Record<string, unknown>[];
+  crumb?: string;
 }
 
-const { title, description, route, noindex } = Astro.props;
+const { title, description, route, noindex, schema, crumb } = Astro.props;
 const lang = toLang(Astro.currentLocale);
 ---
 
@@ -24,7 +26,7 @@ const lang = toLang(Astro.currentLocale);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <Seo {title} {description} {lang} {route} {noindex} />
+    <Seo {title} {description} {lang} {route} {noindex} {schema} {crumb} />
     <!-- Headings are the LCP, so the display font is preloaded. -->
     <Font cssVariable="--font-forum" preload />
     <Font cssVariable="--font-manrope" />

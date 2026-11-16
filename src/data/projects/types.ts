@@ -20,6 +20,8 @@ export type Figure =
       width: number;
       height: number;
       label: string;
+      /** ISO 8601, for the VideoObject schema. */
+      duration: string;
       narrow?: boolean;
     };
 

@@ -2,8 +2,15 @@
 import Base from '../layouts/Base.astro';
 import Uslugi from '../views/Uslugi.astro';
 import { uslugi } from '../data/uslugi';
+import { uslugiSchema } from '../data/schema';
 ---
 
-<Base title={uslugi.meta.title} description={uslugi.meta.description} route="uslugi">
+<Base
+  title={uslugi.meta.title}
+  description={uslugi.meta.description}
+  route="uslugi"
+  schema={uslugiSchema('/uslugi')}
+  crumb="Услуги"
+>
   <Uslugi />
 </Base>

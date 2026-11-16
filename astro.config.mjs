@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // Latin and Cyrillic files of each family; unicode-range lets the browser
 // download only the scripts a page actually uses.
@@ -15,6 +16,32 @@ export default defineConfig({
   compressHTML: true,
   build: {
     format: 'file',
+  },
+  // hreflang lives in each page's <head>; the sitemap only lists indexable URLs.
+  integrations: [
+    sitemap({
+      filter: (page) => !/\/404$|\/styleguide$/.test(page),
+    }),
+  ],
+  // A <meta> CSP with hashes of every inline script and style. Inline style
+  // attributes (the UX note marker positions) are allowed on style-src-attr only.
+  security: {
+    csp: {
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data:",
+        "connect-src 'self' https://api.web3forms.com",
+        'form-action https://api.web3forms.com',
+        "base-uri 'self'",
+        "object-src 'none'",
+      ],
+      styleDirective: {
+        resources: [
+          { resource: "'self'", kind: 'element' },
+          { resource: "'unsafe-inline'", kind: 'attribute' },
+        ],
+      },
+    },
   },
   i18n: {
     defaultLocale: 'bg',

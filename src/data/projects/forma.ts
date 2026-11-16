@@ -90,6 +90,7 @@ const bg: CaseContent = {
           src: '/video/forma-hero',
           width: 1920,
           height: 1088,
+          duration: 'PT14S',
           label: 'Видео: началната страница и портфолиото на FORMA Architects',
         },
         {
@@ -175,6 +176,7 @@ const bg: CaseContent = {
           src: '/video/forma-mobile',
           width: 606,
           height: 1190,
+          duration: 'PT8S',
           label: 'Видео: мобилният сайт на FORMA Architects',
         },
         {
@@ -264,6 +266,7 @@ const en: CaseContent = {
           src: '/video/forma-hero',
           width: 1920,
           height: 1088,
+          duration: 'PT14S',
           label: 'Video: the FORMA Architects homepage and portfolio walkthrough',
         },
         {
@@ -349,6 +352,7 @@ const en: CaseContent = {
           src: '/video/forma-mobile',
           width: 606,
           height: 1190,
+          duration: 'PT8S',
           label: 'Video: the FORMA Architects mobile site walkthrough',
         },
         {

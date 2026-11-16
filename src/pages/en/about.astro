@@ -2,9 +2,16 @@
 import Base from '../../layouts/Base.astro';
 import About from '../../views/About.astro';
 import { ui } from '../../i18n/ui';
+import { aboutSchema } from '../../data/schema';
 const meta = ui.en.meta.about;
 ---
 
-<Base title={meta.title} description={meta.description} route="about">
+<Base
+  title={meta.title}
+  description={meta.description}
+  route="about"
+  schema={aboutSchema('en', '/en/about')}
+  crumb={ui.en.nav.about}
+>
   <About lang="en" />
 </Base>

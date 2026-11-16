@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects. Pages serves /about.html at /about by itself
+# (and /en/404.html for missing /en/* paths), so no rewrites are needed here.
+# Never add a catch-all "/* /404.html 404": it runs before static assets.
+
+/sitemap.xml  /sitemap-index.xml  301

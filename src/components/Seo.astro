@@ -1,7 +1,10 @@
 ---
+import { getImage } from 'astro:assets';
 import { languages, type Lang } from '../i18n/ui';
 import { pathFor, type RouteId } from '../i18n/routes';
 import { site } from '../data/site';
+import { breadcrumb as crumbNode, person, website } from '../data/schema';
+import portrait from '../assets/images/portrait.jpg';
 
 interface Props {
   title: string;
@@ -9,9 +12,13 @@ interface Props {
   lang: Lang;
   route: RouteId;
   noindex?: boolean;
+  /** Page-specific JSON-LD nodes. */
+  schema?: Record<string, unknown>[];
+  /** Name of the page in the breadcrumb (Home → name); omitted on home. */
+  crumb?: string;
 }
 
-const { title, description, lang, route, noindex = false } = Astro.props;
+const { title, description, lang, route, noindex = false, schema = [], crumb } = Astro.props;
 
 const absolute = (path: string) => new URL(path, site.url).href;
 const ogLocale: Record<Lang, string> = { bg: 'bg_BG', en: 'en_US' };
@@ -26,6 +33,15 @@ const alternates = languages.flatMap((l) => {
 const paired = !noindex && alternates.length === languages.length;
 const xDefault = alternates.find((a) => a.lang === 'en')?.href;
 const image = absolute('/og-image.jpg');
+
+const photo = await getImage({ src: portrait, width: 800, format: 'jpg' });
+const graph = [
+  website(lang),
+  person(lang, photo.src),
+  ...(crumb && self ? [crumbNode(lang, pathFor('home', lang)!, crumb, self)] : []),
+  ...schema,
+];
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
 ---
 
 <title>{title}</title>
@@ -53,3 +69,4 @@ const image = absolute('/og-image.jpg');
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content={site.twitter} />
 <meta name="twitter:creator" content={site.twitter} />
+{!noindex && <script type="application/ld+json" set:html={jsonLd} />}

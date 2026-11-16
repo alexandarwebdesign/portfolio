@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import Base from './Base.astro';
 import Button from '../components/Button.astro';
 import Tag from '../components/Tag.astro';
@@ -9,12 +9,13 @@ import UxNotes from '../components/UxNotes.astro';
 import Gallery from '../components/Gallery.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 import { ui, type Lang } from '../i18n/ui';
-import { pathFor, type RouteId } from '../i18n/routes';
+import { pathFor } from '../i18n/routes';
 import type { CaseContent } from '../data/projects/types';
+import { caseSchema } from '../data/schema';
 
 interface Props {
   lang: Lang;
-  route: RouteId;
+  route: 'birse' | 'forma';
   content: CaseContent;
 }
 
@@ -22,9 +23,17 @@ const { lang, route, content } = Astro.props;
 const t = ui[lang];
 const home = pathFor('home', lang)!;
 const workHref = home === '/' ? '/#work' : `${home}#work`;
+const cover = await getImage({ src: content.hero.image, width: 1600, format: 'jpg' });
+const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src);
 ---
 
-<Base title={content.meta.title} description={content.meta.description} {route}>
+<Base
+  title={content.meta.title}
+  description={content.meta.description}
+  {route}
+  {schema}
+  crumb={content.name}
+>
   <article class="case">
     <header class="hero">
       <div class="intro">
