@@ -1,0 +1,243 @@
+---
+import Button from './Button.astro';
+import LangSwitch from './LangSwitch.astro';
+import { ui, type Lang } from '../i18n/ui';
+import { pathFor, type RouteId } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+  route: RouteId;
+}
+
+const { lang, route } = Astro.props;
+const t = ui[lang];
+const home = pathFor('home', lang)!;
+const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`);
+
+const links = [
+  { href: homeHash('#work'), label: t.nav.work, current: false },
+  { href: pathFor('about', lang)!, label: t.nav.about, current: route === 'about' },
+  ...(lang === 'bg'
+    ? [{ href: pathFor('uslugi', 'bg')!, label: t.nav.services, current: route === 'uslugi' }]
+    : []),
+];
+
+// The other language: the same page when it exists, otherwise that language's home.
+const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
+const otherRoute = route === 'notFound' ? 'home' : route;
+const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
+---
+
+<header class="site-header">
+  <a class="brand" href={home} aria-current={route === 'home' ? 'page' : undefined}>
+    {lang === 'bg' ? 'Александър Павлов' : 'Aleksandar Pavlov'}
+  </a>
+  <nav class="bar" aria-label={t.nav.label}>
+    <button class="menu-button" type="button" popovertarget="site-menu">
+      {t.nav.menu}
+    </button>
+    <ul class="menu" id="site-menu" popover>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href} aria-current={link.current ? 'page' : undefined}>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="lang-item">
+        <LangSwitch lang={otherLang} href={otherHref} />
+      </li>
+    </ul>
+    <Button class="cta" href={homeHash('#contact')} arrow>{t.cta}</Button>
+  </nav>
+</header>
+
+<script>
+  // Close the mobile menu after choosing a link, which may only change the #hash.
+  const menu = document.getElementById('site-menu');
+  menu?.addEventListener('click', (event) => {
+    if (
+      event.target instanceof Element &&
+      event.target.closest('a') &&
+      menu.matches(':popover-open')
+    ) {
+      menu.hidePopover();
+    }
+  });
+</script>
+
+<style>
+  .site-header {
+    --bar-bg: color-mix(in srgb, var(--paper-raised) 88%, transparent);
+
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 10;
+    padding: var(--space-4) var(--gutter);
+    color: var(--ink);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target);
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    letter-spacing: var(--tracking-display);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1);
+    border: 1px solid rgb(20 21 23 / 0.1);
+    border-radius: var(--radius-pill);
+    background-color: var(--bar-bg);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 24px -12px rgb(20 21 23 / 0.25);
+  }
+
+  .menu-button {
+    min-height: var(--target);
+    padding-inline: var(--space-5);
+    border: 0;
+    border-radius: var(--radius-pill);
+    background: none;
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .menu {
+    list-style: none;
+    padding: 0;
+  }
+
+  .menu a {
+    display: flex;
+    align-items: center;
+    min-height: var(--target);
+    text-decoration: none;
+  }
+
+  .menu a[aria-current='page'] {
+    text-decoration: underline;
+  }
+
+  /* Mobile and tablet: the bar sits at the bottom, in thumb reach. */
+  @media (width < 64rem) {
+    .bar {
+      position: fixed;
+      inset-inline: var(--gutter);
+      bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+      max-width: 28rem;
+      margin-inline: auto;
+    }
+
+    .menu-button {
+      padding-inline: var(--space-4);
+    }
+
+    /* Keeps the BG label on one line at 360px; the arrow returns on desktop. */
+    .bar .cta {
+      flex: 1;
+      padding-inline: var(--space-4);
+      white-space: nowrap;
+    }
+
+    .bar .cta :global(.arrow) {
+      display: none;
+    }
+
+    .menu:popover-open {
+      position: fixed;
+      inset: auto var(--gutter) calc(var(--space-3) + env(safe-area-inset-bottom, 0px) + 4.5rem);
+      width: auto;
+      max-width: 28rem;
+      margin-inline: auto;
+      display: grid;
+      gap: var(--space-1);
+      margin-block: 0;
+      padding: var(--space-5);
+      border: var(--hairline);
+      border-radius: var(--radius);
+      background-color: var(--paper-raised);
+      color: var(--ink);
+      box-shadow: 0 16px 40px -16px rgb(20 21 23 / 0.35);
+    }
+
+    .menu a {
+      font-family: var(--font-display);
+      font-size: var(--text-title);
+      letter-spacing: var(--tracking-display);
+    }
+
+    .lang-item {
+      padding-top: var(--space-3);
+      border-top: var(--hairline);
+    }
+  }
+
+  /* Desktop: one floating pill at the top with the links inline. */
+  @media (width >= 64rem) {
+    .site-header {
+      position: fixed;
+      inset-inline: 0;
+      width: fit-content;
+      top: var(--space-4);
+      margin-inline: auto;
+      padding: 0 0 0 var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      border: 1px solid rgb(20 21 23 / 0.1);
+      border-radius: var(--radius-pill);
+      background-color: var(--bar-bg);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px -12px rgb(20 21 23 / 0.25);
+    }
+
+    .bar {
+      border: 0;
+      background: none;
+      backdrop-filter: none;
+      box-shadow: none;
+    }
+
+    .menu-button {
+      display: none;
+    }
+
+    /* Always shown inline; the popover only applies to small screens. */
+    .menu {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      inset: auto;
+      width: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      border: 0;
+      background: none;
+      color: inherit;
+    }
+
+    .menu a {
+      padding-inline: var(--space-3);
+      border-radius: var(--radius-pill);
+      font-size: var(--text-small);
+      font-weight: 600;
+      transition: background-color var(--dur-fast) var(--ease-out);
+    }
+
+    .menu a:hover {
+      background-color: var(--line);
+    }
+  }
+</style>

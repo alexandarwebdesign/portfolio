@@ -1,0 +1,140 @@
+---
+import SectionLabel from './SectionLabel.astro';
+import { ui, type Lang } from '../i18n/ui';
+import { pathFor } from '../i18n/routes';
+import { site } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+const home = pathFor('home', lang)!;
+const contact = home === '/' ? '/#contact' : `${home}#contact`;
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer dark">
+  <div class="inner">
+    <SectionLabel>{t.footer.next}</SectionLabel>
+    <a class="headline" href={contact}>
+      {t.footer.title}
+      <svg viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1"></path>
+      </svg>
+    </a>
+
+    <div class="details">
+      <a class="email" href={`mailto:${site.email}`}>{site.email}</a>
+      <p>{t.footer.location}</p>
+      <ul class="social" aria-label={t.footer.social}>
+        {
+          site.social.map((s) => (
+            <li>
+              <a href={s.url}>{s.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <p class="legal">
+      © {year}
+      {site.name[lang]} · {t.footer.role}
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding: var(--section) var(--gutter) var(--space-6);
+  }
+
+  .inner {
+    display: grid;
+    gap: var(--space-6);
+    max-width: var(--page-max);
+    margin-inline: auto;
+  }
+
+  .headline {
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.15em;
+    width: fit-content;
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+    text-decoration: none;
+  }
+
+  .headline svg {
+    width: 0.6em;
+    height: 0.6em;
+    transition: translate var(--dur) var(--ease-out);
+  }
+
+  .headline:hover svg {
+    translate: 0.1em 0;
+  }
+
+  .headline:hover {
+    color: var(--accent);
+  }
+
+  .details {
+    display: grid;
+    gap: var(--space-4);
+    padding-top: var(--space-6);
+    border-top: var(--hairline);
+    color: var(--fg-muted);
+  }
+
+  .email {
+    width: fit-content;
+    color: var(--fg);
+    font-size: var(--text-lead);
+  }
+
+  .social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .social a,
+  .email {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target);
+  }
+
+  .social a:hover,
+  .email:hover {
+    color: var(--accent);
+  }
+
+  .legal {
+    color: var(--fg-muted);
+    font-size: var(--text-small);
+  }
+
+  @media (width >= 64rem) {
+    .details {
+      grid-template-columns: 1fr 1fr auto;
+      align-items: center;
+    }
+  }
+
+  /* Room for the fixed bottom navigation bar. */
+  @media (width < 64rem) {
+    .site-footer {
+      padding-bottom: calc(var(--space-9) + env(safe-area-inset-bottom, 0px));
+    }
+  }
+</style>

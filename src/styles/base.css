@@ -15,10 +15,18 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scroll-padding-top: var(--space-9);
+  scroll-padding-block: var(--space-4) var(--space-9); /* clear of the bottom bar */
+}
+
+@media (width >= 64rem) {
+  html {
+    scroll-padding-block: var(--space-9) var(--space-4); /* clear of the top pill */
+  }
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100dvh;
   background-color: var(--bg);
   color: var(--fg);
@@ -27,6 +35,10 @@ body {
   line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+main {
+  flex: 1;
 }
 
 h1,

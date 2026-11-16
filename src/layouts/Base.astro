@@ -1,0 +1,67 @@
+---
+import { Font } from 'astro:assets';
+import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { toLang, ui } from '../i18n/ui';
+import type { RouteId } from '../i18n/routes';
+import '../styles/tokens.css';
+import '../styles/base.css';
+
+interface Props {
+  title: string;
+  description: string;
+  route: RouteId;
+  noindex?: boolean;
+}
+
+const { title, description, route, noindex } = Astro.props;
+const lang = toLang(Astro.currentLocale);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <Seo {title} {description} {lang} {route} {noindex} />
+    <!-- Headings are the LCP, so the display font is preloaded. -->
+    <Font cssVariable="--font-forum" preload />
+    <Font cssVariable="--font-manrope" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#eff0f1" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{ui[lang].skip}</a>
+    <Header {lang} {route} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer {lang} />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: fixed;
+    top: var(--space-3);
+    left: var(--space-3);
+    z-index: 100;
+    padding: var(--space-3) var(--space-5);
+    border-radius: var(--radius-pill);
+    background-color: var(--accent);
+    color: var(--on-accent);
+    font-weight: 600;
+    translate: 0 -200%;
+  }
+
+  .skip-link:focus {
+    translate: 0;
+  }
+
+  main:focus {
+    outline: none;
+  }
+</style>
