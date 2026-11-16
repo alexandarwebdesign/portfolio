@@ -21,7 +21,7 @@ const pdpPoints: [number, number][] = [
 const checkoutPoints: [number, number][] = [
   [66, 11],
   [58.5, 59],
-  [60, 21],
+  [93, 45],
 ];
 const filterPoints: [number, number][] = [
   [50, 21.5],

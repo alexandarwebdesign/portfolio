@@ -72,6 +72,12 @@
     });
     if (!gl) return;
 
+    // Software rendering (no GPU) cannot run an 80-step raymarch smoothly:
+    // keep the static gradient instead.
+    const info = gl.getExtension('WEBGL_debug_renderer_info');
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : '';
+    if (/swiftshader|llvmpipe|software/i.test(renderer)) return;
+
     const program = gl.createProgram()!;
     for (const [type, source] of [
       [gl.VERTEX_SHADER, VERTEX],
@@ -127,14 +133,27 @@
 
       let visible = true;
       let frame = 0;
+      let slow = 0;
+      let last = 0;
       const begin = performance.now();
       const draw = (now: number) => {
+        // A weak GPU: after a few frames slower than 20 fps, stop for good and
+        // fade back to the static gradient.
+        if (last && now - last > 50 && ++slow > 5) {
+          box.classList.remove('is-ready');
+          frame = -1;
+          return;
+        }
+        last = now;
         gl.uniform1f(time, (now - begin) / 1000);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         frame = visible && !document.hidden ? requestAnimationFrame(draw) : 0;
       };
       const resume = () => {
-        if (!frame && visible && !document.hidden) frame = requestAnimationFrame(draw);
+        if (frame === 0 && visible && !document.hidden) {
+          last = 0;
+          frame = requestAnimationFrame(draw);
+        }
       };
       new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
