@@ -13,8 +13,6 @@ const bg = {
     about: 'За мен',
     services: 'Услуги',
     menu: 'Меню',
-    close: 'Затвори',
-    home: 'Начало',
   },
   cta: 'Безплатна консултация',
   brief: {
@@ -97,8 +95,6 @@ const en: typeof bg = {
     about: 'About',
     services: 'Services',
     menu: 'Menu',
-    close: 'Close',
-    home: 'Home',
   },
   cta: 'Free consultation',
   brief: {

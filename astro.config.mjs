@@ -20,7 +20,7 @@ export default defineConfig({
   // hreflang lives in each page's <head>; the sitemap only lists indexable URLs.
   integrations: [
     sitemap({
-      filter: (page) => !/\/404$|\/styleguide$/.test(page),
+      filter: (page) => !page.endsWith('/404'),
     }),
   ],
   // A <meta> CSP with hashes of every inline script and style. Inline style

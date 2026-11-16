@@ -1,34 +1,18 @@
 # Dependencies
 node_modules/
 
-# Build sources (originals - processed outputs are committed)
-images/raw/
+# Astro
+dist/
+.astro/
 
-# Dev tooling / IDE
+# Editors and tools
 .agent/
 .claude/
 .vscode/
 .idea/
-
-# Internal docs & AI rules (not deployed)
-Rules/
-docs/
-
-# Local-only craft/build tooling & scratch assets (not deployed)
-polished/
-scripts/
-images/toups/
 
 # OS / temp
 .DS_Store
 Thumbs.db
 *.log
 *.tmp
-
-# Unused / Hidden Assets
-Gems/
-move-gems.js
-
-# Astro
-dist/
-.astro/
