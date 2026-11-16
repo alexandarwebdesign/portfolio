@@ -30,8 +30,8 @@ UX/UI design applied exclusively to websites. Industries: luxury architecture, l
 ## Portfolio
 
 - [All Work](https://aleksandarpavlov.com/#work): Featured projects spanning architecture, SaaS, e-commerce, luxury brands, and portfolios.
-- [FORMA Architects](https://aleksandarpavlov.com/forma-architects): Luxury architecture website - refined UX, premium quiet-luxury visual language, conversion-focused for high-net-worth clients. Live: https://forma-architetects.netlify.app/
-- [Birsé](https://aleksandarpavlov.com/birse): Mobile-first UX/UI redesign of BirSé, a Bulgarian fine-jewelry store (online since 2013) - storefront, product pages, and a rebuilt checkout designed around the 80% mobile audience, with EU-Omnibus dual-currency pricing. Tags: Web Design, UX Design, UI Design, E-Commerce, Conversion Optimization. Live (current site): https://www.birse.bg/. Redesign in development with PFG Bulgaria.
+- [FORMA Architects](https://aleksandarpavlov.com/forma-architects): Concept project (self-initiated, fictional studio, not client work). Luxury architecture website - refined UX, premium quiet-luxury visual language, conversion-focused for high-net-worth clients. Live: https://forma-architetects.netlify.app/
+- [Birsé](https://aleksandarpavlov.com/birse): Mobile-first UX/UI redesign of BirSé, a Bulgarian fine-jewelry store (online since 2013) - storefront, product pages, and a three-step checkout, designed mobile-first. Tags: Web Design, UX Design, UI Design, E-Commerce, Conversion Optimization. Live: https://www.birse.bg/. Redesign finished, delivered with PFG Bulgaria.
 - Creative Asset (in development, not yet published): Interactive 3D experience with real-time shader controls. Tags: 3D, Interactive, Web Design.
 - Swis SaaS (in development, not yet published): SaaS productivity platform - trust-building design, high-conversion onboarding UI. Tags: SaaS, Web Design, UI Design, Productivity.
 
@@ -46,6 +46,10 @@ Five stages: Discovery → Wireframes → Design → Development → Launch. Unl
 ## FAQ
 
 - [FAQ](https://aleksandarpavlov.com/#faq): Timelines (2–4 weeks typical), process (5 stages), pricing (custom quote, free initial call), revisions (unlimited during design), getting started (goals + brand assets + 3–5 reference sites), support (30-day post-launch included), remote work (yes, worldwide), industries (architecture, luxury, SaaS, e-commerce, portfolios), tools (Figma + hand-coded HTML/CSS/JS, no page builders).
+
+## Bulgarian page
+
+- [Уебсайт за вашия бизнес](https://aleksandarpavlov.com/uslugi): Bulgarian-language offer for local Bulgarian businesses. Websites with a free first design before payment. One-screen site from 490 EUR, up to 5 pages from 890 EUR, optional monthly maintenance 40 EUR. Prices exclude a domain (separate fee); the business is not VAT-registered, so no VAT is added. Delivery up to 14 working days after the design is approved. Reply within 24 hours.
 
 ## Contact
 

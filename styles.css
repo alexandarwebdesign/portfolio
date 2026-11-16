@@ -33,6 +33,30 @@
   line-gap-override: 0%;
 }
 
+/* Forum Cyrillic (SIL OFL 1.1) - Bulgarian display headings; Marcellus has no Cyrillic. */
+@font-face {
+  font-family: 'Forum';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/forum-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* Manrope Cyrillic - subset of Manrope (SIL OFL 1.1) for the Bulgarian page. */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/manrope-cyrillic.woff2?v=2') format('woff2');
+  unicode-range: U+0400-045F, U+0490-0491, U+2116;
+  size-adjust: 102%;
+  ascent-override: 96%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
 /* Metric-matched fallback so layout does not shift when Manrope swaps in */
 @font-face {
   font-family: 'Manrope Fallback';
@@ -1148,6 +1172,22 @@ textarea:focus-visible {
   overflow: hidden;
   transition: background var(--duration-normal) var(--ease-out),
               box-shadow var(--duration-normal) var(--ease-out);
+}
+
+/* Marks self-initiated work so it is never read as client work */
+.project-concept-tag {
+  position: absolute;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 3;
+  padding: 6px var(--space-4);
+  border-radius: 999px;
+  background: rgba(250, 249, 247, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 .project-pill-name {
@@ -2845,6 +2885,13 @@ html.js .reveal.visible {
   /* none (not blur(0)) - releases the compositing layer */
 }
 
+/* Failsafe: if main.js hasn't run after 3s, show everything instead of a blank page */
+html.js.reveal-failsafe .reveal {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
 /* Stagger reveal for project cards */
 .project-card.reveal:nth-child(1) {
   transition-delay: 0ms;
@@ -4103,6 +4150,37 @@ html.js .reveal.visible {
   padding: clamp(40px, 6vw, 96px) clamp(24px, 5vw, 64px) clamp(18px, 2vw, 32px);
 }
 
+/* Roles list: one tight gap inside each row, hairlines between rows */
+.case-roles {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-roles li {
+  display: grid;
+  grid-template-columns: minmax(120px, 200px) 1fr;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.case-roles li:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.case-roles strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 600px) {
+  .case-roles li {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+}
+
 .case-proof__kicker {
   margin: 0 0 clamp(10px, 1.4vw, 16px);
   font-family: var(--font-mono);
@@ -4577,3 +4655,133 @@ html.js .reveal.visible {
   transform: translateX(3px);
 }
 
+/* ==========================================================================
+   Offer page (/uslugi) - Bulgarian local-business offer.
+   Built from the site's own components (hero, section-header, service-row,
+   project-card, faq, contact). Only the small gaps below are new.
+   Marcellus has no Cyrillic: Forum (closest classical serif) covers it, and
+   Latin characters keep falling through to Marcellus.
+   ========================================================================== */
+
+html:lang(bg) {
+  --font-display: 'Forum', 'Marcellus', Georgia, serif;
+}
+
+.offer-page .tbd {
+  outline: 1px dashed var(--color-error);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Long Bulgarian headline: same hero, smaller than the 2-word English one */
+.offer-page .hero-title {
+  font-size: clamp(36px, calc(3.6vw + 12px), 80px);
+  max-width: 22ch;
+}
+
+.hero-note {
+  margin: var(--space-6) 0 0;
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* service-row variants: statement-only rows and rows with a price column */
+.service-row--static {
+  grid-template-columns: auto 1fr;
+}
+
+.service-row--price {
+  grid-template-columns: auto 1fr minmax(0, 38ch) clamp(180px, 17vw, 260px);
+}
+
+.service-price {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-service);
+  letter-spacing: var(--tracking-tight);
+  white-space: nowrap;
+  text-align: right;
+}
+
+@media (max-width: 1024px) {
+  .service-row--price {
+    grid-template-columns: auto 1fr;
+  }
+
+  .service-row--price .service-desc,
+  .service-row--price .service-price {
+    grid-column: 2;
+    max-width: none;
+    text-align: left;
+  }
+}
+
+/* "За мен" must not break onto two lines in the nav pill */
+.nav-link {
+  white-space: nowrap;
+}
+
+.offer-page .services-list {
+  margin-bottom: var(--space-6);
+}
+
+.section-note {
+  margin: 0 0 var(--space-16);
+  max-width: 60ch;
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+}
+
+/* Birse proof: one project card + text, same 2-column rhythm as the work grid */
+.offer-proof {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--card-gap);
+  align-items: center;
+}
+
+.offer-proof__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-6);
+  padding-inline: var(--space-4);
+}
+
+.offer-proof__text .about-page-para {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .offer-proof {
+    grid-template-columns: 1fr;
+  }
+
+  .offer-proof__text {
+    padding-inline: 0;
+  }
+}
+
+/* Two fields side by side on wide screens, stacked on phones */
+.offer-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--space-4);
+}
+
+@media (max-width: 600px) {
+  .offer-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-lang-link {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-size: var(--text-body-sm);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  min-height: 44px;
+  line-height: 44px;
+}

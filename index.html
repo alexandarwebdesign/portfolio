@@ -17,11 +17,11 @@
     <!-- Performance: Preload Critical Resources -->
     <link rel="preload" href="fonts/manrope-latin.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/marcellus-latin.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="styles.min.css?v=82" as="style">
+    <link rel="preload" href="styles.min.css?v=93" as="style">
 
     <!-- Styles -->
-    <script>document.documentElement.classList.add('js');</script>
-    <link rel="stylesheet" href="styles.min.css?v=82" />
+    <script>var d=document.documentElement;d.classList.add('js');setTimeout(function(){window.__revealReady||d.classList.add('reveal-failsafe')},3000);</script>
+    <link rel="stylesheet" href="styles.min.css?v=93" />
 
     <!-- Meta Tags -->
     <meta name="description" content="UX/UI specialist turning interface psychology into websites that convert. Beautiful, proven to work, and built to last. Based in Sofia, Bulgaria.">
@@ -32,6 +32,7 @@
     <meta name="bingbot" content="index, follow">
     <link rel="canonical" href="https://aleksandarpavlov.com/">
     <link rel="alternate" hreflang="en" href="https://aleksandarpavlov.com/">
+    <link rel="alternate" hreflang="bg" href="https://aleksandarpavlov.com/uslugi">
     <link rel="alternate" hreflang="x-default" href="https://aleksandarpavlov.com/">
     <meta name="theme-color" content="#eff0f1" />
     <meta name="geo.region" content="BG-23">
@@ -261,7 +262,7 @@
           "item": {
             "@type": "CreativeWork",
             "name": "FORMA Architects",
-            "description": "Luxury architecture website with refined UX, premium quiet-luxury visual language, and conversion-focused layout for high-net-worth clients of a boutique architecture studio operating in Miami, Dubai, and the Greek Islands.",
+            "description": "Concept project (self-initiated, fictional studio): a luxury architecture website with refined UX, premium quiet-luxury visual language, and conversion-focused layout for high-net-worth clients of a boutique architecture studio operating in Miami, Dubai, and the Greek Islands.",
             "url": "https://aleksandarpavlov.com/forma-architects",
             "creator": { "@id": "https://aleksandarpavlov.com/#person" },
             "dateCreated": "2026",
@@ -275,12 +276,12 @@
           "item": {
             "@type": "CreativeWork",
             "name": "Birsé",
-            "description": "A mobile-first UX/UI redesign for BirSé, a Bulgarian fine-jewelry store online since 2013 - storefront, product pages, and a rebuilt checkout designed around how 80% of the audience shops, with EU-Omnibus dual-currency pricing.",
+            "description": "A mobile-first UX/UI redesign for BirSé, a Bulgarian fine-jewelry store online since 2013 - storefront, product pages, and a three-step checkout, designed mobile-first.",
             "url": "https://aleksandarpavlov.com/birse",
             "creator": { "@id": "https://aleksandarpavlov.com/#person" },
             "dateCreated": "2026",
             "genre": "E-Commerce / Jewelry",
-            "keywords": "jewelry e-commerce UX, mobile-first redesign, checkout UX, dual-currency pricing, conversion optimization"
+            "keywords": "jewelry e-commerce UX, mobile-first redesign, checkout UX, installment payments, conversion optimization"
           }
         }
       ]
@@ -355,6 +356,7 @@
   <nav class="nav-pill" aria-label="Main navigation">
           <a href="#work" class="nav-link">Work</a>
           <a href="/about" class="nav-link">About</a>
+          <a href="/uslugi" class="nav-link" hreflang="bg" lang="bg">Услуги</a>
           <a href="#contact" class="nav-link nav-contact-link" data-focus-target="#name">Contact</a>
         </nav>
         <button type="button" class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-mobile-menu">
@@ -370,6 +372,7 @@
       <a href="/" class="nav-mobile-link">Home</a>
       <a href="#work" class="nav-mobile-link">Work</a>
       <a href="/about" class="nav-mobile-link">About</a>
+      <a href="/uslugi" class="nav-mobile-link" hreflang="bg" lang="bg">Услуги</a>
       <a href="#contact" class="nav-mobile-link nav-mobile-cta">Let&#x27;s Talk</a>
     </div>
 
@@ -407,9 +410,9 @@
               <a href="/birse" class="project-card-link">
                 <div class="project-image-wrapper">
                   <picture>
-                    <source type="image/avif" srcset="/images/projects/birse-card-500.avif 500w, /images/projects/birse-card-800.avif 800w, /images/projects/birse-card-1080.avif 1080w, /images/projects/birse-card-1600.avif 1600w, /images/projects/birse-card-2400.avif 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
-                    <source type="image/webp" srcset="/images/projects/birse-card-500.webp 500w, /images/projects/birse-card-800.webp 800w, /images/projects/birse-card-1080.webp 1080w, /images/projects/birse-card-1600.webp 1600w, /images/projects/birse-card-2400.webp 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
-                    <img src="/images/projects/birse-card-1080.jpg" srcset="/images/projects/birse-card-500.jpg 500w, /images/projects/birse-card-800.jpg 800w, /images/projects/birse-card-1080.jpg 1080w, /images/projects/birse-card-1600.jpg 1600w, /images/projects/birse-card-2400.jpg 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px" class="project-image project-image--birse-cover" alt="Birsé jewelry e-commerce redesign project preview" width="400" height="284" loading="lazy" decoding="async">
+                    <source type="image/avif" srcset="/images/projects/birse-live-card-500.avif 500w, /images/projects/birse-live-card-800.avif 800w, /images/projects/birse-live-card-1080.avif 1080w, /images/projects/birse-live-card-1600.avif 1600w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
+                    <source type="image/webp" srcset="/images/projects/birse-live-card-500.webp 500w, /images/projects/birse-live-card-800.webp 800w, /images/projects/birse-live-card-1080.webp 1080w, /images/projects/birse-live-card-1600.webp 1600w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
+                    <img src="/images/projects/birse-live-card-1080.jpg" srcset="/images/projects/birse-live-card-500.jpg 500w, /images/projects/birse-live-card-800.jpg 800w, /images/projects/birse-live-card-1080.jpg 1080w, /images/projects/birse-live-card-1600.jpg 1600w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px" class="project-image project-image--birse-cover" alt="Birsé jewelry e-commerce redesign project preview" width="1600" height="1194" loading="lazy" decoding="async">
                   </picture>
                 </div>
                 <div class="project-pill">
@@ -428,6 +431,7 @@
                     <source type="image/webp" srcset="/images/projects/forma-card-500.webp 500w, /images/projects/forma-card-800.webp 800w, /images/projects/forma-card-1080.webp 1080w, /images/projects/forma-card-1600.webp 1600w, /images/projects/forma-card-2400.webp 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px">
                     <img src="/images/projects/forma-card-1080.jpg" srcset="/images/projects/forma-card-500.jpg 500w, /images/projects/forma-card-800.jpg 800w, /images/projects/forma-card-1080.jpg 1080w, /images/projects/forma-card-1600.jpg 1600w, /images/projects/forma-card-2400.jpg 2400w" sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px" class="project-image" alt="FORMA Architects project preview" width="400" height="284" loading="lazy" decoding="async">
                   </picture>
+                  <span class="project-concept-tag">Concept</span>
                 </div>
                 <div class="project-pill">
                   <h3 class="project-pill-name">FORMA Architects</h3>
@@ -478,6 +482,13 @@
             </article>
 
           </div>
+        </div>
+      </section>
+
+      <!-- Testimonials: hidden until there are real, attributable quotes. No schema review. -->
+      <section id="testimonials" class="testimonials-section" aria-labelledby="testimonials-title" hidden>
+        <div class="container">
+          <h2 id="testimonials-title" class="section-title">What clients say</h2>
         </div>
       </section>
 
@@ -921,6 +932,7 @@
               </div>
             </div>
             <p class="footer-location">Based in Sofia, Bulgaria - working worldwide</p>
+            <a href="/uslugi" hreflang="bg" lang="bg" class="footer-lang-link">Уебсайт за вашия бизнес (BG)</a>
           </div>
           <div class="footer-right">
             <p class="footer-copyright">&#169; 2026 Aleksandar Pavlov<br>UX/UI Designer &amp; Website Developer</p>
@@ -948,7 +960,7 @@
     <!-- Scripts -->
     <!-- Application Scripts -->
     <script src="vendor/lenis.min.js?v=1" defer></script>
-    <script src="main.min.js?v=20" defer></script>
+    <script src="main.min.js?v=21" defer></script>
     <script src="hero-shader.min.js?v=15" defer></script>
   </body>
 </html>

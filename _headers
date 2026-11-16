@@ -52,6 +52,9 @@
 /birse
   Cache-Control: public, max-age=0, must-revalidate
 
+/uslugi
+  Cache-Control: public, max-age=0, must-revalidate
+
 /404
   Cache-Control: public, max-age=0, must-revalidate
 

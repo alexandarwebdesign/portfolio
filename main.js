@@ -14,6 +14,7 @@
    * Initialize IntersectionObserver for scroll reveal animations
    */
   function initScrollReveal() {
+    window.__revealReady = true; // read by the head failsafe timer
     const revealElements = document.querySelectorAll(".reveal");
 
     if (!revealElements.length) return;
