@@ -57,7 +57,9 @@ const { steps } = Astro.props;
 
   @media (width >= 64rem) {
     .process {
-      grid-template-columns: repeat(5, 1fr);
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      grid-template-columns: none;
     }
   }
 </style>

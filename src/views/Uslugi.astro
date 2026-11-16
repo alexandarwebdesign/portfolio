@@ -1,0 +1,353 @@
+---
+import { Picture } from 'astro:assets';
+import Button from '../components/Button.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import Process from '../components/Process.astro';
+import Faq from '../components/Faq.astro';
+import BriefBuilder from '../components/BriefBuilder.astro';
+import SmoothScroll from '../components/SmoothScroll.astro';
+import birseCard from '../assets/images/birse-card.jpg';
+import { uslugi as t } from '../data/uslugi';
+import { site } from '../data/site';
+import { pathFor } from '../i18n/routes';
+---
+
+<section class="hero">
+  <div class="inner">
+    <p class="eyebrow">{t.hero.eyebrow}</p>
+    <h1>
+      <span>{t.hero.title[0]}</span>
+      <span class="accent">{t.hero.title[1]}</span>
+    </h1>
+    <p class="lead">{t.hero.lead}</p>
+    <div class="actions">
+      <Button href="#contact" arrow>{t.hero.cta}</Button>
+      <p class="muted">{t.hero.reply}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section raised" aria-labelledby="problem-title">
+  <div class="inner">
+    <header class="head" data-reveal>
+      <SectionLabel>{t.problem.label}</SectionLabel>
+      <h2 id="problem-title">{t.problem.title}</h2>
+    </header>
+    <ol class="cards three">
+      {
+        t.problem.items.map((item, i) => (
+          <li data-reveal>
+            <SectionLabel index={i + 1}>{''}</SectionLabel>
+            <p class="big">{item}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="includes-title">
+  <div class="inner">
+    <header class="head" data-reveal>
+      <SectionLabel>{t.includes.label}</SectionLabel>
+      <h2 id="includes-title">{t.includes.title}</h2>
+    </header>
+    <ol class="cards three">
+      {
+        t.includes.items.map((item, i) => (
+          <li data-reveal>
+            <SectionLabel index={i + 1}>{''}</SectionLabel>
+            <h3>{item.title}</h3>
+            <p class="muted">{item.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="section raised" aria-labelledby="process-title">
+  <div class="inner">
+    <header class="head" data-reveal>
+      <SectionLabel>{t.process.label}</SectionLabel>
+      <h2 id="process-title">{t.process.title}</h2>
+    </header>
+    <Process steps={t.process.steps} />
+  </div>
+</section>
+
+<section class="section dark" aria-labelledby="prices-title">
+  <div class="inner">
+    <header class="head" data-reveal>
+      <SectionLabel>{t.prices.label}</SectionLabel>
+      <h2 id="prices-title">{t.prices.title}</h2>
+    </header>
+    <ul class="prices">
+      {
+        t.prices.items.map((item) => (
+          <li data-reveal>
+            <h3>{item.title}</h3>
+            <p class="muted">{item.text}</p>
+            <p class="price">{item.price}</p>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="note">{t.prices.note}</p>
+    <Button href="#contact" arrow>{t.hero.cta}</Button>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="proof-title">
+  <div class="inner proof">
+    <header class="head">
+      <SectionLabel>{t.proof.label}</SectionLabel>
+      <h2 id="proof-title">{t.proof.title}</h2>
+    </header>
+    <a class="proof-card" href={pathFor('birse', 'bg')}>
+      <Picture
+        src={birseCard}
+        formats={['avif', 'webp']}
+        widths={[480, 800, 1200]}
+        sizes="(width >= 64rem) 40rem, 100vw"
+        alt=""
+        loading="lazy"
+      />
+      <span class="proof-text">
+        <span class="name">Birsé <span class="muted">· {t.proof.category}</span></span>
+        <span class="muted">{t.proof.text}</span>
+        <span class="link">{t.proof.link} →</span>
+      </span>
+    </a>
+  </div>
+</section>
+
+<section class="section raised" aria-labelledby="faq-title">
+  <div class="inner split">
+    <header class="head">
+      <SectionLabel>{t.faq.label}</SectionLabel>
+      <h2 id="faq-title">{t.faq.title}</h2>
+    </header>
+    <Faq items={t.faq.items} />
+  </div>
+</section>
+
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="inner split">
+    <header class="head">
+      <SectionLabel>{t.contact.label}</SectionLabel>
+      <h2 id="contact-title">{t.contact.title}</h2>
+      <p class="lead">{t.contact.lead}</p>
+      <p class="muted">
+        {t.contact.email}
+        <a href={`mailto:${site.email}`}>{site.email}</a>
+      </p>
+    </header>
+    <BriefBuilder lang="bg" choices={t.contact.choices} phone />
+  </div>
+</section>
+
+<SmoothScroll />
+
+<style>
+  .hero {
+    display: flex;
+    align-items: end;
+    min-height: 88svh;
+    padding: calc(var(--space-9) + var(--space-4)) var(--gutter) var(--space-8);
+  }
+
+  .section {
+    padding: var(--section) var(--gutter);
+  }
+
+  .raised {
+    background-color: var(--bg-raised);
+  }
+
+  .inner {
+    display: grid;
+    gap: var(--space-6);
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+  }
+
+  .hero .inner {
+    justify-items: start;
+  }
+
+  .eyebrow {
+    color: var(--fg-muted);
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: var(--tracking-label);
+  }
+
+  h1 {
+    display: grid;
+    max-width: 18ch;
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+  }
+
+  .accent {
+    color: var(--accent);
+  }
+
+  .lead {
+    max-width: 38rem;
+    font-size: var(--text-lead);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .muted {
+    color: var(--fg-muted);
+  }
+
+  .head {
+    display: grid;
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  h2 {
+    font-size: var(--text-heading);
+  }
+
+  h3 {
+    font-size: var(--text-title);
+  }
+
+  .cards {
+    display: grid;
+    gap: var(--space-6) var(--space-5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .cards li {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .big {
+    font-size: var(--text-lead);
+  }
+
+  .prices {
+    display: grid;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .prices li {
+    display: grid;
+    align-content: start;
+    gap: var(--space-3);
+    padding: var(--space-6);
+    border: var(--hairline);
+    border-radius: var(--radius);
+    background-color: var(--bg-raised);
+  }
+
+  .price {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    font-family: var(--font-display);
+    font-size: var(--text-heading);
+    line-height: 1;
+  }
+
+  .note {
+    max-width: var(--measure);
+    color: var(--fg-muted);
+    font-size: var(--text-small);
+  }
+
+  .dark .inner {
+    justify-items: start;
+  }
+
+  .dark .prices {
+    width: 100%;
+  }
+
+  .proof-card {
+    display: grid;
+    gap: var(--space-5);
+    text-decoration: none;
+  }
+
+  .proof-card :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  .proof-text {
+    display: grid;
+    align-content: center;
+    gap: var(--space-4);
+    max-width: 34rem;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-size: var(--text-heading);
+    line-height: 1;
+  }
+
+  .name .muted {
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+  }
+
+  .link {
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .proof-card:hover .link {
+    color: var(--accent);
+  }
+
+  .split .head {
+    align-content: start;
+  }
+
+  @media (width >= 48rem) {
+    .three {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .three,
+    .prices {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .proof-card {
+      grid-template-columns: 1.2fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .split {
+      grid-template-columns: 5fr 7fr;
+      gap: var(--space-9);
+    }
+  }
+</style>

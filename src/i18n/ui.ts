@@ -42,6 +42,7 @@ const bg = {
     details: {
       legend: 'Как да се свържа с вас?',
       email: 'Имейл',
+      phone: 'Телефон (по желание)',
       emailError: 'Въведете имейл, например ime@firma.bg.',
       message: 'Нещо, което да знам (по желание)',
       hint: 'Сайт, който ви харесва, срок, идея – каквото е важно.',
@@ -125,6 +126,7 @@ const en: typeof bg = {
     details: {
       legend: 'How can I reach you?',
       email: 'Email',
+      phone: 'Phone (optional)',
       emailError: 'Enter an email address, like name@company.com.',
       message: 'Anything I should know (optional)',
       hint: 'A site you like, a deadline, an idea – whatever matters.',

@@ -3,17 +3,30 @@ import Button from './Button.astro';
 import { ui, type Lang } from '../i18n/ui';
 import { site } from '../data/site';
 
-interface Props {
-  lang: Lang;
+interface Choice {
+  name: string;
+  legend: string;
+  options: string[];
 }
 
-const { lang } = Astro.props;
-const t = ui[lang].brief;
-const choices = [
-  { name: 'type', ...t.type },
-  { name: 'timeline', ...t.timeline },
-  { name: 'budget', ...t.budget },
-] as const;
+interface Props {
+  lang: Lang;
+  /** Defaults to site type, timeline and budget. */
+  choices?: Choice[];
+  /** Adds an optional phone field (local businesses often prefer a call). */
+  phone?: boolean;
+}
+
+const t = ui[Astro.props.lang].brief;
+const {
+  lang,
+  phone = false,
+  choices = [
+    { name: 'type', ...t.type },
+    { name: 'timeline', ...t.timeline },
+    { name: 'budget', ...t.budget },
+  ],
+} = Astro.props;
 const total = choices.length + 1;
 ---
 
@@ -80,6 +93,14 @@ const total = choices.length + 1;
       />
       <p class="error" id="email-error" role="alert"></p>
     </div>
+    {
+      phone && (
+        <div class="field">
+          <label for="brief-phone">{t.details.phone}</label>
+          <input id="brief-phone" type="tel" name="phone" autocomplete="tel" />
+        </div>
+      )
+    }
     <div class="field">
       <label for="brief-message">{t.details.message}</label>
       <textarea id="brief-message" name="message" rows="3" aria-describedby="message-hint"

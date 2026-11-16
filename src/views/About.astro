@@ -1,0 +1,199 @@
+---
+import { Picture } from 'astro:assets';
+import Button from '../components/Button.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import ProjectRow from '../components/ProjectRow.astro';
+import SmoothScroll from '../components/SmoothScroll.astro';
+import portrait from '../assets/images/portrait.jpg';
+import { about } from '../data/about';
+import { work } from '../data/home';
+import { pathFor } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = about[lang];
+const home = pathFor('home', lang)!;
+const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`);
+---
+
+<section class="intro">
+  <div class="inner">
+    <div class="text">
+      <SectionLabel>{t.label}</SectionLabel>
+      <h1>
+        <span>{t.title[0]}</span>
+        <span class="offset">{t.title[1]}</span>
+      </h1>
+      <p class="lead">{t.lead}</p>
+      {t.text.map((paragraph) => <p>{paragraph}</p>)}
+      <div class="actions">
+        <Button href={homeHash('#contact')} arrow>{t.start}</Button>
+        <Button href={homeHash('#process')} variant="secondary">{t.process}</Button>
+      </div>
+    </div>
+    <aside class="side">
+      <Picture
+        src={portrait}
+        formats={['avif', 'webp']}
+        widths={[400, 640, 960]}
+        sizes="(width >= 64rem) 26rem, 100vw"
+        alt={t.alt}
+        loading="eager"
+        class="portrait"
+      />
+      <dl class="facts">
+        {
+          t.facts.map((fact) => (
+            <div>
+              <dt>{fact.term}</dt>
+              <dd>{fact.desc}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<section class="work dark" aria-labelledby="about-work">
+  <div class="inner-wide">
+    <h2 id="about-work">{t.work}</h2>
+    <ul class="rows">
+      {
+        work
+          .filter((item) => item.route)
+          .map((item) => (
+            <ProjectRow
+              name={item.name}
+              category={item.category[lang]}
+              year={item.year}
+              image={item.image}
+              href={pathFor(item.route!, lang)}
+            />
+          ))
+      }
+    </ul>
+  </div>
+</section>
+
+<SmoothScroll />
+
+<style>
+  .intro {
+    padding: calc(var(--space-9) + var(--space-4)) var(--gutter) var(--section);
+  }
+
+  .inner {
+    display: grid;
+    gap: var(--space-8);
+    max-width: var(--page-max);
+    margin-inline: auto;
+  }
+
+  .text {
+    display: grid;
+    justify-items: start;
+    gap: var(--space-5);
+    max-width: 44rem;
+  }
+
+  h1 {
+    display: grid;
+    font-size: var(--text-display);
+    line-height: var(--leading-display);
+  }
+
+  .offset {
+    padding-inline-start: 0.6em;
+  }
+
+  .lead {
+    font-size: var(--text-lead);
+  }
+
+  .text > p:not(.lead) {
+    color: var(--fg-muted);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+  }
+
+  .side {
+    display: grid;
+    align-content: start;
+    gap: var(--space-6);
+  }
+
+  .side :global(.portrait) {
+    width: 100%;
+    max-width: 26rem;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+  }
+
+  .facts {
+    display: grid;
+    gap: var(--space-4);
+    max-width: 26rem;
+  }
+
+  .facts div {
+    padding-top: var(--space-3);
+    border-top: var(--hairline);
+  }
+
+  dt {
+    color: var(--fg-muted);
+    font-size: var(--text-label);
+    letter-spacing: var(--tracking-label);
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  .work {
+    padding: var(--section) var(--gutter);
+  }
+
+  .inner-wide {
+    max-width: var(--page-max);
+    margin-inline: auto;
+  }
+
+  h2 {
+    margin-bottom: var(--space-7);
+    font-size: var(--text-heading);
+  }
+
+  .rows {
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--hairline);
+  }
+
+  @media (width >= 64rem) {
+    .intro {
+      padding-top: var(--space-10);
+    }
+
+    .inner {
+      grid-template-columns: 1fr 26rem;
+      gap: var(--space-9);
+    }
+
+    .side {
+      position: sticky;
+      top: var(--space-10);
+    }
+  }
+</style>

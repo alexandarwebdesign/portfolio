@@ -1,12 +1,9 @@
 ---
-// Placeholder until the page view is built (step 6).
 import Base from '../layouts/Base.astro';
+import Uslugi from '../views/Uslugi.astro';
+import { uslugi } from '../data/uslugi';
 ---
 
-<Base
-  title="Уебсайт за вашия бизнес | Александър Павлов"
-  description="Уебсайтове за местни бизнеси в България: дизайн по мярка, мобилна версия на първо място, бързо зареждане и основно SEO. Безплатна визия преди да платите."
-  route="uslugi"
->
-  <h1 style="padding: 8rem var(--gutter); font-size: var(--text-display)">Услуги</h1>
+<Base title={uslugi.meta.title} description={uslugi.meta.description} route="uslugi">
+  <Uslugi />
 </Base>
