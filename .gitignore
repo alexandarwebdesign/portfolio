@@ -28,3 +28,7 @@ Thumbs.db
 # Unused / Hidden Assets
 Gems/
 move-gems.js
+
+# Astro
+dist/
+.astro/

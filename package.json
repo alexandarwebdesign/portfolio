@@ -1,18 +1,24 @@
 {
   "name": "aleksandar-pavlov-portfolio",
-  "version": "1.0.0",
-  "description": "Portfolio website for Aleksandar Pavlov - UX/UI Designer & Website Developer",
+  "type": "module",
   "private": true,
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
-    "build": "esbuild styles.css --minify --outfile=styles.min.css && esbuild main.js --minify --outfile=main.min.js && esbuild hero-shader.js --minify --outfile=hero-shader.min.js",
-    "optimize": "node scripts/optimize-images.js",
-    "process-birse-storefront": "node scripts/process-birse-storefront.js",
-    "process-birse-footer-hero": "node scripts/process-birse-footer-hero.js"
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
-    "sharp": "^0.34.5"
+    "astro": "7.4.12"
   },
   "devDependencies": {
-    "esbuild": "^0.28.1"
+    "@astrojs/check": "0.9.12",
+    "prettier": "3.10.1",
+    "prettier-plugin-astro": "0.14.1",
+    "typescript": "6.0.3"
   }
 }

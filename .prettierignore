@@ -1,0 +1,8 @@
+public/
+# Legacy static site at the repo root, removed at the end of the Astro migration.
+/*.html
+/*.css
+/*.js
+/images/
+/vendor/
+/fonts/
