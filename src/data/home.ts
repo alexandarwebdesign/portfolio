@@ -8,7 +8,7 @@ const bg = {
   hero: {
     eyebrow: 'Дизайн и изработка на уебсайтове',
     title: 'Красивото не стига.',
-    lead: 'UX психология и прецизен UI, приложени изцяло към уебсайтове. Визуално силни, създадени да работят.',
+    lead: 'UX психология и прецизен UI в уебсайтове за малки и средни бизнеси. Визуално силни, създадени да работят.',
     cta: 'Започнете проект',
   },
   work: {
@@ -62,7 +62,7 @@ const en: typeof bg = {
   hero: {
     eyebrow: 'Website design & development',
     title: 'Pretty Isn’t Enough.',
-    lead: 'UX psychology meets precise UI craft – applied entirely to websites. Visually powerful, built to perform.',
+    lead: 'UX psychology meets precise UI craft – websites for small and medium businesses. Visually powerful, built to perform.',
     cta: 'Start a Project',
   },
   work: {
