@@ -1,9 +1,7 @@
 ---
-// Full-screen showreel right after the hero. The video sits pinned while the
-// page scrolls and its window opens from a framed picture to the whole
-// screen. It loads only when it comes near, plays only while on screen, and
-// always has a pause button (WCAG 2.2.2). Reduced motion: the poster, still,
-// until the visitor presses play.
+// Full-screen showreel right after the hero. It loads only when it comes
+// near, plays only while on screen, and always has a pause button (WCAG
+// 2.2.2). Reduced motion: the poster, still, until the visitor presses play.
 interface Props {
   label: string;
   name: string;
@@ -159,14 +157,12 @@ const { label, name, tag, link, href, play, pause } = Astro.props;
 
   .showreel {
     --rest: scale(1.1);
-    --start: scale(1.3);
   }
 
   /* The phone recording has no menu bar to hide and its text runs close to the edges. */
   @media (orientation: portrait) {
     .showreel {
       --rest: none;
-      --start: scale(1.15);
     }
   }
 
@@ -245,86 +241,6 @@ const { label, name, tag, link, href, play, pause } = Astro.props;
   @media (width < 64rem) {
     .bar {
       bottom: calc(var(--margin) + 4.5rem);
-    }
-  }
-
-  /*
-   * The pinned version: the section is taller than the screen, the window
-   * sticks, and its clip opens to the full screen over the first part of the
-   * scroll while the video inside settles from a slight zoom.
-   */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .showreel {
-        height: 220svh;
-        view-timeline: --reel block;
-      }
-
-      .pin {
-        position: sticky;
-        top: 0;
-      }
-
-      .window {
-        animation-name: reel-open;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: --reel;
-        animation-range: contain 0% contain 55%;
-      }
-
-      .video {
-        animation-name: reel-settle;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: --reel;
-        animation-range: contain 0% contain 55%;
-      }
-
-      .bar {
-        animation-name: reel-bar;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: --reel;
-        animation-range: contain 35% contain 55%;
-      }
-
-      @keyframes reel-open {
-        from {
-          clip-path: inset(18% var(--margin) 18% var(--margin) round var(--radius));
-        }
-
-        to {
-          clip-path: inset(0 0 0 0 round 0);
-        }
-      }
-
-      @keyframes reel-settle {
-        from {
-          transform: var(--start);
-        }
-
-        to {
-          transform: var(--rest);
-        }
-      }
-
-      /* Never hide the caption or the button from keyboard focus. */
-      .bar:focus-within {
-        animation: none;
-      }
-
-      @keyframes reel-bar {
-        from {
-          opacity: 0;
-          translate: 0 1rem;
-        }
-
-        to {
-          opacity: 1;
-          translate: 0;
-        }
-      }
     }
   }
 </style>

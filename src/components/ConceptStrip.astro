@@ -1,7 +1,6 @@
 ---
-// A full-bleed strip of website concepts. With scroll-driven animations the
-// strip slides sideways as the page scrolls past it; without them, and with
-// reduced motion, it is a row you swipe or scroll (snap per image).
+// A full-bleed strip of website concepts: a row to swipe or scroll, with
+// snapping per image.
 import { Picture } from 'astro:assets';
 import SectionLabel from './SectionLabel.astro';
 import { concepts, conceptsText } from '../data/concepts';
@@ -150,53 +149,15 @@ const titleId = `concepts-title-${lang}`;
     color: var(--fg-muted);
   }
 
-  /* Scrolling the page slides the strip from its first image to its last. */
-  @supports (animation-timeline: view()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .track {
-        animation-name: slide;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: view();
-        animation-range: cover 5% cover 95%;
-      }
-
-      @keyframes slide {
-        from {
-          translate: 0 0;
-        }
-
-        to {
-          translate: calc(-100% + 100cqw) 0;
-        }
-      }
-    }
+  /* A row to swipe or scroll, one image at a time. */
+  .viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: max(var(--margin), (100cqw - var(--container)) / 2);
+    overscroll-behavior-x: contain;
   }
 
-  /* Otherwise: a row to swipe, one image at a time. */
-  @supports not (animation-timeline: view()) {
-    .viewport {
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: max(var(--margin), (100cqw - var(--container)) / 2);
-      overscroll-behavior-x: contain;
-    }
-
-    li {
-      scroll-snap-align: start;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .viewport {
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scroll-padding-inline: max(var(--margin), (100cqw - var(--container)) / 2);
-      overscroll-behavior-x: contain;
-    }
-
-    li {
-      scroll-snap-align: start;
-    }
+  li {
+    scroll-snap-align: start;
   }
 </style>

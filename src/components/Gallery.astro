@@ -14,7 +14,7 @@ const { items, narrow = false } = Astro.props;
 <ul class:list={['gallery', { narrow }]}>
   {
     items.map((item) => (
-      <li class="reveal-media">
+      <li>
         <Picture
           src={item.image}
           formats={['avif', 'webp']}
