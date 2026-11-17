@@ -84,13 +84,13 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
 
 <style>
   .intro {
-    padding: calc(var(--space-9) + var(--space-4)) var(--gutter) var(--section);
+    padding: calc(var(--space-9) + var(--space-4)) var(--margin) var(--section);
   }
 
   .inner {
     display: grid;
     gap: var(--space-8);
-    max-width: var(--page-max);
+    max-width: var(--container);
     margin-inline: auto;
   }
 
@@ -162,11 +162,11 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
   }
 
   .work {
-    padding: var(--section) var(--gutter);
+    padding: var(--section) var(--margin);
   }
 
   .inner-wide {
-    max-width: var(--page-max);
+    max-width: var(--container);
     margin-inline: auto;
   }
 

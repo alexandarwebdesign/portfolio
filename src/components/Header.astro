@@ -75,7 +75,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     position: absolute;
     inset: 0 0 auto;
     z-index: 10;
-    padding: var(--space-4) var(--gutter);
+    padding: var(--space-4) var(--margin);
     color: var(--ink);
   }
 
@@ -132,7 +132,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
   @media (width < 64rem) {
     .bar {
       position: fixed;
-      inset-inline: var(--gutter);
+      inset-inline: var(--margin);
       bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
       max-width: 28rem;
       margin-inline: auto;
@@ -155,7 +155,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
 
     .menu:popover-open {
       position: fixed;
-      inset: auto var(--gutter) calc(var(--space-3) + env(safe-area-inset-bottom, 0px) + 4.5rem);
+      inset: auto var(--margin) calc(var(--space-3) + env(safe-area-inset-bottom, 0px) + 4.5rem);
       width: auto;
       max-width: 28rem;
       margin-inline: auto;

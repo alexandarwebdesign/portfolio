@@ -1,0 +1,106 @@
+/*
+ * Layout system: section → container → (stacked head + content | split).
+ * Every page uses these classes, so spacing and widths change in one place
+ * (tokens.css) and stay in proportion at every screen width.
+ */
+
+/* A band of the page: vertical rhythm and the side margins. */
+.section {
+  padding: var(--section) var(--margin);
+}
+
+.section.raised {
+  background-color: var(--bg-raised);
+}
+
+/* Starts below the fixed header instead of a full section's padding. */
+.section.first {
+  padding-top: calc(var(--top-clear) + var(--section-head));
+}
+
+/* The same content width on every page. */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+}
+
+/* Label + title above the content. */
+.section-head {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-5);
+  margin-bottom: var(--section-head);
+}
+
+.section-head h2,
+.title-display {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+}
+
+/* Two-line titles: the second line steps in. */
+.title-split {
+  display: grid;
+}
+
+.title-split > :last-child {
+  padding-inline-start: 0.6em;
+}
+
+.lead {
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+.muted {
+  color: var(--fg-muted);
+}
+
+/* 12-column grid on desktop; one column below. */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--stack) var(--column-gap);
+}
+
+/*
+ * Split: the head takes columns 1–5, the content 7–12. Column 6 stays empty,
+ * which is the air between them.
+ */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--section-head) var(--column-gap);
+}
+
+.split > .section-head {
+  margin-bottom: 0;
+}
+
+@media (width >= 64rem) {
+  .grid,
+  .split {
+    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  }
+
+  .grid > * {
+    grid-column: 1 / -1;
+  }
+
+  .split > :first-child {
+    grid-column: 1 / span 5;
+  }
+
+  .split > :not(:first-child) {
+    grid-column: 7 / -1;
+  }
+
+  /* The head stays in view next to long content. */
+  .split > .sticky {
+    position: sticky;
+    top: var(--top-clear);
+    align-self: start;
+  }
+}
