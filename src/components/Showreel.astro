@@ -1,0 +1,330 @@
+---
+// Full-screen showreel right after the hero. The video sits pinned while the
+// page scrolls and its window opens from a framed picture to the whole
+// screen. It loads only when it comes near, plays only while on screen, and
+// always has a pause button (WCAG 2.2.2). Reduced motion: the poster, still,
+// until the visitor presses play.
+interface Props {
+  label: string;
+  name: string;
+  tag: string;
+  link: string;
+  href: string;
+  play: string;
+  pause: string;
+}
+
+const { label, name, tag, link, href, play, pause } = Astro.props;
+---
+
+<section class="showreel" aria-label={label}>
+  <div class="pin">
+    <div class="window">
+      <video
+        class="video"
+        width="1920"
+        height="1088"
+        poster="/video/forma-hero-poster.webp"
+        muted
+        loop
+        playsinline
+        preload="none"
+        aria-label={label}
+        data-reel
+      >
+        <source
+          media="(orientation: portrait)"
+          src="/video/forma-mobile.av1.mp4"
+          type='video/mp4; codecs="av01.0.05M.08"'
+        />
+        <source
+          media="(orientation: portrait)"
+          src="/video/forma-mobile.h264.mp4"
+          type="video/mp4"
+        />
+        <source src="/video/forma-hero.av1.mp4" type='video/mp4; codecs="av01.0.05M.08"' />
+        <source src="/video/forma-hero.h264.mp4" type="video/mp4" />
+      </video>
+      <div class="bar">
+        <a class="caption" {href}>
+          <span class="name">{name}</span>
+          <span class="tag">{tag}</span>
+          <span class="link">
+            {link}
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"
+              ></path>
+            </svg>
+          </span>
+        </a>
+        <button
+          class="toggle"
+          type="button"
+          aria-pressed="false"
+          data-reel-toggle
+          data-play={play}
+          data-pause={pause}
+        >
+          <span class="visually-hidden" data-reel-label>{pause}</span>
+          <svg class="icon-pause" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path d="M5 3v10M11 3v10" stroke="currentColor" stroke-width="2"></path>
+          </svg>
+          <svg class="icon-play" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path d="M5 3l8 5-8 5z" fill="currentColor"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const video = document.querySelector<HTMLVideoElement>('[data-reel]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-reel-toggle]');
+  const label = document.querySelector('[data-reel-label]');
+
+  if (video && toggle && label) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Paused by the visitor (or by reduced motion) until they press play.
+    let held = reduced;
+    let onScreen = false;
+
+    const render = () => {
+      const playing = !held;
+      toggle.setAttribute('aria-pressed', String(held));
+      toggle.classList.toggle('is-paused', held);
+      label.textContent = playing ? toggle.dataset.pause! : toggle.dataset.play!;
+    };
+
+    const sync = () => {
+      if (onScreen && !held) {
+        video.play().catch(() => {
+          held = true;
+          render();
+        });
+      } else {
+        video.pause();
+      }
+    };
+
+    // Start fetching a screen before it arrives.
+    new IntersectionObserver(
+      ([entry], observer) => {
+        if (entry.isIntersecting) {
+          video.preload = 'auto';
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '100% 0px' },
+    ).observe(video);
+
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      sync();
+    }).observe(video);
+
+    toggle.addEventListener('click', () => {
+      held = !held;
+      render();
+      sync();
+    });
+
+    render();
+  }
+</script>
+
+<style>
+  .showreel {
+    position: relative;
+  }
+
+  .window {
+    position: relative;
+    height: 100svh;
+    overflow: hidden;
+    background-color: var(--ink);
+  }
+
+  /*
+   * The recording starts with the site's own menu bar; a slight zoom anchored
+   * low keeps it under the edge, so it never doubles our header.
+   */
+  .video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: var(--rest);
+    transform-origin: 50% 75%;
+  }
+
+  .showreel {
+    --rest: scale(1.1);
+    --start: scale(1.3);
+  }
+
+  /* The phone recording has no menu bar to hide and its text runs close to the edges. */
+  @media (orientation: portrait) {
+    .showreel {
+      --rest: none;
+      --start: scale(1.15);
+    }
+  }
+
+  /* Caption and pause button along the bottom edge, on solid chips. */
+  .bar {
+    position: absolute;
+    inset: auto var(--margin) var(--margin);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius);
+    background-color: var(--ink);
+    color: var(--mist);
+    text-decoration: none;
+  }
+
+  .name {
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    letter-spacing: var(--tracking-display);
+    line-height: 1.1;
+  }
+
+  .tag {
+    color: var(--mist-muted);
+    font-size: var(--text-small);
+  }
+
+  .link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-small);
+    font-weight: 600;
+  }
+
+  .link svg {
+    transition: translate var(--dur-fast) var(--ease-out);
+  }
+
+  .caption:hover .link svg {
+    translate: 3px 0;
+  }
+
+  .toggle {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: var(--target);
+    height: var(--target);
+    border: 0;
+    border-radius: var(--radius);
+    background-color: var(--ink);
+    color: var(--mist);
+  }
+
+  .toggle .icon-play,
+  .toggle.is-paused .icon-pause {
+    display: none;
+  }
+
+  .toggle.is-paused .icon-play {
+    display: block;
+  }
+
+  /* On phones the caption leaves room for the bottom navigation bar. */
+  @media (width < 64rem) {
+    .bar {
+      bottom: calc(var(--margin) + 4.5rem);
+    }
+  }
+
+  /*
+   * The pinned version: the section is taller than the screen, the window
+   * sticks, and its clip opens to the full screen over the first part of the
+   * scroll while the video inside settles from a slight zoom.
+   */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .showreel {
+        height: 220svh;
+        view-timeline: --reel block;
+      }
+
+      .pin {
+        position: sticky;
+        top: 0;
+      }
+
+      .window {
+        animation-name: reel-open;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --reel;
+        animation-range: contain 0% contain 55%;
+      }
+
+      .video {
+        animation-name: reel-settle;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --reel;
+        animation-range: contain 0% contain 55%;
+      }
+
+      .bar {
+        animation-name: reel-bar;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: --reel;
+        animation-range: contain 35% contain 55%;
+      }
+
+      @keyframes reel-open {
+        from {
+          clip-path: inset(18% var(--margin) 18% var(--margin) round var(--radius));
+        }
+
+        to {
+          clip-path: inset(0 0 0 0 round 0);
+        }
+      }
+
+      @keyframes reel-settle {
+        from {
+          transform: var(--start);
+        }
+
+        to {
+          transform: var(--rest);
+        }
+      }
+
+      /* Never hide the caption or the button from keyboard focus. */
+      .bar:focus-within {
+        animation: none;
+      }
+
+      @keyframes reel-bar {
+        from {
+          opacity: 0;
+          translate: 0 1rem;
+        }
+
+        to {
+          opacity: 1;
+          translate: 0;
+        }
+      }
+    }
+  }
+</style>
