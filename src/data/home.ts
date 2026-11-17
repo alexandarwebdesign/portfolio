@@ -115,39 +115,37 @@ export const home = { bg, en };
 export interface WorkItem {
   name: string;
   category: { bg: string; en: string };
-  year: string;
   image: ImageMetadata;
   /** Route id of the case study; projects without one show their status. */
   route?: 'birse' | 'forma';
   status?: { bg: string; en: string };
+  /** Corner tag on the card, e.g. self-initiated work. */
+  tag?: { bg: string; en: string };
 }
 
 export const work: WorkItem[] = [
   {
     name: 'Birsé',
     category: { bg: 'Онлайн магазин · бижута', en: 'E-commerce · Jewelry' },
-    year: '2026',
     image: birseCard,
     route: 'birse',
   },
   {
     name: 'FORMA Architects',
-    category: { bg: 'Архитектура · концепция', en: 'Architecture · Concept' },
-    year: '2026',
+    category: { bg: 'Архитектура · луксозен сайт', en: 'Architecture · Luxury website' },
     image: formaCard,
     route: 'forma',
+    tag: { bg: 'Концепция', en: 'Concept' },
   },
   {
     name: 'Swis SaaS',
     category: { bg: 'SaaS · платформа', en: 'SaaS · Platform' },
-    year: '2026',
     image: swisCard,
     status: { bg: 'В разработка', en: 'In development' },
   },
   {
     name: 'Creative Asset',
     category: { bg: '3D · интерактивно', en: '3D · Interactive' },
-    year: '2026',
     image: creativeCard,
     status: { bg: 'Предстои', en: 'Upcoming' },
   },

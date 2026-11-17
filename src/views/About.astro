@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import Button from '../components/Button.astro';
 import SectionLabel from '../components/SectionLabel.astro';
-import ProjectRow from '../components/ProjectRow.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 import portrait from '../assets/images/portrait.jpg';
 import { about } from '../data/about';
@@ -64,17 +64,17 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
     <header class="section-head">
       <h2 id="about-work">{t.work}</h2>
     </header>
-    <ul class="rows">
+    <ul class="card-grid">
       {
         work
           .filter((item) => item.route)
           .map((item) => (
-            <ProjectRow
+            <ProjectCard
               name={item.name}
               category={item.category[lang]}
-              year={item.year}
               image={item.image}
               href={pathFor(item.route!, lang)}
+              tag={item.tag?.[lang]}
             />
           ))
       }
@@ -147,12 +147,6 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
 
   dd {
     margin: 0;
-  }
-
-  .rows {
-    padding: 0;
-    list-style: none;
-    border-bottom: var(--hairline);
   }
 
   /* Text on columns 1–7, portrait and facts on 9–12, kept in view. */

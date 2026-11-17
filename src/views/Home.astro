@@ -2,7 +2,7 @@
 import { Picture } from 'astro:assets';
 import Hero from '../components/Hero.astro';
 import SectionLabel from '../components/SectionLabel.astro';
-import ProjectRow from '../components/ProjectRow.astro';
+import ProjectCard from '../components/ProjectCard.astro';
 import Marquee from '../components/Marquee.astro';
 import Process from '../components/Process.astro';
 import Faq from '../components/Faq.astro';
@@ -34,16 +34,16 @@ const t = home[lang];
       <SectionLabel>{t.work.label}</SectionLabel>
       <h2 id="work-title">{t.work.title}</h2>
     </header>
-    <ul class="rows">
+    <ul class="card-grid">
       {
         work.map((item) => (
-          <ProjectRow
+          <ProjectCard
             name={item.name}
             category={item.category[lang]}
-            year={item.year}
             image={item.image}
             href={item.route && pathFor(item.route, lang)}
             status={item.status?.[lang]}
+            tag={item.tag?.[lang]}
           />
         ))
       }
@@ -138,12 +138,6 @@ const t = home[lang];
 <SmoothScroll />
 
 <style>
-  .rows {
-    padding: 0;
-    list-style: none;
-    border-bottom: var(--hairline);
-  }
-
   .about {
     align-items: center;
   }

@@ -157,3 +157,17 @@
     grid-column: 8 / -1;
   }
 }
+
+/* Project cards: 2 × 2 from 900 px, as on the original site (32 px gap). */
+.card-grid {
+  display: grid;
+  gap: var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+@media (width >= 56.25rem) {
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
