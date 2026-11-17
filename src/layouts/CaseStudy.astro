@@ -179,8 +179,8 @@ const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src
 
   .hero {
     display: grid;
-    gap: var(--space-7);
-    padding-top: calc(var(--space-9) + var(--space-4));
+    gap: var(--section-head);
+    padding-top: calc(var(--top-clear) + var(--space-6));
   }
 
   .intro {
@@ -214,10 +214,15 @@ const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src
     font-size: var(--text-lead);
   }
 
+  .intro :global(.button) {
+    margin-top: var(--space-3);
+  }
+
   .facts {
     display: grid;
-    gap: var(--space-4);
+    gap: var(--space-4) var(--column-gap);
     width: 100%;
+    margin-top: var(--space-6);
     padding-top: var(--space-5);
     border-top: var(--hairline);
   }
@@ -250,13 +255,13 @@ const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src
     display: grid;
     gap: var(--section);
     min-width: 0;
-    padding-top: var(--space-8);
+    padding-top: var(--section-head);
   }
 
   .chapter {
     display: grid;
-    gap: var(--space-7);
-    scroll-margin-top: var(--space-10);
+    gap: var(--section-head);
+    scroll-margin-top: var(--top-clear);
   }
 
   .text {
@@ -266,6 +271,7 @@ const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src
   }
 
   h2 {
+    margin-bottom: var(--space-2);
     font-size: var(--text-heading);
   }
 
@@ -338,7 +344,7 @@ const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src
 
   @media (width >= 48rem) {
     .facts {
-      grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -347,14 +353,25 @@ const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src
       padding-top: var(--space-10);
     }
 
+    /* Facts: one per three columns of the grid. */
+    .facts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* Chapter list on columns 1–3, the story on 4–12. */
     .body {
-      grid-template-columns: 14rem minmax(0, 1fr);
-      gap: var(--space-8);
+      grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+      column-gap: var(--column-gap);
     }
 
     .body :global(.chapter-nav) {
+      grid-column: 1 / span 3;
       align-self: start;
-      padding-top: var(--space-8);
+      padding-top: var(--section-head);
+    }
+
+    .chapters {
+      grid-column: 4 / -1;
     }
   }
 </style>
