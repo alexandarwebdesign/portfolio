@@ -20,13 +20,13 @@ const home = pathFor('home', lang)!;
 const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`);
 ---
 
-<section class="intro">
-  <div class="inner">
+<section class="section first">
+  <div class="container intro">
     <div class="text">
       <SectionLabel>{t.label}</SectionLabel>
-      <h1>
+      <h1 class="title-display title-split">
         <span>{t.title[0]}</span>
-        <span class="offset">{t.title[1]}</span>
+        <span>{t.title[1]}</span>
       </h1>
       <p class="lead">{t.lead}</p>
       {t.text.map((paragraph) => <p>{paragraph}</p>)}
@@ -40,7 +40,7 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
         src={portrait}
         formats={['avif', 'webp']}
         widths={[400, 640, 960]}
-        sizes="(width >= 64rem) 26rem, 100vw"
+        sizes="(width >= 64rem) 30vw, 100vw"
         alt={t.alt}
         loading="eager"
         class="portrait"
@@ -59,9 +59,11 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
   </div>
 </section>
 
-<section class="work dark" aria-labelledby="about-work">
-  <div class="inner-wide">
-    <h2 id="about-work">{t.work}</h2>
+<section class="section dark" aria-labelledby="about-work">
+  <div class="container">
+    <header class="section-head">
+      <h2 id="about-work">{t.work}</h2>
+    </header>
     <ul class="rows">
       {
         work
@@ -84,35 +86,22 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
 
 <style>
   .intro {
-    padding: calc(var(--space-9) + var(--space-4)) var(--margin) var(--section);
-  }
-
-  .inner {
     display: grid;
-    gap: var(--space-8);
-    max-width: var(--container);
-    margin-inline: auto;
+    gap: var(--section-head) var(--column-gap);
   }
 
   .text {
     display: grid;
     justify-items: start;
     gap: var(--space-5);
-    max-width: 44rem;
   }
 
-  h1 {
-    display: grid;
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
+  .text h1 {
+    margin-bottom: var(--space-3);
   }
 
-  .offset {
-    padding-inline-start: 0.6em;
-  }
-
-  .lead {
-    font-size: var(--text-lead);
+  .text > p {
+    max-width: var(--measure);
   }
 
   .text > p:not(.lead) {
@@ -129,7 +118,7 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
   .side {
     display: grid;
     align-content: start;
-    gap: var(--space-6);
+    gap: var(--stack);
   }
 
   .side :global(.portrait) {
@@ -143,7 +132,6 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
   .facts {
     display: grid;
     gap: var(--space-4);
-    max-width: 26rem;
   }
 
   .facts div {
@@ -161,39 +149,31 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
     margin: 0;
   }
 
-  .work {
-    padding: var(--section) var(--margin);
-  }
-
-  .inner-wide {
-    max-width: var(--container);
-    margin-inline: auto;
-  }
-
-  h2 {
-    margin-bottom: var(--space-7);
-    font-size: var(--text-heading);
-  }
-
   .rows {
     padding: 0;
     list-style: none;
     border-bottom: var(--hairline);
   }
 
+  /* Text on columns 1–7, portrait and facts on 9–12, kept in view. */
   @media (width >= 64rem) {
     .intro {
-      padding-top: var(--space-10);
+      grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
     }
 
-    .inner {
-      grid-template-columns: 1fr 26rem;
-      gap: var(--space-9);
+    .text {
+      grid-column: 1 / span 7;
     }
 
     .side {
       position: sticky;
-      top: var(--space-10);
+      top: var(--top-clear);
+      grid-column: 9 / -1;
+      align-self: start;
+    }
+
+    .side :global(.portrait) {
+      max-width: none;
     }
   }
 </style>
