@@ -81,6 +81,10 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       </li>
     </ul>
     <Button class="cta" href={ctaHref} variant={ctaVariant} data-header-cta>{t.cta}</Button>
+    <!-- Desktop: the language comes last, after the button (inside the menu on phones). -->
+    <span class="lang-end">
+      <LangSwitch lang={otherLang} href={otherHref} />
+    </span>
   </nav>
 </header>
 
@@ -298,58 +302,34 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     }
   }
 
-  /* Desktop: name left, page links centred, call to action right (24 px from the top). */
+  .lang-end {
+    display: none;
+  }
+
+  /*
+   * Desktop: one glass bar in the centre, 24 px from the top: name, pages,
+   * call to action, language. The pieces drop their own glass and share the
+   * header's.
+   */
   @media (width >= 64rem) {
     .site-header {
       position: fixed;
       inset: 1.5rem 0 auto;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: var(--space-4);
-      max-width: calc(var(--container) + 2 * var(--margin));
-      margin-inline: auto;
-      padding: 0 var(--margin);
-    }
-
-    .brand {
-      justify-self: start;
-      min-height: 4rem; /* 64 */
-    }
-
-    /* The nav's children join the header grid: links centred, button right. */
-    .bar {
-      display: contents;
-    }
-
-    .bar.glass::after {
-      content: none;
-    }
-
-    .menu-button {
-      display: none;
-    }
-
-    /* Always shown inline; the popover only applies to small screens. */
-    .menu {
-      position: relative;
       display: flex;
       align-items: center;
-      gap: 4px;
-      inset: auto;
-      width: auto;
-      height: auto;
-      margin: 0;
+      gap: var(--space-1);
+      width: fit-content;
+      max-width: calc(100% - 2 * var(--margin));
+      margin-inline: auto;
       padding: var(--space-2); /* 8 */
-      overflow: visible;
-      border: 0;
       border-radius: var(--radius);
       background: var(--glass);
       backdrop-filter: blur(12px) saturate(1.4);
-      color: inherit;
+      pointer-events: auto;
     }
 
-    .menu::after {
+    /* The rim light now travels around the whole bar. */
+    .site-header::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -371,8 +351,55 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       animation: shine-rotate 8s linear infinite;
     }
 
+    .glass {
+      background: none;
+      backdrop-filter: none;
+    }
+
+    .glass::after {
+      content: none;
+    }
+
+    /* Name first, set off from the pages by a hairline. */
+    .brand {
+      min-height: 3rem;
+      margin-right: var(--space-2);
+      padding-inline: var(--space-4) var(--space-5);
+      border-right: var(--hairline);
+      border-radius: 0;
+    }
+
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 0;
+    }
+
+    .menu-button,
+    .lang-item {
+      display: none;
+    }
+
+    /* Always shown inline; the popover only applies to small screens. */
+    .menu {
+      position: static;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      inset: auto;
+      width: auto;
+      height: auto;
+      margin: 0 var(--space-2) 0 0;
+      padding: 0;
+      overflow: visible;
+      border: 0;
+      background: none;
+      color: inherit;
+    }
+
     .menu a {
-      padding: 0.75rem 1.5rem; /* 12 × 24 */
+      padding: 0.75rem 1.25rem; /* 12 × 20 */
       border-radius: var(--radius);
       font-size: 1rem;
       font-weight: 600;
@@ -392,15 +419,20 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       translate: -50% 0;
     }
 
-    .lang-item :global(.lang:hover) {
-      background: none;
-    }
-
     .bar :global(.cta) {
-      justify-self: end;
-      min-height: 4rem; /* same height as the name */
+      min-height: 3rem;
       padding-inline: var(--space-5);
       font-size: 1rem;
+      white-space: nowrap;
+    }
+
+    .lang-end {
+      display: flex;
+    }
+
+    .lang-end :global(.lang) {
+      min-width: 3rem;
+      min-height: 3rem;
     }
   }
 </style>
