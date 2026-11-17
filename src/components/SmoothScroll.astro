@@ -10,24 +10,29 @@
     // Same offsets as scroll-padding in base.css: clear of the top pill on desktop.
     new Lenis({ autoRaf: true, anchors: { offset: innerWidth >= 1024 ? -96 : -16 } });
 
-    const items = document.querySelectorAll('[data-reveal]');
+    // The observer's first report says where each element is, without forcing
+    // a synchronous layout at start-up. Only elements below the fold animate;
+    // the first screen is never hidden.
+    const seen = new WeakSet<Element>();
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          entry.target.classList.add('is-revealed');
-          observer.unobserve(entry.target);
+        for (const { target, isIntersecting, boundingClientRect } of entries) {
+          if (!seen.has(target)) {
+            seen.add(target);
+            if (!isIntersecting && boundingClientRect.top > innerHeight) {
+              target.classList.add('will-reveal');
+            } else {
+              observer.unobserve(target);
+            }
+          } else if (isIntersecting) {
+            target.classList.add('is-revealed');
+            observer.unobserve(target);
+          }
         }
       },
       { rootMargin: '0px 0px -10% 0px' },
     );
-    for (const item of items) {
-      // Only elements below the fold animate; the first screen is never hidden.
-      if (item.getBoundingClientRect().top > innerHeight) {
-        item.classList.add('will-reveal');
-        observer.observe(item);
-      }
-    }
+    document.querySelectorAll('[data-reveal]').forEach((item) => observer.observe(item));
   }
 </script>
 
