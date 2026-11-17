@@ -1,8 +1,12 @@
 ---
+// The original site's glass navigation: a home circle beside a glass pill
+// with a slowly rotating rim light. On phones and tablets the pill becomes a
+// bar at the bottom (thumb reach) with the menu and the call to action.
 import Button from './Button.astro';
 import LangSwitch from './LangSwitch.astro';
 import { ui, type Lang } from '../i18n/ui';
 import { pathFor, type RouteId } from '../i18n/routes';
+import { site } from '../data/site';
 
 interface Props {
   lang: Lang;
@@ -20,6 +24,7 @@ const links = [
   ...(lang === 'bg'
     ? [{ href: pathFor('uslugi', 'bg')!, label: t.nav.services, current: route === 'uslugi' }]
     : []),
+  { href: homeHash('#contact'), label: t.nav.contact, current: false },
 ];
 
 // The other language: the same page when it exists, otherwise that language's home.
@@ -29,10 +34,28 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
 ---
 
 <header class="site-header">
-  <a class="brand" href={home} aria-current={route === 'home' ? 'page' : undefined}>
-    {lang === 'bg' ? 'Александър Павлов' : 'Aleksandar Pavlov'}
+  <a
+    class="home glass"
+    href={home}
+    aria-current={route === 'home' ? 'page' : undefined}
+    aria-label={`${t.nav.home} · ${site.name[lang]}`}
+  >
+    <svg width="22" height="23" viewBox="0 0 15 16" fill="none" aria-hidden="true">
+      <path
+        d="M2.99 15.33c-.95 0-1.72-.8-1.72-1.79V6.35c0-.54.24-1.06.65-1.4L6.64 1.02a1.68 1.68 0 0 1 2.15 0l4.73 3.93c.41.34.64.86.64 1.4v7.19c0 .99-.77 1.79-1.72 1.79H2.99Z"
+        stroke="currentColor"
+        stroke-width="1.25"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+      <path
+        d="M5.7 15.33v-4.49c0-.43.17-.85.47-1.16.3-.3.71-.47 1.14-.47h.81c.43 0 .84.17 1.14.47.3.31.47.73.47 1.16v4.49"
+        stroke="currentColor"
+        stroke-width="1.25"
+        stroke-linecap="round"
+        stroke-linejoin="round"></path>
+    </svg>
   </a>
-  <nav class="bar" aria-label={t.nav.label}>
+  <nav class="bar glass" aria-label={t.nav.label}>
     <button class="menu-button" type="button" popovertarget="site-menu">
       {t.nav.menu}
     </button>
@@ -50,7 +73,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
         <LangSwitch lang={otherLang} href={otherHref} />
       </li>
     </ul>
-    <Button class="cta" href={homeHash('#contact')} arrow>{t.cta}</Button>
+    <Button class="cta" href={homeHash('#contact')}>{t.cta}</Button>
   </nav>
 </header>
 
@@ -69,37 +92,85 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
 </script>
 
 <style>
-  .site-header {
-    --bar-bg: color-mix(in srgb, var(--paper-raised) 88%, transparent);
+  @property --shine {
+    syntax: '<angle>';
+    initial-value: 156deg;
+    inherits: false;
+  }
 
+  @keyframes shine-rotate {
+    to {
+      --shine: 516deg;
+    }
+  }
+
+  .site-header {
     position: absolute;
     inset: 0 0 auto;
     z-index: 10;
     padding: var(--space-4) var(--margin);
     color: var(--ink);
+    pointer-events: none;
   }
 
-  .brand {
-    display: inline-flex;
+  .site-header > * {
+    pointer-events: auto;
+  }
+
+  /*
+   * Glass (the old "Espacio" recipe). The fill is 55 % instead of 50 % so the
+   * links keep AA contrast when the bar passes over the dark sections.
+   */
+  .glass {
+    position: relative;
+    background: rgb(255 255 255 / 0.55);
+    backdrop-filter: blur(12px) saturate(3) hue-rotate(180deg);
+  }
+
+  /* Rim light that slowly travels around the edge. */
+  .glass::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid transparent;
+    border-radius: inherit;
+    background: linear-gradient(
+        var(--shine),
+        rgb(255 255 255 / 0.5) 2%,
+        rgb(255 255 255 / 0.001) 40%,
+        rgb(255 255 255 / 0.001) 55%,
+        rgb(255 255 255 / 0.15) 93%
+      )
+      border-box;
+    mask:
+      linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: shine-rotate 8s linear infinite;
+  }
+
+  .home {
+    display: flex;
     align-items: center;
-    min-height: var(--target);
-    font-family: var(--font-display);
-    font-size: 1.375rem;
-    letter-spacing: var(--tracking-display);
-    text-decoration: none;
-    white-space: nowrap;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    color: var(--ink);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+
+  .home:hover {
+    color: var(--cobalt);
   }
 
   .bar {
     display: flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-1);
     padding: var(--space-1);
-    border: 1px solid rgb(20 21 23 / 0.1);
     border-radius: var(--radius-pill);
-    background-color: var(--bar-bg);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 8px 24px -12px rgb(20 21 23 / 0.25);
   }
 
   .menu-button {
@@ -108,6 +179,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     border: 0;
     border-radius: var(--radius-pill);
     background: none;
+    color: var(--ink);
     font-size: var(--text-small);
     font-weight: 600;
   }
@@ -118,14 +190,18 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
   }
 
   .menu a {
+    position: relative;
     display: flex;
     align-items: center;
     min-height: var(--target);
+    color: var(--ink);
     text-decoration: none;
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease-out);
   }
 
-  .menu a[aria-current='page'] {
-    text-decoration: underline;
+  .menu a:hover {
+    color: var(--cobalt);
   }
 
   /* Mobile and tablet: the bar sits at the bottom, in thumb reach. */
@@ -138,19 +214,11 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       margin-inline: auto;
     }
 
-    .menu-button {
-      padding-inline: var(--space-4);
-    }
-
-    /* Keeps the BG label on one line at 360px; the arrow returns on desktop. */
+    /* Keeps the BG label on one line at 360px. */
     .bar .cta {
       flex: 1;
       padding-inline: var(--space-4);
       white-space: nowrap;
-    }
-
-    .bar .cta :global(.arrow) {
-      display: none;
     }
 
     .menu:popover-open {
@@ -176,39 +244,40 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       letter-spacing: var(--tracking-display);
     }
 
+    .menu a[aria-current='page'] {
+      text-decoration: underline;
+    }
+
     .lang-item {
       padding-top: var(--space-3);
       border-top: var(--hairline);
     }
   }
 
-  /* Desktop: one floating pill at the top with the links inline. */
+  /* Desktop: home circle + glass pill, centred at the top (24 px). */
   @media (width >= 64rem) {
     .site-header {
       position: fixed;
-      inset-inline: 0;
-      width: fit-content;
-      top: var(--space-4);
-      margin-inline: auto;
-      padding: 0 0 0 var(--space-5);
+      inset: 1.5rem 0 auto;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: var(--space-4);
-      border: 1px solid rgb(20 21 23 / 0.1);
-      border-radius: var(--radius-pill);
-      background-color: var(--bar-bg);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px -12px rgb(20 21 23 / 0.25);
+      padding: 0;
+    }
+
+    .home {
+      z-index: 1;
+      width: 4rem; /* 64 */
+      height: 4rem;
+      margin-right: -4px;
     }
 
     .bar {
-      border: 0;
-      background: none;
-      backdrop-filter: none;
-      box-shadow: none;
+      padding: var(--space-2); /* 8 */
     }
 
-    .menu-button {
+    .menu-button,
+    .bar .cta {
       display: none;
     }
 
@@ -217,7 +286,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       position: static;
       display: flex;
       align-items: center;
-      gap: var(--space-1);
+      gap: 4px;
       inset: auto;
       width: auto;
       height: auto;
@@ -229,15 +298,34 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     }
 
     .menu a {
-      padding-inline: var(--space-3);
+      padding: 0.75rem 1.5rem; /* 12 × 24 */
       border-radius: var(--radius-pill);
-      font-size: var(--text-small);
+      font-size: 1rem;
       font-weight: 600;
-      transition: background-color var(--dur-fast) var(--ease-out);
+      line-height: 1.25;
     }
 
-    .menu a:hover {
-      background-color: var(--line);
+    /* Active page: a small accent dot under the label. */
+    .menu a[aria-current='page']::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--cobalt);
+      translate: -50% 0;
+    }
+
+    .lang-item :global(.lang) {
+      color: var(--ink);
+      font-size: 1rem;
+    }
+
+    .lang-item :global(.lang:hover) {
+      background: none;
+      color: var(--cobalt);
     }
   }
 </style>
