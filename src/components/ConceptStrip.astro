@@ -154,7 +154,9 @@ const titleId = `concepts-title-${lang}`;
   @supports (animation-timeline: view()) {
     @media (prefers-reduced-motion: no-preference) {
       .track {
-        animation: slide linear both;
+        animation-name: slide;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: view();
         animation-range: cover 5% cover 95%;
       }
