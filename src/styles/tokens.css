@@ -39,6 +39,7 @@
   /* Type */
   --font-display: var(--font-forum);
   --font-body: var(--font-manrope);
+  --font-mono: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
 
   /*
    * Type scale. Display sizes follow the viewport (like the layout) and stop

@@ -1,3 +1,10 @@
+export interface Fact {
+  term: string;
+  desc: string;
+  /** Small animated mark before the value (the original about index). */
+  icon?: 'globe' | 'status';
+}
+
 const bg = {
   label: 'За мен',
   title: ['Дизайн, който', 'работи с хората.'],
@@ -10,10 +17,10 @@ const bg = {
   ],
   facts: [
     { term: 'Роля', desc: 'UX/UI дизайнер и уеб разработчик' },
-    { term: 'База', desc: 'София, България · работя с клиенти от цял свят' },
+    { term: 'База', desc: 'София, България · работя с клиенти от цял свят', icon: 'globe' },
     { term: 'Опит', desc: 'От 2023 г.' },
-    { term: 'Статус', desc: 'Приемам нови проекти' },
-  ],
+    { term: 'Статус', desc: 'Приемам нови проекти', icon: 'status' },
+  ] as Fact[],
   start: 'Започнете проект',
   process: 'Вижте процеса',
   work: 'Избрани проекти',
@@ -32,9 +39,9 @@ const en: typeof bg = {
   ],
   facts: [
     { term: 'Role', desc: 'UX/UI designer & web developer' },
-    { term: 'Based', desc: 'Sofia, Bulgaria · working worldwide' },
+    { term: 'Based', desc: 'Sofia, Bulgaria · working worldwide', icon: 'globe' },
     { term: 'Experience', desc: 'Since 2023' },
-    { term: 'Status', desc: 'Taking new projects' },
+    { term: 'Status', desc: 'Taking new projects', icon: 'status' },
   ],
   start: 'Start a project',
   process: 'See the process',

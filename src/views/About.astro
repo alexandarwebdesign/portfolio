@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import Button from '../components/Button.astro';
+import AboutIndex from '../components/AboutIndex.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
@@ -45,16 +46,7 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
         loading="eager"
         class="portrait"
       />
-      <dl class="facts">
-        {
-          t.facts.map((fact) => (
-            <div>
-              <dt>{fact.term}</dt>
-              <dd>{fact.desc}</dd>
-            </div>
-          ))
-        }
-      </dl>
+      <AboutIndex facts={t.facts} />
     </aside>
   </div>
 </section>
@@ -129,27 +121,7 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
     border-radius: var(--radius);
   }
 
-  .facts {
-    display: grid;
-    gap: var(--space-4);
-  }
-
-  .facts div {
-    padding-top: var(--space-3);
-    border-top: var(--hairline);
-  }
-
-  dt {
-    color: var(--fg-muted);
-    font-size: var(--text-label);
-    letter-spacing: var(--tracking-label);
-  }
-
-  dd {
-    margin: 0;
-  }
-
-  /* Text on columns 1–7, portrait and facts on 9–12, kept in view. */
+  /* Text on columns 1–7, portrait and the index on 9–12. */
   @media (width >= 64rem) {
     .intro {
       grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
@@ -159,9 +131,8 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
       grid-column: 1 / span 7;
     }
 
+    /* Not sticky: portrait + index are taller than a laptop screen. */
     .side {
-      position: sticky;
-      top: var(--top-clear);
       grid-column: 9 / -1;
       align-self: start;
     }

@@ -8,9 +8,11 @@ import Process from '../components/Process.astro';
 import Faq from '../components/Faq.astro';
 import BriefBuilder from '../components/BriefBuilder.astro';
 import Button from '../components/Button.astro';
+import AboutIndex from '../components/AboutIndex.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 import portrait from '../assets/images/portrait.jpg';
 import { home, work } from '../data/home';
+import { about } from '../data/about';
 import { services } from '../data/services';
 import { process } from '../data/process';
 import { faq } from '../data/faq';
@@ -87,21 +89,26 @@ const t = home[lang];
 </section>
 
 <section id="about" class="section" aria-labelledby="about-title">
-  <div class="container split about">
-    <Picture
-      src={portrait}
-      formats={['avif', 'webp']}
-      widths={[400, 640, 960]}
-      sizes="(width >= 64rem) 34vw, 100vw"
-      alt={t.about.alt}
-      loading="lazy"
-      class="portrait"
-    />
-    <div class="about-text" data-reveal>
+  <div class="container">
+    <header class="section-head" data-reveal>
       <SectionLabel>{t.about.label}</SectionLabel>
-      <h2 id="about-title" class="title-display">{t.about.title}</h2>
-      <p class="lead">{t.about.text}</p>
-      <Button href={pathFor('about', lang)} variant="secondary" arrow>{t.about.link}</Button>
+      <h2 id="about-title">{t.about.title}</h2>
+    </header>
+    <div class="split about" data-reveal>
+      <div class="about-lead">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[96, 192]}
+          sizes="96px"
+          alt={t.about.alt}
+          loading="lazy"
+          class="avatar"
+        />
+        <p class="bio">{t.about.text}</p>
+        <Button href={pathFor('about', lang)} variant="secondary" arrow>{t.about.link}</Button>
+      </div>
+      <AboutIndex facts={about[lang].facts} />
     </div>
   </div>
 </section>
@@ -138,28 +145,29 @@ const t = home[lang];
 <SmoothScroll />
 
 <style>
+  /* The original about block: small round portrait, bio and link, index beside. */
   .about {
     align-items: center;
   }
 
-  .about :global(.portrait) {
-    width: 100%;
-    max-width: 28rem;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    border-radius: var(--radius);
-  }
-
-  .about-text {
+  .about-lead {
     display: grid;
     justify-items: start;
-    gap: var(--space-5);
-    max-width: 40rem;
+    gap: var(--space-6);
   }
 
-  @media (width >= 64rem) {
-    .about :global(.portrait) {
-      max-width: none;
-    }
+  .about-lead :global(.avatar) {
+    width: 6rem; /* 96 */
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .bio {
+    max-width: 40ch;
+    color: var(--fg-muted);
+    font-size: clamp(1.25rem, 1.4vw, 1.5rem); /* 20 → 24 */
+    line-height: 1.6;
   }
 </style>
