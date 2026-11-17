@@ -11,14 +11,6 @@ const bg = {
     lead: 'UX психология и прецизен UI в уебсайтове за малки и средни бизнеси. Визуално силни, създадени да работят.',
     cta: 'Започнете проект',
   },
-  reel: {
-    label: 'Видео: началният екран на FORMA Architects',
-    name: 'FORMA Architects',
-    tag: 'Концепция',
-    link: 'Вижте проекта',
-    play: 'Пусни видеото',
-    pause: 'Спри видеото',
-  },
   work: {
     label: 'Избрани проекти',
     title: 'Работа, която стига до хората.',
@@ -72,14 +64,6 @@ const en: typeof bg = {
     title: 'Pretty Isn’t Enough.',
     lead: 'UX psychology meets precise UI craft – websites for small and medium businesses. Visually powerful, built to perform.',
     cta: 'Start a Project',
-  },
-  reel: {
-    label: 'Video: the FORMA Architects home screen',
-    name: 'FORMA Architects',
-    tag: 'Concept',
-    link: 'View the project',
-    play: 'Play the video',
-    pause: 'Pause the video',
   },
   work: {
     label: 'Selected work',

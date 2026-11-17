@@ -4,19 +4,14 @@ import Hero from '../components/Hero.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Marquee from '../components/Marquee.astro';
-import ConceptStrip from '../components/ConceptStrip.astro';
 import Process from '../components/Process.astro';
 import Faq from '../components/Faq.astro';
 import BriefBuilder from '../components/BriefBuilder.astro';
 import Button from '../components/Button.astro';
 import AboutIndex from '../components/AboutIndex.astro';
-import ServiceShowcase from '../components/ServiceShowcase.astro';
-import Showreel from '../components/Showreel.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 import portrait from '../assets/images/portrait.jpg';
-import servicePdp from '../assets/images/birse-pdp.jpg';
-import serviceBuild from '../assets/images/forma-home.jpg';
-import serviceWhole from '../assets/images/birse-hero.jpg';
 import { home, work } from '../data/home';
 import { about } from '../data/about';
 import { services } from '../data/services';
@@ -32,15 +27,12 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = home[lang];
-const serviceImages = [servicePdp, serviceBuild, serviceWhole];
-const serviceItems = services[lang].map((service, i) => ({ ...service, image: serviceImages[i] }));
+const shapes = ['circle', 'triangle', 'hexagon'] as const;
 ---
 
 <Hero {...t.hero} />
 
-<Showreel {...t.reel} href={pathFor('forma', lang)!} />
-
-<section id="work" class="section" aria-labelledby="work-title">
+<section id="work" class="section dark" aria-labelledby="work-title">
   <div class="container">
     <header class="section-head" data-reveal>
       <SectionLabel>{t.work.label}</SectionLabel>
@@ -63,8 +55,6 @@ const serviceItems = services[lang].map((service, i) => ({ ...service, image: se
   </div>
 </section>
 
-<ConceptStrip {lang} raised />
-
 <Marquee label={t.industries.label} items={t.industries.items} />
 
 <section id="services" class="section" aria-labelledby="services-title">
@@ -76,7 +66,18 @@ const serviceItems = services[lang].map((service, i) => ({ ...service, image: se
         <span>{t.services.title[1]}</span>
       </h2>
     </header>
-    <ServiceShowcase items={serviceItems} />
+    <ol class="index-rows with-icon">
+      {
+        services[lang].map((service, i) => (
+          <li data-reveal>
+            <span class="index">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{service.title}</h3>
+            <p>{service.text}</p>
+            <ServiceIcon shape={shapes[i % shapes.length]} />
+          </li>
+        ))
+      }
+    </ol>
     <div class="services-cta">
       <Button href="#contact" size="large">{t.services.cta}</Button>
     </div>
@@ -99,22 +100,21 @@ const serviceItems = services[lang].map((service, i) => ({ ...service, image: se
       <SectionLabel>{t.about.label}</SectionLabel>
       <h2 id="about-title">{t.about.title}</h2>
     </header>
-    <div class="about">
-      <div class="portrait">
+    <div class="split about" data-reveal>
+      <div class="about-lead">
         <Picture
           src={portrait}
           formats={['avif', 'webp']}
-          widths={[480, 800, 1200]}
-          sizes="(width >= 64rem) 40vw, 92vw"
+          widths={[96, 192]}
+          sizes="96px"
           alt={t.about.alt}
           loading="lazy"
+          class="avatar"
         />
-      </div>
-      <div class="about-text" data-reveal>
         <p class="bio">{t.about.text}</p>
         <Button href={pathFor('about', lang)} variant="secondary" arrow>{t.about.link}</Button>
-        <AboutIndex facts={about[lang].facts} />
       </div>
+      <AboutIndex facts={about[lang].facts} />
     </div>
   </div>
 </section>
@@ -157,48 +157,23 @@ const serviceItems = services[lang].map((service, i) => ({ ...service, image: se
     margin-top: var(--section-head);
   }
 
-  /* About: a large portrait leads, the words and the facts beside it. */
+  /* The original about block: small round portrait, bio and link, index beside. */
   .about {
-    display: grid;
-    gap: var(--section-head) var(--column-gap);
+    align-items: center;
   }
 
-  .portrait {
-    overflow: hidden;
-    border-radius: var(--radius);
-    background-color: var(--bg-sunken);
-  }
-
-  .portrait :global(img) {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  .about-text {
+  .about-lead {
     display: grid;
     justify-items: start;
-    align-content: center;
     gap: var(--space-6);
   }
 
-  .about-text :global(.about-index) {
-    width: 100%;
-  }
-
-  @media (width >= 64rem) {
-    .about {
-      grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
-    }
-
-    .portrait {
-      grid-column: 1 / span 5;
-    }
-
-    .about-text {
-      grid-column: 7 / -1;
-    }
+  .about-lead :global(.avatar) {
+    width: 6rem; /* 96 */
+    height: 6rem;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
   }
 
   .bio {

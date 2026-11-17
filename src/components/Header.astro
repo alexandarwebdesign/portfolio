@@ -1,12 +1,7 @@
 ---
-// Glass navigation. Desktop: name on the left, the glass bar with the pages in
-// the middle, the call to action on the right. Phones and tablets: the name at
-// the top, and a bar at the bottom (thumb reach) with the menu and the call to
-// action.
-//
-// While the hero's own button is on screen, the header button is secondary so
-// the page never shows two primary buttons at once; when the hero button
-// leaves the screen, it becomes the primary button (script below).
+// The original site's glass navigation: a home circle beside a glass pill
+// with a slowly rotating rim light. On phones and tablets the pill becomes a
+// bar at the bottom (thumb reach) with the menu and the call to action.
 import Button from './Button.astro';
 import LangSwitch from './LangSwitch.astro';
 import { ui, type Lang } from '../i18n/ui';
@@ -23,20 +18,14 @@ const t = ui[lang];
 const home = pathFor('home', lang)!;
 const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`);
 
-// The call to action is the way to contact, so there is no separate link.
 const links = [
   { href: homeHash('#work'), label: t.nav.work, current: false },
   { href: pathFor('about', lang)!, label: t.nav.about, current: route === 'about' },
   ...(lang === 'bg'
     ? [{ href: pathFor('uslugi', 'bg')!, label: t.nav.services, current: route === 'uslugi' }]
     : []),
+  { href: homeHash('#contact'), label: t.nav.contact, current: false },
 ];
-
-// /uslugi has its own form; every other page goes to the one on the home page.
-const ctaHref = route === 'uslugi' ? '#contact' : homeHash('#contact');
-// Pages with a hero start with the secondary style (see the script).
-const hasHero = route === 'home' || route === 'uslugi';
-const ctaVariant = hasHero ? 'secondary' : 'primary';
 
 // The other language: the same page when it exists, otherwise that language's home.
 const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
@@ -45,8 +34,13 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
 ---
 
 <header class="site-header">
-  <a class="brand glass" href={home} aria-current={route === 'home' ? 'page' : undefined}>
-    <svg width="20" height="21" viewBox="0 0 15 16" fill="none" aria-hidden="true">
+  <a
+    class="home glass"
+    href={home}
+    aria-current={route === 'home' ? 'page' : undefined}
+    aria-label={`${t.nav.home} · ${site.name[lang]}`}
+  >
+    <svg width="22" height="23" viewBox="0 0 15 16" fill="none" aria-hidden="true">
       <path
         d="M2.99 15.33c-.95 0-1.72-.8-1.72-1.79V6.35c0-.54.24-1.06.65-1.4L6.64 1.02a1.68 1.68 0 0 1 2.15 0l4.73 3.93c.41.34.64.86.64 1.4v7.19c0 .99-.77 1.79-1.72 1.79H2.99Z"
         stroke="currentColor"
@@ -60,7 +54,6 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
         stroke-linecap="round"
         stroke-linejoin="round"></path>
     </svg>
-    <span class="name">{site.name[lang]}</span>
   </a>
   <nav class="bar glass" aria-label={t.nav.label}>
     <button class="menu-button" type="button" popovertarget="site-menu">
@@ -80,11 +73,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
         <LangSwitch lang={otherLang} href={otherHref} />
       </li>
     </ul>
-    <Button class="cta" href={ctaHref} variant={ctaVariant} data-header-cta>{t.cta}</Button>
-    <!-- Desktop: the language comes last, after the button (inside the menu on phones). -->
-    <span class="lang-end">
-      <LangSwitch lang={otherLang} href={otherHref} />
-    </span>
+    <Button class="cta" href={homeHash('#contact')}>{t.cta}</Button>
   </nav>
 </header>
 
@@ -100,17 +89,6 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       menu.hidePopover();
     }
   });
-
-  // Secondary while the hero button is visible, primary once it has left.
-  const cta = document.querySelector('[data-header-cta]');
-  const heroCta = document.querySelector('[data-hero-cta]');
-  if (cta && heroCta && 'IntersectionObserver' in window) {
-    new IntersectionObserver(([entry]) => {
-      const heroVisible = entry.isIntersecting;
-      cta.classList.toggle('secondary', heroVisible);
-      cta.classList.toggle('primary', !heroVisible);
-    }).observe(heroCta);
-  }
 </script>
 
 <style>
@@ -127,8 +105,6 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
   }
 
   .site-header {
-    --glass: rgb(247 247 247 / 0.55);
-
     position: absolute;
     inset: 0 0 auto;
     z-index: 10;
@@ -142,14 +118,13 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
   }
 
   /*
-   * Glass (the old "Espacio" recipe), neutral. The fill is 55 % so the links
-   * keep AA contrast when the bar passes over the dark sections and images.
+   * Glass (the old "Espacio" recipe). The fill is 55 % instead of 50 % so the
+   * links keep AA contrast when the bar passes over the dark sections.
    */
   .glass {
     position: relative;
-    border-radius: var(--radius);
-    background: var(--glass);
-    backdrop-filter: blur(12px) saturate(1.4);
+    background: rgb(250 250 250 / 0.55);
+    backdrop-filter: blur(12px) saturate(3) hue-rotate(180deg);
   }
 
   /* Rim light that slowly travels around the edge. */
@@ -161,10 +136,10 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     border-radius: inherit;
     background: linear-gradient(
         var(--shine),
-        rgb(247 247 247 / 0.6) 2%,
-        rgb(247 247 247 / 0.001) 40%,
-        rgb(247 247 247 / 0.001) 55%,
-        rgb(247 247 247 / 0.2) 93%
+        rgb(250 250 250 / 0.5) 2%,
+        rgb(250 250 250 / 0.001) 40%,
+        rgb(250 250 250 / 0.001) 55%,
+        rgb(250 250 250 / 0.15) 93%
       )
       border-box;
     mask:
@@ -175,24 +150,18 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     animation: shine-rotate 8s linear infinite;
   }
 
-  .brand {
-    display: inline-flex;
+  .home {
+    display: flex;
     align-items: center;
-    gap: var(--space-3);
-    min-height: 3.5rem;
-    padding-inline: 1.125rem 1.25rem;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: var(--radius);
     color: var(--ink);
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
     transition: color var(--dur-fast) var(--ease-out);
   }
 
-  .brand svg {
-    flex: none;
-  }
-
-  .brand:hover {
+  .home:hover {
     color: var(--cobalt);
   }
 
@@ -201,6 +170,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     align-items: center;
     gap: var(--space-1);
     padding: var(--space-1);
+    border-radius: var(--radius);
   }
 
   .menu-button {
@@ -234,19 +204,6 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     color: var(--cobalt);
   }
 
-  /* The secondary state sits on glass so it stays readable over anything. */
-  .site-header :global(.cta.secondary) {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    color: var(--ink);
-  }
-
-  .site-header :global(.cta.secondary:hover) {
-    border-color: var(--ink);
-    background: var(--ink);
-    color: var(--mist);
-  }
-
   /* Mobile and tablet: the bar sits at the bottom, in thumb reach. */
   @media (width < 64rem) {
     .bar {
@@ -258,16 +215,10 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     }
 
     /* Keeps the BG label on one line at 360px. */
-    .bar :global(.cta) {
+    .bar .cta {
       flex: 1;
       padding-inline: var(--space-4);
       white-space: nowrap;
-    }
-
-    /* Inside the bar the glass is already there. */
-    .site-header :global(.bar .cta.secondary) {
-      background: none;
-      backdrop-filter: none;
     }
 
     .menu:popover-open {
@@ -302,82 +253,30 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     }
   }
 
-  .lang-end {
-    display: none;
-  }
-
-  /*
-   * Desktop: one glass bar in the centre, 24 px from the top: name, pages,
-   * call to action, language. The pieces drop their own glass and share the
-   * header's.
-   */
+  /* Desktop: home circle + glass pill, centred at the top (24 px). */
   @media (width >= 64rem) {
     .site-header {
       position: fixed;
       inset: 1.5rem 0 auto;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: var(--space-1);
-      width: fit-content;
-      max-width: calc(100% - 2 * var(--margin));
-      margin-inline: auto;
-      padding: var(--space-2); /* 8 */
-      border-radius: var(--radius);
-      background: var(--glass);
-      backdrop-filter: blur(12px) saturate(1.4);
-      pointer-events: auto;
-    }
-
-    /* The rim light now travels around the whole bar. */
-    .site-header::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 1.5px solid transparent;
-      border-radius: inherit;
-      background: linear-gradient(
-          var(--shine),
-          rgb(247 247 247 / 0.6) 2%,
-          rgb(247 247 247 / 0.001) 40%,
-          rgb(247 247 247 / 0.001) 55%,
-          rgb(247 247 247 / 0.2) 93%
-        )
-        border-box;
-      mask:
-        linear-gradient(#fff 0 0) padding-box,
-        linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      pointer-events: none;
-      animation: shine-rotate 8s linear infinite;
-    }
-
-    .glass {
-      background: none;
-      backdrop-filter: none;
-    }
-
-    .glass::after {
-      content: none;
-    }
-
-    /* Name first, set off from the pages by a hairline. */
-    .brand {
-      min-height: 3rem;
-      margin-right: var(--space-2);
-      padding-inline: var(--space-4) var(--space-5);
-      border-right: var(--hairline);
-      border-radius: 0;
-    }
-
-    .bar {
-      display: flex;
-      align-items: center;
-      gap: var(--space-1);
       padding: 0;
     }
 
+    .home {
+      z-index: 1;
+      width: 4rem; /* 64 */
+      height: 4rem;
+      margin-right: -4px;
+    }
+
+    .bar {
+      padding: var(--space-2); /* 8 */
+    }
+
     .menu-button,
-    .lang-item {
+    .bar .cta {
       display: none;
     }
 
@@ -390,8 +289,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       inset: auto;
       width: auto;
       height: auto;
-      margin: 0 var(--space-2) 0 0;
-      padding: 0;
+      margin: 0;
       overflow: visible;
       border: 0;
       background: none;
@@ -399,7 +297,7 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
     }
 
     .menu a {
-      padding: 0.75rem 1.25rem; /* 12 × 20 */
+      padding: 0.75rem 1.5rem; /* 12 × 24 */
       border-radius: var(--radius);
       font-size: 1rem;
       font-weight: 600;
@@ -419,20 +317,14 @@ const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
       translate: -50% 0;
     }
 
-    .bar :global(.cta) {
-      min-height: 3rem;
-      padding-inline: var(--space-5);
+    .lang-item :global(.lang) {
+      color: var(--ink);
       font-size: 1rem;
-      white-space: nowrap;
     }
 
-    .lang-end {
-      display: flex;
-    }
-
-    .lang-end :global(.lang) {
-      min-width: 3rem;
-      min-height: 3rem;
+    .lang-item :global(.lang:hover) {
+      background: none;
+      color: var(--cobalt);
     }
   }
 </style>

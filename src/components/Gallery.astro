@@ -36,14 +36,10 @@ const { items, narrow = false } = Astro.props;
     list-style: none;
   }
 
-  .gallery li {
-    overflow: hidden;
-    border: var(--hairline);
-    border-radius: var(--radius);
-  }
-
   .gallery :global(img) {
     width: 100%;
+    border: var(--hairline);
+    border-radius: var(--radius);
   }
 
   .narrow {

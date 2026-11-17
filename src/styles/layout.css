@@ -158,10 +158,10 @@
   }
 }
 
-/* Project cards: 2 × 2 from 900 px; more air between rows, where the names sit. */
+/* Project cards: 2 × 2 from 900 px, as on the original site (32 px gap). */
 .card-grid {
   display: grid;
-  gap: var(--section-head) var(--column-gap);
+  gap: var(--space-6);
   padding: 0;
   list-style: none;
 }
@@ -169,5 +169,27 @@
 @media (width >= 56.25rem) {
   .card-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Rows with a decorative mark on the right (home services). */
+.index-rows.with-icon > li > :last-child {
+  display: none;
+}
+
+@media (width >= 64rem) {
+  .index-rows.with-icon h3 {
+    grid-column: 2 / span 4;
+  }
+
+  .index-rows.with-icon p {
+    grid-column: 7 / span 4;
+  }
+
+  .index-rows.with-icon > li > :last-child {
+    display: flex;
+    grid-column: 11 / -1;
+    align-self: center;
+    justify-self: end;
   }
 }
