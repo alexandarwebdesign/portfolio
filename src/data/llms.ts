@@ -88,7 +88,7 @@ ${chapter.text.join('\n\n')}${chapter.list ? '\n\n' + chapter.list.map((item) =>
 export function llmsFull(): string {
   return `${intro}
 
-## ${en.hero.title.join(' ')}
+## ${en.hero.title}
 
 ${en.hero.lead}
 

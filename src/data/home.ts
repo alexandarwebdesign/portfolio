@@ -7,14 +7,9 @@ import creativeCard from '../assets/images/creative-asset.jpg';
 const bg = {
   hero: {
     eyebrow: 'Дизайн и изработка на уебсайтове',
-    title: ['Красивото', 'не стига.'],
-    lead: 'UX психология и прецизен UI, приложени изцяло към уебсайтове. Сайтове, които впечатляват и работят – за бизнеси, които искат клиенти, а не просто визия.',
-    work: 'Вижте проектите',
-    facts: [
-      'UX/UI дизайнер и уеб разработчик',
-      'София · работя с клиенти от цял свят',
-      'Приемам нови проекти',
-    ],
+    title: 'Красивото не стига.',
+    lead: 'UX психология и прецизен UI, приложени изцяло към уебсайтове. Визуално силни, създадени да работят.',
+    cta: 'Започнете проект',
   },
   work: {
     label: 'Избрани проекти',
@@ -65,10 +60,9 @@ const bg = {
 const en: typeof bg = {
   hero: {
     eyebrow: 'Website design & development',
-    title: ['Pretty isn’t', 'enough.'],
-    lead: 'UX psychology meets precise UI craft – applied entirely to websites. Sites that look striking and do their job, for businesses that want clients, not just visuals.',
-    work: 'See the work',
-    facts: ['UX/UI designer & web developer', 'Sofia · working worldwide', 'Taking new projects'],
+    title: 'Pretty Isn’t Enough.',
+    lead: 'UX psychology meets precise UI craft – applied entirely to websites. Visually powerful, built to perform.',
+    cta: 'Start a Project',
   },
   work: {
     label: 'Selected work',

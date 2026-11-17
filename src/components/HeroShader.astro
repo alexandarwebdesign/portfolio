@@ -1,7 +1,8 @@
 ---
-// WebGL atmosphere behind the hero title. The static gradient is the default;
-// the shader starts only after the page has loaded, never with reduced motion
-// or Save-Data, and pauses when the hero is off screen or the tab is hidden.
+// The original site's WebGL shader over the whole hero (same maths, colours,
+// opacity and screen blend). It starts after the page has loaded; with reduced
+// motion it draws one still frame; never with Save-Data or software rendering
+// (a static gradient stays). Pauses off screen or in a hidden tab.
 ---
 
 <div class="hero-shader" aria-hidden="true">
@@ -52,18 +53,18 @@
 
       o = tanhApprox(o / 9000.0);
 
-      // Brand grade: shadows to cobalt, mids to teal, highlights to paper.
+      // Brand grade: shadows to cobalt, mids to teal, highlights to the old paper.
       vec3 raw = clamp(o.rgb, 0.0, 1.0);
       float lum = dot(raw, vec3(0.2126, 0.7152, 0.0722));
       vec3 graded = mix(vec3(0.2, 0.275, 0.863), vec3(0.125, 0.698, 0.667), smoothstep(0.1, 0.62, lum));
-      graded = mix(graded, vec3(0.937, 0.941, 0.945), smoothstep(0.58, 1.0, lum));
+      graded = mix(graded, vec3(0.918, 0.933, 0.953), smoothstep(0.58, 1.0, lum));
       graded = mix(graded, raw, 0.22);
       gl_FragColor = vec4(graded, clamp(max(raw.r, max(raw.g, raw.b)) * 1.02, 0.0, 1.0));
     }
   `;
   const VERTEX = 'attribute vec2 p; void main() { gl_Position = vec4(p, 0.0, 1.0); }';
 
-  function start(box: HTMLElement) {
+  function start(box: HTMLElement, still: boolean) {
     const canvas = box.querySelector('canvas')!;
     const gl = canvas.getContext('webgl', {
       antialias: false,
@@ -118,18 +119,38 @@
       const resolution = gl.getUniformLocation(program, 'iResolution');
       const time = gl.getUniformLocation(program, 'iTime');
 
-      // Render below device resolution: the image is soft, so this is invisible.
+      // Render below device resolution, as the old site did: the image is soft.
       const resize = () => {
+        const w = innerWidth;
         const scale =
           Math.min(devicePixelRatio, 2) *
-          (innerWidth <= 640 ? 0.35 : innerWidth <= 1024 ? 0.5 : 0.7);
+          (w <= 480
+            ? 0.3
+            : w <= 640
+              ? 0.38
+              : w <= 980
+                ? 0.52
+                : w <= 1920
+                  ? 0.7
+                  : w <= 2560
+                    ? 0.85
+                    : 1);
         canvas.width = Math.round(box.clientWidth * scale);
         canvas.height = Math.round(box.clientHeight * scale);
         gl.viewport(0, 0, canvas.width, canvas.height);
         gl.uniform2f(resolution, canvas.width, canvas.height);
+        if (still) gl.drawArrays(gl.TRIANGLES, 0, 6);
       };
       new ResizeObserver(resize).observe(box);
       resize();
+
+      // Reduced motion: one still frame (time 0), no animation loop.
+      if (still) {
+        gl.uniform1f(time, 0);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        box.classList.add('is-ready');
+        return;
+      }
 
       let visible = true;
       let frame = 0;
@@ -171,11 +192,12 @@
   const box = document.querySelector<HTMLElement>('.hero-shader');
   const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
     ?.saveData;
-  if (box && !saveData && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (box && !saveData) {
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const idle = () =>
       'requestIdleCallback' in window
-        ? requestIdleCallback(() => start(box))
-        : setTimeout(() => start(box), 200);
+        ? requestIdleCallback(() => start(box, still))
+        : setTimeout(() => start(box, still), 200);
     if (document.readyState === 'complete') idle();
     else addEventListener('load', idle, { once: true });
   }
@@ -185,35 +207,43 @@
   .hero-shader {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: 0;
     overflow: hidden;
-    /* Static fallback: the shader's palette as a still gradient. */
+    pointer-events: none;
+  }
+
+  /* Static stand-in with the shader's colours, until (or instead of) WebGL. */
+  .hero-shader::before {
+    content: '';
+    position: absolute;
+    inset: 0;
     background:
-      radial-gradient(60% 55% at 78% 70%, rgb(51 70 220 / 0.32), transparent 70%),
-      radial-gradient(45% 40% at 92% 40%, rgb(32 178 170 / 0.22), transparent 70%);
-    /* Keeps the title area clean so text contrast never depends on the shader. */
-    mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+      radial-gradient(70% 30% at 50% 74%, rgb(32 178 170 / 0.2), transparent 70%),
+      radial-gradient(50% 24% at 22% 82%, rgb(51 70 220 / 0.1), transparent 70%),
+      radial-gradient(50% 24% at 80% 80%, rgb(32 178 170 / 0.14), transparent 70%);
+    transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .is-ready::before {
+    opacity: 0;
   }
 
   canvas {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 1.2s var(--ease-out);
+    transform: scale(1.08);
+    filter: blur(14px);
+    mix-blend-mode: screen;
+    transition:
+      opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 1.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Text sits on top on small screens, so the shader stays faint there. */
   .is-ready canvas {
-    opacity: 0.5;
-  }
-
-  @media (width >= 64rem) {
-    .hero-shader {
-      mask-image: linear-gradient(to right, transparent 25%, #000 75%);
-    }
-
-    .is-ready canvas {
-      opacity: 0.8;
-    }
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 </style>

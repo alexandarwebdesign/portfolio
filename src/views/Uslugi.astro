@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import Button from '../components/Button.astro';
+import Hero from '../components/Hero.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import Process from '../components/Process.astro';
 import Faq from '../components/Faq.astro';
@@ -12,20 +13,14 @@ import { site } from '../data/site';
 import { pathFor } from '../i18n/routes';
 ---
 
-<section class="hero">
-  <div class="inner">
-    <p class="eyebrow">{t.hero.eyebrow}</p>
-    <h1>
-      <span>{t.hero.title[0]}</span>
-      <span class="accent">{t.hero.title[1]}</span>
-    </h1>
-    <p class="lead">{t.hero.lead}</p>
-    <div class="actions">
-      <Button href="#contact" arrow>{t.hero.cta}</Button>
-      <p class="muted">{t.hero.reply}</p>
-    </div>
-  </div>
-</section>
+<Hero
+  eyebrow={t.hero.eyebrow}
+  title={t.hero.title.join(' ')}
+  lead={t.hero.lead}
+  cta={t.hero.cta}
+  note={t.hero.reply}
+  compact
+/>
 
 <section class="section raised" aria-labelledby="problem-title">
   <div class="inner">
@@ -150,13 +145,6 @@ import { pathFor } from '../i18n/routes';
 <SmoothScroll />
 
 <style>
-  .hero {
-    display: flex;
-    align-items: end;
-    min-height: 88svh;
-    padding: calc(var(--space-9) + var(--space-4)) var(--margin) var(--space-8);
-  }
-
   .section {
     padding: var(--section) var(--margin);
   }
@@ -173,38 +161,9 @@ import { pathFor } from '../i18n/routes';
     margin-inline: auto;
   }
 
-  .hero .inner {
-    justify-items: start;
-  }
-
-  .eyebrow {
-    color: var(--fg-muted);
-    font-size: var(--text-label);
-    font-weight: 500;
-    letter-spacing: var(--tracking-label);
-  }
-
-  h1 {
-    display: grid;
-    max-width: 18ch;
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-  }
-
-  .accent {
-    color: var(--accent);
-  }
-
   .lead {
     max-width: 38rem;
     font-size: var(--text-lead);
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--space-4);
   }
 
   .muted {

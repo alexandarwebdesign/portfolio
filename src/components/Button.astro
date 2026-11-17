@@ -3,14 +3,22 @@ import type { HTMLAttributes } from 'astro/types';
 
 type Props = {
   variant?: 'primary' | 'secondary';
+  /** large: the hero call to action of the original site. */
+  size?: 'default' | 'large';
   arrow?: boolean;
 } & (
   | ({ href: string } & Omit<HTMLAttributes<'a'>, 'href'>)
   | ({ href?: undefined } & HTMLAttributes<'button'>)
 );
 
-const { variant = 'primary', arrow = false, class: className, ...rest } = Astro.props;
-const classes = ['button', variant, className];
+const {
+  variant = 'primary',
+  size = 'default',
+  arrow = false,
+  class: className,
+  ...rest
+} = Astro.props;
+const classes = ['button', variant, { large: size === 'large' }, className];
 ---
 
 {
@@ -71,6 +79,38 @@ const classes = ['button', variant, className];
     border-color: var(--fg);
     background-color: var(--fg);
     color: var(--bg);
+  }
+  /* 18 px label, 18 × 36 px padding, soft accent shadow, lift on hover. */
+  .large {
+    padding: 1.125rem 2.25rem;
+    font-size: 1.125rem;
+    letter-spacing: 0.015rem; /* 0.24 px */
+    line-height: 1.5;
+    box-shadow:
+      0 8px 18px rgb(51 70 220 / 0.2),
+      inset 0 1px 0 rgb(255 255 255 / 0.16);
+    transition:
+      background-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+  .large.primary:hover {
+    background-color: #2737c4;
+    color: var(--on-accent);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 12px 24px rgb(51 70 220 / 0.26),
+      inset 0 1px 0 rgb(255 255 255 / 0.2);
+  }
+  @media (width <= 37.5rem) {
+    .large {
+      padding: 0.875rem 1.75rem; /* 14 × 28 */
+      font-size: 1rem;
+    }
+  }
+  .large:active {
+    transform: none;
+    transition-duration: 80ms;
   }
   .arrow {
     flex: none;

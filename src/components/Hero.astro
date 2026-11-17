@@ -1,149 +1,143 @@
 ---
+// The hero from the original site, 1:1: centred eyebrow, one-line title,
+// subtitle and a single call to action over the full-bleed shader.
 import Button from './Button.astro';
 import HeroShader from './HeroShader.astro';
-import { ui, type Lang } from '../i18n/ui';
-import { home } from '../data/home';
 
 interface Props {
-  lang: Lang;
+  eyebrow: string;
+  title: string;
+  lead: string;
+  cta: string;
+  href?: string;
+  /** Short line under the button (reply time). */
+  note?: string;
+  /** Long titles (the /uslugi offer) use the smaller size of the old offer page. */
+  compact?: boolean;
 }
 
-const { lang } = Astro.props;
-const t = home[lang].hero;
-const [first, second] = t.title;
+const { eyebrow, title, lead, cta, href = '#contact', note, compact = false } = Astro.props;
 ---
 
-<section class="hero">
+<section class:list={['hero', { compact }]}>
   <HeroShader />
-  <div class="inner">
-    <p class="eyebrow">{t.eyebrow}</p>
-    <h1>
-      <span>{first}</span>
-      <span class="offset">{second}</span>
-    </h1>
-    <div class="intro">
-      <p class="lead">{t.lead}</p>
-      <div class="actions">
-        <Button href="#contact" arrow>{ui[lang].cta}</Button>
-        <Button href="#work" variant="secondary">{t.work}</Button>
-      </div>
-    </div>
-    <ul class="facts">
-      {
-        t.facts.map((fact, i) => (
-          <li class:list={{ available: i === t.facts.length - 1 }}>{fact}</li>
-        ))
-      }
-    </ul>
+  <div class="content">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1 class="title">{title}</h1>
+    <p class="subtitle">{lead}</p>
+    <Button {href} size="large" class="cta">{cta}</Button>
+    {note && <p class="note">{note}</p>}
   </div>
 </section>
 
 <style>
+  /* Values are the old site's: px in comments. */
   .hero {
     position: relative;
     isolation: isolate;
     display: flex;
+    align-items: center;
+    justify-content: center;
     min-height: 100svh;
-    padding: calc(var(--space-9) + var(--space-4)) var(--margin) var(--space-7);
+    padding-block: 7.5rem 5rem; /* 120 / 80 */
+    overflow: hidden;
+    text-align: center;
+    /* The shader thins out into the next section. */
+    mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
   }
 
-  .inner {
-    display: grid;
-    align-content: end;
-    gap: var(--space-6);
-    width: 100%;
-    max-width: var(--container);
-    margin-inline: auto;
+  .content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 72.5rem; /* 1160 */
+    padding-inline: 1.5rem; /* 24 */
   }
 
   .eyebrow {
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Eyebrow → title tight, title → subtitle moderate, subtitle → CTA generous. */
+  .title {
+    max-width: 80rem;
+    margin-top: 0.75rem; /* 12 */
+    font-size: clamp(3rem, 5vw + 1rem, 6rem); /* 48 → 96 */
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle {
+    max-width: 32rem; /* 512 */
+    margin-top: 1.5rem; /* 24 */
     color: var(--fg-muted);
-    font-size: var(--text-label);
-    font-weight: 500;
-    letter-spacing: var(--tracking-label);
+    /* 20 → 24, ×1.02: the old Manrope had size-adjust 102 %, so lines break the same. */
+    font-size: clamp(1.275rem, 1.428vw, 1.53rem);
+    line-height: 1.6;
   }
 
-  h1 {
-    display: grid;
-    font-size: var(--text-hero);
-    line-height: var(--leading-display);
-    text-wrap: nowrap;
+  .content :global(.cta) {
+    margin-top: 2.5rem; /* 40 */
   }
 
-  .offset {
-    padding-inline-start: 0.5em;
-  }
-
-  .intro {
-    display: grid;
-    gap: var(--space-5);
-    max-width: 36rem;
-  }
-
-  .lead {
-    font-size: var(--text-lead);
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-
-  /* Legible over the shader. */
-  .actions :global(.secondary) {
-    background-color: color-mix(in srgb, var(--paper-raised) 80%, transparent);
-  }
-
-  .facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2) var(--space-5);
-    padding: var(--space-4) 0 0;
-    border-top: var(--hairline);
+  .note {
+    margin-top: 1.5rem;
     color: var(--fg-muted);
-    font-size: var(--text-small);
-    list-style: none;
+    font-size: 1rem;
   }
 
-  .available {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    color: var(--fg);
+  .compact .title {
+    max-width: 17.75em; /* the old 22ch, measured in Marcellus */
+    font-size: clamp(2.25rem, 3.6vw + 0.75rem, 5rem); /* 36 → 80 */
   }
 
-  .available::before {
-    content: '';
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 50%;
-    background-color: #1f9d55;
-    box-shadow: 0 0 0 3px rgb(31 157 85 / 0.2);
+  /*
+   * Staggered rise on load. The title and the button move without fading, so
+   * the title is painted at once (LCP) and the white-on-blue label never
+   * passes through a low-contrast frame. Reduced motion: instant (base.css).
+   */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+    }
   }
 
-  @media (width >= 64rem) {
-    .hero {
-      padding-top: var(--space-10);
+  @keyframes rise-solid {
+    from {
+      translate: 0 1.5rem;
     }
+  }
 
-    .offset {
-      padding-inline-start: 1.2em;
-    }
+  .content > * {
+    animation: rise 0.8s cubic-bezier(0.55, 0, 0.1, 1) both;
+  }
 
-    .intro {
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: var(--space-7);
-      max-width: none;
-    }
+  .eyebrow {
+    animation-delay: 0.05s;
+  }
 
-    .lead {
-      max-width: 34rem;
-    }
+  .title {
+    animation-name: rise-solid;
+    animation-delay: 0.15s;
+  }
 
-    .facts {
-      justify-content: space-between;
-    }
+  .subtitle {
+    animation-delay: 0.28s;
+  }
+
+  .content > :global(.cta) {
+    animation: rise-solid 0.8s cubic-bezier(0.55, 0, 0.1, 1) 0.4s both;
+  }
+
+  .note {
+    animation-delay: 0.48s;
   }
 </style>
