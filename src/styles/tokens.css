@@ -11,15 +11,20 @@
  */
 
 :root {
-  /* Palette */
-  --paper: #eff0f1;
-  --paper-raised: #f8f8f9;
-  --ink: #141517;
-  --ink-raised: #1d1e22;
-  --ink-muted: #585b63; /* 5.9:1 on paper */
-  --mist: #eceef0;
-  --mist-muted: #a2a6ae; /* 7.5:1 on ink */
-  --cobalt: #3346dc; /* 6.0:1 on paper, white text on it 6.9:1 */
+  /*
+   * Palette. The neutrals carry no hue (R = G = B) and never reach pure black
+   * or white. Depth comes from lightness, never from shadows: a surface that
+   * sits above another is lighter on paper and lighter on ink.
+   */
+  --paper: #efefef;
+  --paper-raised: #f7f7f7;
+  --paper-sunken: #e4e4e4;
+  --ink: #141414;
+  --ink-raised: #222222;
+  --ink-muted: #5a5a5a; /* 6.0:1 on paper, 5.4:1 on paper-sunken */
+  --mist: #ededed;
+  --mist-muted: #a3a3a3; /* 7.3:1 on ink */
+  --cobalt: #3346dc; /* 6.0:1 on paper, near-white text on it 6.7:1 */
   --cobalt-light: #97a3ff; /* 7.9:1 on ink */
   --red: #b3261e;
   --red-light: #ff8a80;
@@ -29,10 +34,11 @@
   --bg-raised: var(--paper-raised);
   --fg: var(--ink);
   --fg-muted: var(--ink-muted);
-  --line: rgb(20 21 23 / 0.14);
-  --line-strong: rgb(20 21 23 / 0.45);
+  --bg-sunken: var(--paper-sunken);
+  --line: rgb(20 20 20 / 0.14);
+  --line-strong: rgb(20 20 20 / 0.45);
   --accent: var(--cobalt);
-  --on-accent: #ffffff;
+  --on-accent: #fafafa;
   --error: var(--red);
   --focus: var(--cobalt);
 
@@ -103,10 +109,13 @@
   --stack: clamp(1.25rem, 1vw + 1rem, 2.25rem);
   --top-clear: calc(var(--space-9) + var(--space-4)); /* below the fixed header */
 
-  /* Shape */
-  --radius-sm: 0.5rem;
-  --radius: 0.875rem;
-  --radius-pill: 999px;
+  /*
+   * Shape: almost square, only softened. Circles stay only where the shape is
+   * the meaning (dots, the globe, note markers).
+   * Shadow: exactly one in the whole site, on the primary button (Button.astro).
+   */
+  --radius-sm: 0.125rem; /* 2 */
+  --radius: 0.25rem; /* 4 */
   --hairline: 1px solid var(--line);
   --target: 2.75rem; /* 44px minimum touch target */
 
@@ -123,8 +132,9 @@
   --bg-raised: var(--ink-raised);
   --fg: var(--mist);
   --fg-muted: var(--mist-muted);
-  --line: rgb(236 238 240 / 0.16);
-  --line-strong: rgb(236 238 240 / 0.5);
+  --bg-sunken: #0d0d0d;
+  --line: rgb(237 237 237 / 0.16);
+  --line-strong: rgb(237 237 237 / 0.5);
   --accent: var(--cobalt-light);
   --on-accent: var(--ink);
   --error: var(--red-light);

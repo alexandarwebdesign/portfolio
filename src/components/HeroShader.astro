@@ -53,11 +53,11 @@
 
       o = tanhApprox(o / 9000.0);
 
-      // Brand grade: shadows to cobalt, mids to teal, highlights to the old paper.
+      // Brand grade: shadows to cobalt, mids to teal, highlights to the neutral paper.
       vec3 raw = clamp(o.rgb, 0.0, 1.0);
       float lum = dot(raw, vec3(0.2126, 0.7152, 0.0722));
       vec3 graded = mix(vec3(0.2, 0.275, 0.863), vec3(0.125, 0.698, 0.667), smoothstep(0.1, 0.62, lum));
-      graded = mix(graded, vec3(0.918, 0.933, 0.953), smoothstep(0.58, 1.0, lum));
+      graded = mix(graded, vec3(0.937), smoothstep(0.58, 1.0, lum));
       graded = mix(graded, raw, 0.22);
       gl_FragColor = vec4(graded, clamp(max(raw.r, max(raw.g, raw.b)) * 1.02, 0.0, 1.0));
     }

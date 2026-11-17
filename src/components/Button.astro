@@ -52,7 +52,7 @@ const classes = ['button', variant, { large: size === 'large' }, className];
     min-height: var(--target);
     padding: var(--space-2) var(--space-5);
     border: 1px solid transparent;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius);
     font-size: var(--text-small);
     font-weight: 600;
     line-height: 1.2;
@@ -61,56 +61,55 @@ const classes = ['button', variant, { large: size === 'large' }, className];
     transition:
       background-color var(--dur-fast) var(--ease-out),
       color var(--dur-fast) var(--ease-out),
-      border-color var(--dur-fast) var(--ease-out);
+      border-color var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
   }
+
+  /*
+   * The primary button is the only element in the site with a shadow; every
+   * other surface gets its depth from lightness alone.
+   */
   .primary {
+    --lift: 0 6px 14px rgb(51 70 220 / 0.22);
+
     background-color: var(--accent);
     color: var(--on-accent);
+    box-shadow: var(--lift);
   }
   .primary:hover {
-    background-color: var(--fg);
-    color: var(--bg);
+    --lift: 0 10px 22px rgb(51 70 220 / 0.28);
+
+    background-color: color-mix(in oklab, var(--accent), var(--fg) 16%);
+    color: var(--on-accent);
+    transform: translateY(-2px);
+  }
+  .primary:active {
+    transform: none;
+    transition-duration: 80ms;
   }
   .secondary {
     border-color: var(--line-strong);
     color: var(--fg);
+    box-shadow: none;
   }
   .secondary:hover {
     border-color: var(--fg);
     background-color: var(--fg);
     color: var(--bg);
   }
-  /* 18 px label, 18 × 36 px padding, soft accent shadow, lift on hover. */
+  /* 18 px label, 18 × 36 px padding: the hero call to action. */
   .large {
     padding: 1.125rem 2.25rem;
     font-size: 1.125rem;
     letter-spacing: 0.015rem; /* 0.24 px */
     line-height: 1.5;
-    box-shadow:
-      0 8px 18px rgb(51 70 220 / 0.2),
-      inset 0 1px 0 rgb(255 255 255 / 0.16);
-    transition:
-      background-color var(--dur-fast) var(--ease-out),
-      box-shadow var(--dur-fast) var(--ease-out),
-      transform var(--dur-fast) var(--ease-out);
-  }
-  .large.primary:hover {
-    background-color: #2737c4;
-    color: var(--on-accent);
-    transform: translateY(-2px) scale(1.02);
-    box-shadow:
-      0 12px 24px rgb(51 70 220 / 0.26),
-      inset 0 1px 0 rgb(255 255 255 / 0.2);
   }
   @media (width <= 37.5rem) {
     .large {
       padding: 0.875rem 1.75rem; /* 14 × 28 */
       font-size: 1rem;
     }
-  }
-  .large:active {
-    transform: none;
-    transition-duration: 80ms;
   }
   .arrow {
     flex: none;

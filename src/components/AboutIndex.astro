@@ -129,7 +129,10 @@ const { facts } = Astro.props;
     }
   }
 
-  /* Small turning globe drawn with borders. */
+  /*
+   * Small turning globe. Its lines are drawn with hard inset box-shadows (no
+   * blur, accent colour): strokes, not shadows.
+   */
   .globe {
     position: relative;
     flex-shrink: 0;

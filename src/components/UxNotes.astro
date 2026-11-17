@@ -110,7 +110,7 @@ const t = ui[lang].caseStudy;
     position: relative;
     width: 2.5rem;
     height: 1.5rem;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius);
     background-color: var(--line-strong);
     transition: background-color var(--dur-fast) var(--ease-out);
   }
@@ -122,7 +122,7 @@ const t = ui[lang].caseStudy;
     left: 0.1875rem;
     width: 1.125rem;
     height: 1.125rem;
-    border-radius: 50%;
+    border-radius: var(--radius-sm);
     background-color: var(--bg);
     transition: translate var(--dur-fast) var(--ease-out);
   }
@@ -178,11 +178,10 @@ const t = ui[lang].caseStudy;
     width: 2rem;
     height: 2rem;
     border-radius: 50% 50% 50% 0;
+    /* A light ring separates the marker from the screenshot; no shadow. */
+    outline: 3px solid var(--paper-raised);
     background-color: var(--cobalt);
-    color: #fff;
-    box-shadow:
-      0 0 0 3px rgb(255 255 255 / 0.9),
-      0 6px 16px -4px rgb(20 21 23 / 0.5);
+    color: var(--on-accent);
   }
 
   .marker:hover {
