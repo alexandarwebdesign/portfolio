@@ -4,6 +4,7 @@ import Button from '../components/Button.astro';
 import AboutIndex from '../components/AboutIndex.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import ConceptStrip from '../components/ConceptStrip.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 import portrait from '../assets/images/portrait.jpg';
 import { about } from '../data/about';
@@ -51,7 +52,7 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
   </div>
 </section>
 
-<section class="section dark" aria-labelledby="about-work">
+<section class="section raised" aria-labelledby="about-work">
   <div class="container">
     <header class="section-head">
       <h2 id="about-work">{t.work}</h2>
@@ -73,6 +74,8 @@ const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`
     </ul>
   </div>
 </section>
+
+<ConceptStrip {lang} />
 
 <SmoothScroll />
 

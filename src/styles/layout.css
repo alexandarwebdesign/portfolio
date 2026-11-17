@@ -158,10 +158,10 @@
   }
 }
 
-/* Project cards: 2 × 2 from 900 px, as on the original site (32 px gap). */
+/* Project cards: 2 × 2 from 900 px; more air between rows, where the names sit. */
 .card-grid {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--section-head) var(--column-gap);
   padding: 0;
   list-style: none;
 }

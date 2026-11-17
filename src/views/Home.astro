@@ -4,6 +4,7 @@ import Hero from '../components/Hero.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Marquee from '../components/Marquee.astro';
+import ConceptStrip from '../components/ConceptStrip.astro';
 import Process from '../components/Process.astro';
 import Faq from '../components/Faq.astro';
 import BriefBuilder from '../components/BriefBuilder.astro';
@@ -32,7 +33,7 @@ const shapes = ['circle', 'triangle', 'hexagon'] as const;
 
 <Hero {...t.hero} />
 
-<section id="work" class="section dark" aria-labelledby="work-title">
+<section id="work" class="section" aria-labelledby="work-title">
   <div class="container">
     <header class="section-head" data-reveal>
       <SectionLabel>{t.work.label}</SectionLabel>
@@ -54,6 +55,8 @@ const shapes = ['circle', 'triangle', 'hexagon'] as const;
     </ul>
   </div>
 </section>
+
+<ConceptStrip {lang} raised />
 
 <Marquee label={t.industries.label} items={t.industries.items} />
 
