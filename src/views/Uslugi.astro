@@ -102,14 +102,16 @@ import { pathFor } from '../i18n/routes';
       <h2 id="proof-title">{t.proof.title}</h2>
     </header>
     <a class="proof-card" href={pathFor('birse', 'bg')}>
-      <Picture
-        src={birseCard}
-        formats={['avif', 'webp']}
-        widths={[480, 800, 1200]}
-        sizes="(width >= 64rem) 55vw, 100vw"
-        alt=""
-        loading="lazy"
-      />
+      <span class="proof-media reveal-media">
+        <Picture
+          src={birseCard}
+          formats={['avif', 'webp']}
+          widths={[480, 800, 1200]}
+          sizes="(width >= 64rem) 55vw, 100vw"
+          alt=""
+          loading="lazy"
+        />
+      </span>
       <span class="proof-text">
         <span class="name">Birsé <span class="muted">· {t.proof.category}</span></span>
         <span class="muted">{t.proof.text}</span>
@@ -218,11 +220,16 @@ import { pathFor } from '../i18n/routes';
     text-decoration: none;
   }
 
+  .proof-media {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+
   .proof-card :global(img) {
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: var(--radius);
   }
 
   .proof-text {
@@ -270,7 +277,7 @@ import { pathFor } from '../i18n/routes';
       grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
     }
 
-    .proof-card :global(picture) {
+    .proof-media {
       grid-column: 1 / span 7;
     }
 

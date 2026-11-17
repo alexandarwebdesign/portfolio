@@ -14,7 +14,7 @@ const { items, narrow = false } = Astro.props;
 <ul class:list={['gallery', { narrow }]}>
   {
     items.map((item) => (
-      <li>
+      <li class="reveal-media">
         <Picture
           src={item.image}
           formats={['avif', 'webp']}
@@ -36,10 +36,14 @@ const { items, narrow = false } = Astro.props;
     list-style: none;
   }
 
-  .gallery :global(img) {
-    width: 100%;
+  .gallery li {
+    overflow: hidden;
     border: var(--hairline);
     border-radius: var(--radius);
+  }
+
+  .gallery :global(img) {
+    width: 100%;
   }
 
   .narrow {
