@@ -104,3 +104,56 @@
     align-self: start;
   }
 }
+
+/*
+ * Numbered rows (services, what is included): number · title · text on one
+ * line of the 12-column grid, separated by hairlines.
+ */
+.index-rows {
+  padding: 0;
+  list-style: none;
+  border-bottom: var(--hairline);
+}
+
+.index-rows > li {
+  display: grid;
+  gap: var(--space-3) var(--column-gap);
+  padding-block: var(--stack);
+  border-top: var(--hairline);
+}
+
+.index-rows .index {
+  color: var(--accent);
+  font-size: var(--text-small);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.index-rows h3 {
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+}
+
+.index-rows p {
+  max-width: var(--measure);
+  color: var(--fg-muted);
+}
+
+@media (width >= 64rem) {
+  .index-rows > li {
+    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+    align-items: baseline;
+  }
+
+  .index-rows .index {
+    grid-column: 1;
+  }
+
+  .index-rows h3 {
+    grid-column: 2 / span 5;
+  }
+
+  .index-rows p {
+    grid-column: 8 / -1;
+  }
+}

@@ -18,7 +18,7 @@ const { label, items } = Astro.props;
 <style>
   .marquee {
     overflow: hidden;
-    padding-block: var(--space-6);
+    padding-block: var(--stack);
     border-block: var(--hairline);
   }
 
@@ -67,9 +67,15 @@ const { label, items } = Astro.props;
 
   /* Without motion the list simply wraps. */
   @media (prefers-reduced-motion: reduce) {
-    .track {
-      width: auto;
+    .marquee {
       padding-inline: var(--margin);
+    }
+
+    /* Aligned with the content of the other sections. */
+    .track {
+      width: 100%;
+      max-width: var(--container);
+      margin-inline: auto;
       animation: none;
     }
 

@@ -29,8 +29,8 @@ const t = home[lang];
 <Hero {...t.hero} />
 
 <section id="work" class="section dark" aria-labelledby="work-title">
-  <div class="inner">
-    <header class="head" data-reveal>
+  <div class="container">
+    <header class="section-head" data-reveal>
       <SectionLabel>{t.work.label}</SectionLabel>
       <h2 id="work-title">{t.work.title}</h2>
     </header>
@@ -54,19 +54,19 @@ const t = home[lang];
 <Marquee label={t.industries.label} items={t.industries.items} />
 
 <section id="services" class="section" aria-labelledby="services-title">
-  <div class="inner">
-    <header class="head" data-reveal>
+  <div class="container">
+    <header class="section-head" data-reveal>
       <SectionLabel>{t.services.label}</SectionLabel>
-      <h2 id="services-title" class="split">
+      <h2 id="services-title" class="title-split">
         <span>{t.services.title[0]}</span>
-        <span class="offset">{t.services.title[1]}</span>
+        <span>{t.services.title[1]}</span>
       </h2>
     </header>
-    <ol class="services">
+    <ol class="index-rows">
       {
         services[lang].map((service, i) => (
           <li data-reveal>
-            <SectionLabel index={i + 1}>{''}</SectionLabel>
+            <span class="index">{String(i + 1).padStart(2, '0')}</span>
             <h3>{service.title}</h3>
             <p>{service.text}</p>
           </li>
@@ -77,8 +77,8 @@ const t = home[lang];
 </section>
 
 <section id="process" class="section raised" aria-labelledby="process-title">
-  <div class="inner">
-    <header class="head" data-reveal>
+  <div class="container split">
+    <header class="section-head sticky" data-reveal>
       <SectionLabel>{t.process.label}</SectionLabel>
       <h2 id="process-title">{t.process.title}</h2>
     </header>
@@ -87,28 +87,28 @@ const t = home[lang];
 </section>
 
 <section id="about" class="section" aria-labelledby="about-title">
-  <div class="inner about">
+  <div class="container split about">
     <Picture
       src={portrait}
       formats={['avif', 'webp']}
       widths={[400, 640, 960]}
-      sizes="(width >= 64rem) 28rem, 100vw"
+      sizes="(width >= 64rem) 34vw, 100vw"
       alt={t.about.alt}
       loading="lazy"
       class="portrait"
     />
     <div class="about-text" data-reveal>
       <SectionLabel>{t.about.label}</SectionLabel>
-      <h2 id="about-title">{t.about.title}</h2>
+      <h2 id="about-title" class="title-display">{t.about.title}</h2>
       <p class="lead">{t.about.text}</p>
       <Button href={pathFor('about', lang)} variant="secondary" arrow>{t.about.link}</Button>
     </div>
   </div>
 </section>
 
-<section id="faq" class="section" aria-labelledby="faq-title">
-  <div class="inner split-grid">
-    <header class="head" data-reveal>
+<section id="faq" class="section raised" aria-labelledby="faq-title">
+  <div class="container split">
+    <header class="section-head" data-reveal>
       <SectionLabel>{t.faq.label}</SectionLabel>
       <h2 id="faq-title">{t.faq.title}</h2>
     </header>
@@ -116,13 +116,13 @@ const t = home[lang];
   </div>
 </section>
 
-<section id="contact" class="section raised" aria-labelledby="contact-title">
-  <div class="inner split-grid">
-    <header class="head">
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="container split">
+    <header class="section-head">
       <SectionLabel>{t.contact.label}</SectionLabel>
-      <h2 id="contact-title" class="split">
+      <h2 id="contact-title" class="title-split">
         <span>{t.contact.title[0]}</span>
-        <span class="offset">{t.contact.title[1]}</span>
+        <span>{t.contact.title[1]}</span>
       </h2>
       <p class="lead">{t.contact.lead}</p>
       <p class="muted">{t.contact.reply}</p>
@@ -138,76 +138,14 @@ const t = home[lang];
 <SmoothScroll />
 
 <style>
-  .section {
-    padding: var(--section) var(--margin);
-  }
-
-  .raised {
-    background-color: var(--bg-raised);
-  }
-
-  .inner {
-    max-width: var(--container);
-    margin-inline: auto;
-  }
-
-  .head {
-    display: grid;
-    gap: var(--space-4);
-    margin-bottom: var(--space-8);
-  }
-
-  h2 {
-    font-size: var(--text-display);
-    line-height: var(--leading-display);
-  }
-
-  .split {
-    display: grid;
-  }
-
-  .offset {
-    padding-inline-start: 0.6em;
-  }
-
-  .lead {
-    font-size: var(--text-lead);
-  }
-
-  .muted {
-    color: var(--fg-muted);
-  }
-
   .rows {
     padding: 0;
     list-style: none;
     border-bottom: var(--hairline);
   }
 
-  .services {
-    display: grid;
-    gap: var(--space-7);
-    padding: 0;
-    list-style: none;
-  }
-
-  .services li {
-    display: grid;
-    align-content: start;
-    gap: var(--space-4);
-  }
-
-  .services h3 {
-    font-size: var(--text-title);
-  }
-
-  .services p {
-    color: var(--fg-muted);
-  }
-
   .about {
-    display: grid;
-    gap: var(--space-7);
+    align-items: center;
   }
 
   .about :global(.portrait) {
@@ -220,40 +158,14 @@ const t = home[lang];
 
   .about-text {
     display: grid;
-    align-content: center;
     justify-items: start;
     gap: var(--space-5);
     max-width: 40rem;
   }
 
-  .split-grid {
-    display: grid;
-    gap: var(--space-6);
-  }
-
-  .split-grid .head {
-    align-content: start;
-    margin-bottom: 0;
-  }
-
   @media (width >= 64rem) {
-    .services {
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-6);
-    }
-
-    .about {
-      grid-template-columns: 28rem 1fr;
-      gap: var(--space-9);
-    }
-
-    .split-grid {
-      grid-template-columns: 5fr 7fr;
-      gap: var(--space-9);
-    }
-
-    .split-grid h2 {
-      font-size: var(--text-heading);
+    .about :global(.portrait) {
+      max-width: none;
     }
   }
 </style>
