@@ -32,6 +32,7 @@ const bg = {
   services: {
     label: 'Услуги',
     title: ['От стратегията', 'до работещия сайт.'],
+    cta: 'Да работим заедно',
   },
   process: {
     label: 'Процес',
@@ -85,6 +86,7 @@ const en: typeof bg = {
   services: {
     label: 'Services',
     title: ['From strategy', 'to live site.'],
+    cta: 'Let’s work together',
   },
   process: {
     label: 'Process',

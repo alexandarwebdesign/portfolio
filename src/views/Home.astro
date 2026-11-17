@@ -9,6 +9,7 @@ import Faq from '../components/Faq.astro';
 import BriefBuilder from '../components/BriefBuilder.astro';
 import Button from '../components/Button.astro';
 import AboutIndex from '../components/AboutIndex.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
 import SmoothScroll from '../components/SmoothScroll.astro';
 import portrait from '../assets/images/portrait.jpg';
 import { home, work } from '../data/home';
@@ -26,6 +27,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = home[lang];
+const shapes = ['circle', 'triangle', 'hexagon'] as const;
 ---
 
 <Hero {...t.hero} />
@@ -64,17 +66,21 @@ const t = home[lang];
         <span>{t.services.title[1]}</span>
       </h2>
     </header>
-    <ol class="index-rows">
+    <ol class="index-rows with-icon">
       {
         services[lang].map((service, i) => (
           <li data-reveal>
             <span class="index">{String(i + 1).padStart(2, '0')}</span>
             <h3>{service.title}</h3>
             <p>{service.text}</p>
+            <ServiceIcon shape={shapes[i % shapes.length]} />
           </li>
         ))
       }
     </ol>
+    <div class="services-cta">
+      <Button href="#contact" size="large">{t.services.cta}</Button>
+    </div>
   </div>
 </section>
 
@@ -145,6 +151,12 @@ const t = home[lang];
 <SmoothScroll />
 
 <style>
+  .services-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--section-head);
+  }
+
   /* The original about block: small round portrait, bio and link, index beside. */
   .about {
     align-items: center;
