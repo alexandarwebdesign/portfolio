@@ -2458,10 +2458,10 @@ body.is-loaded .hero-note {
 
     .process__step {
       grid-area: 1 / 1;
-      width: 84vw;
-      height: 78svh;
+      width: 100%;
+      height: 100svh;
       margin: 0;
-      border-radius: var(--border-radius);
+      border-radius: 0;
       overflow: hidden;
       background: #101010;
     }
