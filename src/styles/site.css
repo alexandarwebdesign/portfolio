@@ -5207,6 +5207,7 @@ html.js.reveal-failsafe .reveal {
   text-wrap: balance;
   text-align: center;
   color: var(--color-text);
+  padding-inline: 4%; /* here, not on the ring, so cqw below is the ring's full width */
 }
 
 /* a circle around the whole sentence */
@@ -5219,7 +5220,6 @@ html.js.reveal-failsafe .reveal {
   aspect-ratio: 1;
   display: grid;
   place-content: center;
-  padding-inline: 4%;
 }
 
 /* the circle is made of short lines, each one pointing at the centre */
