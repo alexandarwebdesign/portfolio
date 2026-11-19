@@ -2330,7 +2330,8 @@ body.is-loaded .hero-note {
 /* --------------------------------------------------------------------------
    Process: full-bleed band per step, name left, one sentence right
    -------------------------------------------------------------------------- */
-.process {
+.process.stage {
+  background: #ffffff; /* pure white by request, the only place */
   padding-bottom: var(--section-gap);
 }
 
