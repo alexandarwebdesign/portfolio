@@ -2,7 +2,6 @@
 // The original home page: hero over the shader, 2 × 2 work, the image
 // marquee, about, services, FAQ and the contact form.
 import { Picture } from 'astro:assets';
-import HeroShader from '../components/HeroShader.astro';
 import Button from '../components/Button.astro';
 import WorkCard from '../components/WorkCard.astro';
 import Process from '../components/Process.astro';
@@ -42,11 +41,12 @@ const columns = [
 ];
 ---
 
-<section id="hero" class="hero-section hero-section--shader">
-  <HeroShader />
-  <div class="hero-content">
+<section id="hero" class="hero-section hero-stage stage">
+  <div class="hero-content container">
     <p class="hero-eyebrow">{t.hero.eyebrow}</p>
     <h1 class="hero-title">{t.hero.title}</h1>
+    {/* Grey placeholder until the picture exists: 4:5, one blue, neutral grey ground. */}
+    <div class="hero-picture" aria-hidden="true"></div>
     <p class="hero-subtitle">{t.hero.lead}</p>
     <Button href="#contact" class="hero-cta" data-focus-target="#name">{t.hero.cta}</Button>
   </div>

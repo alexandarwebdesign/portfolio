@@ -1458,6 +1458,79 @@ textarea:focus-visible {
   margin-top: var(--space-10); /* subtitle → CTA: generous, action needs room */
 }
 
+/* Home hero on the dark stage: title left, a framed picture in the middle,
+   the sentence and the button right (one column on phones). */
+.hero-stage {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.hero-stage .hero-content {
+  width: 100%;
+  max-width: var(--container);
+  align-items: center;
+  text-align: center;
+}
+
+.hero-stage .hero-title,
+.hero-stage .hero-subtitle {
+  text-align: inherit;
+}
+
+.hero-stage .hero-title {
+  font-size: clamp(40px, 4.4vw, 80px);
+}
+
+.hero-picture {
+  width: min(62vw, 280px);
+  aspect-ratio: 4 / 5;
+  margin-top: var(--space-8);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+}
+
+@media (min-width: 900px) {
+  .hero-stage .hero-content {
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 22vw) 1fr;
+    grid-template-areas:
+      'eyebrow picture .'
+      'title picture lead'
+      'title picture cta';
+    grid-template-rows: auto 1fr auto;
+    column-gap: clamp(24px, 4vw, 72px);
+    text-align: left;
+  }
+
+  .hero-stage .hero-eyebrow {
+    grid-area: eyebrow;
+  }
+
+  .hero-stage .hero-title {
+    grid-area: title;
+    align-self: center;
+  }
+
+  .hero-picture {
+    grid-area: picture;
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .hero-stage .hero-subtitle {
+    grid-area: lead;
+    align-self: end;
+    margin-top: 0;
+  }
+
+  .hero-stage .hero-cta {
+    grid-area: cta;
+    justify-self: start;
+    margin-top: var(--space-8);
+  }
+}
+
 /* The shader canvas behind the hero uses mix-blend-mode: screen. That blend
    leaks into axe-core's background computation for the CTA, so the audit
    composites the white label over the shader tint instead of the button's
