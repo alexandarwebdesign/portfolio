@@ -39,8 +39,13 @@ const count = String(work.length).padStart(2, '0');
     <h1 class="hero-title">{t.hero.title}</h1>
     <p class="hero-subtitle">{t.hero.lead}</p>
     <Button href="#contact" class="hero-cta" data-focus-target="#name">{t.hero.cta}</Button>
-    <p class="hero-note hero-proof">
-      {t.hero.proof} · <a href="#work">{t.hero.proofLink}</a>
+  </div>
+</section>
+
+<section class="statement-section">
+  <div class="container">
+    <p class="statement reveal">
+      {t.statement.before}<mark class="statement-mark">{t.statement.mark}</mark>{t.statement.after}
     </p>
   </div>
 </section>

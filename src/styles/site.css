@@ -4783,6 +4783,37 @@ html:lang(bg) {
   text-wrap: balance;
 }
 
+/* One-sentence statement after the hero, with the key phrase marked */
+.statement-section {
+  padding-block: var(--section-gap);
+}
+
+.statement {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.3vw, 56px);
+  line-height: 1.18;
+  letter-spacing: var(--tracking-display);
+  text-wrap: balance;
+  color: var(--color-text);
+}
+
+@media (min-width: 900px) {
+  .statement {
+    margin-left: 16.66%;
+    max-width: 58%;
+  }
+}
+
+.statement-mark {
+  background: var(--color-accent);
+  color: var(--color-white);
+  padding: 0.02em 0.22em;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
 .hero-proof a {
   display: inline-block;
   padding-block: 12px;

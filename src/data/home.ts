@@ -10,8 +10,11 @@ const bg = {
     title: 'Красивото не стига.',
     lead: 'UX психология и прецизен UI в уебсайтове за малки и средни бизнеси. Визуално силни, създадени да работят.',
     cta: 'Започнете проект',
-    proof: 'Birsé · FORMA Architects',
-    proofLink: 'Вижте проектите',
+  },
+  statement: {
+    before: 'Правя уебсайтове за ',
+    mark: 'малки и средни бизнеси',
+    after: ', които изглеждат премиум и са направени да носят запитвания.',
   },
   work: {
     label: 'Избрани проекти',
@@ -67,8 +70,11 @@ const en: typeof bg = {
     title: 'Pretty Isn’t Enough.',
     lead: 'UX psychology meets precise UI craft – websites for small and medium businesses. Visually powerful, built to perform.',
     cta: 'Start a Project',
-    proof: 'Birsé · FORMA Architects',
-    proofLink: 'See the work',
+  },
+  statement: {
+    before: 'I build websites for ',
+    mark: 'small and medium businesses',
+    after: ' that look premium and are made to bring inquiries.',
   },
   work: {
     label: 'Selected work',
