@@ -2431,9 +2431,9 @@ body.is-loaded .hero-note {
 
 @media (min-width: 800px) and (min-height: 700px) and (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    /* Stacked cards: each comes up from below and lands a little lower than the
-       one before, so a strip of it stays visible. When the next one arrives the
-       card behind tilts and dims (10 %, then 20 % and more tilt). */
+    /* The first card stays in the centre; each next one is unmasked over it from
+       left to right along a slightly slanted edge. When the last one is fully
+       shown the page scrolls on as usual. */
     .process__track {
       position: relative;
       display: grid;
@@ -2453,7 +2453,7 @@ body.is-loaded .hero-note {
       height: 100svh;
       overflow: hidden;
       display: grid;
-      place-items: start center;
+      place-items: center;
       z-index: 1;
     }
 
@@ -2461,7 +2461,7 @@ body.is-loaded .hero-note {
       grid-area: 1 / 1;
       width: 84vw;
       height: 78svh;
-      margin: 9svh 0 0;
+      margin: 0;
       border-radius: var(--border-radius);
       overflow: hidden;
       background: #101010;
@@ -2474,64 +2474,21 @@ body.is-loaded .hero-note {
       border-block: 0;
     }
 
-    /* the dimming layer on top of each card */
-    .process__step::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #101010;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .process__step,
-    .process__step::after {
+    .process__step:nth-child(2),
+    .process__step:nth-child(3) {
+      animation-name: process-wipe;
       animation-duration: 1ms;
       animation-timing-function: linear;
-    }
-
-    /* card 3 comes up from below */
-    .process__step:nth-child(3) {
-      animation-name: process-rise-3;
       animation-fill-mode: both;
-      animation-timeline: --seg2;
-      animation-range: entry 25% entry 80%; /* comes up, then the one behind reacts */
-    }
-
-    /* card 1: first step on seg1, second step on seg2 */
-    .process__step:nth-child(1) {
-      animation-name: process-back-1, process-back-2;
-      animation-fill-mode: both, forwards;
-      animation-timeline: --seg1, --seg2;
-      animation-range:
-        entry 65% entry 90%,
-        entry 65% entry 90%;
-    }
-
-    .process__step:nth-child(1)::after {
-      animation-name: process-dim-1, process-dim-2;
-      animation-fill-mode: both, forwards;
-      animation-timeline: --seg1, --seg2;
-      animation-range:
-        entry 65% entry 90%,
-        entry 65% entry 90%;
-    }
-
-    /* card 2: the same, one step later */
-    .process__step:nth-child(2)::after {
-      animation-name: process-dim-1;
-      animation-fill-mode: both;
-      animation-timeline: --seg2;
-      animation-range: entry 65% entry 90%;
+      animation-range: entry 10% entry 100%;
     }
 
     .process__step:nth-child(2) {
-      animation-name: process-rise-2, process-back-1;
-      animation-fill-mode: both, both;
-      animation-timeline: --seg1, --seg2;
-      animation-range:
-        entry 25% entry 80%,
-        entry 65% entry 90%;
+      animation-timeline: --seg1;
+    }
+
+    .process__step:nth-child(3) {
+      animation-timeline: --seg2;
     }
 
     .process__seg--dwell,
@@ -2551,7 +2508,7 @@ body.is-loaded .hero-note {
     }
 
     .process__seg--tail {
-      height: 40svh;
+      height: 0;
     }
 
     .process {
@@ -2560,56 +2517,14 @@ body.is-loaded .hero-note {
   }
 }
 
-@keyframes process-rise-2 {
+/* left to right, the edge leans left (top is further left than the bottom) */
+@keyframes process-wipe {
   from {
-    translate: 0 100svh;
+    clip-path: polygon(0 0, -6% 0, 0 100%, 0 100%);
   }
 
   to {
-    translate: 0 3svh;
-  }
-}
-
-@keyframes process-rise-3 {
-  from {
-    translate: 0 100svh;
-  }
-
-  to {
-    translate: 0 6svh;
-  }
-}
-
-/* the card behind: tilt and dim in two steps (10 %, then 20 %) */
-@keyframes process-back-1 {
-  to {
-    rotate: -2deg;
-  }
-}
-
-@keyframes process-back-2 {
-  from {
-    rotate: -2deg;
-  }
-
-  to {
-    rotate: -4deg;
-  }
-}
-
-@keyframes process-dim-1 {
-  to {
-    opacity: 0.1;
-  }
-}
-
-@keyframes process-dim-2 {
-  from {
-    opacity: 0.1;
-  }
-
-  to {
-    opacity: 0.2;
+    clip-path: polygon(0 0, 100% 0, 106% 100%, 0 100%);
   }
 }
 
