@@ -5210,13 +5210,39 @@ html.js.reveal-failsafe .reveal {
 }
 
 /* a circle around the whole sentence */
+.statement-section {
+  overflow-x: clip;
+}
+
 .statement-ring {
+  position: relative;
   aspect-ratio: 1;
   display: grid;
   place-content: center;
   padding-inline: 4%;
   border: 1px solid var(--color-border);
   border-radius: 50%;
+}
+
+/* a line from each side of the circle out to the edge of the screen */
+.statement-ring::before,
+.statement-ring::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 100vw;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.statement-ring::before {
+  right: 100%;
+  margin-right: 1px;
+}
+
+.statement-ring::after {
+  left: 100%;
+  margin-left: 1px;
 }
 
 @media (min-width: 900px) {
