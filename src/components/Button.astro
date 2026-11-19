@@ -1,121 +1,34 @@
 ---
+// The original buttons: an accent block (the only element with a shadow) or a
+// hairline outline, with the label sliding up to a copy of itself on hover.
 import type { HTMLAttributes } from 'astro/types';
 
 type Props = {
   variant?: 'primary' | 'secondary';
-  /** large: the hero call to action of the original site. */
-  size?: 'default' | 'large';
-  arrow?: boolean;
 } & (
   | ({ href: string } & Omit<HTMLAttributes<'a'>, 'href'>)
   | ({ href?: undefined } & HTMLAttributes<'button'>)
 );
 
-const {
-  variant = 'primary',
-  size = 'default',
-  arrow = false,
-  class: className,
-  ...rest
-} = Astro.props;
-const classes = ['button', variant, { large: size === 'large' }, className];
+const { variant = 'primary', class: className, ...rest } = Astro.props;
+const classes = [`button-${variant}`, className];
+const label = await Astro.slots.render('default');
 ---
 
 {
   rest.href === undefined ? (
     <button class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
-      <slot />
-      {arrow && (
-        <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" />
-        </svg>
-      )}
+      <span class="btn-content">
+        <span class="btn-text" set:html={label} />
+        <span class="btn-hover-text" aria-hidden="true" set:html={label} />
+      </span>
     </button>
   ) : (
     <a class:list={classes} {...rest}>
-      <slot />
-      {arrow && (
-        <svg class="arrow" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-          <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" />
-        </svg>
-      )}
+      <span class="btn-content">
+        <span class="btn-text" set:html={label} />
+        <span class="btn-hover-text" aria-hidden="true" set:html={label} />
+      </span>
     </a>
   )
 }
-
-<style>
-  .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    min-height: var(--target);
-    padding: var(--space-2) var(--space-5);
-    border: 1px solid transparent;
-    border-radius: var(--radius);
-    font-size: var(--text-small);
-    font-weight: 600;
-    line-height: 1.2;
-    text-align: center;
-    text-decoration: none;
-    transition:
-      background-color var(--dur-fast) var(--ease-out),
-      color var(--dur-fast) var(--ease-out),
-      border-color var(--dur-fast) var(--ease-out),
-      box-shadow var(--dur-fast) var(--ease-out),
-      transform var(--dur-fast) var(--ease-out);
-  }
-
-  /*
-   * The primary button is the only element in the site with a shadow; every
-   * other surface gets its depth from lightness alone.
-   */
-  .primary {
-    --lift: 0 6px 14px rgb(51 70 220 / 0.22);
-
-    background-color: var(--accent);
-    color: var(--on-accent);
-    box-shadow: var(--lift);
-  }
-  .primary:hover {
-    --lift: 0 10px 22px rgb(51 70 220 / 0.28);
-
-    background-color: color-mix(in oklab, var(--accent), var(--fg) 16%);
-    color: var(--on-accent);
-    transform: translateY(-2px);
-  }
-  .primary:active {
-    transform: none;
-    transition-duration: 80ms;
-  }
-  .secondary {
-    border-color: var(--line-strong);
-    color: var(--fg);
-    box-shadow: none;
-  }
-  .secondary:hover {
-    border-color: var(--fg);
-    background-color: var(--fg);
-    color: var(--bg);
-  }
-  /* 18 px label, 18 × 36 px padding: the hero call to action. */
-  .large {
-    padding: 1.125rem 2.25rem;
-    font-size: 1.125rem;
-    letter-spacing: 0.015rem; /* 0.24 px */
-    line-height: 1.5;
-  }
-  @media (width <= 37.5rem) {
-    .large {
-      padding: 0.875rem 1.75rem; /* 14 × 28 */
-      font-size: 1rem;
-    }
-  }
-  .arrow {
-    flex: none;
-    transition: translate var(--dur-fast) var(--ease-out);
-  }
-  .button:hover .arrow {
-    translate: 3px 0;
-  }
-</style>

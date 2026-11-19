@@ -10,11 +10,13 @@ const bg = {
     title: 'Красивото не стига.',
     lead: 'UX психология и прецизен UI в уебсайтове за малки и средни бизнеси. Визуално силни, създадени да работят.',
     cta: 'Започнете проект',
+    proof: 'Birsé · FORMA Architects',
+    proofLink: 'Вижте проектите',
   },
   work: {
     label: 'Избрани проекти',
     title: 'Работа, която стига до хората.',
-    open: 'Вижте проекта',
+    count: 'проекта',
   },
   industries: {
     label: 'Индустрии',
@@ -33,6 +35,7 @@ const bg = {
     label: 'Услуги',
     title: ['От стратегията', 'до работещия сайт.'],
     cta: 'Да работим заедно',
+    pick: 'Избери тази услуга',
   },
   process: {
     label: 'Процес',
@@ -52,7 +55,7 @@ const bg = {
   contact: {
     label: 'Контакт',
     title: ['Имате проект', 'наум?'],
-    lead: 'Три кратки въпроса и имейл – под минута. Ще ви кажа точно как бих подходил.',
+    lead: 'Разкажете ми какво изграждате. Ще ви кажа точно как бих подходил.',
     reply: 'Отговарям до 24 часа.',
     email: 'Предпочитате имейл?',
   },
@@ -64,11 +67,13 @@ const en: typeof bg = {
     title: 'Pretty Isn’t Enough.',
     lead: 'UX psychology meets precise UI craft – websites for small and medium businesses. Visually powerful, built to perform.',
     cta: 'Start a Project',
+    proof: 'Birsé · FORMA Architects',
+    proofLink: 'See the work',
   },
   work: {
     label: 'Selected work',
     title: 'Work that ships.',
-    open: 'View project',
+    count: 'Projects',
   },
   industries: {
     label: 'Industries',
@@ -87,6 +92,7 @@ const en: typeof bg = {
     label: 'Services',
     title: ['From strategy', 'to live site.'],
     cta: 'Let’s work together',
+    pick: 'Choose this service',
   },
   process: {
     label: 'Process',
@@ -106,7 +112,7 @@ const en: typeof bg = {
   contact: {
     label: 'Contact',
     title: ['Have a project', 'in mind?'],
-    lead: 'Three quick questions and your email – under a minute. I’ll tell you exactly how I’d approach it.',
+    lead: 'Tell me what you’re building. I’ll tell you exactly how I’d approach it.',
     reply: 'I reply within 24 hours.',
     email: 'Prefer email?',
   },

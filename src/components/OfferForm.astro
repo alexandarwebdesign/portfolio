@@ -1,0 +1,228 @@
+---
+// The original /uslugi request form (Web3Forms): name, phone, email, kind of
+// business, city, whether there is a site, and a short message.
+import Button from './Button.astro';
+---
+
+<form
+  class="contact-form reveal"
+  id="offer-form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  aria-label="Заявка за безплатна визия"
+  novalidate
+>
+  <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY} />
+  <input type="hidden" name="subject" value="Нова заявка от /uslugi (местен бизнес)" />
+  <input type="hidden" name="from_name" value="Portfolio /uslugi" />
+  <input
+    type="checkbox"
+    name="botcheck"
+    class="hidden"
+    style="display: none;"
+    tabindex="-1"
+    autocomplete="off"
+  />
+  <div class="form-group">
+    <label for="offer-name" class="form-label">Име</label>
+    <input
+      type="text"
+      id="offer-name"
+      name="name"
+      class="form-input"
+      placeholder="Вашето име"
+      autocomplete="name"
+      required
+      aria-required="true"
+      aria-describedby="offer-name-error"
+    />
+    <span id="offer-name-error" class="form-error" role="alert" hidden></span>
+  </div>
+  <div class="offer-form-row">
+    <div class="form-group">
+      <label for="offer-phone" class="form-label">Телефон</label>
+      <input
+        type="tel"
+        id="offer-phone"
+        name="phone"
+        class="form-input"
+        placeholder="+359 …"
+        autocomplete="tel"
+        required
+        aria-required="true"
+        aria-describedby="offer-phone-error"
+      />
+      <span id="offer-phone-error" class="form-error" role="alert" hidden></span>
+    </div>
+    <div class="form-group">
+      <label for="offer-email" class="form-label">Имейл</label>
+      <input
+        type="email"
+        id="offer-email"
+        name="email"
+        class="form-input"
+        placeholder="you@firma.bg"
+        autocomplete="email"
+        required
+        aria-required="true"
+        aria-describedby="offer-email-error"
+      />
+      <span id="offer-email-error" class="form-error" role="alert" hidden></span>
+    </div>
+  </div>
+  <div class="offer-form-row">
+    <div class="form-group">
+      <label for="offer-business" class="form-label">Вид бизнес</label>
+      <input
+        type="text"
+        id="offer-business"
+        name="business"
+        class="form-input"
+        placeholder="Напр. зъболекар"
+        autocomplete="off"
+        required
+        aria-required="true"
+        aria-describedby="offer-business-error"
+      />
+      <span id="offer-business-error" class="form-error" role="alert" hidden></span>
+    </div>
+    <div class="form-group">
+      <label for="offer-city" class="form-label">Град</label>
+      <input
+        type="text"
+        id="offer-city"
+        name="city"
+        class="form-input"
+        placeholder="Напр. Пловдив"
+        autocomplete="address-level2"
+        required
+        aria-required="true"
+        aria-describedby="offer-city-error"
+      />
+      <span id="offer-city-error" class="form-error" role="alert" hidden></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="offer-hassite" class="form-label">Имате ли сайт?</label>
+    <div class="select-wrapper">
+      <select
+        id="offer-hassite"
+        name="hassite"
+        class="form-input form-select"
+        required
+        aria-required="true"
+        aria-describedby="offer-hassite-error"
+      >
+        <option value="" disabled selected>Изберете</option>
+        <option value="да">Да</option>
+        <option value="не">Не</option>
+        <option value="остарял">Да, но е остарял</option>
+      </select>
+    </div>
+    <span id="offer-hassite-error" class="form-error" role="alert" hidden></span>
+  </div>
+  <div class="form-group">
+    <label for="offer-message" class="form-label">Кратко съобщение</label>
+    <textarea
+      id="offer-message"
+      name="message"
+      class="form-input form-textarea"
+      placeholder="Какво предлагате и какво искате да постигнете със сайта?"
+      rows="4"
+      autocomplete="off"></textarea>
+  </div>
+  <Button type="submit" class="form-submit">Изпрати заявка</Button>
+  <p class="form-helper">Използвам данните ви само за да ви отговоря.</p>
+  <p id="offer-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+</form>
+
+<script>
+  // The original offer.js request form handling.
+  const form = document.getElementById('offer-form') as HTMLFormElement | null;
+  const status = document.getElementById('offer-status');
+  const required: Record<string, string> = {
+    'offer-name': 'Моля, въведете името си.',
+    'offer-phone': 'Моля, въведете телефон за връзка.',
+    'offer-email': 'Моля, въведете валиден имейл.',
+    'offer-business': 'Моля, напишете какъв е бизнесът ви.',
+    'offer-city': 'Моля, въведете град.',
+    'offer-hassite': 'Моля, изберете отговор.',
+  };
+
+  const setStatus = (text: string, state?: string) => {
+    if (!status) return;
+    status.textContent = text;
+    if (state) status.dataset.state = state;
+    else delete status.dataset.state;
+  };
+
+  // Validate a field when the visitor leaves it; clear the message once fixed.
+  const check = (id: string) => {
+    const field = document.getElementById(id) as HTMLInputElement;
+    const error = document.getElementById(`${id}-error`)!;
+    const value = field.value.trim();
+    let ok = value.length > 0;
+    if (id === 'offer-email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    if (id === 'offer-phone') ok = value.replace(/\D/g, '').length >= 7;
+    if (ok) field.removeAttribute('aria-invalid');
+    else field.setAttribute('aria-invalid', 'true');
+    error.textContent = ok ? '' : required[id];
+    error.hidden = ok;
+  };
+  for (const id of Object.keys(required)) {
+    const field = document.getElementById(id);
+    field?.addEventListener(field.tagName === 'SELECT' ? 'change' : 'blur', () => check(id));
+    field?.addEventListener('input', () => {
+      if (field.getAttribute('aria-invalid') === 'true') check(id);
+    });
+  }
+
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    setStatus('');
+    const bad: string[] = [];
+    for (const id of Object.keys(required)) {
+      const field = document.getElementById(id) as HTMLInputElement;
+      const error = document.getElementById(`${id}-error`)!;
+      field.removeAttribute('aria-invalid');
+      error.hidden = true;
+      error.textContent = '';
+      const value = field.value.trim();
+      let ok = value.length > 0;
+      if (id === 'offer-email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+      if (id === 'offer-phone') ok = value.replace(/\D/g, '').length >= 7;
+      if (!ok) bad.push(id);
+    }
+    if (bad.length) {
+      for (const id of bad) {
+        document.getElementById(id)!.setAttribute('aria-invalid', 'true');
+        const error = document.getElementById(`${id}-error`)!;
+        error.textContent = required[id];
+        error.hidden = false;
+      }
+      document.getElementById(bad[0])!.focus();
+      setStatus('Моля, поправете полетата по-горе.', 'error');
+      return;
+    }
+
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    button.disabled = true;
+    setStatus('Изпращане…');
+    fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) })
+      .then(async (response) => {
+        const json = await response.json();
+        if (response.status !== 200) throw new Error(json.message || 'error');
+        form.reset();
+        setStatus('Заявката е изпратена. Ще ви отговоря в най-скоро време.', 'success');
+      })
+      .catch(() =>
+        setStatus(
+          'Нещо се обърка. Опитайте пак или ми пишете на alexandar.webdesign@gmail.com.',
+          'error',
+        ),
+      )
+      .finally(() => {
+        button.disabled = false;
+      });
+  });
+</script>

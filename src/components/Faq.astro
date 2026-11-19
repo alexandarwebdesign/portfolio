@@ -1,71 +1,29 @@
 ---
+// The original FAQ: hairline rows, one open at a time (site script), "+" that
+// turns into "×".
 interface Props {
   items: { q: string; a: string }[];
+  /** Prefix for the item ids, so a link can open one (#faq-1). */
+  idPrefix?: string;
 }
 
-const { items } = Astro.props;
+const { items, idPrefix = 'faq' } = Astro.props;
 ---
 
-<div class="faq">
+<div class="faq-list">
   {
-    items.map((item) => (
-      <details name="faq">
-        <summary>
+    items.map((item, i) => (
+      <div id={`${idPrefix}-${i + 1}`} class="faq-item reveal">
+        <button type="button" class="faq-question" aria-expanded="false">
           <span>{item.q}</span>
-          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
-            <path d="M3 8h10M8 3v10" fill="none" stroke="currentColor" stroke-width="1.5" />
-          </svg>
-        </summary>
-        <p>{item.a}</p>
-      </details>
+          <span class="faq-icon" aria-hidden="true" />
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner">
+            <p>{item.a}</p>
+          </div>
+        </div>
+      </div>
     ))
   }
 </div>
-
-<style>
-  details {
-    border-top: var(--hairline);
-  }
-
-  details:last-child {
-    border-bottom: var(--hairline);
-  }
-
-  summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-5);
-    min-height: var(--target);
-    padding-block: var(--space-5);
-    font-family: var(--font-display);
-    font-size: var(--text-title);
-    letter-spacing: var(--tracking-display);
-    line-height: var(--leading-heading);
-    cursor: pointer;
-    list-style: none;
-  }
-
-  summary::-webkit-details-marker {
-    display: none;
-  }
-
-  summary:hover {
-    color: var(--accent);
-  }
-
-  svg {
-    flex: none;
-    transition: rotate var(--dur) var(--ease-out);
-  }
-
-  details[open] svg {
-    rotate: 45deg;
-  }
-
-  p {
-    max-width: var(--measure);
-    padding-bottom: var(--space-5);
-    color: var(--fg-muted);
-  }
-</style>

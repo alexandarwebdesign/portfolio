@@ -1,15 +1,16 @@
 ---
+// The original about page: portrait beside the story, the facts index, two
+// buttons, the image marquee and the Birsé teaser.
 import { Picture } from 'astro:assets';
 import Button from '../components/Button.astro';
 import AboutIndex from '../components/AboutIndex.astro';
-import SectionLabel from '../components/SectionLabel.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import SmoothScroll from '../components/SmoothScroll.astro';
+import ImageMarquee from '../components/ImageMarquee.astro';
+import NextTeaser from '../components/NextTeaser.astro';
 import portrait from '../assets/images/portrait.jpg';
+import birseCard from '../assets/images/birse-card.jpg';
 import { about } from '../data/about';
-import { work } from '../data/home';
+import { ui, type Lang } from '../i18n/ui';
 import { pathFor } from '../i18n/routes';
-import type { Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -17,128 +18,55 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = about[lang];
+const s = ui[lang].site;
 const home = pathFor('home', lang)!;
-const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`);
+const homeHash = (hash: string) => `${home === '/' ? '' : home}/#${hash}`;
 ---
 
-<section class="section first">
-  <div class="container intro">
-    <div class="text">
-      <SectionLabel>{t.label}</SectionLabel>
-      <h1 class="title-display title-split">
-        <span>{t.title[0]}</span>
-        <span>{t.title[1]}</span>
-      </h1>
-      <p class="lead">{t.lead}</p>
-      {t.text.map((paragraph) => <p>{paragraph}</p>)}
-      <div class="actions">
-        <Button href={homeHash('#contact')} arrow>{t.start}</Button>
-        <Button href={homeHash('#process')} variant="secondary">{t.process}</Button>
+<section class="about-page-section" aria-labelledby="about-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(02)</span> {t.label}</p>
+      <h1 id="about-title" class="section-title">{t.title.join(' ')}</h1>
+    </div>
+
+    <div class="about-page-grid">
+      <div class="about-page-photo reveal">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[500, 720, 1080, 1600]}
+          sizes="(max-width: 900px) calc(100vw - 48px), 40vw"
+          alt={t.alt}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="about-page-content">
+        <div class="about-page-bio reveal">
+          <p class="about-page-para">{t.lead}</p>
+          {t.text.map((paragraph) => <p class="about-page-para">{paragraph}</p>)}
+        </div>
+
+        <AboutIndex facts={t.facts} class="reveal" />
+
+        <div class="about-page-cta-row reveal">
+          <Button href={homeHash('contact')}>{t.start}</Button>
+          <Button href={homeHash('faq')} variant="secondary">{t.process}</Button>
+        </div>
       </div>
     </div>
-    <aside class="side">
-      <Picture
-        src={portrait}
-        formats={['avif', 'webp']}
-        widths={[400, 640, 960]}
-        sizes="(width >= 64rem) 30vw, 100vw"
-        alt={t.alt}
-        loading="eager"
-        class="portrait"
-      />
-      <AboutIndex facts={t.facts} />
-    </aside>
   </div>
 </section>
 
-<section class="section dark" aria-labelledby="about-work">
-  <div class="container">
-    <header class="section-head">
-      <h2 id="about-work">{t.work}</h2>
-    </header>
-    <ul class="card-grid">
-      {
-        work
-          .filter((item) => item.route)
-          .map((item) => (
-            <ProjectCard
-              name={item.name}
-              category={item.category[lang]}
-              image={item.image}
-              href={pathFor(item.route!, lang)}
-              tag={item.tag?.[lang]}
-            />
-          ))
-      }
-    </ul>
-  </div>
-</section>
+<ImageMarquee {lang} />
 
-<SmoothScroll />
-
-<style>
-  .intro {
-    display: grid;
-    gap: var(--section-head) var(--column-gap);
-  }
-
-  .text {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-5);
-  }
-
-  .text h1 {
-    margin-bottom: var(--space-3);
-  }
-
-  .text > p {
-    max-width: var(--measure);
-  }
-
-  .text > p:not(.lead) {
-    color: var(--fg-muted);
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    padding-top: var(--space-3);
-  }
-
-  .side {
-    display: grid;
-    align-content: start;
-    gap: var(--stack);
-  }
-
-  .side :global(.portrait) {
-    width: 100%;
-    max-width: 26rem;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    border-radius: var(--radius);
-  }
-
-  /* Text on columns 1–7, portrait and the index on 9–12. */
-  @media (width >= 64rem) {
-    .intro {
-      grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
-    }
-
-    .text {
-      grid-column: 1 / span 7;
-    }
-
-    /* Not sticky: portrait + index are taller than a laptop screen. */
-    .side {
-      grid-column: 9 / -1;
-      align-self: start;
-    }
-
-    .side :global(.portrait) {
-      max-width: none;
-    }
-  }
-</style>
+<NextTeaser
+  href={pathFor('birse', lang)!}
+  label={s.selectedWork}
+  left="Bir"
+  right="Sé"
+  image={birseCard}
+  ariaLabel={`${s.viewCase}: Birsé`}
+/>

@@ -1,25 +1,24 @@
 ---
+// The original home page: hero over the shader, 2 × 2 work, the image
+// marquee, about, services, FAQ and the contact form.
 import { Picture } from 'astro:assets';
-import Hero from '../components/Hero.astro';
-import SectionLabel from '../components/SectionLabel.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import Marquee from '../components/Marquee.astro';
-import Process from '../components/Process.astro';
-import Faq from '../components/Faq.astro';
-import BriefBuilder from '../components/BriefBuilder.astro';
+import HeroShader from '../components/HeroShader.astro';
 import Button from '../components/Button.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ImageMarquee from '../components/ImageMarquee.astro';
 import AboutIndex from '../components/AboutIndex.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
-import SmoothScroll from '../components/SmoothScroll.astro';
+import Faq from '../components/Faq.astro';
+import ContactForm from '../components/ContactForm.astro';
+import StatusIcon from '../components/StatusIcon.astro';
 import portrait from '../assets/images/portrait.jpg';
 import { home, work } from '../data/home';
 import { about } from '../data/about';
 import { services } from '../data/services';
-import { process } from '../data/process';
 import { faq } from '../data/faq';
 import { site } from '../data/site';
+import { ui, type Lang } from '../i18n/ui';
 import { pathFor } from '../i18n/routes';
-import type { Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -27,18 +26,36 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = home[lang];
+const s = ui[lang].site;
 const shapes = ['circle', 'triangle', 'hexagon'] as const;
+const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
+const count = String(work.length).padStart(2, '0');
 ---
 
-<Hero {...t.hero} />
+<section id="hero" class="hero-section hero-section--shader">
+  <HeroShader />
+  <div class="hero-content">
+    <p class="hero-eyebrow">{t.hero.eyebrow}</p>
+    <h1 class="hero-title">{t.hero.title}</h1>
+    <p class="hero-subtitle">{t.hero.lead}</p>
+    <Button href="#contact" class="hero-cta" data-focus-target="#name">{t.hero.cta}</Button>
+    <p class="hero-note hero-proof">
+      {t.hero.proof} · <a href="#work">{t.hero.proofLink}</a>
+    </p>
+  </div>
+</section>
 
-<section id="work" class="section dark" aria-labelledby="work-title">
+<section id="work" class="work-section">
   <div class="container">
-    <header class="section-head" data-reveal>
-      <SectionLabel>{t.work.label}</SectionLabel>
-      <h2 id="work-title">{t.work.title}</h2>
+    <header class="section-header reveal">
+      <p class="mono-label">
+        <span class="index">(01)</span>
+        {t.work.label} &middot; {count}
+        {t.work.count}
+      </p>
+      <h2 class="section-title">{t.work.title}</h2>
     </header>
-    <ul class="card-grid">
+    <div class="project-grid" id="project-grid">
       {
         work.map((item) => (
           <ProjectCard
@@ -51,135 +68,110 @@ const shapes = ['circle', 'triangle', 'hexagon'] as const;
           />
         ))
       }
-    </ul>
-  </div>
-</section>
-
-<Marquee label={t.industries.label} items={t.industries.items} />
-
-<section id="services" class="section" aria-labelledby="services-title">
-  <div class="container">
-    <header class="section-head" data-reveal>
-      <SectionLabel>{t.services.label}</SectionLabel>
-      <h2 id="services-title" class="title-split">
-        <span>{t.services.title[0]}</span>
-        <span>{t.services.title[1]}</span>
-      </h2>
-    </header>
-    <ol class="index-rows with-icon">
-      {
-        services[lang].map((service, i) => (
-          <li data-reveal>
-            <span class="index">{String(i + 1).padStart(2, '0')}</span>
-            <h3>{service.title}</h3>
-            <p>{service.text}</p>
-            <ServiceIcon shape={shapes[i % shapes.length]} />
-          </li>
-        ))
-      }
-    </ol>
-    <div class="services-cta">
-      <Button href="#contact" size="large">{t.services.cta}</Button>
     </div>
   </div>
 </section>
 
-<section id="process" class="section raised" aria-labelledby="process-title">
-  <div class="container split">
-    <header class="section-head sticky" data-reveal>
-      <SectionLabel>{t.process.label}</SectionLabel>
-      <h2 id="process-title">{t.process.title}</h2>
-    </header>
-    <div data-reveal><Process steps={process[lang]} /></div>
-  </div>
-</section>
+<ImageMarquee {lang} />
 
-<section id="about" class="section" aria-labelledby="about-title">
+<section id="about" class="about-section">
   <div class="container">
-    <header class="section-head" data-reveal>
-      <SectionLabel>{t.about.label}</SectionLabel>
-      <h2 id="about-title">{t.about.title}</h2>
-    </header>
-    <div class="split about" data-reveal>
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(02)</span> {t.about.label}</p>
+      <h2 class="section-title">{t.about.title}</h2>
+    </div>
+    <div class="about-grid reveal">
       <div class="about-lead">
-        <Picture
-          src={portrait}
-          formats={['avif', 'webp']}
-          widths={[96, 192]}
-          sizes="96px"
-          alt={t.about.alt}
-          loading="lazy"
-          class="avatar"
-        />
-        <p class="bio">{t.about.text}</p>
-        <Button href={pathFor('about', lang)} variant="secondary" arrow>{t.about.link}</Button>
+        <div class="about-heading-content">
+          <div class="about-photo-circle">
+            <Picture
+              src={portrait}
+              formats={['avif', 'webp']}
+              widths={[96, 192, 288]}
+              sizes="96px"
+              alt={t.about.alt}
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <p class="about-bio-new">{t.about.text}</p>
+        <Button href={pathFor('about', lang)} variant="secondary">{t.about.link}</Button>
       </div>
       <AboutIndex facts={about[lang].facts} />
     </div>
   </div>
 </section>
 
-<section id="faq" class="section raised" aria-labelledby="faq-title">
-  <div class="container split">
-    <header class="section-head" data-reveal>
-      <SectionLabel>{t.faq.label}</SectionLabel>
-      <h2 id="faq-title">{t.faq.title}</h2>
-    </header>
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(03)</span> {t.services.label}</p>
+      <h2 class="section-title">{t.services.title.join(' ')}</h2>
+    </div>
+    <div class="services-list">
+      {
+        services[lang].map((service, i) => (
+          <div class="service-row reveal" data-service={serviceIds[i]}>
+            <span class="service-index" aria-hidden="true">
+              ({String(i + 1).padStart(2, '0')})
+            </span>
+            <h3 class="service-title">{service.title}</h3>
+            <div class="service-body">
+              <p class="service-desc">{service.text}</p>
+              <a
+                href="#contact"
+                class="service-pick"
+                data-service-pick={serviceIds[i]}
+                data-focus-target="#name"
+              >
+                {t.services.pick} <span aria-hidden="true">→</span>
+                <span class="sr-only">: {service.title}</span>
+              </a>
+            </div>
+            <ServiceIcon shape={shapes[i % shapes.length]} />
+          </div>
+        ))
+      }
+    </div>
+    <div class="services-cta reveal">
+      <Button href="#contact">{t.services.cta}</Button>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="faq-section" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(04)</span> {t.faq.label}</p>
+      <h2 id="faq-title" class="section-title">{t.faq.title}</h2>
+    </div>
     <Faq items={faq[lang]} />
   </div>
 </section>
 
-<section id="contact" class="section" aria-labelledby="contact-title">
-  <div class="container split">
-    <header class="section-head">
-      <SectionLabel>{t.contact.label}</SectionLabel>
-      <h2 id="contact-title" class="title-split">
-        <span>{t.contact.title[0]}</span>
-        <span>{t.contact.title[1]}</span>
-      </h2>
-      <p class="lead">{t.contact.lead}</p>
-      <p class="muted">{t.contact.reply}</p>
-      <p class="muted">
-        {t.contact.email}
-        <a href={`mailto:${site.email}`}>{site.email}</a>
-      </p>
-    </header>
-    <BriefBuilder {lang} />
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(05)</span> {t.contact.label}</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="availability-signal">
+          <StatusIcon class="availability-icon" />
+          <span>{s.available}</span>
+        </div>
+        <h2 class="contact-title">
+          <span>{t.contact.title[0]}</span>
+          <span>{t.contact.title[1]}</span>
+        </h2>
+        <p class="contact-subtitle">{t.contact.lead}</p>
+        <div class="contact-email">
+          <p class="email-label">{t.contact.email}</p>
+          <a href={`mailto:${site.email}`} class="email-link" aria-label={s.emailTo}>{site.email}</a
+          >
+        </div>
+      </div>
+      <ContactForm {lang} />
+    </div>
   </div>
 </section>
-
-<SmoothScroll />
-
-<style>
-  .services-cta {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--section-head);
-  }
-
-  /* The original about block: small round portrait, bio and link, index beside. */
-  .about {
-    align-items: center;
-  }
-
-  .about-lead {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-6);
-  }
-
-  .about-lead :global(.avatar) {
-    width: 6rem; /* 96 */
-    height: 6rem;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center top;
-  }
-
-  .bio {
-    max-width: 40ch;
-    color: var(--fg-muted);
-    font-size: clamp(1.25rem, 1.4vw, 1.5rem); /* 20 → 24 */
-    line-height: 1.6;
-  }
-</style>

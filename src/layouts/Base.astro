@@ -1,13 +1,14 @@
 ---
-import { Font } from 'astro:assets';
 import Seo from '../components/Seo.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { toLang, ui } from '../i18n/ui';
 import type { RouteId } from '../i18n/routes';
-import '../styles/tokens.css';
-import '../styles/base.css';
-import '../styles/layout.css';
+import manropeLatin from '../assets/fonts/manrope-latin.woff2?url';
+import marcellusLatin from '../assets/fonts/marcellus-latin.woff2?url';
+import forumCyrillic from '../assets/fonts/forum-cyrillic.woff2?url';
+import manropeCyrillic from '../assets/fonts/manrope-cyrillic.woff2?url';
+import '../styles/site.css';
 
 interface Props {
   title: string;
@@ -16,55 +17,50 @@ interface Props {
   noindex?: boolean;
   schema?: Record<string, unknown>[];
   crumb?: string;
+  /** Page class on <body>, as on the original site (about-page, case pages). */
+  bodyClass?: string;
 }
 
-const { title, description, route, noindex, schema, crumb } = Astro.props;
+const { title, description, route, noindex, schema, crumb, bodyClass } = Astro.props;
 const lang = toLang(Astro.currentLocale);
+// The fonts of the first screen: Latin for English, Cyrillic for Bulgarian.
+const preload = lang === 'bg' ? [manropeCyrillic, forumCyrillic] : [manropeLatin, marcellusLatin];
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    <meta name="color-scheme" content="light" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <Seo {title} {description} {lang} {route} {noindex} {schema} {crumb} />
-    <!-- Headings are the LCP, so the display font is preloaded. -->
-    <Font cssVariable="--font-forum" preload />
-    <Font cssVariable="--font-manrope" />
+    {
+      preload.map((href) => (
+        <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+      ))
+    }
+    <!-- Reveal-on-scroll hides content only when scripts run; failsafe after 3 s. -->
+    <script is:inline>
+      var d = document.documentElement;
+      d.classList.add('js');
+      setTimeout(function () {
+        window.__revealReady || d.classList.add('reveal-failsafe');
+      }, 3000);
+    </script>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#efefef" />
   </head>
-  <body>
-    <a class="skip-link" href="#main">{ui[lang].skip}</a>
+  <body class={bodyClass}>
+    <a href="#main-content" class="skip-link">{ui[lang].skip}</a>
     <Header {lang} {route} />
-    <main id="main" tabindex="-1">
+    <main id="main-content">
       <slot />
     </main>
-    <Footer {lang} />
+    <Footer {lang} {route} />
+    <script>
+      import '../scripts/site';
+    </script>
   </body>
 </html>
-
-<style>
-  .skip-link {
-    position: fixed;
-    top: var(--space-3);
-    left: var(--space-3);
-    z-index: 100;
-    padding: var(--space-3) var(--space-5);
-    border-radius: var(--radius);
-    background-color: var(--accent);
-    color: var(--on-accent);
-    font-weight: 600;
-    translate: 0 -200%;
-  }
-
-  .skip-link:focus {
-    translate: 0;
-  }
-
-  main:focus {
-    outline: none;
-  }
-</style>

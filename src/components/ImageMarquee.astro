@@ -1,0 +1,45 @@
+---
+// The original image marquee: seven website concepts in a row that drifts,
+// follows the scroll and can be dragged (site script). Still with reduced
+// motion.
+import { Picture } from 'astro:assets';
+import { ui, type Lang } from '../i18n/ui';
+import studio01 from '../assets/images/marquee/studio-01.jpg';
+import studio02 from '../assets/images/marquee/studio-02.jpg';
+import studio03 from '../assets/images/marquee/studio-03.jpg';
+import studio04 from '../assets/images/marquee/studio-04.jpg';
+import studio05 from '../assets/images/marquee/studio-05.jpg';
+import studio06 from '../assets/images/marquee/studio-06.jpg';
+import studio07 from '../assets/images/marquee/studio-07.jpg';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const images = [studio01, studio02, studio03, studio04, studio05, studio06, studio07];
+---
+
+<section class="image-marquee" aria-label={ui[lang].site.marquee} data-marquee>
+  <div class="image-marquee__viewport">
+    <div class="image-marquee__track" data-marquee-track>
+      <div class="image-marquee__row" data-marquee-row>
+        {
+          images.map((image) => (
+            <figure class="image-marquee__item">
+              <Picture
+                src={image}
+                formats={['avif', 'webp']}
+                widths={[500, 800, 1080, 1600]}
+                sizes="(max-width: 480px) min(82vw, 340px), (max-width: 768px) min(78vw, 420px), clamp(400px, 50vw, 820px)"
+                alt=""
+                loading="lazy"
+                draggable="false"
+              />
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

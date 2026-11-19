@@ -1,10 +1,6 @@
 ---
-import Base from '../layouts/Base.astro';
+// Standalone like the original 404: its own document, no header or footer.
 import NotFound from '../views/NotFound.astro';
-import { ui } from '../i18n/ui';
-const meta = ui.bg.meta.notFound;
 ---
 
-<Base title={meta.title} description={meta.description} route="notFound" noindex>
-  <NotFound lang="bg" />
-</Base>
+<NotFound lang="bg" />

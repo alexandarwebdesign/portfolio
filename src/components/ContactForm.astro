@@ -1,0 +1,108 @@
+---
+// The original contact form (Web3Forms). Validation and sending live in the
+// site script; its messages come from data attributes in the page's language.
+import Button from './Button.astro';
+import { ui, type Lang } from '../i18n/ui';
+import { services } from '../data/services';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang].form;
+const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
+---
+
+<form
+  class="contact-form reveal"
+  id="contact-form"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+  aria-label={t.label}
+  data-msg-sending={t.sending}
+  data-msg-sent={t.sent}
+  data-msg-success={t.success}
+  data-msg-failed={t.failed}
+  data-msg-fix-one={t.fixOne}
+  data-msg-fix-many={t.fixMany}
+  data-err-name={t.errors.name}
+  data-err-email={t.errors.email}
+  data-err-service={t.errors.service}
+  data-err-message={t.errors.message}
+>
+  <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY} />
+  <input type="hidden" name="subject" value={t.subject} />
+  <input type="hidden" name="from_name" value={t.from} />
+  <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" />
+
+  <div class="form-group">
+    <label for="name" class="form-label">{t.name}</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      class="form-input"
+      placeholder={t.namePlaceholder}
+      autocomplete="name"
+      required
+      aria-required="true"
+      aria-describedby="name-error"
+    />
+    <span id="name-error" class="form-error" role="alert" hidden></span>
+  </div>
+
+  <div class="form-group">
+    <label for="email" class="form-label">{t.email}</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      class="form-input"
+      placeholder={t.emailPlaceholder}
+      autocomplete="email"
+      required
+      aria-required="true"
+      aria-describedby="email-error"
+    />
+    <span id="email-error" class="form-error" role="alert" hidden></span>
+  </div>
+
+  <div class="form-group">
+    <label for="service" class="form-label">{t.service}</label>
+    <div class="select-wrapper">
+      <select
+        id="service"
+        name="service"
+        class="form-input form-select"
+        autocomplete="off"
+        required
+        aria-required="true"
+        aria-describedby="service-error"
+      >
+        <option value="" disabled selected>{t.servicePlaceholder}</option>
+        {services[lang].map((service, i) => <option value={serviceIds[i]}>{service.title}</option>)}
+      </select>
+    </div>
+    <span id="service-error" class="form-error" role="alert" hidden></span>
+  </div>
+
+  <div class="form-group">
+    <label for="message" class="form-label">{t.message}</label>
+    <textarea
+      id="message"
+      name="message"
+      class="form-input form-textarea"
+      autocomplete="off"
+      placeholder={t.messagePlaceholder}
+      rows="5"
+      required
+      aria-required="true"
+      aria-describedby="message-error"></textarea>
+    <span id="message-error" class="form-error" role="alert" hidden></span>
+  </div>
+
+  <Button type="submit" class="form-submit">{t.send}</Button>
+  <p class="form-helper">{t.helper}</p>
+  <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+</form>

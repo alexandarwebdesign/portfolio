@@ -1,74 +1,316 @@
 ---
-import Button from '../components/Button.astro';
+// The original 404: a full-screen wireframe tunnel with a floating 3D "404"
+// (three.js, loaded only on this page), a line of text and one button home.
+// Standalone like the original: no header or footer.
+import Seo from '../components/Seo.astro';
+import manropeLatin from '../assets/fonts/manrope-latin.woff2?url';
+import manropeCyrillic from '../assets/fonts/manrope-cyrillic.woff2?url';
+import { ui, type Lang } from '../i18n/ui';
 import { pathFor } from '../i18n/routes';
-import type { Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const meta = ui[lang].meta.notFound;
 const t = {
   bg: {
-    title: ['Тази страница', 'се изгуби.'],
-    text: 'Адресът може да е сгрешен или страницата да е преместена. Ето откъде да продължите.',
-    home: 'Към началото',
-    work: 'Вижте проектите',
+    h1: '404 – страницата не е намерена',
+    message: 'Тази страница се изгуби в празнотата.',
+    button: 'Обратно към сигнала',
+    label: 'Към началото',
   },
   en: {
-    title: ['This page has', 'drifted away.'],
-    text: 'The address may be mistyped, or the page has moved. Here is where to go next.',
-    home: 'Back to home',
-    work: 'See the work',
+    h1: '404 - Page Not Found',
+    message: 'This page has drifted into the void.',
+    button: 'Return to Signal',
+    label: 'Return to Home',
   },
 }[lang];
-const home = pathFor('home', lang)!;
 ---
 
-<section class="section first not-found">
-  <div class="container inner">
-    <p class="code" aria-hidden="true">404</p>
-    <h1 class="title-display title-split">
-      <span>{t.title[0]}</span>
-      <span>{t.title[1]}</span>
-    </h1>
-    <p class="text">{t.text}</p>
-    <div class="actions">
-      <Button href={home} arrow>{t.home}</Button>
-      <Button href={home === '/' ? '/#work' : `${home}#work`} variant="secondary">{t.work}</Button>
+<!doctype html>
+<html {lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Seo title={meta.title} description={meta.description} {lang} route="notFound" noindex />
+    <link
+      rel="preload"
+      href={lang === 'bg' ? manropeCyrillic : manropeLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="theme-color" content="#efefef" />
+  </head>
+  <body>
+    <div id="tunnel"></div>
+    <div class="content">
+      <h1 class="sr-only">{t.h1}</h1>
+      <p class="message">{t.message}</p>
+      <a href={pathFor('home', lang)} class="home-btn" aria-label={t.label}>{t.button}</a>
     </div>
-  </div>
-</section>
 
-<style>
-  .not-found {
-    display: flex;
-    align-items: center;
-    min-height: 80svh;
-  }
+    <script>
+      import {
+        AmbientLight,
+        DirectionalLight,
+        FogExp2,
+        GridHelper,
+        Group,
+        Mesh,
+        MeshPhysicalMaterial,
+        PerspectiveCamera,
+        PointLight,
+        Scene,
+        WebGLRenderer,
+        type LineBasicMaterial,
+      } from 'three';
+      import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+      import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+      import fontUrl from 'three/examples/fonts/helvetiker_bold.typeface.json?url';
 
-  .inner {
-    display: grid;
-    justify-items: start;
-    gap: var(--space-5);
-  }
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // The original settings, in the neutral palette.
+      const settings = { bg: 0xefefef, grid: 0x1c1c1c, gridOpacity: 0.2 };
 
-  .code {
-    color: var(--accent);
-    font-family: var(--font-display);
-    font-size: var(--text-heading);
-    line-height: 1;
-  }
+      const scene = new Scene();
+      scene.fog = new FogExp2(settings.bg, 0.025);
+      const camera = new PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 200);
+      camera.position.z = 15;
 
-  .text {
-    max-width: 32rem;
-    color: var(--fg-muted);
-    font-size: var(--text-lead);
-  }
+      const renderer = new WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setClearColor(settings.bg, 1);
+      document.getElementById('tunnel')!.appendChild(renderer.domElement);
 
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-  }
-</style>
+      scene.add(new AmbientLight(0xffffff, 1));
+      const key = new DirectionalLight(0xffffff, 2);
+      key.position.set(5, 10, 7);
+      scene.add(key);
+      const point = new PointLight(0xffffff, 10, 100);
+      point.position.set(0, 5, 5);
+      scene.add(point);
+
+      const scaleFor = () => (innerWidth < 768 ? 0.5 : 1);
+      // Elastic and ease-out curves of the original GSAP intro.
+      const elasticOut = (t: number) =>
+        t === 0 || t === 1
+          ? t
+          : Math.pow(2, -10 * t) * Math.sin(((t - 0.075) * 2 * Math.PI) / 0.3) + 1;
+      const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
+
+      let text: Mesh | undefined;
+      let introStart = 0;
+      new FontLoader().load(fontUrl, (font) => {
+        const geometry = new TextGeometry('404', {
+          font,
+          size: 6,
+          height: 1,
+          curveSegments: 12,
+          bevelEnabled: true,
+          bevelThickness: 0.1,
+          bevelSize: 0.1,
+          bevelOffset: 0,
+          bevelSegments: 15,
+        });
+        geometry.center();
+        text = new Mesh(
+          geometry,
+          new MeshPhysicalMaterial({
+            color: settings.grid,
+            roughness: 0,
+            metalness: 0,
+            clearcoat: 1,
+            clearcoatRoughness: 1,
+          }),
+        );
+        text.position.y = 2;
+        text.scale.setScalar(reduceMotion ? scaleFor() : 0);
+        scene.add(text);
+        introStart = performance.now();
+      });
+
+      const tunnel = new Group();
+      scene.add(tunnel);
+      const grid = (setup: (g: GridHelper) => void) => {
+        const g = new GridHelper(100, 40, settings.grid, settings.grid);
+        const material = g.material as LineBasicMaterial;
+        material.opacity = settings.gridOpacity;
+        material.transparent = true;
+        setup(g);
+        tunnel.add(g);
+      };
+      grid((g) => (g.position.y = -5));
+      grid((g) => (g.position.y = 5));
+      grid((g) => {
+        g.rotation.z = Math.PI / 2;
+        g.position.x = -15;
+      });
+      grid((g) => {
+        g.rotation.z = Math.PI / 2;
+        g.position.x = 15;
+      });
+
+      let target = scaleFor();
+      const animate = (now: number) => {
+        requestAnimationFrame(animate);
+        if (!reduceMotion) {
+          tunnel.rotation.z += 0.0035;
+          for (const g of tunnel.children) {
+            g.position.z += 0.08;
+            if (g.position.z > 2.5) g.position.z = 0;
+          }
+        }
+        if (text && !reduceMotion) {
+          const scaleT = Math.min(1, (now - introStart) / 1500);
+          const spinT = Math.min(1, (now - introStart) / 2000);
+          const current = text.scale.x;
+          text.scale.setScalar(
+            scaleT < 1 ? target * elasticOut(scaleT) : current + (target - current) * 0.1,
+          );
+          text.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
+          text.rotation.y =
+            Math.cos(Date.now() * 0.0015) * 0.15 + Math.PI * 2 * (1 - easeOut(spinT));
+          text.rotation.z = Math.sin(Date.now() * 0.0005) * 0.05;
+        }
+        renderer.render(scene, camera);
+      };
+      requestAnimationFrame(animate);
+
+      addEventListener('resize', () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+        target = scaleFor();
+        if (reduceMotion && text) text.scale.setScalar(target);
+      });
+    </script>
+
+    <style is:global>
+      @font-face {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: url('../assets/fonts/manrope-latin.woff2') format('woff2');
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      @font-face {
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400 700;
+        font-display: swap;
+        src: url('../assets/fonts/manrope-cyrillic.woff2') format('woff2');
+        unicode-range: U+0400-045F, U+0490-0491, U+2116;
+      }
+
+      :root {
+        --color-background: #efefef;
+        --color-ink: #1c1c1c;
+        --color-accent: #3346dc;
+        --color-on-dark: #ededed;
+        --ease: cubic-bezier(0.55, 0, 0.1, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Manrope', sans-serif;
+        background: var(--color-background);
+        color: var(--color-ink);
+        overflow-x: hidden;
+      }
+
+      #tunnel {
+        position: fixed;
+        inset: 0 0 auto;
+        height: 100vh;
+        z-index: 1;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        pointer-events: none;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+      }
+
+      .message {
+        margin-top: 250px;
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+        opacity: 0.8;
+        text-align: center;
+      }
+
+      .home-btn {
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 36px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        background: var(--color-ink);
+        color: var(--color-on-dark);
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 1.5;
+        text-decoration: none;
+        transition:
+          background 450ms var(--ease),
+          transform 450ms var(--ease);
+      }
+
+      .home-btn:hover {
+        background: var(--color-accent);
+        transform: translateY(-2px);
+      }
+
+      .home-btn:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: 4px;
+      }
+
+      @media (max-width: 768px) {
+        .message {
+          margin-top: 180px;
+          padding: 0 24px;
+          font-size: 1.125rem;
+        }
+
+        .home-btn {
+          min-width: 180px;
+          padding: 14px 28px;
+          font-size: 16px;
+        }
+      }
+    </style>
+  </body>
+</html>

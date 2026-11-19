@@ -1,7 +1,7 @@
 ---
-// The original site's project card: full-bleed image, a glass pill with
-// "Name · Category" at the bottom, an optional corner tag, and a dimmed
-// overlay with the status for work that has no case study yet.
+// The original project card: full-bleed image, a glass "Name · Category"
+// pill, a corner tag for self-initiated work, and an overlay with the status
+// for work that has no case study yet.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
@@ -9,185 +9,39 @@ interface Props {
   name: string;
   category: string;
   image: ImageMetadata;
-  /** Case study URL; without one the card shows its status instead of linking. */
   href?: string;
   status?: string;
-  /** Corner tag, e.g. "Concept" for self-initiated work. */
   tag?: string;
 }
 
 const { name, category, image, href, status, tag } = Astro.props;
-const Tagname = href ? 'a' : 'div';
+const Link = href ? 'a' : 'div';
 ---
 
-<li class:list={['project-card', { upcoming: !href }]}>
-  <Tagname class="link" href={href}>
-    <span class="media">
+<article class:list={['project-card', 'reveal', { 'project-card--upcoming': !href }]}>
+  <Link href={href} class:list={['project-card-link', { 'project-card-link--disabled': !href }]}>
+    <div class="project-image-wrapper">
       <Picture
         src={image}
         formats={['avif', 'webp']}
-        widths={[480, 800, 1200]}
-        sizes="(width >= 104rem) 52rem, (width >= 56.25rem) 46vw, 92vw"
+        widths={[500, 800, 1080, 1600].filter((w) => w <= image.width)}
+        sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1648px) calc((100vw - 76px) / 2), 762px"
         alt=""
         loading="lazy"
       />
-      {tag && <span class="tag">{tag}</span>}
+      {tag && <span class="project-concept-tag">{tag}</span>}
       {
         status && (
-          <span class="overlay">
-            <span class="status">{status}</span>
-          </span>
+          <div class="project-upcoming-overlay">
+            <span class="project-upcoming-label">{status}</span>
+          </div>
         )
       }
-    </span>
-    <span class="pill">
-      <h3 class="name">{name}</h3>
-      <span class="sep" aria-hidden="true">·</span>
-      <span class="category">{category}</span>
-    </span>
-  </Tagname>
-</li>
-
-<style>
-  /* Values are the old site's (px in comments). */
-  .project-card {
-    position: relative;
-    overflow: hidden;
-    border: var(--hairline);
-    border-radius: var(--radius);
-    background-color: var(--paper-raised);
-    color: var(--ink);
-    transition: border-color 600ms var(--ease-out);
-  }
-
-  .link {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .link:focus-visible {
-    outline-offset: -4px;
-    border-radius: inherit;
-  }
-
-  .media {
-    position: relative;
-    display: block;
-    overflow: hidden;
-  }
-
-  .media :global(img) {
-    width: 100%;
-    aspect-ratio: 400 / 284;
-    object-fit: cover;
-    transition: transform 900ms var(--ease-out);
-  }
-
-  /* Always visible, bottom centre, "Name · Category" on one line. */
-  .pill {
-    position: absolute;
-    bottom: 1.25rem; /* 20 */
-    /* Centred with insets, not left: 50%, so it can use the card's full width. */
-    inset-inline: 1rem;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem; /* 12 */
-    width: fit-content;
-    max-width: calc(100% - 2rem);
-    margin-inline: auto;
-    padding: 0.75rem 1.25rem; /* 12 × 20 */
-    overflow: hidden;
-    border: 1px solid rgb(250 250 250 / 0.9);
-    border-radius: var(--radius);
-    background: rgb(250 250 250 / 0.8);
-    backdrop-filter: blur(12px);
-    white-space: nowrap;
-    transition: background-color 600ms var(--ease-out);
-  }
-
-  .name {
-    flex-shrink: 0;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: 0;
-  }
-
-  .sep {
-    flex-shrink: 0;
-    color: rgb(20 20 20 / 0.72);
-  }
-
-  .category {
-    min-width: 0;
-    overflow: hidden;
-    color: var(--ink-muted);
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-overflow: ellipsis;
-  }
-
-  /* Marks self-initiated work so it is never read as client work. */
-  .tag {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    z-index: 3;
-    padding: 0.375rem 1rem;
-    border-radius: var(--radius);
-    background: rgb(250 250 250 / 0.9);
-    backdrop-filter: blur(8px);
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  .overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgb(20 20 20 / 0.3);
-  }
-
-  .status {
-    padding: 0.5rem 1.4rem;
-    border: 1px solid rgb(250 250 250 / 0.2);
-    border-radius: var(--radius);
-    background: rgb(20 20 20 / 0.45);
-    backdrop-filter: blur(8px);
-    color: #fafafa;
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  a.link:hover .media :global(img),
-  a.link:focus-visible .media :global(img) {
-    transform: scale(1.03);
-  }
-
-  .project-card:not(.upcoming):hover {
-    border-color: rgb(51 70 220 / 0.4);
-  }
-
-  .project-card:not(.upcoming):hover .pill {
-    background: rgb(250 250 250 / 0.86);
-  }
-
-  @media (width < 48rem) {
-    .pill {
-      bottom: 1rem;
-      padding: 0.5rem 1rem;
-    }
-
-    .status {
-      font-size: 1rem;
-    }
-  }
-</style>
+    </div>
+    <div class="project-pill">
+      <h3 class="project-pill-name">{name}</h3>
+      <span class="project-pill-sep" aria-hidden="true">·</span>
+      <span class="project-pill-category">{category}</span>
+    </div>
+  </Link>
+</article>

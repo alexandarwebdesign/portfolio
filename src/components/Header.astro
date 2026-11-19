@@ -1,9 +1,8 @@
 ---
-// The original site's glass navigation: a home circle beside a glass pill
-// with a slowly rotating rim light. On phones and tablets the pill becomes a
-// bar at the bottom (thumb reach) with the menu and the call to action.
-import Button from './Button.astro';
-import LangSwitch from './LangSwitch.astro';
+// The original navigation: a glass home tile beside a glass pill with a
+// rotating rim light, centred at the top. On phones only the home tile and a
+// menu button stay; the menu opens as a full-screen overlay. The other
+// language is the last link (two languages, both kept).
 import { ui, type Lang } from '../i18n/ui';
 import { pathFor, type RouteId } from '../i18n/routes';
 import { site } from '../data/site';
@@ -15,316 +14,143 @@ interface Props {
 
 const { lang, route } = Astro.props;
 const t = ui[lang];
+const name = site.name[lang];
 const home = pathFor('home', lang)!;
-const homeHash = (hash: string) => (home === '/' ? `/${hash}` : `${home}${hash}`);
+// On the home page the sections are on the page itself.
+const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? '' : home}/#${id}`);
+const contact = route === 'uslugi' ? '#contact' : hash('contact');
+const focusField = route === 'uslugi' ? '#offer-name' : '#name';
 
 const links = [
-  { href: homeHash('#work'), label: t.nav.work, current: false },
+  { href: hash('work'), label: t.nav.work, current: false },
   { href: pathFor('about', lang)!, label: t.nav.about, current: route === 'about' },
   ...(lang === 'bg'
     ? [{ href: pathFor('uslugi', 'bg')!, label: t.nav.services, current: route === 'uslugi' }]
     : []),
-  { href: homeHash('#contact'), label: t.nav.contact, current: false },
 ];
 
-// The other language: the same page when it exists, otherwise that language's home.
+// The other language: the same page when it exists, otherwise its home page.
 const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
 const otherRoute = route === 'notFound' ? 'home' : route;
 const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
+// /uslugi has no English pair, so the language link opens the English home page.
+const noPair = route === 'uslugi';
+const otherName = { bg: { short: 'БГ', full: 'Български' }, en: { short: 'EN', full: 'English' } }[
+  otherLang
+];
 ---
 
-<header class="site-header">
-  <a
-    class="home glass"
-    href={home}
-    aria-current={route === 'home' ? 'page' : undefined}
-    aria-label={`${t.nav.home} · ${site.name[lang]}`}
-  >
-    <svg width="22" height="23" viewBox="0 0 15 16" fill="none" aria-hidden="true">
-      <path
-        d="M2.99 15.33c-.95 0-1.72-.8-1.72-1.79V6.35c0-.54.24-1.06.65-1.4L6.64 1.02a1.68 1.68 0 0 1 2.15 0l4.73 3.93c.41.34.64.86.64 1.4v7.19c0 .99-.77 1.79-1.72 1.79H2.99Z"
-        stroke="currentColor"
-        stroke-width="1.25"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-      <path
-        d="M5.7 15.33v-4.49c0-.43.17-.85.47-1.16.3-.3.71-.47 1.14-.47h.81c.43 0 .84.17 1.14.47.3.31.47.73.47 1.16v4.49"
-        stroke="currentColor"
-        stroke-width="1.25"
-        stroke-linecap="round"
-        stroke-linejoin="round"></path>
-    </svg>
-  </a>
-  <nav class="bar glass" aria-label={t.nav.label}>
-    <button class="menu-button" type="button" popovertarget="site-menu">
-      {t.nav.menu}
-    </button>
-    <ul class="menu" id="site-menu" popover>
+<header>
+  <div class="nav">
+    <a
+      href={home}
+      class="nav-home"
+      aria-label={`${name} – ${t.nav.home}`}
+      aria-current={route === 'home' ? 'page' : undefined}
+    >
+      <svg width="22" height="23" viewBox="0 0 15 16" fill="none" aria-hidden="true">
+        <path
+          d="M2.99 15.33c-.95 0-1.72-.8-1.72-1.79V6.35c0-.54.24-1.06.65-1.4L6.64 1.02a1.68 1.68 0 0 1 2.15 0l4.73 3.93c.41.34.64.86.64 1.4v7.19c0 .99-.77 1.79-1.72 1.79H2.99Z"
+          stroke="currentColor"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M5.7 15.33v-4.49c0-.43.17-.85.47-1.16.3-.3.71-.47 1.14-.47h.81c.43 0 .84.17 1.14.47.3.31.47.73.47 1.16v4.49"
+          stroke="currentColor"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <span class="nav-home-name" aria-hidden="true">{name}</span>
+    </a>
+    <nav class="nav-pill" aria-label={t.nav.label}>
       {
         links.map((link) => (
-          <li>
-            <a href={link.href} aria-current={link.current ? 'page' : undefined}>
-              {link.label}
-            </a>
-          </li>
+          <a href={link.href} class="nav-link" aria-current={link.current ? 'page' : undefined}>
+            {link.label}
+          </a>
         ))
       }
-      <li class="lang-item">
-        <LangSwitch lang={otherLang} href={otherHref} />
-      </li>
-    </ul>
-    <Button class="cta" href={homeHash('#contact')}>{t.cta}</Button>
-  </nav>
+      <a href={contact} class="nav-link nav-contact-link" data-focus-target={focusField}>
+        {t.nav.contact}
+      </a>
+      <a
+        href={otherHref}
+        class="nav-link nav-lang-link"
+        hreflang={otherLang}
+        lang={otherLang}
+        title={noPair ? 'English: само началната страница' : undefined}
+        aria-label={noPair ? `${otherName.full}: само началната страница` : otherName.full}
+        >{otherName.short}</a
+      >
+    </nav>
+    <a href={contact} class="nav-contact-mobile" data-focus-target={focusField}>{t.nav.contact}</a>
+    <button
+      type="button"
+      class="nav-burger"
+      aria-label={t.site.openMenu}
+      aria-expanded="false"
+      aria-controls="nav-mobile-menu"
+      data-open-label={t.site.openMenu}
+      data-close-label={t.site.closeMenu}
+    >
+      <svg
+        width="20"
+        height="14"
+        viewBox="0 0 20 14"
+        fill="none"
+        aria-hidden="true"
+        class="nav-burger-icon"
+      >
+        <line
+          class="bar bar-1"
+          x1="0"
+          y1="1"
+          x2="20"
+          y2="1"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"></line>
+        <line
+          class="bar bar-2"
+          x1="0"
+          y1="7"
+          x2="20"
+          y2="7"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"></line>
+        <line
+          class="bar bar-3"
+          x1="0"
+          y1="13"
+          x2="20"
+          y2="13"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"></line>
+      </svg>
+    </button>
+  </div>
 </header>
-
-<script>
-  // Close the mobile menu after choosing a link, which may only change the #hash.
-  const menu = document.getElementById('site-menu');
-  menu?.addEventListener('click', (event) => {
-    if (
-      event.target instanceof Element &&
-      event.target.closest('a') &&
-      menu.matches(':popover-open')
-    ) {
-      menu.hidePopover();
-    }
-  });
-</script>
-
-<style>
-  @property --shine {
-    syntax: '<angle>';
-    initial-value: 156deg;
-    inherits: false;
+<div
+  class="nav-mobile-menu"
+  id="nav-mobile-menu"
+  aria-hidden="true"
+  role="dialog"
+  aria-label={t.site.menuLabel}
+>
+  <a href={home} class="nav-mobile-link">{t.nav.home}</a>
+  {
+    links.map((link) => (
+      <a href={link.href} class="nav-mobile-link" aria-current={link.current ? 'page' : undefined}>
+        {link.label}
+      </a>
+    ))
   }
-
-  @keyframes shine-rotate {
-    to {
-      --shine: 516deg;
-    }
-  }
-
-  .site-header {
-    position: absolute;
-    inset: 0 0 auto;
-    z-index: 10;
-    padding: var(--space-4) var(--margin);
-    color: var(--ink);
-    pointer-events: none;
-  }
-
-  .site-header > * {
-    pointer-events: auto;
-  }
-
-  /*
-   * Glass (the old "Espacio" recipe). The fill is 55 % instead of 50 % so the
-   * links keep AA contrast when the bar passes over the dark sections.
-   */
-  .glass {
-    position: relative;
-    background: rgb(250 250 250 / 0.55);
-    backdrop-filter: blur(12px) saturate(3) hue-rotate(180deg);
-  }
-
-  /* Rim light that slowly travels around the edge. */
-  .glass::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border: 1.5px solid transparent;
-    border-radius: inherit;
-    background: linear-gradient(
-        var(--shine),
-        rgb(250 250 250 / 0.5) 2%,
-        rgb(250 250 250 / 0.001) 40%,
-        rgb(250 250 250 / 0.001) 55%,
-        rgb(250 250 250 / 0.15) 93%
-      )
-      border-box;
-    mask:
-      linear-gradient(#fff 0 0) padding-box,
-      linear-gradient(#fff 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-    animation: shine-rotate 8s linear infinite;
-  }
-
-  .home {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: var(--radius);
-    color: var(--ink);
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .home:hover {
-    color: var(--cobalt);
-  }
-
-  .bar {
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-1);
-    border-radius: var(--radius);
-  }
-
-  .menu-button {
-    min-height: var(--target);
-    padding-inline: var(--space-5);
-    border: 0;
-    border-radius: var(--radius);
-    background: none;
-    color: var(--ink);
-    font-size: var(--text-small);
-    font-weight: 600;
-  }
-
-  .menu {
-    list-style: none;
-    padding: 0;
-  }
-
-  .menu a {
-    position: relative;
-    display: flex;
-    align-items: center;
-    min-height: var(--target);
-    color: var(--ink);
-    text-decoration: none;
-    white-space: nowrap;
-    transition: color var(--dur-fast) var(--ease-out);
-  }
-
-  .menu a:hover {
-    color: var(--cobalt);
-  }
-
-  /* Mobile and tablet: the bar sits at the bottom, in thumb reach. */
-  @media (width < 64rem) {
-    .bar {
-      position: fixed;
-      inset-inline: var(--margin);
-      bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
-      max-width: 28rem;
-      margin-inline: auto;
-    }
-
-    /* Keeps the BG label on one line at 360px. */
-    .bar .cta {
-      flex: 1;
-      padding-inline: var(--space-4);
-      white-space: nowrap;
-    }
-
-    .menu:popover-open {
-      position: fixed;
-      inset: auto var(--margin) calc(var(--space-3) + env(safe-area-inset-bottom, 0px) + 4.5rem);
-      width: auto;
-      max-width: 28rem;
-      margin-inline: auto;
-      display: grid;
-      gap: var(--space-1);
-      margin-block: 0;
-      padding: var(--space-5);
-      border: var(--hairline);
-      border-radius: var(--radius);
-      background-color: var(--paper-raised);
-      color: var(--ink);
-    }
-
-    .menu a {
-      font-family: var(--font-display);
-      font-size: var(--text-title);
-      letter-spacing: var(--tracking-display);
-    }
-
-    .menu a[aria-current='page'] {
-      text-decoration: underline;
-    }
-
-    .lang-item {
-      padding-top: var(--space-3);
-      border-top: var(--hairline);
-    }
-  }
-
-  /* Desktop: home circle + glass pill, centred at the top (24 px). */
-  @media (width >= 64rem) {
-    .site-header {
-      position: fixed;
-      inset: 1.5rem 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-    }
-
-    .home {
-      z-index: 1;
-      width: 4rem; /* 64 */
-      height: 4rem;
-      margin-right: -4px;
-    }
-
-    .bar {
-      padding: var(--space-2); /* 8 */
-    }
-
-    .menu-button,
-    .bar .cta {
-      display: none;
-    }
-
-    /* Always shown inline; the popover only applies to small screens. */
-    .menu {
-      position: static;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      inset: auto;
-      width: auto;
-      height: auto;
-      margin: 0;
-      overflow: visible;
-      border: 0;
-      background: none;
-      color: inherit;
-    }
-
-    .menu a {
-      padding: 0.75rem 1.5rem; /* 12 × 24 */
-      border-radius: var(--radius);
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: 1.25;
-    }
-
-    /* Active page: a small accent dot under the label. */
-    .menu a[aria-current='page']::after {
-      content: '';
-      position: absolute;
-      bottom: 3px;
-      left: 50%;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background-color: var(--cobalt);
-      translate: -50% 0;
-    }
-
-    .lang-item :global(.lang) {
-      color: var(--ink);
-      font-size: 1rem;
-    }
-
-    .lang-item :global(.lang:hover) {
-      background: none;
-      color: var(--cobalt);
-    }
-  }
-</style>
+  <a href={otherHref} class="nav-mobile-link" hreflang={otherLang} lang={otherLang}
+    >{noPair ? `${otherName.full} (началната страница)` : otherName.full}</a
+  >
+  <a href={contact} class="nav-mobile-link nav-mobile-cta">{t.site.letsTalk}</a>
+</div>
