@@ -56,7 +56,11 @@ const columns = [
   <div class="container">
     <div class="statement-ring reveal">
       <svg class="statement-ticks" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-        <circle cx="50" cy="50" r="48.5" pathLength="360"></circle>
+        {
+          Array.from({ length: 120 }, (_, i) => (
+            <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
+          ))
+        }
       </svg>
       <p class="statement">
         {t.statement.before}<mark class="statement-mark">{t.statement.mark}</mark>{

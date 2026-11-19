@@ -5231,17 +5231,11 @@ html.js.reveal-failsafe .reveal {
   pointer-events: none;
 }
 
-.statement-ticks circle {
-  fill: none;
+.statement-ticks line {
   stroke: var(--color-border);
-  stroke-width: 3;
-  stroke-dasharray: 0.4 2.6; /* 120 lines */
-}
-
-@media (min-width: 900px) {
-  .statement-ticks circle {
-    stroke-dasharray: 0.2 2.8;
-  }
+  stroke-width: 1.25px; /* the same width on every line, whatever the circle size */
+  vector-effect: non-scaling-stroke;
+  shape-rendering: geometricPrecision;
 }
 
 /* a line from each side of the circle out to the edge of the screen */
