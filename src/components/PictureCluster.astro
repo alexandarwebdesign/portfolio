@@ -1,6 +1,9 @@
 ---
 // The closing call to action: the title and the button in the centre, six
-// website concepts around them (a 2 × 3 grid on phones).
+// website concepts around them. On wide, tall screens with motion the section
+// is pinned and the pictures zoom out of the centre as you scroll (the
+// scaling-media effect, site.ts); otherwise a 2 × 3 grid on phones and a static
+// cluster on desktop.
 import { Picture } from 'astro:assets';
 import Button from './Button.astro';
 import s1 from '../assets/images/marquee/studio-01.jpg';
@@ -17,9 +20,19 @@ interface Props {
 
 const { title, cta } = Astro.props;
 const pictures = [s1, s2, s3, s4, s5, s6];
+// Where each picture sits when sharp (x, y: from the centre, size: width, all as a
+// share of the stage unit) and where in the scroll (0..1) it starts.
+const spots = [
+  { x: 0.4, y: -0.12, size: 0.26, at: 0.03 },
+  { x: -0.4, y: 0.12, size: 0.25, at: 0.18 },
+  { x: -0.37, y: -0.2, size: 0.24, at: 0.33 },
+  { x: 0.38, y: 0.18, size: 0.25, at: 0.48 },
+  { x: -0.08, y: 0.25, size: 0.22, at: 0.63 },
+  { x: 0.12, y: -0.27, size: 0.22, at: 0.78 },
+];
 ---
 
-<section class="cluster stage" aria-labelledby="cluster-title">
+<section class="cluster stage" aria-labelledby="cluster-title" data-cluster>
   <div class="container cluster__stage">
     <div class="cluster__center reveal">
       <h2 id="cluster-title" class="cluster__title">{title}</h2>
@@ -28,7 +41,13 @@ const pictures = [s1, s2, s3, s4, s5, s6];
     <ul class="cluster__pictures" aria-hidden="true">
       {
         pictures.map((image, i) => (
-          <li class={`cluster__picture cluster__picture--${i + 1}`}>
+          <li
+            class={`cluster__picture cluster__picture--${i + 1}`}
+            data-x={spots[i].x}
+            data-y={spots[i].y}
+            data-size={spots[i].size}
+            data-at={spots[i].at}
+          >
             <Picture
               src={image}
               formats={['avif', 'webp']}

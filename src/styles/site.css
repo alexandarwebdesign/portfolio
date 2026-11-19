@@ -2642,6 +2642,42 @@ body.is-loaded .hero-note {
   }
 }
 
+/* Scroll mode (site.ts sets data-scroll on wide, tall screens with motion): the section is
+   a long track, the stage is pinned, and the pictures zoom out of the centre as you scroll.
+   The title and the button stay in the middle. */
+.cluster[data-scroll] {
+  --cluster-length: 400vh;
+  height: var(--cluster-length);
+  padding-bottom: 0;
+}
+
+.cluster[data-scroll] .cluster__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 0;
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.cluster[data-scroll] .cluster__pictures {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cluster[data-scroll] .cluster__pictures .cluster__picture {
+  left: 50%;
+  top: 50%;
+  right: auto;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+
 /* --------------------------------------------------------------------------
    Stage: the one surface the home page sits on. It uses the light root tokens.
    -------------------------------------------------------------------------- */
