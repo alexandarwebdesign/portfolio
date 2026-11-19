@@ -315,7 +315,8 @@ h3,
   --font-display: 'Marcellus', Georgia, serif;
   --font-mono: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
   --text-hero: clamp(56px, 11vw, 176px);
-  --text-section: clamp(40px, 5.5vw, 96px);
+  --text-section: clamp(32px, 3.3vw, 56px);
+  --text-cta: clamp(40px, 5.5vw, 96px); /* footer roll-link, stays large */
   --text-title: clamp(24px, 2vw, 36px);
   --text-project: clamp(24px, 1.8vw, 32px);
   --text-service: clamp(24px, 1vw + 20.8px, 48px);
@@ -2317,7 +2318,7 @@ main {
 /* Giant roll-link CTA. */
 .footer-cta-title {
   display: inline-block;
-  font-size: var(--text-section);
+  font-size: var(--text-cta);
   font-weight: 500;
   letter-spacing: var(--tracking-tight);
   line-height: 1.1;
