@@ -2402,9 +2402,14 @@ body.is-loaded .hero-note {
     inset-block: 0;
     inset-inline: 6%;
     padding: 0;
-    grid-template-columns: 22% 1fr 24%;
-    align-content: center; /* the row sits in the middle of the screen */
+    grid-template-columns: 32% 1fr 24%;
+    align-content: end; /* the row sits in the lower part of the screen */
+    padding-block-end: 14svh;
     align-items: start; /* both sides begin on the same line */
+  }
+
+  .process__name {
+    font-size: clamp(40px, 4.4vw, 72px);
   }
 
   .process__step[data-tone='dark'] .process__text {
