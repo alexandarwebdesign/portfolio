@@ -5209,8 +5209,18 @@ html.js.reveal-failsafe .reveal {
   color: var(--color-text);
 }
 
+/* a circle around the whole sentence */
+.statement-ring {
+  aspect-ratio: 1;
+  display: grid;
+  place-content: center;
+  padding-inline: 4%;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+}
+
 @media (min-width: 900px) {
-  .statement {
+  .statement-ring {
     margin-inline: auto;
     max-width: 58%;
   }

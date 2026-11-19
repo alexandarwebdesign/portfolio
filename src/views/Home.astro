@@ -54,9 +54,13 @@ const columns = [
 
 <section class="statement-section stage">
   <div class="container">
-    <p class="statement reveal">
-      {t.statement.before}<mark class="statement-mark">{t.statement.mark}</mark>{t.statement.after}
-    </p>
+    <div class="statement-ring reveal">
+      <p class="statement">
+        {t.statement.before}<mark class="statement-mark">{t.statement.mark}</mark>{
+          t.statement.after
+        }
+      </p>
+    </div>
   </div>
 </section>
 
