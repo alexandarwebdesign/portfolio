@@ -5244,6 +5244,16 @@ html.js.reveal-failsafe .reveal {
     stroke-dashoffset: 0;
   }
 
+  /* every line starts a little higher than its place and settles down as it appears */
+  html.js .statement-ticks .tick {
+    transform: translateY(-2px); /* user units: about 15px on desktop, 7px on a phone */
+    transition: transform 420ms var(--ease-out) calc(700ms + var(--k) * 18ms);
+  }
+
+  html.js .statement-ring.is-drawn .statement-ticks .tick {
+    transform: none;
+  }
+
   html.js .statement-ring::before {
     clip-path: inset(0 100% 0 0);
     transition: clip-path 700ms var(--ease-out);
@@ -5262,6 +5272,10 @@ html.js.reveal-failsafe .reveal {
   /* if the script never runs, show everything */
   html.js.reveal-failsafe .statement-ticks line {
     stroke-dashoffset: 0;
+  }
+
+  html.js.reveal-failsafe .statement-ticks .tick {
+    transform: none;
   }
 
   html.js.reveal-failsafe .statement-ring::before,

@@ -64,14 +64,9 @@ const columns = [
               // the lower half starts at the left side (9 o'clock) and goes counter-clockwise along the bottom
               const k = i > 30 && i < 90 ? 90 - i : (30 - i + 120) % 120;
               return (
-                <line
-                  x1="50"
-                  y1="0"
-                  x2="50"
-                  y2="3"
-                  transform={`rotate(${i * 3} 50 50)`}
-                  style={`--k:${k}`}
-                />
+                <g class="tick" style={`--k:${k}`}>
+                  <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
+                </g>
               );
             })
         }
