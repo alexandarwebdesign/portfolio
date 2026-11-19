@@ -4,7 +4,7 @@
 import { Picture } from 'astro:assets';
 import HeroShader from '../components/HeroShader.astro';
 import Button from '../components/Button.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import WorkCard from '../components/WorkCard.astro';
 import ImageMarquee from '../components/ImageMarquee.astro';
 import AboutIndex from '../components/AboutIndex.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
@@ -30,6 +30,12 @@ const s = ui[lang].site;
 const shapes = ['circle', 'triangle', 'hexagon'] as const;
 const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
 const count = String(work.length).padStart(2, '0');
+// Two columns, the second one dropped: 1st and 3rd on the left, 2nd and 4th on the right.
+const indexed = work.map((item, index) => ({ item, index }));
+const columns = [
+  indexed.filter(({ index }) => index % 2 === 0),
+  indexed.filter(({ index }) => index % 2 === 1),
+];
 ---
 
 <section id="hero" class="hero-section hero-section--shader">
@@ -60,17 +66,22 @@ const count = String(work.length).padStart(2, '0');
       </p>
       <h2 class="section-title">{t.work.title}</h2>
     </header>
-    <div class="project-grid" id="project-grid">
+    <div class="work-stagger">
       {
-        work.map((item) => (
-          <ProjectCard
-            name={item.name}
-            category={item.category[lang]}
-            image={item.image}
-            href={item.route && pathFor(item.route, lang)}
-            status={item.status?.[lang]}
-            tag={item.tag?.[lang]}
-          />
+        columns.map((column, c) => (
+          <div class:list={['work-col', { 'work-col--b': c === 1 }]}>
+            {column.map(({ item, index }) => (
+              <WorkCard
+                name={item.name}
+                index={index}
+                category={item.category[lang]}
+                image={item.image}
+                href={item.route && pathFor(item.route, lang)}
+                status={item.status?.[lang]}
+                tag={item.tag?.[lang]}
+              />
+            ))}
+          </div>
         ))
       }
     </div>
