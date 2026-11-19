@@ -5238,25 +5238,24 @@ html.js.reveal-failsafe .reveal {
   shape-rendering: geometricPrecision;
 }
 
-/* a line from each side of the circle out to the edge of the screen */
+/* the two lines at 3 and 9 o'clock carry on to the screen edges, as one line with the ticks */
 .statement-ring::before,
 .statement-ring::after {
   content: '';
   position: absolute;
   top: 50%;
   width: 100vw;
-  height: 1px;
+  height: 1.25px;
+  transform: translateY(-50%);
   background: var(--color-border);
 }
 
 .statement-ring::before {
-  right: 100%;
-  margin-right: 1px;
+  right: 97%; /* starts where the tick would have started (3 % of the width) */
 }
 
 .statement-ring::after {
-  left: 100%;
-  margin-left: 1px;
+  left: 97%;
 }
 
 @media (min-width: 900px) {

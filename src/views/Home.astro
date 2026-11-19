@@ -57,9 +57,9 @@ const columns = [
     <div class="statement-ring reveal">
       <svg class="statement-ticks" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
         {
-          Array.from({ length: 120 }, (_, i) => (
-            <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
-          ))
+          Array.from({ length: 120 }, (_, i) => i)
+            .filter((i) => i !== 30 && i !== 90)
+            .map((i) => <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />)
         }
       </svg>
       <p class="statement">
