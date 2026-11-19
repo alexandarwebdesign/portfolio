@@ -2504,8 +2504,8 @@ body.is-loaded .hero-note {
       animation-fill-mode: both, forwards;
       animation-timeline: --seg1, --seg2;
       animation-range:
-        entry 80% entry 100%,
-        entry 80% entry 100%;
+        entry 65% entry 90%,
+        entry 65% entry 90%;
     }
 
     .process__step:nth-child(1)::after {
@@ -2513,8 +2513,8 @@ body.is-loaded .hero-note {
       animation-fill-mode: both, forwards;
       animation-timeline: --seg1, --seg2;
       animation-range:
-        entry 80% entry 100%,
-        entry 80% entry 100%;
+        entry 65% entry 90%,
+        entry 65% entry 90%;
     }
 
     /* card 2: the same, one step later */
@@ -2522,7 +2522,7 @@ body.is-loaded .hero-note {
       animation-name: process-dim-1;
       animation-fill-mode: both;
       animation-timeline: --seg2;
-      animation-range: entry 80% entry 100%;
+      animation-range: entry 65% entry 90%;
     }
 
     .process__step:nth-child(2) {
@@ -2531,7 +2531,7 @@ body.is-loaded .hero-note {
       animation-timeline: --seg1, --seg2;
       animation-range:
         entry 25% entry 80%,
-        entry 80% entry 100%;
+        entry 65% entry 90%;
     }
 
     .process__seg--dwell,
