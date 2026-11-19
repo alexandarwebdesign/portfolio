@@ -5,8 +5,6 @@ import Footer from '../components/Footer.astro';
 import { toLang, ui } from '../i18n/ui';
 import type { RouteId } from '../i18n/routes';
 import manropeLatin from '../assets/fonts/manrope-latin.woff2?url';
-import marcellusLatin from '../assets/fonts/marcellus-latin.woff2?url';
-import forumCyrillic from '../assets/fonts/forum-cyrillic.woff2?url';
 import manropeCyrillic from '../assets/fonts/manrope-cyrillic.woff2?url';
 import '../styles/site.css';
 
@@ -24,7 +22,7 @@ interface Props {
 const { title, description, route, noindex, schema, crumb, bodyClass } = Astro.props;
 const lang = toLang(Astro.currentLocale);
 // The fonts of the first screen: Latin for English, Cyrillic for Bulgarian.
-const preload = lang === 'bg' ? [manropeCyrillic, forumCyrillic] : [manropeLatin, marcellusLatin];
+const preload = lang === 'bg' ? [manropeCyrillic] : [manropeLatin];
 ---
 
 <!doctype html>

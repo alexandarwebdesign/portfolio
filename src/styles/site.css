@@ -38,16 +38,6 @@
   line-gap-override: 0%;
 }
 
-/* Forum Cyrillic (SIL OFL 1.1) - Bulgarian display headings; Marcellus has no Cyrillic. */
-@font-face {
-  font-family: 'Forum';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../assets/fonts/forum-cyrillic.woff2') format('woff2');
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
 /* Manrope Cyrillic - subset of Manrope (SIL OFL 1.1) for the Bulgarian page. */
 @font-face {
   font-family: 'Manrope';
@@ -70,29 +60,6 @@
   ascent-override: 96%;
   descent-override: 25%;
   line-gap-override: 0%;
-}
-
-/* Marcellus - editorial display serif for headlines (self-hosted, 400 only). */
-@font-face {
-  font-family: 'Marcellus';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../assets/fonts/marcellus-latin.woff2') format('woff2');
-  unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
-    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-@font-face {
-  font-family: 'Marcellus';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('../assets/fonts/marcellus-latin-ext.woff2') format('woff2');
-  unicode-range:
-    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
-    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
-    U+A720-A7FF;
 }
 
 @property --degshine {
@@ -312,8 +279,8 @@ h3,
 
   /* ---------- Typography ---------- */
   --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
-  --font-display: 'Marcellus', Georgia, serif;
-  --font-mono: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', monospace;
+  --font-display: var(--font-body); /* one family everywhere: Manrope */
+  --font-mono: var(--font-body);
   --text-hero: clamp(56px, 11vw, 176px);
   --text-section: clamp(32px, 3.3vw, 56px);
   --text-cta: clamp(40px, 5.5vw, 96px); /* footer roll-link, stays large */
@@ -328,7 +295,7 @@ h3,
   --leading-display: 0.95;
   --leading-tight: 1.05;
   --leading-normal: 1.5;
-  --tracking-display: -0.01em; /* Marcellus - lighter tracking than sans */
+  --tracking-display: -0.02em;
   --tracking-tight: -0.02em;
   --tracking-caps: 0.08em;
 
@@ -4752,13 +4719,7 @@ html.js.reveal-failsafe .reveal {
    Offer page (/uslugi) - Bulgarian local-business offer.
    Built from the site's own components (hero, section-header, service-row,
    project-card, faq, contact). Only the small gaps below are new.
-   Marcellus has no Cyrillic: Forum (closest classical serif) covers it, and
-   Latin characters keep falling through to Marcellus.
    ========================================================================== */
-
-html:lang(bg) {
-  --font-display: 'Forum', 'Marcellus', Georgia, serif;
-}
 
 .offer-page .tbd {
   outline: 1px dashed var(--color-error);
