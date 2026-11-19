@@ -727,16 +727,23 @@ textarea:focus-visible {
   }
 }
 
-/* Centered shrink-wrapped glass pill */
+/* One solid bar, centred at the top: the home tile and the links share one
+   surface with a hairline edge, so it reads on light and dark sections alike. */
 .nav {
+  --nav-radius: 18px;
+  --nav-item-radius: 12px; /* bar radius minus its 6px padding */
   position: fixed;
-  top: 24px;
+  top: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
   display: inline-flex;
   align-items: center;
-  gap: 0;
+  gap: 4px;
+  padding: 6px;
+  border-radius: var(--nav-radius);
+  background: #f4f4f4;
+  border: 1px solid rgba(28, 28, 28, 0.22);
 }
 
 /* Home icon circle button */
@@ -745,16 +752,12 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--space-16);
-  height: var(--space-16);
-  border-radius: var(--border-radius);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  color: var(--color-ink);
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--nav-item-radius);
+  color: #1c1c1c;
   text-decoration: none;
   flex-shrink: 0;
-  margin-right: -4px;
   z-index: 1;
   transition:
     color var(--duration-fast) var(--ease),
@@ -764,10 +767,12 @@ textarea:focus-visible {
 
 .nav-home:hover {
   color: var(--color-accent);
+  background: rgba(28, 28, 28, 0.06);
 }
 
 /* Rotating shine ring on home circle (same as pill) */
 .nav-home::after {
+  display: none;
   content: '';
   position: absolute;
   inset: 0;
@@ -798,16 +803,12 @@ textarea:focus-visible {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: var(--space-2);
-  border-radius: var(--glass-radius);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  gap: 2px;
 }
 
 /* Rotating shine ring (Espacio rim-light) */
 .nav-pill::after {
+  display: none;
   --degshine: 156deg;
   /* static ring fallback where @property is unsupported */
   content: '';
@@ -838,8 +839,8 @@ textarea:focus-visible {
 .nav-link {
   position: relative;
   display: inline-block;
-  padding: var(--space-3) var(--space-6);
-  border-radius: var(--glass-radius);
+  padding: 14px var(--space-5);
+  border-radius: var(--nav-item-radius);
   border: 0;
   background: transparent;
   font: 600 var(--text-body-sm) var(--font-body);
@@ -854,6 +855,7 @@ textarea:focus-visible {
 
 .nav-link:hover {
   color: var(--color-accent);
+  background: rgba(28, 28, 28, 0.06);
 }
 
 /* Active-page dot (Dennis pattern) */
@@ -881,15 +883,13 @@ textarea:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  width: var(--space-16);
-  height: var(--space-16);
-  border-radius: var(--border-radius);
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--nav-item-radius);
   border: 0;
   cursor: pointer;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  color: var(--color-ink);
+  background: transparent;
+  color: #1c1c1c;
   position: relative;
   transition:
     color var(--duration-fast) var(--ease),
@@ -902,6 +902,7 @@ textarea:focus-visible {
 
 /* Same rotating shine ring as nav-home */
 .nav-burger::after {
+  display: none;
   content: '';
   position: absolute;
   inset: 0;
@@ -1051,13 +1052,9 @@ textarea:focus-visible {
 .nav-contact-mobile {
   display: none;
   align-items: center;
-  height: var(--space-16);
+  height: var(--space-12);
   padding-inline: var(--space-5);
-  margin-right: var(--space-2);
-  border-radius: var(--border-radius);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  border-radius: var(--nav-item-radius);
   color: var(--color-accent);
   font-size: var(--text-body-sm);
   font-weight: 600;
