@@ -1,0 +1,46 @@
+---
+// Process: three bands of one screen each. From 800 px wide (and 700 px tall,
+// no reduced motion, with scroll-driven animation) the first pins and each next
+// band is unmasked from the bottom up over it as you scroll; otherwise they are
+// plain bands. The picture is a grey placeholder until the real scenes exist
+// (16:9, 2560 × 1440, subject in the centre, at least 25 % free on each side).
+interface Props {
+  index: string;
+  label: string;
+  title: string;
+  steps: { title: string; text: string }[];
+}
+
+const { index, label, title, steps } = Astro.props;
+---
+
+<section class="process" aria-labelledby="process-title">
+  <div class="container">
+    <p class="mono-label process__label"><span class="index">({index})</span> {label}</p>
+    <h2 id="process-title" class="sr-only">{title}</h2>
+  </div>
+  <div class="process__track">
+    <div class="process__stage">
+      {
+        steps.map((step, i) => (
+          <div class="process__step">
+            <div class="process__picture" aria-hidden="true" />
+            <div class="process__text">
+              <div class="process__head">
+                <span class="mono-label">({String(i + 1).padStart(2, '0')})</span>
+                <h3 class="process__name">{step.title}</h3>
+              </div>
+              <p class="process__lead">{step.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="process__segments" aria-hidden="true">
+      <div class="process__seg process__seg--dwell"></div>
+      <div class="process__seg process__seg--1"></div>
+      <div class="process__seg process__seg--2"></div>
+      <div class="process__seg process__seg--tail"></div>
+    </div>
+  </div>
+</section>

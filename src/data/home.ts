@@ -42,7 +42,22 @@ const bg = {
   },
   process: {
     label: 'Процес',
-    title: 'Пет етапа, без изненади.',
+    title: 'Три етапа, без изненади.',
+    // EN steps are drafts waiting for approval, so the section shows in BG only.
+    steps: [
+      {
+        title: 'Разбиране',
+        text: 'Цели, потребители и критерии за успех, после скелет на страниците и пътя на потребителя. Нищо не се проектира, преди проблемът да е ясен.',
+      },
+      {
+        title: 'Дизайн',
+        text: 'Детайлен дизайн във Figma за компютър и телефон. Корекции без ограничение до пълно одобрение.',
+      },
+      {
+        title: 'Изработка и пускане',
+        text: 'Код, точен до пиксел, точно както е проектиран. Сайтът е онлайн, с 30 дни безплатна поддръжка. Нищо не излиза без вашето одобрение.',
+      },
+    ] as { title: string; text: string }[] | undefined,
   },
   about: {
     label: 'За мен',
@@ -102,7 +117,8 @@ const en: typeof bg = {
   },
   process: {
     label: 'Process',
-    title: 'Five stages, no surprises.',
+    title: 'Three stages, no surprises.',
+    steps: undefined,
   },
   about: {
     label: 'About',

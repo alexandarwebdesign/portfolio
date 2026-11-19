@@ -5,6 +5,7 @@ import { Picture } from 'astro:assets';
 import HeroShader from '../components/HeroShader.astro';
 import Button from '../components/Button.astro';
 import WorkCard from '../components/WorkCard.astro';
+import Process from '../components/Process.astro';
 import ImageMarquee from '../components/ImageMarquee.astro';
 import AboutIndex from '../components/AboutIndex.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
@@ -27,6 +28,9 @@ interface Props {
 const { lang } = Astro.props;
 const t = home[lang];
 const s = ui[lang].site;
+// Numbered labels shift by one when the process section is shown.
+const steps = t.process.steps;
+const n = (i: number) => String(i + (steps ? 1 : 0)).padStart(2, '0');
 const shapes = ['circle', 'triangle', 'hexagon'] as const;
 const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
 const count = String(work.length).padStart(2, '0');
@@ -88,12 +92,14 @@ const columns = [
   </div>
 </section>
 
+{steps && <Process index="02" label={t.process.label} title={t.process.title} steps={steps} />}
+
 <ImageMarquee {lang} />
 
 <section id="about" class="about-section">
   <div class="container">
     <div class="section-header reveal">
-      <p class="mono-label"><span class="index">(02)</span> {t.about.label}</p>
+      <p class="mono-label"><span class="index">({n(2)})</span> {t.about.label}</p>
       <h2 class="section-title">{t.about.title}</h2>
     </div>
     <div class="about-split reveal">
@@ -120,7 +126,7 @@ const columns = [
 <section id="services" class="services-section">
   <div class="container">
     <div class="section-header reveal">
-      <p class="mono-label"><span class="index">(03)</span> {t.services.label}</p>
+      <p class="mono-label"><span class="index">({n(3)})</span> {t.services.label}</p>
       <h2 class="section-title">{t.services.title.join(' ')}</h2>
     </div>
     <div class="services-list">
@@ -157,7 +163,7 @@ const columns = [
 <section id="faq" class="faq-section" aria-labelledby="faq-title">
   <div class="container">
     <div class="section-header reveal">
-      <p class="mono-label"><span class="index">(04)</span> {t.faq.label}</p>
+      <p class="mono-label"><span class="index">({n(4)})</span> {t.faq.label}</p>
       <h2 id="faq-title" class="section-title">{t.faq.title}</h2>
     </div>
     <Faq items={faq[lang]} openFirst />
@@ -167,7 +173,7 @@ const columns = [
 <section id="contact" class="contact-section">
   <div class="container">
     <div class="section-header reveal">
-      <p class="mono-label"><span class="index">(05)</span> {t.contact.label}</p>
+      <p class="mono-label"><span class="index">({n(5)})</span> {t.contact.label}</p>
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
