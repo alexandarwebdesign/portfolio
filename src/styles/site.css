@@ -2180,6 +2180,57 @@ body.is-loaded .hero-note {
   }
 }
 
+/* FAQ from 900 px: the question sits on one line in the left slot and the
+   answer opens in the right slot of the same row; the "+" is centred in the
+   right end of the row. */
+@media (min-width: 900px) {
+  .faq-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 7fr 0 5fr;
+    align-items: start;
+  }
+
+  .faq-question {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: stretch;
+    padding-block: var(--space-8);
+    min-height: 5.5rem;
+    font-size: clamp(17px, 1.35vw, 22px);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .faq-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -12px;
+  }
+
+  .faq-answer {
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .faq-answer p {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    padding-right: var(--space-12);
+    font-size: var(--text-body-lg);
+    line-height: 1.5;
+    max-width: 34em;
+  }
+}
+
+@media (min-width: 1200px) {
+  .faq-item {
+    grid-template-columns: 5fr 1fr 6fr;
+  }
+}
+
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   .faq-item,
@@ -4736,6 +4787,7 @@ html.js.reveal-failsafe .reveal {
   line-height: 1.18;
   letter-spacing: var(--tracking-display);
   text-wrap: balance;
+  text-align: center;
   color: var(--color-text);
 }
 
@@ -4787,7 +4839,6 @@ html.js.reveal-failsafe .reveal {
     grid-template-columns: auto 1fr;
   }
 
-  text-align: center;
   .service-row--price .service-desc,
   .service-row--price .service-price {
     grid-column: 2;

@@ -5,16 +5,25 @@ interface Props {
   items: { q: string; a: string }[];
   /** Prefix for the item ids, so a link can open one (#faq-1). */
   idPrefix?: string;
+  /** Open the first question on load. */
+  openFirst?: boolean;
 }
 
-const { items, idPrefix = 'faq' } = Astro.props;
+const { items, idPrefix = 'faq', openFirst = false } = Astro.props;
 ---
 
 <div class="faq-list">
   {
     items.map((item, i) => (
-      <div id={`${idPrefix}-${i + 1}`} class="faq-item reveal">
-        <button type="button" class="faq-question" aria-expanded="false">
+      <div
+        id={`${idPrefix}-${i + 1}`}
+        class:list={['faq-item', 'reveal', { 'is-open': openFirst && i === 0 }]}
+      >
+        <button
+          type="button"
+          class="faq-question"
+          aria-expanded={openFirst && i === 0 ? 'true' : 'false'}
+        >
           <span>{item.q}</span>
           <span class="faq-icon" aria-hidden="true" />
         </button>
