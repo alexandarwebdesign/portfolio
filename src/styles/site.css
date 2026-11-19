@@ -2405,7 +2405,8 @@ body.is-loaded .hero-note {
     inset-inline: 6%;
     padding: 0;
     grid-template-columns: 22% 1fr 24%;
-    align-items: center;
+    align-content: center; /* the row sits in the middle of the screen */
+    align-items: start; /* both sides begin on the same line */
   }
 
   .process__step[data-tone='dark'] .process__text {
