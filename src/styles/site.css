@@ -5238,7 +5238,12 @@ html.js.reveal-failsafe .reveal {
   shape-rendering: geometricPrecision;
 }
 
-/* the two lines at 3 and 9 o'clock carry on to the screen edges, as one line with the ticks */
+/* the two lines at 3 and 9 o'clock carry on to the screen edges as dashes, each
+   as long as one tick (3 % of the circle's width) with a gap of the same length */
+.statement-ring {
+  container-type: inline-size;
+}
+
 .statement-ring::before,
 .statement-ring::after {
   content: '';
@@ -5247,15 +5252,20 @@ html.js.reveal-failsafe .reveal {
   width: 100vw;
   height: 1.25px;
   transform: translateY(-50%);
-  background: var(--color-border);
 }
 
 .statement-ring::before {
-  right: 97%; /* starts where the tick would have started (3 % of the width) */
+  right: 97%; /* the first dash starts where the tick would have started */
+  background: repeating-linear-gradient(to left, var(--color-border) 0 3cqw, transparent 3cqw 6cqw);
 }
 
 .statement-ring::after {
   left: 97%;
+  background: repeating-linear-gradient(
+    to right,
+    var(--color-border) 0 3cqw,
+    transparent 3cqw 6cqw
+  );
 }
 
 @media (min-width: 900px) {
