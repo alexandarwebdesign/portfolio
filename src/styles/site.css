@@ -4741,7 +4741,7 @@ html.js.reveal-failsafe .reveal {
 
 @media (min-width: 900px) {
   .statement {
-    margin-left: 16.66%;
+    margin-inline: auto;
     max-width: 58%;
   }
 }
@@ -4787,6 +4787,7 @@ html.js.reveal-failsafe .reveal {
     grid-template-columns: auto 1fr;
   }
 
+  text-align: center;
   .service-row--price .service-desc,
   .service-row--price .service-price {
     grid-column: 2;
