@@ -268,7 +268,6 @@ h3,
   --color-white: #fafafa;
   --color-accent: #0066cc; /* Apple link blue on light */
   --color-accent-hover: #0058b0;
-  --color-accent-on-stage: #2997ff; /* Apple blue on the dark stage */
   --color-success: #1f9c44;
   --color-error: #b3261e;
   /* On-dark (footer, contact band) */
@@ -2093,8 +2092,8 @@ body.is-loaded .hero-note {
 }
 
 .contact-section .form-input {
-  background: #1d1d1d; /* a step lighter than the stage, no outline */
-  border: 1px solid transparent;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
 }
 
@@ -2639,27 +2638,11 @@ body.is-loaded .hero-note {
 }
 
 /* --------------------------------------------------------------------------
-   Dark stage: near-black, neutral, with one blue. Sections with .stage remap
-   the colour tokens, so everything inside them follows.
+   Stage: the one surface the home page sits on. It uses the light root tokens.
    -------------------------------------------------------------------------- */
 .stage {
-  --color-background: #101010;
-  --color-surface: #181818;
-  --color-surface-subtle: #181818;
-  --color-ink: #efefef;
-  --color-text: #efefef;
-  --color-text-muted: rgba(239, 239, 239, 0.66);
-  --color-text-soft: rgba(239, 239, 239, 0.72);
-  --color-text-light: rgba(239, 239, 239, 0.74);
-  --color-text-tertiary: rgba(239, 239, 239, 0.8);
-  --color-border: rgba(239, 239, 239, 0.4);
-  --color-border-subtle: rgba(239, 239, 239, 0.14);
-  --color-accent: var(--color-accent-on-stage);
-  --color-accent-hover: #55adff;
-  --color-white: #101010; /* text on the accent block */
-  --color-danger: #ff7a70;
-  background: #101010;
-  color: #efefef;
+  background: var(--color-background);
+  color: var(--color-text);
 }
 
 /* --------------------------------------------------------------------------
