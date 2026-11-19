@@ -5232,7 +5232,7 @@ html.js.reveal-failsafe .reveal {
 }
 
 /* Drawing: the side lines come in from the screen edges, then the ticks follow from the
-   3 o'clock side, the upper half counter-clockwise and the lower half clockwise. */
+   right side (upper half, over the top) and the left side (lower half, along the bottom). */
 @media (prefers-reduced-motion: no-preference) {
   html.js .statement-ticks line {
     stroke-dasharray: 100px;
