@@ -96,24 +96,23 @@ const columns = [
       <p class="mono-label"><span class="index">(02)</span> {t.about.label}</p>
       <h2 class="section-title">{t.about.title}</h2>
     </div>
-    <div class="about-grid reveal">
-      <div class="about-lead">
-        <div class="about-heading-content">
-          <div class="about-photo-circle">
-            <Picture
-              src={portrait}
-              formats={['avif', 'webp']}
-              widths={[96, 192, 288]}
-              sizes="96px"
-              alt={t.about.alt}
-              loading="lazy"
-            />
-          </div>
-        </div>
-        <p class="about-bio-new">{t.about.text}</p>
+    <div class="about-split reveal">
+      <figure class="about-figure">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[600, 900, 1400]}
+          sizes="(max-width: 900px) 100vw, 40vw"
+          alt={t.about.alt}
+          loading="lazy"
+        />
+        <figcaption>{t.about.alt.replace(', ', ' · ')}</figcaption>
+      </figure>
+      <div class="about-side">
+        <p class="about-text">{t.about.text}</p>
+        <AboutIndex facts={about[lang].facts} />
         <Button href={pathFor('about', lang)} variant="secondary">{t.about.link}</Button>
       </div>
-      <AboutIndex facts={about[lang].facts} />
     </div>
   </div>
 </section>
