@@ -2,8 +2,12 @@
 // Process: three bands of one screen each. From 800 px wide (and 700 px tall,
 // no reduced motion, with scroll-driven animation) the first pins and each next
 // band is unmasked from the bottom up over it as you scroll; otherwise they are
-// plain bands. The picture is a grey placeholder until the real scenes exist
-// (16:9, 2560 × 1440, subject in the centre, at least 25 % free on each side).
+// plain bands. Each picture is one scene (subject in the centre, free space left
+// and right for the text); the tone says which text colour sits on it.
+import { Picture } from 'astro:assets';
+import understand from '../assets/images/process/understand.jpg';
+import design from '../assets/images/process/design.jpg';
+import build from '../assets/images/process/build.jpg';
 interface Props {
   index: string;
   label: string;
@@ -12,6 +16,11 @@ interface Props {
 }
 
 const { index, label, title, steps } = Astro.props;
+const scenes = [
+  { image: understand, tone: 'light' },
+  { image: design, tone: 'dark' },
+  { image: build, tone: 'light' },
+];
 ---
 
 <section class="process" aria-labelledby="process-title">
@@ -23,8 +32,19 @@ const { index, label, title, steps } = Astro.props;
     <div class="process__stage">
       {
         steps.map((step, i) => (
-          <div class="process__step">
-            <div class="process__picture" aria-hidden="true" />
+          <div class="process__step" data-tone={scenes[i]?.tone}>
+            <div class="process__picture">
+              {scenes[i] && (
+                <Picture
+                  src={scenes[i].image}
+                  formats={['avif', 'webp']}
+                  widths={[800, 1400, 2000, 2560]}
+                  sizes="100vw"
+                  alt=""
+                  loading="lazy"
+                />
+              )}
+            </div>
             <div class="process__text">
               <div class="process__head">
                 <span class="mono-label">({String(i + 1).padStart(2, '0')})</span>
