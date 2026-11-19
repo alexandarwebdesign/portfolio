@@ -1609,7 +1609,6 @@ body.is-loaded .hero-cta {
   flex-direction: column;
   gap: 24px;
   padding-top: 24px;
-  border-top: 1px solid var(--color-border-subtle);
   margin-bottom: clamp(48px, 7vh, 88px);
 }
 
@@ -5357,7 +5356,6 @@ html.js.reveal-failsafe .reveal {
 .work-card__media {
   overflow: hidden;
   border-radius: var(--border-radius);
-  border: 1px solid var(--color-border-subtle);
   background: var(--color-surface-subtle);
 }
 
