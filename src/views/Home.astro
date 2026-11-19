@@ -6,7 +6,7 @@ import HeroShader from '../components/HeroShader.astro';
 import Button from '../components/Button.astro';
 import WorkCard from '../components/WorkCard.astro';
 import Process from '../components/Process.astro';
-import ImageMarquee from '../components/ImageMarquee.astro';
+import PictureCluster from '../components/PictureCluster.astro';
 import AboutIndex from '../components/AboutIndex.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
 import Faq from '../components/Faq.astro';
@@ -94,7 +94,7 @@ const columns = [
 
 {steps && <Process index="02" label={t.process.label} title={t.process.title} steps={steps} />}
 
-<ImageMarquee {lang} />
+<PictureCluster title={t.cluster.title} cta={t.cluster.cta} />
 
 <section id="about" class="about-section">
   <div class="container">

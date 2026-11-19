@@ -59,6 +59,10 @@ const bg = {
       },
     ] as { title: string; text: string }[] | undefined,
   },
+  cluster: {
+    title: 'Да превърнем идеята ви в работещ сайт.',
+    cta: 'Да поговорим',
+  },
   about: {
     label: 'За мен',
     title: 'Дизайн, който работи с хората.',
@@ -119,6 +123,10 @@ const en: typeof bg = {
     label: 'Process',
     title: 'Three stages, no surprises.',
     steps: undefined,
+  },
+  cluster: {
+    title: 'Let’s turn your idea into a working website.',
+    cta: 'Let’s talk',
   },
   about: {
     label: 'About',

@@ -2441,6 +2441,116 @@ body.is-loaded .hero-note {
 }
 
 /* --------------------------------------------------------------------------
+   Picture cluster: title and button in the centre, six concepts around them
+   -------------------------------------------------------------------------- */
+.cluster {
+  padding-bottom: var(--section-gap);
+}
+
+.cluster__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+.cluster__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  text-align: center;
+}
+
+.cluster__title {
+  margin: 0;
+  max-width: 14em;
+  font-size: var(--text-section);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.cluster__pictures {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.cluster__picture {
+  overflow: hidden;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-subtle);
+}
+
+.cluster__picture img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 900px) {
+  .cluster__stage {
+    min-height: clamp(640px, 84vh, 860px);
+    justify-content: center;
+  }
+
+  .cluster__center {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cluster__pictures {
+    display: block;
+    position: absolute;
+    inset: var(--space-6);
+    width: auto;
+  }
+
+  .cluster__picture {
+    position: absolute;
+    width: 23%;
+  }
+
+  .cluster__picture--1 {
+    left: 0;
+    top: 0;
+  }
+
+  .cluster__picture--2 {
+    left: 8%;
+    top: 34%;
+  }
+
+  .cluster__picture--3 {
+    left: 1%;
+    top: 68%;
+  }
+
+  .cluster__picture--4 {
+    right: 0;
+    top: 5%;
+  }
+
+  .cluster__picture--5 {
+    right: 8%;
+    top: 37%;
+  }
+
+  .cluster__picture--6 {
+    right: 1%;
+    top: 68%;
+  }
+}
+
+/* --------------------------------------------------------------------------
    6.6 Footer
    -------------------------------------------------------------------------- */
 
