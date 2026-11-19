@@ -2488,7 +2488,6 @@ body.is-loaded .hero-note {
     .process__step::after {
       animation-duration: 1ms;
       animation-timing-function: linear;
-      animation-range: entry 25% entry 100%;
     }
 
     /* card 3 comes up from below */
@@ -2496,6 +2495,7 @@ body.is-loaded .hero-note {
       animation-name: process-rise-3;
       animation-fill-mode: both;
       animation-timeline: --seg2;
+      animation-range: entry 25% entry 80%; /* comes up, then the one behind reacts */
     }
 
     /* card 1: first step on seg1, second step on seg2 */
@@ -2503,12 +2503,18 @@ body.is-loaded .hero-note {
       animation-name: process-back-1, process-back-2;
       animation-fill-mode: both, forwards;
       animation-timeline: --seg1, --seg2;
+      animation-range:
+        entry 80% entry 100%,
+        entry 80% entry 100%;
     }
 
     .process__step:nth-child(1)::after {
       animation-name: process-dim-1, process-dim-2;
       animation-fill-mode: both, forwards;
       animation-timeline: --seg1, --seg2;
+      animation-range:
+        entry 80% entry 100%,
+        entry 80% entry 100%;
     }
 
     /* card 2: the same, one step later */
@@ -2516,12 +2522,16 @@ body.is-loaded .hero-note {
       animation-name: process-dim-1;
       animation-fill-mode: both;
       animation-timeline: --seg2;
+      animation-range: entry 80% entry 100%;
     }
 
     .process__step:nth-child(2) {
       animation-name: process-rise-2, process-back-1;
       animation-fill-mode: both, both;
       animation-timeline: --seg1, --seg2;
+      animation-range:
+        entry 25% entry 80%,
+        entry 80% entry 100%;
     }
 
     .process__seg--dwell,
@@ -2556,7 +2566,7 @@ body.is-loaded .hero-note {
   }
 
   to {
-    translate: 0 6svh;
+    translate: 0 3svh;
   }
 }
 
@@ -2566,7 +2576,7 @@ body.is-loaded .hero-note {
   }
 
   to {
-    translate: 0 12svh;
+    translate: 0 6svh;
   }
 }
 
