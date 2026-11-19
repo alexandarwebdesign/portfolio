@@ -1,0 +1,136 @@
+---
+// The original Birsé case study, in both languages.
+import CaseIntro from '../components/case/CaseIntro.astro';
+import CaseProof from '../components/case/CaseProof.astro';
+import DeviceDesktop from '../components/case/DeviceDesktop.astro';
+import DevicePhones from '../components/case/DevicePhones.astro';
+import DeviceCarousel from '../components/case/DeviceCarousel.astro';
+import FullBleed from '../components/case/FullBleed.astro';
+import CaseCta from '../components/case/CaseCta.astro';
+import NextTeaser from '../components/NextTeaser.astro';
+import hero from '../assets/images/case/birse-hero.jpg';
+import storefront from '../assets/images/case/birse-storefront.jpg';
+import pdp from '../assets/images/case/birse-pdp.jpg';
+import checkout from '../assets/images/case/birse-checkout.jpg';
+import m1 from '../assets/images/case/birse-mobile-1.jpg';
+import m2 from '../assets/images/case/birse-mobile-2.jpg';
+import m3 from '../assets/images/case/birse-mobile-3.jpg';
+import m4 from '../assets/images/case/birse-mobile-4.jpg';
+import m5 from '../assets/images/case/birse-mobile-5.jpg';
+import m6 from '../assets/images/case/birse-mobile-6.jpg';
+import d1 from '../assets/images/case/birse-desktop-1.jpg';
+import d2 from '../assets/images/case/birse-desktop-2.jpg';
+import d3 from '../assets/images/case/birse-desktop-3.jpg';
+import footerHero from '../assets/images/case/birse-footer-hero.jpg';
+import formaCard from '../assets/images/case/forma-card.jpg';
+import logo from '../assets/images/case/birse-logo.svg';
+import footerLogo from '../assets/images/case/birse-footer-logo.svg';
+import { caseText } from '../data/cases';
+import { birseCopy } from '../data/case-copy';
+import { pathFor } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = caseText[lang];
+const home = pathFor('home', lang)!;
+const homeHash = (id: string) => `${home === '/' ? '' : home}/#${id}`;
+
+const t = birseCopy[lang];
+---
+
+<CaseIntro
+  back={{ href: homeHash('work'), label: c.allWork }}
+  title="Birsé"
+  badge={t.badge}
+  meta={t.meta}
+  hero={{ image: hero, alt: t.heroAlt }}
+  logo={{ src: logo.src, width: 120, height: 120, class: 'hero-logo--birse' }}
+  palette={{ label: c.palette, colors: ['#7c2529', '#c9a96e', '#1a8a5f', '#faf9f7', '#101010'] }}
+/>
+
+<section
+  id="project-dynamic-body"
+  class="project-dynamic-body-section case-blocks"
+  aria-label={c.body}
+>
+  <div class="container">
+    <div id="project-content-stream" class="project-content-stream">
+      <CaseProof id="birse-proof-storefront" {...t.storefront}>
+        <DeviceDesktop
+          image={storefront}
+          alt={t.storefront.alt}
+          scroll={{ end: '-32.1%', duration: '18s' }}
+        />
+      </CaseProof>
+
+      <CaseProof id="birse-proof-pdp" {...t.pdp}>
+        <DeviceDesktop image={pdp} alt={t.pdp.alt} bare />
+      </CaseProof>
+
+      <CaseProof id="birse-proof-checkout" {...t.checkout}>
+        <DeviceDesktop image={checkout} alt={t.checkout.alt} bare />
+      </CaseProof>
+
+      <CaseProof id="birse-proof-mobile-commerce" {...t.mobile} phones>
+        <DevicePhones
+          label={t.mobile.label}
+          phones={[m1, m2, m3].map((image, i) => ({ image, ...t.mobile.phones[i] }))}
+        />
+      </CaseProof>
+
+      <CaseProof id="birse-proof-navigation" {...t.navigation} phones>
+        <DevicePhones
+          label={t.navigation.label}
+          phones={[m4, m5, m6].map((image, i) => ({ image, ...t.navigation.phones[i] }))}
+        />
+      </CaseProof>
+
+      <CaseProof id="birse-proof-desktop-states" {...t.desktop}>
+        <DeviceCarousel
+          id="case-carousel-birse"
+          slides={[d1, d2, d3].map((image, i) => ({ image, alt: t.desktop.slides[i] }))}
+          prev={c.prev}
+          next={c.next}
+        />
+      </CaseProof>
+
+      <CaseProof id="birse-proof-visual-system" {...t.visual}>
+        <FullBleed
+          image={footerHero}
+          alt={t.visual.alt}
+          logo={{ src: footerLogo.src, width: 120, height: 120, class: 'hero-logo--birse' }}
+        />
+      </CaseProof>
+
+      <CaseProof id="birse-proof-roles" kicker={t.roles.kicker} title={t.roles.title}>
+        <ul class="case-roles" slot="text">
+          {
+            t.roles.items.map(([role, text]) => (
+              <li>
+                <strong>{role}</strong>
+                <span>{text}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </CaseProof>
+
+      <CaseProof id="birse-proof-results" {...t.results} />
+
+      <CaseCta title={c.ctaTitle} cta={c.cta} href={homeHash('contact')} />
+    </div>
+  </div>
+</section>
+
+<NextTeaser
+  href={pathFor('forma', lang)!}
+  label={c.nextProject}
+  left="FORMA"
+  right="Architects"
+  image={formaCard}
+  ariaLabel={`${c.viewCase}: FORMA Architects`}
+/>

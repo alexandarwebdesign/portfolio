@@ -1,0 +1,23 @@
+---
+// One step of the case story: kicker, heading, text, then its visual.
+interface Props {
+  id: string;
+  kicker: string;
+  title: string;
+  /** May hold inline colour swatches (trusted, written in the data files). */
+  text?: string;
+  phones?: boolean;
+}
+
+const { id, kicker, title, text, phones = false } = Astro.props;
+---
+
+<section class:list={['case-proof', { 'case-proof--phones': phones }]} aria-labelledby={id}>
+  <div class="case-proof__text rich-text reveal">
+    <p class="case-proof__kicker">{kicker}</p>
+    <h2 {id}>{title}</h2>
+    {text && <p set:html={text} />}
+    <slot name="text" />
+  </div>
+  <slot />
+</section>

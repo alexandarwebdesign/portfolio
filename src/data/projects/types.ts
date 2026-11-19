@@ -1,6 +1,12 @@
 import type { ImageMetadata } from 'astro';
-import type { Note } from '../../components/UxNotes.astro';
 import type { RouteId } from '../../i18n/routes';
+
+export interface Note {
+  title: string;
+  problem: string;
+  solution: string;
+  why: string;
+}
 
 export type Figure =
   | {

@@ -7,6 +7,7 @@ import { about } from './about';
 import { uslugi } from './uslugi';
 import { birse } from './projects/birse';
 import { forma } from './projects/forma';
+import { birseCopy, formaCopy } from './case-copy';
 import { pathFor } from '../i18n/routes';
 import type { CaseContent } from './projects/types';
 
@@ -63,27 +64,53 @@ ${contact}
 `;
 }
 
-const caseFull = (route: 'birse' | 'forma', content: CaseContent) => `### ${content.name}
+const plain = (html: string) =>
+  html
+    .replace(/<svg[\s\S]*?<\/svg>/g, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+type Block = {
+  kicker?: string;
+  title?: string;
+  text?: string;
+  phones?: Block[];
+  items?: string[][];
+};
+
+// The case study text comes from the same copy the pages render.
+const caseSections = (copy: Record<string, unknown>) =>
+  Object.values(copy)
+    .filter((v): v is Block => typeof v === 'object' && v !== null && !Array.isArray(v))
+    .filter((v) => v.title && (v.text || v.items))
+    .map((block) => {
+      const lines = [`#### ${block.kicker}: ${block.title}`];
+      if (block.text) lines.push('', plain(block.text));
+      const list = [
+        ...(block.phones ?? []).map((phone) => `- ${phone.title}: ${plain(phone.text ?? '')}`),
+        ...(block.items ?? []).map(([role, text]) => `- ${role}: ${text}`),
+      ];
+      if (list.length) lines.push('', ...list);
+      return lines.join('\n');
+    })
+    .join('\n\n');
+
+const caseFull = (
+  route: 'birse' | 'forma',
+  content: CaseContent,
+  copy: { meta: { label: string; items: string[] }[] } & Record<string, unknown>,
+) => `### ${content.name}
 
 URL: ${url(pathFor(route, 'en')!)}
-Status: ${content.status}
-${content.facts.map((f) => `${f.term}: ${f.desc}`).join('\n')}
+Status: ${plain(String(copy.badge))}
+${copy.meta.map((m) => `${plain(m.label)}: ${m.items.map(plain).join('; ')}`).join('\n')}
 Live: ${content.live.href}
 
 ${content.lead}
 
-${content.chapters
-  .map(
-    (chapter) => `#### ${chapter.label}: ${chapter.title}
-
-${chapter.text.join('\n\n')}${chapter.list ? '\n\n' + chapter.list.map((item) => `- ${item}`).join('\n') : ''}${
-      chapter.facts ? '\n\n' + chapter.facts.map((f) => `- ${f.term}: ${f.desc}`).join('\n') : ''
-    }${chapter.figures
-      ?.flatMap((figure) => (figure.kind === 'notes' ? figure.notes : []))
-      .map((note) => `\n- ${note.title}: ${note.problem} ${note.solution} ${note.why}`)
-      .join('')}`,
-  )
-  .join('\n\n')}`;
+${caseSections(copy)}`;
 
 export function llmsFull(): string {
   return `${intro}
@@ -102,9 +129,9 @@ ${process.en.map((s, i) => `${i + 1}. ${s.title}: ${s.text}`).join('\n')}
 
 ## Work
 
-${caseFull('birse', birse.en)}
+${caseFull('birse', birse.en, birseCopy.en)}
 
-${caseFull('forma', forma.en)}
+${caseFull('forma', forma.en, formaCopy.en)}
 
 ## About
 

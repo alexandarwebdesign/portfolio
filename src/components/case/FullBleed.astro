@@ -1,0 +1,44 @@
+---
+// A full-width brand image with the logo floating over it.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  logo: { src: string; width?: number; height?: number; class?: string };
+  label?: string;
+}
+
+const { image, alt, logo, label } = Astro.props;
+---
+
+<div class="case-block case-block--fullbleed">
+  <section class="section single-block block-fullwidth block_7" aria-label={label}>
+    <div class="row">
+      <div class="flex-col">
+        <div class="single-image">
+          <Picture
+            src={image}
+            formats={['avif', 'webp']}
+            widths={[800, 1080, 1600, 2400].filter((w) => w <= image.width)}
+            sizes="100vw"
+            {alt}
+            class="overlay overlay-image"
+            loading="lazy"
+          />
+          <div class:list={['project-hero-logo-wrap', logo.class]} data-parallax-speed="3">
+            <img
+              src={logo.src}
+              alt=""
+              class="project-hero-logo block-fullwidth-logo"
+              aria-hidden="true"
+              width={logo.width}
+              height={logo.height}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

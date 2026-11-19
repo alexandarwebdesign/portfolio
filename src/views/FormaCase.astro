@@ -1,0 +1,141 @@
+---
+// The original FORMA Architects case study, in both languages.
+import CaseIntro from '../components/case/CaseIntro.astro';
+import CaseProof from '../components/case/CaseProof.astro';
+import DeviceDesktop from '../components/case/DeviceDesktop.astro';
+import DevicePhones from '../components/case/DevicePhones.astro';
+import DeviceCarousel from '../components/case/DeviceCarousel.astro';
+import FullBleed from '../components/case/FullBleed.astro';
+import CaseCta from '../components/case/CaseCta.astro';
+import NextTeaser from '../components/NextTeaser.astro';
+import hero from '../assets/images/case/forma-hero.jpg';
+import project from '../assets/images/case/forma-project.jpg';
+import homeShot from '../assets/images/case/forma-home.jpg';
+import portfolio from '../assets/images/case/forma-portfolio.jpg';
+import portfolio2 from '../assets/images/case/forma-portfolio-2.jpg';
+import aboutShot from '../assets/images/case/forma-about.jpg';
+import services from '../assets/images/case/forma-services.jpg';
+import contact from '../assets/images/case/forma-contact.jpg';
+import mobileHome from '../assets/images/case/forma-mobile-home.jpg';
+import mobileServices from '../assets/images/case/forma-mobile-services.jpg';
+import brand from '../assets/images/case/forma-brand.jpg';
+import birseCard from '../assets/images/case/birse-card.jpg';
+import mark from '../assets/images/case/forma-mark.svg';
+import logo from '../assets/images/case/forma-logo.svg';
+import { caseText } from '../data/cases';
+import { formaCopy } from '../data/case-copy';
+import { pathFor } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = caseText[lang];
+const home = pathFor('home', lang)!;
+const homeHash = (id: string) => `${home === '/' ? '' : home}/#${id}`;
+const heroVideo = {
+  src: '/video/forma-hero',
+  poster: '/video/forma-hero-poster.webp',
+  width: 1920,
+  height: 1088,
+};
+const mobileVideo = {
+  src: '/video/forma-mobile',
+  poster: '/video/forma-mobile-poster.webp',
+  width: 606,
+  height: 1190,
+};
+
+const t = formaCopy[lang];
+---
+
+<CaseIntro
+  back={{ href: homeHash('work'), label: c.allWork }}
+  title="FORMA Architects"
+  badge={t.badge}
+  meta={t.meta}
+  hero={{ image: hero, alt: t.heroAlt }}
+  logo={{ src: mark.src, width: 68, height: 68 }}
+  palette={{ label: c.palette, colors: ['#e8e4df', '#a09a94', '#b8956a', '#6b6560', '#1a1a1a'] }}
+  live={{ href: 'https://forma-architetects.netlify.app/', label: t.live }}
+/>
+
+<section
+  id="project-dynamic-body"
+  class="project-dynamic-body-section case-blocks"
+  aria-label={c.body}
+>
+  <div class="container">
+    <div id="project-content-stream" class="project-content-stream">
+      <CaseProof id="forma-proof-trust" {...t.trust}>
+        <DeviceDesktop alt={t.trust.alt} video={heroVideo} />
+      </CaseProof>
+
+      <CaseProof id="forma-proof-hero" {...t.hero}>
+        <div class="case-block case-block--fullbleed">
+          <div class="content-wide-video video-toggle">
+            <video
+              class="screen-video"
+              poster={heroVideo.poster}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              width="1920"
+              height="1088"
+              aria-label={t.hero.alt}
+            >
+              <source src={`${heroVideo.src}.av1.mp4`} type='video/mp4; codecs="av01.0.05M.08"' />
+              <source src={`${heroVideo.src}.h264.mp4`} type="video/mp4" />
+            </video>
+            <div class="wide-video-label" data-parallax-speed="2" aria-hidden="true">
+              <img src={mark.src} class="wide-video-label__icon" alt="" />
+              <p class="wide-video-label__eyebrow">{t.hero.eyebrow}</p>
+              <p class="wide-video-label__heading">{t.hero.heading}</p>
+            </div>
+          </div>
+        </div>
+      </CaseProof>
+
+      <CaseProof id="forma-proof-portfolio" {...t.portfolio}>
+        <DeviceCarousel
+          id="case-carousel-forma"
+          slides={[project, homeShot, portfolio, portfolio2, aboutShot, services, contact].map(
+            (image, i) => ({ image, alt: t.portfolio.slides[i] }),
+          )}
+          prev={c.prev}
+          next={c.next}
+        />
+      </CaseProof>
+
+      <CaseProof id="forma-proof-mobile" {...t.mobile} phones>
+        <DevicePhones
+          label={t.mobile.label}
+          phones={[
+            { image: mobileHome, ...t.mobile.phones[0] },
+            { video: mobileVideo, ...t.mobile.phones[1] },
+            { image: mobileServices, ...t.mobile.phones[2] },
+          ]}
+        />
+      </CaseProof>
+
+      <CaseProof id="forma-proof-brand" {...t.brand}>
+        <FullBleed image={brand} alt={t.brand.alt} logo={{ src: logo.src }} label={t.brand.label} />
+      </CaseProof>
+
+      <CaseCta title={c.ctaTitle} cta={c.cta} href={homeHash('contact')} />
+    </div>
+  </div>
+</section>
+
+<NextTeaser
+  href={pathFor('birse', lang)!}
+  label={c.nextProject}
+  left="Bir"
+  right="Sé"
+  image={birseCard}
+  ariaLabel={`${c.viewCase}: Birsé`}
+/>

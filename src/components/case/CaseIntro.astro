@@ -1,0 +1,121 @@
+---
+// The original case header: back link, title, badge, three meta columns, the
+// full-width hero with a floating logo, and the palette strip.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  back: { href: string; label: string };
+  title: string;
+  badge: string;
+  meta: { label: string; items: string[] }[];
+  hero: { image: ImageMetadata; alt: string };
+  logo: { src: string; width?: number; height?: number; class?: string };
+  palette: { label: string; colors: string[] };
+  live?: { href: string; label: string };
+}
+
+const { back, title, badge, meta, hero, logo, palette, live } = Astro.props;
+---
+
+<section id="project-hero" class="case-header">
+  <div class="container">
+    <a href={back.href} class="case-back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path
+          d="M10 12L6 8L10 4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <span>{back.label}</span>
+    </a>
+    <h1 class="case-title" id="project-title">{title}</h1>
+    <span class="conceptual-badge">{badge}</span>
+  </div>
+</section>
+
+<section class="case-meta" aria-label={meta.map((m) => m.label).join(' · ')}>
+  <div class="container">
+    <div class="case-meta-row">
+      {
+        meta.map((col) => (
+          <div class="case-meta-col">
+            <p class="case-meta-label">{col.label}</p>
+            <div class="case-meta-stripe" aria-hidden="true" />
+            <ul>
+              {col.items.map((item) => (
+                <li set:html={item} />
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section id="project-hero-full" class="project-hero-full-section">
+  <div class="container">
+    <div class="project-hero-image-frame">
+      <Picture
+        src={hero.image}
+        formats={['avif', 'webp']}
+        widths={[800, 1080, 1600, 2400].filter((w) => w <= hero.image.width)}
+        sizes="100vw"
+        alt={hero.alt}
+        class="project-hero-image"
+        id="project-hero-full-image"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class:list={['project-hero-logo-wrap', logo.class]} data-parallax-speed="3">
+        <img
+          src={logo.src}
+          alt=""
+          class="project-hero-logo"
+          aria-hidden="true"
+          width={logo.width}
+          height={logo.height}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="project-brief" class="case-palette-section" aria-label={palette.label}>
+  <div class="container">
+    <div class="case-palette-row reveal">
+      <p class="case-meta-label">{palette.label}</p>
+      <div class="case-meta-stripe" aria-hidden="true"></div>
+      <div class="project-palette" id="project-palette">
+        {
+          palette.colors.map((color) => (
+            <span
+              class="palette-swatch"
+              style={`background:${color};`}
+              title={color.toUpperCase()}
+            />
+          ))
+        }
+      </div>
+    </div>
+    {
+      live && (
+        <div class="case-live-url-row">
+          <a
+            href={live.href}
+            class="live-site-btn"
+            id="project-live-url"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-parallax-speed="4"
+          >
+            {live.label}
+          </a>
+        </div>
+      )
+    }
+  </div>
+</section>

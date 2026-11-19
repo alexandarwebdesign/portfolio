@@ -1,0 +1,101 @@
+---
+// The original laptop carousel: a full-bleed slanted band with a laptop frame
+// and previous / next buttons (site script).
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  id: string;
+  slides: { image: ImageMetadata; alt: string }[];
+  prev: string;
+  next: string;
+}
+
+const { id, slides, prev, next } = Astro.props;
+---
+
+<div class="case-block case-block--device" style="--case-tint:#e4e4e4;">
+  <div class="carousel-outer">
+    <div class="single-block block-device block-padding-bottom">
+      <div class="row device-mbp15">
+        <div class="flex-col">
+          <div class="device reveal">
+            <div class="single-image">
+              <div {id} class="case-carousel" data-case-carousel aria-live="polite">
+                {
+                  slides.map((slide, i) => (
+                    <figure
+                      class:list={['case-carousel__slide', { 'is-active': i === 0 }]}
+                      data-carousel-slide
+                    >
+                      <Picture
+                        src={slide.image}
+                        formats={['avif', 'webp']}
+                        widths={[500, 800, 1080, 1600].filter((w) => w <= slide.image.width)}
+                        sizes="(max-width: 768px) 92vw, 820px"
+                        alt={slide.alt}
+                        class="case-carousel__image"
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                      />
+                    </figure>
+                  ))
+                }
+              </div>
+            </div>
+            <div class="overlay-device-image" aria-hidden="true">
+              <div class="overlay overlay-device"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-btn-track">
+      <button
+        type="button"
+        class="carousel-btn carousel-btn--prev"
+        data-carousel={id}
+        data-dir="prev"
+        aria-label={prev}
+      >
+        <svg width="80" height="80" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path
+            d="M12.5 15L7.5 10L12.5 5"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="carousel-btn carousel-btn--next"
+        data-carousel={id}
+        data-dir="next"
+        aria-label={next}
+      >
+        <svg width="80" height="80" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path
+            d="M7.5 5L12.5 10L7.5 15"
+            stroke="currentColor"
+            stroke-width="1"
+            stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Inline styles of the original, moved here (no style attributes needed). */
+  .carousel-outer {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .block-device {
+    clip-path: polygon(0% 4%, 100% 0%, 100% 96%, 0% 100%);
+  }
+</style>
