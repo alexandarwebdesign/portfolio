@@ -5201,8 +5201,8 @@ html.js.reveal-failsafe .reveal {
 .statement {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.3vw, 56px);
-  line-height: 1.18;
+  font-size: clamp(24px, 2.7vw, 46px);
+  line-height: 1.25;
   letter-spacing: var(--tracking-display);
   text-wrap: balance;
   text-align: center;
@@ -5217,12 +5217,22 @@ html.js.reveal-failsafe .reveal {
 }
 
 .statement-mark {
-  background: var(--color-accent);
-  color: var(--color-white);
-  padding: 0.02em 0.22em;
-  border-radius: 2px;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  position: relative;
+  white-space: nowrap;
+  isolation: isolate;
+  background: transparent; /* drop the default <mark> yellow */
+  color: var(--color-ink-deep);
+  padding: 0.02em 0.3em;
+}
+
+/* the white plate leans like the edge of the process pictures (top further left) */
+.statement-mark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #ffffff; /* pure white by request */
+  transform: skewX(6deg);
 }
 
 .hero-proof a {
