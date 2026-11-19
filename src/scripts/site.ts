@@ -35,6 +35,29 @@ function initScrollReveal() {
   items.forEach((item) => observer.observe(item));
 }
 
+// Statement ring: when the ring is half visible, the side lines and the
+// circle draw themselves (CSS transitions, started by .is-drawn).
+function initStatementRing() {
+  const ring = document.querySelector('.statement-ring');
+  if (!ring) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      // half of the ring is visible, or it fills most of a short window
+      const half = entries.some(
+        (entry) =>
+          entry.intersectionRatio >= 0.5 ||
+          entry.intersectionRect.height >= window.innerHeight * 0.45,
+      );
+      if (half) {
+        ring.classList.add('is-drawn');
+        observer.disconnect();
+      }
+    },
+    { threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] },
+  );
+  observer.observe(ring);
+}
+
 // SMIL ignores prefers-reduced-motion: pause it.
 function initReducedMotionSvg() {
   if (!reduceMotion()) return;
@@ -569,6 +592,7 @@ function init() {
   initReducedMotionVideo();
   initPageLoadSequence();
   initScrollReveal();
+  initStatementRing();
   initSmoothScroll();
   initMobileNav();
   initFormHandling();

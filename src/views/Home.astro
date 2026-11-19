@@ -54,12 +54,25 @@ const columns = [
 
 <section class="statement-section stage">
   <div class="container">
-    <div class="statement-ring reveal">
+    <div class="statement-ring">
       <svg class="statement-ticks" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
         {
           Array.from({ length: 120 }, (_, i) => i)
             .filter((i) => i !== 30 && i !== 90)
-            .map((i) => <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />)
+            .map((i) => {
+              // steps from the 3 o'clock side: up (counter-clockwise) and down (clockwise)
+              const k = Math.min((i - 30 + 120) % 120, (30 - i + 120) % 120);
+              return (
+                <line
+                  x1="50"
+                  y1="0"
+                  x2="50"
+                  y2="3"
+                  transform={`rotate(${i * 3} 50 50)`}
+                  style={`--k:${k}`}
+                />
+              );
+            })
         }
       </svg>
       <p class="statement">
