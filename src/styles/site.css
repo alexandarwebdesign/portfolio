@@ -1703,7 +1703,6 @@ body.is-loaded .hero-cta {
 /* Hairline-divided meta index (mono key, bold value) */
 .about-index {
   margin: 0;
-  border-top: 1px solid var(--color-border-subtle);
 }
 
 .about-index-row {
@@ -1712,7 +1711,6 @@ body.is-loaded .hero-cta {
   align-items: center;
   gap: var(--space-6);
   padding: 20px 0;
-  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .about-index-row dt {
@@ -1900,11 +1898,6 @@ body.is-loaded .hero-cta {
   gap: 32px;
   align-items: center;
   padding: 40px 0;
-  border-top: 1px solid var(--color-border-subtle);
-}
-
-.service-row:last-child {
-  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .service-row[data-service] {
@@ -2124,12 +2117,10 @@ body.is-loaded .hero-note {
 .faq-list {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--color-border-subtle);
 }
 
 /* Hairline-divided rows - no boxes, no cards. */
 .faq-item {
-  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .faq-question {
