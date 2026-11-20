@@ -1,0 +1,41 @@
+---
+// The FAQ section, shared by the home page and the offer page: the heading and a link to the
+// contact on the left, the list on the right. On phones it is one column and the link comes after
+// the list, where a reader who found no answer ends up.
+import Faq from './Faq.astro';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** The section number, like "(04)". */
+  index: string;
+  label: string;
+  title: string;
+  items: { q: string; a: string }[];
+  /** The field the contact link focuses. */
+  focus?: string;
+  class?: string;
+}
+
+const { lang, index, label, title, items, focus = '#name', class: className } = Astro.props;
+const ask = ui[lang].site.faqAsk;
+---
+
+<section id="faq" class:list={['faq-section', className]} aria-labelledby="faq-title">
+  <div class="container faq-layout">
+    <div class="faq-aside">
+      <div class="faq-intro reveal">
+        <p class="mono-label"><span class="index">{index}</span> {label}</p>
+        <h2 id="faq-title" class="section-title">{title}</h2>
+      </div>
+      <div class="faq-ask reveal">
+        <p class="faq-ask__text">{ask.text}</p>
+        <a href="#contact" class="faq-ask__link" data-focus-target={focus}>
+          {ask.link}
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+    <Faq {items} />
+  </div>
+</section>

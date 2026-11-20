@@ -430,42 +430,28 @@ function initFormHandling() {
   });
 }
 
-// 7. FAQ accordion (one open at a time)
+// 7. FAQ accordion (several can be open)
 function initFaqAccordion() {
   const items = document.querySelectorAll<HTMLElement>('.faq-item');
   if (!items.length) return;
 
-  const open = (item: HTMLElement) => {
-    items.forEach((other) => {
-      if (other !== item && other.classList.contains('is-open')) {
-        other.classList.remove('is-open');
-        other.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
-      }
-    });
-    item.classList.add('is-open');
-    item.querySelector('.faq-question')?.setAttribute('aria-expanded', 'true');
-    if (item.id) history.replaceState(null, '', `#${item.id}`);
-  };
-
-  const close = (item: HTMLElement) => {
-    item.classList.remove('is-open');
-    item.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
-    if (item.id && location.hash === `#${item.id}`)
-      history.replaceState(null, '', location.pathname);
+  const set = (item: HTMLElement, open: boolean) => {
+    item.classList.toggle('is-open', open);
+    item.querySelector('.faq-question')?.setAttribute('aria-expanded', String(open));
   };
 
   items.forEach((item) => {
     item.querySelector('.faq-question')?.addEventListener('click', () => {
-      if (item.classList.contains('is-open')) close(item);
-      else open(item);
+      set(item, !item.classList.contains('is-open'));
     });
   });
 
+  // A link to #faq-3 opens that question.
   if (location.hash) {
     const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
     if (target?.classList.contains('faq-item')) {
       setTimeout(() => {
-        open(target);
+        set(target, true);
         target.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }, 300);
     }

@@ -3,7 +3,7 @@
 import HeroShader from '../components/HeroShader.astro';
 import Button from '../components/Button.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import Faq from '../components/Faq.astro';
+import FaqSection from '../components/FaqSection.astro';
 import OfferForm from '../components/OfferForm.astro';
 import StatusIcon from '../components/StatusIcon.astro';
 import birseCard from '../assets/images/birse-card.jpg';
@@ -146,15 +146,14 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
   </div>
 </section>
 
-<section id="faq" class="faq-section" aria-labelledby="faq-title">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="mono-label"><span class="index">(06)</span> {t.faq.label}</p>
-      <h2 id="faq-title" class="section-title">{t.faq.title}</h2>
-    </div>
-    <Faq items={t.faq.items} />
-  </div>
-</section>
+<FaqSection
+  {lang}
+  index="(06)"
+  label={t.faq.label}
+  title={t.faq.title}
+  items={t.faq.items}
+  focus="#offer-name"
+/>
 
 <section id="contact" class="contact-section stage">
   <div class="container">

@@ -8,7 +8,7 @@ import Process from '../components/Process.astro';
 import PictureCluster from '../components/PictureCluster.astro';
 import AboutIndex from '../components/AboutIndex.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
-import Faq from '../components/Faq.astro';
+import FaqSection from '../components/FaqSection.astro';
 import ContactForm from '../components/ContactForm.astro';
 import StatusIcon from '../components/StatusIcon.astro';
 import portrait from '../assets/images/portrait.jpg';
@@ -210,15 +210,14 @@ const columns = [
   </div>
 </section>
 
-<section id="faq" class="faq-section stage" aria-labelledby="faq-title">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="mono-label"><span class="index">({n(4)})</span> {t.faq.label}</p>
-      <h2 id="faq-title" class="section-title">{t.faq.title}</h2>
-    </div>
-    <Faq items={faq[lang]} openFirst />
-  </div>
-</section>
+<FaqSection
+  lang={lang}
+  index={`(${n(4)})`}
+  label={t.faq.label}
+  title={t.faq.title}
+  items={faq[lang]}
+  class="stage"
+/>
 
 <section id="contact" class="contact-section stage">
   <div class="container">

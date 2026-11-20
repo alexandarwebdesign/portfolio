@@ -2355,6 +2355,9 @@ body.is-loaded .hero-note {
 
 /* --------------------------------------------------------------------------
    6.5.1 FAQ Section
+   Two columns from 900 px: the heading and a link to the contact on the left (it stays in view),
+   the list on the right. On phones it is one column and the link comes after the list. The answer
+   opens under its question; all rows are closed on load and several can be open.
    -------------------------------------------------------------------------- */
 
 .faq-section {
@@ -2362,13 +2365,67 @@ body.is-loaded .hero-note {
   padding-bottom: var(--section-gap);
 }
 
+.faq-layout {
+  display: grid;
+  gap: var(--space-10);
+}
+
+/* On phones the two blocks of the aside are separate grid items, so the link can follow the list. */
+.faq-aside {
+  display: contents;
+}
+
+.faq-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-6);
+}
+
 .faq-list {
   display: flex;
   flex-direction: column;
+  order: 1;
+}
+
+.faq-ask {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  order: 2;
+}
+
+.faq-ask__text {
+  margin: 0;
+  font-size: var(--text-body-lg);
+  color: var(--color-text-muted);
+}
+
+.faq-ask__link {
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-subtle);
+  text-underline-offset: 0.3em;
+  transition:
+    color var(--duration-fast) var(--ease),
+    text-decoration-color var(--duration-fast) var(--ease);
+}
+
+.faq-ask__link:hover {
+  color: var(--color-accent);
+  text-decoration-color: currentColor;
 }
 
 /* Hairline-divided rows - no boxes, no cards. */
 .faq-item {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.faq-item:last-child {
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .faq-question {
@@ -2377,64 +2434,58 @@ body.is-loaded .hero-note {
   align-items: center;
   gap: var(--space-4);
   width: 100%;
-  min-height: 44px;
+  min-height: 5rem;
   padding: var(--space-6) 0;
   cursor: pointer;
   font-family: var(--font-body);
   font-size: var(--text-body-lg);
   font-weight: 600;
+  line-height: 1.25;
   color: var(--color-ink);
   background: none;
   border: none;
   text-align: left;
-  transition: color var(--duration-fast) var(--ease);
 }
 
-.faq-question::-webkit-details-marker {
-  display: none;
-}
-
-.faq-question::marker {
-  display: none;
-  content: '';
-}
-
-.faq-question:hover {
-  color: var(--color-accent);
-}
-
-.faq-item.is-open .faq-question {
-  color: var(--color-accent);
-}
-
-/* FAQ Icon: "+" rotates 45deg into "x" on open */
+/* The icon: "+" in a circle, turned 45deg into "x" on open. Only it takes the accent. */
 .faq-icon {
   position: relative;
-  width: 24px;
-  height: 24px;
   flex-shrink: 0;
-  transition: transform var(--duration-fast) var(--ease);
+  width: var(--space-8);
+  height: var(--space-8);
+  border-radius: 50%;
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-ink);
+  transition:
+    transform var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
 }
 
 .faq-icon::before,
 .faq-icon::after {
   content: '';
   position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   background: currentColor;
 }
 
 .faq-icon::before {
-  width: 2px;
-  height: 16px;
-  top: 4px;
-  left: 11px;
+  width: 1.5px;
+  height: 12px;
 }
 
 .faq-icon::after {
-  width: 16px;
-  height: 2px;
-  top: 11px;
-  left: 4px;
+  width: 12px;
+  height: 1.5px;
+}
+
+.faq-question:hover .faq-icon,
+.faq-item.is-open .faq-icon {
+  color: var(--color-accent);
+  border-color: currentColor;
 }
 
 .faq-item.is-open .faq-icon {
@@ -2458,12 +2509,12 @@ body.is-loaded .hero-note {
 
 /* Text fade in with upward movement */
 .faq-answer p {
-  font-size: var(--text-body);
-  color: var(--color-text-muted);
-  line-height: 1.6;
   margin: 0;
-  max-width: 65ch;
-  padding-bottom: var(--space-6);
+  max-width: 60ch;
+  padding: 0 var(--space-12) var(--space-8) 0;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-muted);
   opacity: 0;
   transform: translateY(-10px);
   transition:
@@ -2476,82 +2527,38 @@ body.is-loaded .hero-note {
   transform: translateY(0);
 }
 
-/* FAQ Mobile Responsive */
 @media (max-width: 768px) {
   .faq-section {
     padding-bottom: var(--space-16);
   }
 
   .faq-question {
+    min-height: 4.5rem;
     padding: var(--space-5) 0;
   }
 
-  .faq-icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .faq-icon::before {
-    height: 14px;
-    top: 3px;
-    left: 9px;
-  }
-
-  .faq-icon::after {
-    width: 14px;
-    top: 9px;
-    left: 3px;
+  .faq-answer p {
+    padding-right: 0;
   }
 }
 
-/* FAQ from 900 px: the question sits on one line in the left slot and the
-   answer opens in the right slot of the same row; the "+" is centred in the
-   right end of the row. */
 @media (min-width: 900px) {
-  .faq-item {
-    position: relative;
-    display: grid;
-    grid-template-columns: 7fr 0 5fr;
+  .faq-layout {
+    grid-template-columns: 4fr 7fr;
+    gap: var(--space-16);
     align-items: start;
   }
 
-  .faq-question {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: stretch;
-    padding-block: var(--space-8);
-    min-height: 5.5rem;
-    font-size: clamp(17px, 1.35vw, 22px);
-    line-height: 1.2;
-    white-space: nowrap;
+  .faq-aside {
+    position: sticky;
+    top: var(--space-24);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-10);
   }
 
-  .faq-icon {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    margin-top: -12px;
-  }
-
-  .faq-answer {
-    grid-column: 3;
-    grid-row: 1;
-    align-self: start;
-  }
-
-  .faq-answer p {
-    padding-top: var(--space-8);
-    padding-bottom: var(--space-8);
-    padding-right: var(--space-12);
-    font-size: var(--text-body-lg);
-    line-height: 1.5;
-    max-width: 34em;
-  }
-}
-
-@media (min-width: 1200px) {
-  .faq-item {
-    grid-template-columns: 5fr 1fr 6fr;
+  .faq-list {
+    order: 0;
   }
 }
 
@@ -2560,8 +2567,6 @@ body.is-loaded .hero-note {
   .faq-item,
   .faq-question,
   .faq-icon,
-  .faq-icon::before,
-  .faq-icon::after,
   .faq-answer,
   .faq-answer p {
     transition-duration: 0.01ms !important;
