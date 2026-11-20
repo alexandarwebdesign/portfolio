@@ -324,9 +324,16 @@ h3,
   --content-width: 1600px;
 
   /* ---------- Shape ---------- */
-  --border-radius: 4px;
+  /* One way of rounding everywhere, set by the element's size (about 0.29 of the shorter side,
+     like the navigation bar: 18px on 62px). Squares use the percentage, so any size keeps it. */
+  --radius-xs: 8px; /* labels, tags, pills: about 30px high */
+  --radius-sm: 12px; /* nav items, swatches: 40-48px */
+  --radius-md: 18px; /* buttons, fields, the nav bar: 60-70px */
+  --radius-lg: 32px; /* cards, pictures, figures, videos: the largest */
+  --radius-square: 29%; /* square elements of any size */
+  --border-radius: var(--radius-lg);
   --border-radius-sm: 2px;
-  --border-radius-button: 4px;
+  --border-radius-button: var(--radius-md);
   --section-gap: clamp(120px, 18vh, 220px);
 
   /* ---------- Components ---------- */
@@ -1109,7 +1116,7 @@ textarea:focus-visible {
 .form-input {
   width: 100%;
   border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-md);
   padding: var(--input-padding);
   font-family: var(--font-body);
   font-size: var(--text-body);
@@ -1234,7 +1241,7 @@ textarea:focus-visible {
   gap: var(--space-3);
   max-width: calc(100% - var(--space-8));
   padding: var(--space-3) var(--space-5);
-  border-radius: var(--border-radius-button);
+  border-radius: var(--radius-xs);
   background: var(--glass-bg-hover);
   backdrop-filter: var(--glass-blur-card);
   -webkit-backdrop-filter: var(--glass-blur-card);
@@ -1253,7 +1260,7 @@ textarea:focus-visible {
   left: var(--space-4);
   z-index: 3;
   padding: 6px var(--space-4);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-xs);
   background: rgba(250, 250, 250, 0.9);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -1320,7 +1327,7 @@ textarea:focus-visible {
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(250, 250, 250, 0.2);
   padding: 0.5rem 1.4rem;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-xs);
 }
 
 /* Disabled card (upcoming projects) */
@@ -2100,7 +2107,11 @@ body.is-loaded .hero-note {
 .contact-section .form-input {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-md);
+}
+
+.contact-section textarea.form-input {
+  border-radius: var(--radius-lg); /* tall field: the larger step */
 }
 
 .contact-section .form-input:user-invalid {
@@ -2901,7 +2912,7 @@ main {
   width: 48px;
   height: 48px;
   background: var(--color-on-dark-border);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-square);
   overflow: hidden;
   transition: background var(--duration-normal) var(--ease);
 }
@@ -3003,7 +3014,7 @@ body.is-loaded .case-meta {
   background: radial-gradient(circle, rgba(224, 224, 224, 0) 30%, rgba(250, 250, 250, 1) 100%);
   backdrop-filter: blur(3rem);
   -webkit-backdrop-filter: blur(3rem);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-square);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3105,7 +3116,7 @@ body.is-loaded .case-meta {
 .live-site-btn {
   width: clamp(130px, 14.58vw, 280px);
   height: clamp(130px, 14.58vw, 280px);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-square);
   background: linear-gradient(
     160deg,
     var(--color-accent) 0%,
@@ -3147,7 +3158,7 @@ body.is-loaded .case-meta {
 .palette-swatch {
   flex: 1;
   height: 40px;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-sm);
 }
 
 .conceptual-badge {
@@ -3159,7 +3170,7 @@ body.is-loaded .case-meta {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-xs);
 }
 
 /* Content Widths */
@@ -3739,7 +3750,7 @@ html.js.reveal-failsafe .reveal {
   padding: 1rem 2rem;
   z-index: 9999;
   text-decoration: none;
-  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
   font-weight: 600;
   transition: top var(--duration-fast) var(--ease-out);
 }
@@ -3873,7 +3884,7 @@ html.js.reveal-failsafe .reveal {
   z-index: 2;
   width: min(18rem, 38%);
   padding: 1rem 1.15rem;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-xs);
   margin-bottom: 16px;
   background: rgba(250, 250, 250, 0.78);
   backdrop-filter: blur(10px);
@@ -4053,7 +4064,7 @@ html.js.reveal-failsafe .reveal {
   width: 74.4%;
   left: 49.95%;
   top: 47.3%;
-  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  border-radius: 4px 4px 0 0;
 }
 
 .device-mbp15 .overlay-device {
@@ -4197,7 +4208,7 @@ html.js.reveal-failsafe .reveal {
 .carousel-btn {
   width: clamp(52px, 5.05vw, 194px);
   height: clamp(52px, 5.05vw, 194px);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-square);
   border: none;
   cursor: pointer;
   pointer-events: all;
@@ -4571,7 +4582,7 @@ html.js.reveal-failsafe .reveal {
   text-transform: uppercase;
   color: var(--color-text-tertiary);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-xs);
   background: transparent;
 }
 
@@ -5235,7 +5246,7 @@ html.js.reveal-failsafe .reveal {
 .offer-page .tbd {
   outline: 1px dashed var(--color-error);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
 }
 
 /* Long Bulgarian headline: same hero, smaller than the 2-word English one */
@@ -5620,7 +5631,7 @@ html.js.reveal-failsafe .reveal {
   letter-spacing: var(--tracking-caps);
   color: var(--color-text-muted);
   border: 1px solid var(--color-border-subtle);
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   padding: 2px 8px;
 }
 
