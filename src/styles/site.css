@@ -757,10 +757,12 @@ textarea:focus-visible {
   width: max-content;
   max-width: calc(100vw - 40px);
   border-radius: var(--nav-radius);
-  /* Same style as the tool discs: lit from the top left (highlight on that rim, a softer rim on the
-     other side), one shadow down and to the right. Slightly see-through, frosted with a 2rem blur. */
+  /* The tool discs' recipe, but lit from straight above instead of the top left: the highlight is
+     on the top rim, a softer rim on the bottom, one shadow falling straight down, and the gradient
+     runs top to bottom, so everything is centred on the bar. Slightly see-through, frosted with a
+     2rem blur. */
   background: linear-gradient(
-    135deg,
+    180deg,
     color-mix(in srgb, var(--color-surface) 78%, transparent) 0%,
     color-mix(in srgb, var(--color-surface-subtle) 78%, transparent) 100%
   );
@@ -769,7 +771,11 @@ textarea:focus-visible {
   /* the first layer is the hairline, outside the bar so it keeps its size */
   box-shadow:
     0 0 0 1px var(--color-border-subtle),
-    var(--shadow-disc);
+    inset 0 2px 3px rgb(255 255 255 / 1),
+    inset 0 5px 12px -2px rgb(255 255 255 / 0.9),
+    inset 0 -1.5px 2px rgb(0 0 0 / 0.07),
+    0 3px 4px rgb(0 0 0 / 0.14),
+    0 7px 12px -2px rgb(0 0 0 / 0.22);
 }
 
 /* Home icon circle button */
