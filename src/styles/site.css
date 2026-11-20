@@ -885,8 +885,8 @@ textarea:focus-visible {
 }
 
 /* The language switch shows both languages, Bulgarian first, each as a flag and its short name.
-   The one you are reading is in ink with a ring round its flag; the other flag is dimmed and its
-   text stays readable. The whole switch is one link to the other language (the aria-label names it). */
+   The one you are reading is in ink and full colour; the other flag is dimmed and its text stays
+   readable. The whole switch is one link to the other language (the aria-label names it). */
 .nav-lang-link {
   display: inline-flex;
   align-items: center;
@@ -910,13 +910,12 @@ textarea:focus-visible {
   display: block;
   width: 22px;
   height: 22px;
-  border-radius: 50%;
+  border-radius: var(--radius-square); /* the same proportional rounding as the other squares */
   opacity: 0.55;
 }
 
 .lang-option[data-active] img {
   opacity: 1;
-  box-shadow: 0 0 0 1.5px var(--color-ink);
 }
 
 /* Narrow screens: the bar would not fit with the short names and the wide link padding, so the
