@@ -2431,9 +2431,7 @@ body.is-loaded .hero-note {
 /* Rows: the nav's hairline on top and bottom and its fill. */
 .faq-item {
   border-block: 1px solid var(--color-border-subtle); /* the nav's hairline, top and bottom only */
-  /* the nav's fill, on the solid colour it was tuned on, so it looks the same whatever the section
-     background is */
-  background: var(--gradient-bar), var(--color-surface-subtle);
+  background: var(--gradient-bar); /* the nav's fill, as it is: see-through over the section */
   padding-inline: var(--space-6);
 }
 
