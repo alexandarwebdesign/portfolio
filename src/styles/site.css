@@ -2366,7 +2366,8 @@ body.is-loaded .hero-note {
   align-items: center;
   min-height: 100svh; /* the section fills the screen, the content sits in the middle */
   padding-block: var(--space-24);
-  background: var(--color-surface-subtle); /* a little darker than the page background */
+  /* a little darker than the page background, halfway between it and --color-surface-subtle */
+  background: color-mix(in srgb, var(--color-surface-subtle) 50%, var(--color-background));
 }
 
 .faq-section > .container {
@@ -2455,9 +2456,16 @@ body.is-loaded .hero-note {
   background: none;
   border: none;
   text-align: left;
+  transition: color var(--duration-fast) var(--ease);
 }
 
-/* The icon: "+" in a circle, turned 45deg into "x" on open. Only it takes the accent. */
+/* the question turns blue with the plus */
+.faq-question:hover,
+.faq-item.is-open .faq-question {
+  color: var(--color-accent);
+}
+
+/* The icon: "+" in a circle, turned 45deg into "x" on open. It turns blue with the question. */
 .faq-icon {
   position: relative;
   flex-shrink: 0;
