@@ -7,7 +7,7 @@ import { ui, type Lang } from '../i18n/ui';
 import { pathFor, type RouteId } from '../i18n/routes';
 import { site } from '../data/site';
 import bgFlag from '../assets/icons/flags/bg.svg';
-import enFlag from '../assets/icons/flags/gb.svg';
+import enFlag from '../assets/icons/flags/us.svg';
 
 interface Props {
   lang: Lang;
@@ -83,11 +83,13 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
         title={noPair ? `${otherName.full}: само началната страница` : otherName.full}
         aria-label={noPair ? `${otherName.full}: само началната страница` : otherName.full}
       >
-        <span class="lang-flag" data-active={lang === 'bg' ? '' : undefined}>
+        <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
           <img src={bgFlag.src} width="22" height="22" alt="" />
+          <span aria-hidden="true">БГ</span>
         </span>
-        <span class="lang-flag" data-active={lang === 'en' ? '' : undefined}>
+        <span class="lang-option" data-active={lang === 'en' ? '' : undefined}>
           <img src={enFlag.src} width="22" height="22" alt="" />
+          <span aria-hidden="true">EN</span>
         </span>
       </a>
     </nav>

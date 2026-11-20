@@ -753,6 +753,9 @@ textarea:focus-visible {
   align-items: center;
   gap: 4px;
   padding: 6px;
+  /* left: 50% would cap the bar at half the screen (720 px at 1440) and squeeze its links */
+  width: max-content;
+  max-width: calc(100vw - 40px);
   border-radius: var(--nav-radius);
   /* Same style as the tool discs: lit from the top left (highlight on that rim, a softer rim on the
      other side), one shadow down and to the right. Slightly see-through, frosted with a 2rem blur. */
@@ -881,17 +884,29 @@ textarea:focus-visible {
   background: rgba(28, 28, 28, 0.06);
 }
 
-/* The language switch shows both flags, Bulgarian first; the one you are reading is in full colour
-   with a ring, the other one is dimmed and is where the link goes. The full name is the aria-label. */
+/* The language switch shows both languages, Bulgarian first, each as a flag and its short name.
+   The one you are reading is in ink with a ring round its flag; the other flag is dimmed and its
+   text stays readable. The whole switch is one link to the other language (the aria-label names it). */
 .nav-lang-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-3);
   height: var(--space-12);
   padding-block: 0;
 }
 
-.lang-flag {
+.lang-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-tertiary);
+}
+
+.lang-option[data-active] {
+  color: var(--color-ink);
+}
+
+.lang-option img {
   display: block;
   width: 22px;
   height: 22px;
@@ -899,15 +914,21 @@ textarea:focus-visible {
   opacity: 0.55;
 }
 
-.lang-flag[data-active] {
+.lang-option[data-active] img {
   opacity: 1;
   box-shadow: 0 0 0 1.5px var(--color-ink);
 }
 
-.lang-flag img {
-  display: block;
-  width: 100%;
-  height: 100%;
+/* Narrow screens: the bar would not fit with the short names and the wide link padding, so the
+   switch keeps just the flags (the aria-label names it) and the links sit a little closer. */
+@media (min-width: 481px) and (max-width: 859px) {
+  .lang-option span {
+    display: none;
+  }
+
+  .nav-pill .nav-link {
+    padding-inline: var(--space-3);
+  }
 }
 
 /* Active-page dot (Dennis pattern) */
