@@ -1951,12 +1951,6 @@ body.is-loaded .hero-cta {
   align-items: center;
   gap: var(--space-6);
   padding: var(--space-6);
-  /* the same two colours as the FAQ glow, as a straight top to bottom gradient */
-  background: linear-gradient(
-    180deg,
-    var(--gradient-bar-start) 0%,
-    var(--bar-end, var(--color-background)) 100%
-  );
 }
 
 .about-index-row dt {
@@ -2440,8 +2434,10 @@ body.is-loaded .hero-note {
 }
 
 /* The glow of the nav in a box: light at the middle of the top edge, fading sideways and down to the
-   colour of the section behind (--bar-end), so the dark end blends into it. Used by the FAQ boxes. */
-.faq-item {
+   colour of the section behind (--bar-end), so the dark end blends into it. Used by the FAQ boxes and
+   the rows of the about index. */
+.faq-item,
+.about-index-row {
   background: radial-gradient(
     var(--gradient-bar-shape),
     var(--gradient-bar-start) 0%,
