@@ -43,7 +43,6 @@ const bg = {
   process: {
     label: 'Процес',
     title: 'Три етапа, без изненади.',
-    // EN steps are drafts waiting for approval, so the section shows in BG only.
     steps: [
       {
         title: 'Разбиране',
@@ -57,7 +56,7 @@ const bg = {
         title: 'Изработка и пускане',
         text: 'Код, точен до пиксел, точно както е проектиран. Сайтът е онлайн, с 30 дни безплатна поддръжка. Нищо не излиза без вашето одобрение.',
       },
-    ] as { title: string; text: string }[] | undefined,
+    ],
   },
   cluster: {
     title: 'Да превърнем идеята ви в работещ сайт.',
@@ -122,7 +121,21 @@ const en: typeof bg = {
   process: {
     label: 'Process',
     title: 'Three stages, no surprises.',
-    steps: undefined,
+    // Draft: translated from the Bulgarian steps, waiting for approval.
+    steps: [
+      {
+        title: 'Understanding',
+        text: 'Goals, business and success criteria, then the skeleton of the pages and the user’s path. Nothing is designed before the problem is clear.',
+      },
+      {
+        title: 'Design and research',
+        text: 'Research into users and competitors, then detailed design in Figma for desktop and phone. Unlimited revisions until it is fully approved.',
+      },
+      {
+        title: 'Build and launch',
+        text: 'Code accurate to the pixel, exactly as designed. The site goes live with 30 days of free support. Nothing ships without your approval.',
+      },
+    ],
   },
   cluster: {
     title: 'Let’s turn your idea into a working website.',

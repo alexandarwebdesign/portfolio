@@ -28,9 +28,9 @@ interface Props {
 const { lang } = Astro.props;
 const t = home[lang];
 const s = ui[lang].site;
-// Numbered labels shift by one when the process section is shown.
+// Numbered labels start after the process section (02).
 const steps = t.process.steps;
-const n = (i: number) => String(i + (steps ? 1 : 0)).padStart(2, '0');
+const n = (i: number) => String(i + 1).padStart(2, '0');
 const shapes = ['circle', 'triangle', 'hexagon'] as const;
 const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
 const count = String(work.length).padStart(2, '0');
@@ -142,7 +142,7 @@ const columns = [
   </div>
 </section>
 
-{steps && <Process index="02" label={t.process.label} title={t.process.title} steps={steps} />}
+<Process index="02" label={t.process.label} title={t.process.title} steps={steps} />
 
 <PictureCluster title={t.cluster.title} cta={t.cluster.cta} />
 
