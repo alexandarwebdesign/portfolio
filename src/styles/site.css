@@ -862,6 +862,15 @@ textarea:focus-visible {
   animation: shine-rotate 8s linear infinite;
 }
 
+/* A hairline at each end of the links. It stretches to the height of the links, so it keeps the
+   bar's top and bottom padding. */
+.nav-sep {
+  align-self: stretch;
+  width: 1px;
+  margin-inline: var(--space-2);
+  background: var(--color-border-subtle);
+}
+
 .nav-link {
   position: relative;
   display: inline-block;

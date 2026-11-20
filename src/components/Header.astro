@@ -61,6 +61,7 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
       <span class="nav-home-name" aria-hidden="true">{name}</span>
     </a>
     <nav class="nav-pill" aria-label={t.nav.label}>
+      <span class="nav-sep" aria-hidden="true"></span>
       {
         links.map((link) => (
           <a href={link.href} class="nav-link" aria-current={link.current ? 'page' : undefined}>
@@ -88,6 +89,7 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
           <span aria-hidden="true">EN</span>
         </span>
       </a>
+      <span class="nav-sep" aria-hidden="true"></span>
     </nav>
     <a href={contact} class="nav-contact-mobile" data-focus-target={focusField}>{t.nav.contact}</a>
     <button
