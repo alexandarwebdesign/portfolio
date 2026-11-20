@@ -1951,11 +1951,6 @@ body.is-loaded .hero-cta {
   align-items: center;
   gap: var(--space-6);
   padding: 20px var(--space-6);
-  border-block: 1px solid var(--color-border-subtle); /* the nav's hairline, top and bottom only */
-}
-
-.about-index-row + .about-index-row {
-  margin-top: -1px; /* neighbours share one line */
 }
 
 .about-index-row dt {
