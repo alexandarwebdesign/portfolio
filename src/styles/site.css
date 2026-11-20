@@ -2446,12 +2446,17 @@ body.is-loaded .hero-note {
 }
 
 /* Rows: the nav's hairline on top and bottom and its fill. */
-.faq-item {
+.faq-item,
+.about-index-row {
   border-block: 1px solid var(--color-border-subtle); /* the nav's hairline, top and bottom only */
+}
+
+.faq-item {
   padding-inline: var(--space-6);
 }
 
-.faq-item + .faq-item {
+.faq-item + .faq-item,
+.about-index-row + .about-index-row {
   margin-top: -1px; /* neighbours share one line */
 }
 
