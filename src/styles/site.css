@@ -2483,6 +2483,7 @@ body.is-loaded .hero-note {
   height: var(--space-10);
   border-radius: 50%;
   border: 1px solid var(--color-border-subtle);
+  background: var(--gradient-bar-start); /* the light colour of the glow */
   color: var(--color-ink);
   transition:
     transform var(--duration-fast) var(--ease),
