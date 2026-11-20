@@ -1463,7 +1463,7 @@ textarea:focus-visible {
 
 .hero-stage .hero-content {
   width: 100%;
-  max-width: var(--container);
+  max-width: var(--content-width);
   align-items: center;
   text-align: center;
 }
