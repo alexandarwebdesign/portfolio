@@ -5851,3 +5851,18 @@ html.js.reveal-failsafe .reveal {
     order: var(--i);
   }
 }
+
+/* --------------------------------------------------------------------------
+   One hairline on the photos
+   The same 1px line as the hero picture, in the colour of the surface it sits on
+   (--color-border-subtle: 14 % ink on light, 14 % light on dark). Not on the three process
+   pictures, the full-bleed case images or the screens inside the device mockups.
+   -------------------------------------------------------------------------- */
+.work-card__media,
+.about-page-photo,
+.image-marquee__item,
+.project-next-teaser__media,
+.project-image-wrapper,
+.case-figure {
+  border: 1px solid var(--color-border-subtle);
+}
