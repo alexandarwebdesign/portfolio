@@ -1497,7 +1497,7 @@ textarea:focus-visible {
 @media (min-width: 900px) {
   .hero-stage .hero-content {
     display: grid;
-    grid-template-columns: 1fr minmax(0, 22vw) 1fr;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 22vw) minmax(0, 1fr);
     grid-template-areas:
       'heading picture .'
       'heading picture lead'
@@ -1509,7 +1509,8 @@ textarea:focus-visible {
 
   .hero-stage .hero-heading {
     grid-area: heading;
-    align-self: center;
+    align-self: start; /* the top of the title block is the top of the picture */
+    margin-top: -6px; /* the space above the capitals, so the letters sit on the picture's top line */
     align-items: flex-start;
   }
 
