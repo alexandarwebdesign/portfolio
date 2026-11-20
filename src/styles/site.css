@@ -348,10 +348,10 @@ h3,
     inset 2px 2px 3px rgb(255 255 255 / 1), inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
     inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07), 2px 3px 4px rgb(0 0 0 / 0.14),
     5px 7px 12px -2px rgb(0 0 0 / 0.22);
-  /* The fill of the nav bar and the FAQ boxes: it starts light at the top edge and reaches the darker
-     colour at 40 % of the box height, then stays flat. */
+  /* The fill of the nav bar and the FAQ boxes: a light glow that starts at the middle of the top edge
+     and fades out sideways and down, to the darker colour at the sides and the bottom. */
   --gradient-bar: radial-gradient(
-    ellipse 100% 40% at 50% 0,
+    ellipse 60% 100% at 50% 0,
     color-mix(in srgb, var(--color-surface) 78%, transparent) 0%,
     color-mix(in srgb, var(--color-surface-subtle) 78%, transparent) 100%
   );
