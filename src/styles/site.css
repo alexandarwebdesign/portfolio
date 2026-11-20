@@ -342,6 +342,12 @@ h3,
   --input-padding: 20px;
 
   /* ---------- Glass (Espacio recipe) ---------- */
+  /* A lit disc: highlight on the top-left rim, a turned-away rim bottom-right, one shadow falling
+     down and to the right. Used by the nav bar and the tool discs. */
+  --shadow-disc:
+    inset 2px 2px 3px rgb(255 255 255 / 1), inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
+    inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07), 2px 3px 4px rgb(0 0 0 / 0.14),
+    5px 7px 12px -2px rgb(0 0 0 / 0.22);
   --glass-bg: rgba(250, 250, 250, 0.55);
   --glass-blur: blur(12px) saturate(1.4);
   --glass-radius: 4px;
@@ -750,17 +756,17 @@ textarea:focus-visible {
   border-radius: var(--nav-radius);
   /* Same style as the tool discs: lit from the top left (highlight on that rim, a softer rim on the
      other side), one shadow down and to the right. Slightly see-through, frosted with a 2rem blur. */
-  background: linear-gradient(135deg, rgb(248 248 248 / 0.78) 0%, rgb(228 228 228 / 0.78) 100%);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-surface) 78%, transparent) 0%,
+    color-mix(in srgb, var(--color-surface-subtle) 78%, transparent) 100%
+  );
   -webkit-backdrop-filter: blur(2rem);
   backdrop-filter: blur(2rem);
   /* the first layer is the hairline, outside the bar so it keeps its size */
   box-shadow:
     0 0 0 1px var(--color-border-subtle),
-    inset 2px 2px 3px rgb(255 255 255 / 1),
-    inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
-    inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07),
-    2px 3px 4px rgb(0 0 0 / 0.14),
-    5px 7px 12px -2px rgb(0 0 0 / 0.22);
+    var(--shadow-disc);
 }
 
 /* Home icon circle button */
@@ -1072,7 +1078,9 @@ textarea:focus-visible {
   height: var(--space-12);
   padding-inline: var(--space-5);
   border-radius: var(--nav-item-radius);
-  color: #1c1c1c; /* the blue accent is under 3:1 on the see-through bar over the dark hero */
+  color: var(
+    --color-ink
+  ); /* the blue accent is under 3:1 on the see-through bar over the dark hero */
   font-size: var(--text-body-sm);
   font-weight: 600;
   text-decoration: none;
@@ -1492,11 +1500,13 @@ textarea:focus-visible {
    lighter than the hero background. They turn very slowly; still with reduced motion. */
 .hero-ring {
   --ring-size: clamp(220px, 42vw, 640px);
+  --ring-color: #1b1b1b; /* a shade lighter than the hero background */
+  --ring-turn: 90s;
   position: absolute;
   z-index: 0;
   width: var(--ring-size);
   height: var(--ring-size);
-  stroke: #1b1b1b;
+  stroke: var(--ring-color);
   stroke-width: 1.25;
   pointer-events: none;
 }
@@ -1517,7 +1527,7 @@ textarea:focus-visible {
 
 @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
   .hero-ring {
-    animation: hero-ring-turn 90s linear infinite;
+    animation: hero-ring-turn var(--ring-turn) linear infinite;
   }
 }
 
@@ -2576,13 +2586,8 @@ body.is-loaded .hero-note {
   width: var(--tool);
   height: var(--tool);
   border-radius: 50%;
-  background: linear-gradient(135deg, #f8f8f8 0%, #e4e4e4 100%);
-  box-shadow:
-    inset 2px 2px 3px rgb(255 255 255 / 1),
-    inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
-    inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07),
-    2px 3px 4px rgb(0 0 0 / 0.14),
-    5px 7px 12px -2px rgb(0 0 0 / 0.22);
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-subtle) 100%);
+  box-shadow: var(--shadow-disc);
 }
 
 .process__tool + .process__tool {
@@ -3110,7 +3115,7 @@ main {
   width: 48px;
   height: 48px;
   background: var(--color-on-dark-border);
-  border: 1px solid rgba(239, 239, 239, 0.14); /* the hero hairline: the footer is dark, so its --color-border-subtle (ink) would not show */
+  border: 1px solid var(--color-on-dark-border); /* the footer is dark, so --color-border-subtle (ink) would not show */
   border-radius: var(--radius-square);
   overflow: hidden;
   transition: background var(--duration-normal) var(--ease);
@@ -5818,7 +5823,7 @@ html.js.reveal-failsafe .reveal {
   flex-basis: 100%;
   margin: 0;
   font-size: var(--text-body-sm);
-  color: rgba(28, 28, 28, 0.85); /* the muted 72 % let the line sink into the page */
+  color: var(--color-text-tertiary); /* the muted 72 % let the line sink into the page */
 }
 
 .work-card__tag,
@@ -5828,8 +5833,12 @@ html.js.reveal-failsafe .reveal {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
-  color: rgba(28, 28, 28, 0.85);
-  background: rgba(28, 28, 28, 0.07); /* a chip with a body, not just a faint outline */
+  color: var(--color-text-tertiary);
+  background: color-mix(
+    in srgb,
+    var(--color-ink) 7%,
+    transparent
+  ); /* a chip with a body, not just a faint outline */
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-xs);
   padding: 2px 8px;
