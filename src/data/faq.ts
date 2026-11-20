@@ -1,11 +1,11 @@
 const bg = [
   {
-    q: 'Колко време отнема един проект?',
-    a: 'Повечето проекти излизат онлайн за 2–4 седмици. Лендинг страница отнема 1–2 седмици, сайт с повече страници – 3–4. Точен срок ви давам, след като разбера обхвата. Без мъгляви оценки.',
-  },
-  {
     q: 'Колко струва един уебсайт?',
     a: 'Цената зависи от обхвата, не от фиксирано меню. Давам ви подробна оферта, след като разбера какво ви трябва – без изненади по средата на проекта. Запазете безплатен разговор и за 20 минути ще го изясним.',
+  },
+  {
+    q: 'Колко време отнема един проект?',
+    a: 'Повечето проекти излизат онлайн за 2–4 седмици. Лендинг страница отнема 1–2 седмици, сайт с повече страници – 3–4. Точен срок ви давам, след като разбера обхвата. Без мъгляви оценки.',
   },
   {
     q: 'Колко корекции са включени?',
@@ -27,12 +27,12 @@ const bg = [
 
 const en: typeof bg = [
   {
-    q: 'How long does a typical project take?',
-    a: 'Most projects go live in 2–4 weeks. A focused landing page takes 1–2 weeks; a full multi-page website takes 3–4. I’ll give you a precise timeline once I understand your scope – no vague estimates.',
-  },
-  {
     q: 'How much does a website cost?',
     a: 'Pricing depends on scope, not a fixed menu. I give you a detailed quote after understanding what you actually need – no surprise charges mid-project. Book a free call and we’ll figure it out in 20 minutes.',
+  },
+  {
+    q: 'How long does a typical project take?',
+    a: 'Most projects go live in 2–4 weeks. A focused landing page takes 1–2 weeks; a full multi-page website takes 3–4. I’ll give you a precise timeline once I understand your scope – no vague estimates.',
   },
   {
     q: 'How many revisions do I get?',
