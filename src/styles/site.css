@@ -2432,6 +2432,7 @@ body.is-loaded .hero-note {
 .faq-item {
   border-block: 1px solid var(--color-border-subtle); /* the nav's hairline, top and bottom only */
   background: var(--gradient-bar); /* the nav's fill */
+  padding-inline: var(--space-6);
 }
 
 .faq-item + .faq-item {
@@ -2444,8 +2445,8 @@ body.is-loaded .hero-note {
   align-items: center;
   gap: var(--space-4);
   width: 100%;
-  min-height: 5rem;
-  padding: var(--space-6) 0;
+  min-height: 7rem;
+  padding: var(--space-8) 0;
   cursor: pointer;
   font-family: var(--font-body);
   font-size: var(--text-body-lg);
@@ -2461,8 +2462,8 @@ body.is-loaded .hero-note {
 .faq-icon {
   position: relative;
   flex-shrink: 0;
-  width: var(--space-8);
-  height: var(--space-8);
+  width: var(--space-10);
+  height: var(--space-10);
   border-radius: 50%;
   border: 1px solid var(--color-border-subtle);
   color: var(--color-ink);
@@ -2483,13 +2484,13 @@ body.is-loaded .hero-note {
 }
 
 .faq-icon::before {
-  width: 1.5px;
-  height: 12px;
+  width: 2px;
+  height: 18px;
 }
 
 .faq-icon::after {
-  width: 12px;
-  height: 1.5px;
+  width: 18px;
+  height: 2px;
 }
 
 .faq-question:hover .faq-icon,
@@ -2521,7 +2522,7 @@ body.is-loaded .hero-note {
 .faq-answer p {
   margin: 0;
   max-width: 60ch;
-  padding: 0 var(--space-12) var(--space-8) 0;
+  padding: 0 var(--space-12) var(--space-10) 0;
   font-size: var(--text-body);
   line-height: 1.6;
   color: var(--color-text-muted);
@@ -2542,9 +2543,13 @@ body.is-loaded .hero-note {
     padding-block: var(--space-16);
   }
 
+  .faq-item {
+    padding-inline: var(--space-4);
+  }
+
   .faq-question {
-    min-height: 4.5rem;
-    padding: var(--space-5) 0;
+    min-height: 6rem;
+    padding: var(--space-6) 0;
   }
 
   .faq-answer p {
