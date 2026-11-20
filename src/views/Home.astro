@@ -44,6 +44,20 @@ const columns = [
 
 <div class="hero-reveal">
   <section id="hero" class="hero-section hero-stage stage">
+    <svg class="hero-ring hero-ring--bl" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      {
+        Array.from({ length: 120 }, (_, i) => (
+          <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
+        ))
+      }
+    </svg>
+    <svg class="hero-ring hero-ring--tr" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+      {
+        Array.from({ length: 120 }, (_, i) => (
+          <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
+        ))
+      }
+    </svg>
     <div class="hero-content container">
       <div class="hero-heading">
         <p class="hero-eyebrow">{t.hero.eyebrow}</p>

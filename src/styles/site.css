@@ -1473,6 +1473,47 @@ textarea:focus-visible {
   max-width: var(--content-width);
   align-items: center;
   text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Two quiet rings of fine ticks, half cropped by the corners (bottom left, top right): a shade
+   lighter than the hero background. They turn very slowly; still with reduced motion. */
+.hero-ring {
+  --ring-size: clamp(220px, 42vw, 640px);
+  position: absolute;
+  z-index: 0;
+  width: var(--ring-size);
+  height: var(--ring-size);
+  stroke: #1b1b1b;
+  stroke-width: 1.25;
+  pointer-events: none;
+}
+
+.hero-ring line {
+  vector-effect: non-scaling-stroke;
+}
+
+.hero-ring--bl {
+  left: calc(var(--ring-size) / -2);
+  bottom: calc(var(--ring-size) / -2);
+}
+
+.hero-ring--tr {
+  right: calc(var(--ring-size) / -2);
+  top: calc(var(--ring-size) / -2);
+}
+
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .hero-ring {
+    animation: hero-ring-turn 90s linear infinite;
+  }
+}
+
+@keyframes hero-ring-turn {
+  to {
+    rotate: 360deg;
+  }
 }
 
 .hero-stage .hero-title,
