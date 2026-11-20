@@ -1492,7 +1492,21 @@ textarea:focus-visible {
   margin: -0.15em 0 0; /* 8px of gap plus this pull-up = about 8px between the letters */
 }
 
+.hero-picture picture,
+.hero-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-picture img {
+  object-fit: cover;
+  transform: scale(1.2); /* moves in on the laptop (it sits a little right of the centre) */
+  transform-origin: 53% 50%;
+}
+
 .hero-picture {
+  overflow: hidden;
   width: min(62vw, 280px);
   aspect-ratio: 4 / 5;
   margin-top: var(--space-8);
@@ -1504,13 +1518,16 @@ textarea:focus-visible {
 @media (min-width: 900px) {
   .hero-stage .hero-content {
     display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 22vw) minmax(0, 1fr);
+    /* three groups, space between: title block | picture | sentence and button.
+       Percentages of the content width, so the groups never outgrow the container. */
+    grid-template-columns: 30% 32% 26%;
+    justify-content: space-between;
     grid-template-areas:
       'heading picture .'
       'heading picture lead'
       'heading picture cta';
     grid-template-rows: auto 1fr auto;
-    column-gap: clamp(24px, 4vw, 72px);
+    column-gap: 0;
     text-align: left;
   }
 
