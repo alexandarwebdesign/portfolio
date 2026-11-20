@@ -1477,7 +1477,7 @@ textarea:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: inherit;
-  gap: 8px; /* eyebrow to title */
+  gap: 20px; /* eyebrow to title; the pull-up on the title takes about 11px of this at 72px */
 }
 
 .hero-stage .hero-title {
