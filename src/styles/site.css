@@ -1577,8 +1577,7 @@ textarea:focus-visible {
 }
 
 /* Hero to the sentence: the hero stays where it is (fixed) and the next section slides over it.
-   While that happens the three groups shrink a little and rise one after another, and the
-   whole hero dims by 30 %. Wide, tall screens with motion and scroll-driven animation only. */
+   While that happens the content shrinks towards the centre and the whole hero dims by 30 %. Wide, tall screens with motion and scroll-driven animation only. */
 @media (min-width: 900px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll()) {
     .hero-reveal {
@@ -1611,44 +1610,24 @@ textarea:focus-visible {
       animation-range: 0svh 100svh;
     }
 
-    /* The entrance (heroRise) is already on these elements, with the same specificity chain, so
-       both animations are listed: the entrance on time, the lift on the scroll. */
-    body.is-loaded .hero-content > .hero-heading,
-    body.is-loaded .hero-content > .hero-picture,
-    body.is-loaded .hero-content > .hero-aside {
-      animation-name: heroRise, hero-lift;
-      animation-duration: 0.8s, 1ms;
-      animation-timing-function: var(--ease), ease-in-out;
-      animation-fill-mode: both, both;
-      animation-delay: 0s, 0s;
-      animation-timeline: auto, scroll(root block);
-    }
-
-    /* staggered: each group starts a little after the one before */
-    body.is-loaded .hero-content > .hero-heading {
-      animation-range:
-        normal,
-        0svh 65svh;
-    }
-
-    body.is-loaded .hero-content > .hero-picture {
-      animation-range:
-        normal,
-        12svh 78svh;
-    }
-
-    body.is-loaded .hero-content > .hero-aside {
-      animation-range:
-        normal,
-        24svh 91svh;
+    /* All the content shrinks together about the centre of the hero, so every group moves
+       towards the centre as it gets smaller (no stagger). The entrance (heroRise) sits on the
+       children, so this does not collide with it. */
+    .hero-stage .hero-content {
+      transform-origin: 50% 50%;
+      animation-name: hero-shrink;
+      animation-duration: 1ms;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+      animation-range: 0svh 100svh;
     }
   }
 }
 
-@keyframes hero-lift {
+@keyframes hero-shrink {
   to {
-    translate: 0 -90px;
-    scale: 0.92;
+    scale: 0.85;
   }
 }
 
