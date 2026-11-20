@@ -1950,7 +1950,12 @@ body.is-loaded .hero-cta {
   justify-content: space-between;
   align-items: center;
   gap: var(--space-6);
-  padding: 20px 0;
+  padding: 20px var(--space-6);
+  border-block: 1px solid var(--color-border-subtle); /* the nav's hairline, top and bottom only */
+}
+
+.about-index-row + .about-index-row {
+  margin-top: -1px; /* neighbours share one line */
 }
 
 .about-index-row dt {
@@ -2372,12 +2377,7 @@ body.is-loaded .hero-note {
   /* a little darker than the page background, halfway between it and --color-surface-subtle */
   --faq-bg: color-mix(in srgb, var(--color-surface-subtle) 50%, var(--color-background));
   background: var(--faq-bg);
-  /* the boxes: the same glow, ending on the section's own colour so the dark end blends into it */
-  --gradient-bar: radial-gradient(
-    var(--gradient-bar-shape),
-    var(--gradient-bar-start) 0%,
-    var(--faq-bg) 100%
-  );
+  --bar-end: var(--faq-bg); /* the boxes' gradient ends on the section's own colour */
 }
 
 .faq-section > .container {
@@ -2438,10 +2438,21 @@ body.is-loaded .hero-note {
   text-decoration-color: currentColor;
 }
 
+/* The glow of the nav in a box: light at the middle of the top edge, fading sideways and down to the
+   colour of the section behind (--bar-end), so the dark end blends into it. Used by the FAQ boxes and
+   the rows of the about index. */
+.faq-item,
+.about-index-row {
+  background: radial-gradient(
+    var(--gradient-bar-shape),
+    var(--gradient-bar-start) 0%,
+    var(--bar-end, var(--color-background)) 100%
+  );
+}
+
 /* Rows: the nav's hairline on top and bottom and its fill. */
 .faq-item {
   border-block: 1px solid var(--color-border-subtle); /* the nav's hairline, top and bottom only */
-  background: var(--gradient-bar); /* the nav's glow, ending on the section colour */
   padding-inline: var(--space-6);
 }
 
