@@ -1950,7 +1950,7 @@ body.is-loaded .hero-cta {
   justify-content: space-between;
   align-items: center;
   gap: var(--space-6);
-  padding: var(--space-6);
+  padding: var(--space-8) var(--space-6);
 }
 
 .about-index-row dt {
