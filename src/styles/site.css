@@ -1506,6 +1506,17 @@ textarea:focus-visible {
 }
 
 .hero-picture {
+  /* Eight layers on an ease-in curve: tight and dense at the frame, then lower and lower
+     the shadow gets wider and softer. */
+  box-shadow:
+    0 1px 5px -1px rgb(0 0 0 / 0.57),
+    0 3px 9px -3px rgb(0 0 0 / 0.482),
+    0 12px 26px -7px rgb(0 0 0 / 0.398),
+    0 27px 54px -15px rgb(0 0 0 / 0.318),
+    0 51px 100px -28px rgb(0 0 0 / 0.243),
+    0 82px 159px -45px rgb(0 0 0 / 0.174),
+    0 122px 235px -66px rgb(0 0 0 / 0.114),
+    0 171px 328px -92px rgb(0 0 0 / 0.07);
   overflow: hidden;
   width: min(62vw, 280px);
   aspect-ratio: 4 / 5;
