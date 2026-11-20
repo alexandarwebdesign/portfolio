@@ -2417,7 +2417,7 @@ body.is-loaded .hero-note {
 
 .faq-ask__text {
   margin: 0;
-  font-size: var(--text-body-lg);
+  font-size: var(--text-body-sm);
   color: var(--color-text-muted);
 }
 
