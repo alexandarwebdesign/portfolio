@@ -72,6 +72,7 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
       <a href={contact} class="nav-link nav-contact-link" data-focus-target={focusField}>
         {t.nav.contact}
       </a>
+      <span class="nav-sep" aria-hidden="true"></span>
       <a
         href={otherHref}
         class="nav-link nav-lang-link"
@@ -89,7 +90,6 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
           <span aria-hidden="true">EN</span>
         </span>
       </a>
-      <span class="nav-sep" aria-hidden="true"></span>
     </nav>
     <a href={contact} class="nav-contact-mobile" data-focus-target={focusField}>{t.nav.contact}</a>
     <button
