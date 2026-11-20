@@ -1,7 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Uslugi from '../views/Uslugi.astro';
-import { uslugi } from '../data/uslugi';
+import { uslugiCopy } from '../data/uslugi';
+import { ui } from '../i18n/ui';
+const uslugi = uslugiCopy.bg;
 import { uslugiSchema } from '../data/schema';
 ---
 
@@ -9,8 +11,8 @@ import { uslugiSchema } from '../data/schema';
   title={uslugi.meta.title}
   description={uslugi.meta.description}
   route="uslugi"
-  schema={uslugiSchema('/uslugi')}
-  crumb="Услуги"
+  schema={uslugiSchema('bg', '/uslugi')}
+  crumb={ui.bg.nav.services}
 >
-  <Uslugi />
+  <Uslugi lang="bg" />
 </Base>

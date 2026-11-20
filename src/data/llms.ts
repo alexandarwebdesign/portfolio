@@ -4,7 +4,7 @@ import { services } from './services';
 import { process } from './process';
 import { faq } from './faq';
 import { about } from './about';
-import { uslugi } from './uslugi';
+import { uslugiCopy } from './uslugi';
 import { birse } from './projects/birse';
 import { forma } from './projects/forma';
 import { birseCopy, formaCopy } from './case-copy';
@@ -35,7 +35,7 @@ const contact = `## Contact
 const bulgarian = `## Bulgarian pages
 
 - [Начало](${url('/')}), [За мен](${url('/about')}), [Birsé](${url('/birse')}), [FORMA Architects](${url('/forma-architects')}): Bulgarian versions of the English pages.
-- [${uslugi.meta.title}](${url('/uslugi')}): A Bulgarian-only offer for local businesses. ${uslugi.prices.items.map((p) => `${p.title}: ${p.price}`).join('; ')}. ${uslugi.prices.note}`;
+- [${uslugiCopy.bg.meta.title}](${url('/uslugi')}): Bulgarian version of the offer for local businesses. ${uslugiCopy.bg.prices.items.map((p) => `${p.title}: ${p.price}`).join('; ')}. ${uslugiCopy.bg.prices.note}`;
 
 export function llms(): string {
   return `${intro}
@@ -57,6 +57,7 @@ ${work
 
 - [About](${url('/en/about')}): ${about.en.lead}
 - Process: ${process.en.map((s) => s.title).join(' → ')}.
+- [${uslugiCopy.en.meta.title}](${url('/en/services')}): An offer for local businesses. ${uslugiCopy.en.prices.items.map((p) => `${p.title}: ${p.price}`).join('; ')}. ${uslugiCopy.en.prices.note}
 
 ${bulgarian}
 

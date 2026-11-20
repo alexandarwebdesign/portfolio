@@ -1,5 +1,5 @@
 ---
-// The original /uslugi offer page for local businesses (Bulgarian only).
+// The offer page for local businesses, in both languages (/uslugi, /en/services).
 import HeroShader from '../components/HeroShader.astro';
 import Button from '../components/Button.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -7,8 +7,18 @@ import Faq from '../components/Faq.astro';
 import OfferForm from '../components/OfferForm.astro';
 import StatusIcon from '../components/StatusIcon.astro';
 import birseCard from '../assets/images/birse-card.jpg';
-import { uslugi as t } from '../data/uslugi';
+import { uslugiCopy } from '../data/uslugi';
+import { ui, type Lang } from '../i18n/ui';
+import { pathFor } from '../i18n/routes';
 import { site } from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = uslugiCopy[lang];
+const birsePath = pathFor('birse', lang)!;
 
 const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
 ---
@@ -127,10 +137,10 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
       <h2 id="birse-title" class="section-title">{t.proof.title}</h2>
     </div>
     <div class="offer-proof">
-      <ProjectCard name="Birsé" category={t.proof.category} image={birseCard} href="/birse" />
+      <ProjectCard name="Birsé" category={t.proof.category} image={birseCard} href={birsePath} />
       <div class="offer-proof__text reveal">
         <p class="about-page-para">{t.proof.text}</p>
-        <Button href="/birse" variant="secondary">{t.proof.link}</Button>
+        <Button href={birsePath} variant="secondary">{t.proof.link}</Button>
       </div>
     </div>
   </div>
@@ -155,7 +165,7 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
       <div class="contact-info reveal">
         <div class="availability-signal">
           <StatusIcon class="availability-icon" />
-          <span>В момента приемам нови проекти</span>
+          <span>{ui[lang].site.available}</span>
         </div>
         <h2 class="contact-title">
           <span>{t.contact.title[0]}</span><span>{t.contact.title[1]}</span>
@@ -163,12 +173,12 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
         <p class="contact-subtitle">{t.hero.reply}</p>
         <div class="contact-email">
           <p class="email-label">{t.contact.email}</p>
-          <a href={`mailto:${site.email}`} class="email-link" aria-label="Изпрати имейл"
+          <a href={`mailto:${site.email}`} class="email-link" aria-label={t.form.emailLabel}
             >{site.email}</a
           >
         </div>
       </div>
-      <OfferForm />
+      <OfferForm {lang} />
     </div>
   </div>
 </section>

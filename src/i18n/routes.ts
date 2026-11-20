@@ -9,7 +9,7 @@ export const routes = {
   about: { bg: '/about', en: '/en/about' },
   forma: { bg: '/forma-architects', en: '/en/forma-architects' },
   birse: { bg: '/birse', en: '/en/birse' },
-  uslugi: { bg: '/uslugi' },
+  uslugi: { bg: '/uslugi', en: '/en/services' },
   notFound: { bg: '/404', en: '/en/404' },
 } satisfies Record<string, Partial<Record<Lang, string>>>;
 

@@ -1,7 +1,7 @@
 import { site } from './site';
 import { services } from './services';
 import { faq } from './faq';
-import { uslugi } from './uslugi';
+import { uslugiCopy } from './uslugi';
 import type { CaseContent } from './projects/types';
 import type { Lang } from '../i18n/ui';
 
@@ -165,7 +165,8 @@ export function caseSchema(
   return nodes;
 }
 
-export function uslugiSchema(path: string): Node[] {
+export function uslugiSchema(lang: Lang, path: string): Node[] {
+  const uslugi = uslugiCopy[lang];
   return [
     {
       '@type': 'ProfessionalService',
@@ -173,7 +174,7 @@ export function uslugiSchema(path: string): Node[] {
       name: uslugi.hero.eyebrow,
       description: uslugi.meta.description,
       url: abs(path),
-      inLanguage: 'bg',
+      inLanguage: lang,
       provider: { '@id': ids.person },
       areaServed: { '@type': 'Country', name: 'Bulgaria' },
       email: site.email,
@@ -192,6 +193,6 @@ export function uslugiSchema(path: string): Node[] {
               },
       })),
     },
-    faqPage('bg', uslugi.faq.items),
+    faqPage(lang, uslugi.faq.items),
   ];
 }

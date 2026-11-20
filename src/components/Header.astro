@@ -26,17 +26,13 @@ const focusField = route === 'uslugi' ? '#offer-name' : '#name';
 const links = [
   { href: hash('work'), label: t.nav.work, current: false },
   { href: pathFor('about', lang)!, label: t.nav.about, current: route === 'about' },
-  ...(lang === 'bg'
-    ? [{ href: pathFor('uslugi', 'bg')!, label: t.nav.services, current: route === 'uslugi' }]
-    : []),
+  { href: pathFor('uslugi', lang)!, label: t.nav.services, current: route === 'uslugi' },
 ];
 
 // The other language: the same page when it exists, otherwise its home page.
 const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
 const otherRoute = route === 'notFound' ? 'home' : route;
 const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
-// /uslugi has no English pair, so the language link opens the English home page.
-const noPair = route === 'uslugi';
 const otherName = { bg: { full: 'Български' }, en: { full: 'English' } }[otherLang];
 ---
 
@@ -80,8 +76,8 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
         class="nav-link nav-lang-link"
         hreflang={otherLang}
         lang={otherLang}
-        title={noPair ? `${otherName.full}: само началната страница` : otherName.full}
-        aria-label={noPair ? `${otherName.full}: само началната страница` : otherName.full}
+        title={otherName.full}
+        aria-label={otherName.full}
       >
         <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
           <img src={bgFlag.src} width="22" height="22" alt="" />
@@ -158,7 +154,7 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
     ))
   }
   <a href={otherHref} class="nav-mobile-link" hreflang={otherLang} lang={otherLang}
-    >{noPair ? `${otherName.full} (началната страница)` : otherName.full}</a
+    >{otherName.full}</a
   >
   <a href={contact} class="nav-mobile-link nav-mobile-cta">{t.site.letsTalk}</a>
 </div>

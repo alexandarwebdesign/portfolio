@@ -2,6 +2,15 @@
 // The original /uslugi request form (Web3Forms): name, phone, email, kind of
 // business, city, whether there is a site, and a short message.
 import Button from './Button.astro';
+import { uslugiCopy } from '../data/uslugi';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const f = uslugiCopy[lang].form;
 ---
 
 <form
@@ -9,11 +18,18 @@ import Button from './Button.astro';
   id="offer-form"
   action="https://api.web3forms.com/submit"
   method="POST"
-  aria-label="Заявка за безплатна визия"
+  aria-label={f.aria}
+  data-copy={JSON.stringify({
+    errors: f.errors,
+    fix: f.fix,
+    sending: f.sending,
+    sent: f.sent,
+    failed: f.failed,
+  })}
   novalidate
 >
   <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY} />
-  <input type="hidden" name="subject" value="Нова заявка от /uslugi (местен бизнес)" />
+  <input type="hidden" name="subject" value={f.subject} />
   <input type="hidden" name="from_name" value="Portfolio /uslugi" />
   <input
     type="checkbox"
@@ -24,13 +40,13 @@ import Button from './Button.astro';
     autocomplete="off"
   />
   <div class="form-group">
-    <label for="offer-name" class="form-label">Име</label>
+    <label for="offer-name" class="form-label">{f.name}</label>
     <input
       type="text"
       id="offer-name"
       name="name"
       class="form-input"
-      placeholder="Вашето име"
+      placeholder={f.namePh}
       autocomplete="name"
       required
       aria-required="true"
@@ -40,7 +56,7 @@ import Button from './Button.astro';
   </div>
   <div class="offer-form-row">
     <div class="form-group">
-      <label for="offer-phone" class="form-label">Телефон</label>
+      <label for="offer-phone" class="form-label">{f.phone}</label>
       <input
         type="tel"
         id="offer-phone"
@@ -55,13 +71,13 @@ import Button from './Button.astro';
       <span id="offer-phone-error" class="form-error" role="alert" hidden></span>
     </div>
     <div class="form-group">
-      <label for="offer-email" class="form-label">Имейл</label>
+      <label for="offer-email" class="form-label">{f.email}</label>
       <input
         type="email"
         id="offer-email"
         name="email"
         class="form-input"
-        placeholder="you@firma.bg"
+        placeholder={f.emailPh}
         autocomplete="email"
         required
         aria-required="true"
@@ -72,13 +88,13 @@ import Button from './Button.astro';
   </div>
   <div class="offer-form-row">
     <div class="form-group">
-      <label for="offer-business" class="form-label">Вид бизнес</label>
+      <label for="offer-business" class="form-label">{f.business}</label>
       <input
         type="text"
         id="offer-business"
         name="business"
         class="form-input"
-        placeholder="Напр. зъболекар"
+        placeholder={f.businessPh}
         autocomplete="off"
         required
         aria-required="true"
@@ -87,13 +103,13 @@ import Button from './Button.astro';
       <span id="offer-business-error" class="form-error" role="alert" hidden></span>
     </div>
     <div class="form-group">
-      <label for="offer-city" class="form-label">Град</label>
+      <label for="offer-city" class="form-label">{f.city}</label>
       <input
         type="text"
         id="offer-city"
         name="city"
         class="form-input"
-        placeholder="Напр. Пловдив"
+        placeholder={f.cityPh}
         autocomplete="address-level2"
         required
         aria-required="true"
@@ -103,7 +119,7 @@ import Button from './Button.astro';
     </div>
   </div>
   <div class="form-group">
-    <label for="offer-hassite" class="form-label">Имате ли сайт?</label>
+    <label for="offer-hassite" class="form-label">{f.hasSite}</label>
     <div class="select-wrapper">
       <select
         id="offer-hassite"
@@ -113,26 +129,26 @@ import Button from './Button.astro';
         aria-required="true"
         aria-describedby="offer-hassite-error"
       >
-        <option value="" disabled selected>Изберете</option>
-        <option value="да">Да</option>
-        <option value="не">Не</option>
-        <option value="остарял">Да, но е остарял</option>
+        <option value="" disabled selected>{f.choose}</option>
+        <option value="да">{f.yes}</option>
+        <option value="не">{f.no}</option>
+        <option value="остарял">{f.outdated}</option>
       </select>
     </div>
     <span id="offer-hassite-error" class="form-error" role="alert" hidden></span>
   </div>
   <div class="form-group">
-    <label for="offer-message" class="form-label">Кратко съобщение</label>
+    <label for="offer-message" class="form-label">{f.message}</label>
     <textarea
       id="offer-message"
       name="message"
       class="form-input form-textarea"
-      placeholder="Какво предлагате и какво искате да постигнете със сайта?"
+      placeholder={f.messagePh}
       rows="4"
       autocomplete="off"></textarea>
   </div>
-  <Button type="submit" class="form-submit">Изпрати заявка</Button>
-  <p class="form-helper">Използвам данните ви само за да ви отговоря.</p>
+  <Button type="submit" class="form-submit">{f.submit}</Button>
+  <p class="form-helper">{f.helper}</p>
   <p id="offer-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
 </form>
 
@@ -140,14 +156,14 @@ import Button from './Button.astro';
   // The original offer.js request form handling.
   const form = document.getElementById('offer-form') as HTMLFormElement | null;
   const status = document.getElementById('offer-status');
-  const required: Record<string, string> = {
-    'offer-name': 'Моля, въведете името си.',
-    'offer-phone': 'Моля, въведете телефон за връзка.',
-    'offer-email': 'Моля, въведете валиден имейл.',
-    'offer-business': 'Моля, напишете какъв е бизнесът ви.',
-    'offer-city': 'Моля, въведете град.',
-    'offer-hassite': 'Моля, изберете отговор.',
+  const copy = JSON.parse(form?.dataset.copy ?? '{}') as {
+    errors: Record<string, string>;
+    fix: string;
+    sending: string;
+    sent: string;
+    failed: string;
   };
+  const required = copy.errors ?? {};
 
   const setStatus = (text: string, state?: string) => {
     if (!status) return;
@@ -201,26 +217,21 @@ import Button from './Button.astro';
         error.hidden = false;
       }
       document.getElementById(bad[0])!.focus();
-      setStatus('Моля, поправете полетата по-горе.', 'error');
+      setStatus(copy.fix, 'error');
       return;
     }
 
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     button.disabled = true;
-    setStatus('Изпращане…');
+    setStatus(copy.sending);
     fetch('https://api.web3forms.com/submit', { method: 'POST', body: new FormData(form) })
       .then(async (response) => {
         const json = await response.json();
         if (response.status !== 200) throw new Error(json.message || 'error');
         form.reset();
-        setStatus('Заявката е изпратена. Ще ви отговоря в най-скоро време.', 'success');
+        setStatus(copy.sent, 'success');
       })
-      .catch(() =>
-        setStatus(
-          'Нещо се обърка. Опитайте пак или ми пишете на alexandar.webdesign@gmail.com.',
-          'error',
-        ),
-      )
+      .catch(() => setStatus(`${copy.failed} alexandar.webdesign@gmail.com.`, 'error'))
       .finally(() => {
         button.disabled = false;
       });

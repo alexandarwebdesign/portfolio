@@ -156,7 +156,7 @@ const en: typeof bg = {
     viewCase: 'View case study',
     online: 'Online',
     tagline: 'Designing websites that convert since 2023.',
-    services: 'Уебсайт за вашия бизнес (BG)',
+    services: 'A website for your business',
     available: 'Currently available for new projects',
     followX: 'Follow on X (Twitter)',
     followDribbble: 'Follow on Dribbble',

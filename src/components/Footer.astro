@@ -64,7 +64,7 @@ const social = [
           <p class="footer-location">{t.footer.location}</p>
           {
             route !== 'uslugi' && (
-              <a href={pathFor('uslugi', 'bg')} hreflang="bg" lang="bg" class="footer-lang-link">
+              <a href={pathFor('uslugi', lang)} class="footer-lang-link">
                 {t.site.services}
               </a>
             )
