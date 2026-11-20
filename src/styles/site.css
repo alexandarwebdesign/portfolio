@@ -1910,7 +1910,7 @@ body.is-loaded .hero-cta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-12);
+  gap: var(--space-16);
   align-self: end;
 }
 
@@ -3722,7 +3722,7 @@ body.is-loaded .case-meta {
 }
 
 .about-page-content .about-index {
-  margin-top: clamp(var(--space-12), 8vh, var(--space-20));
+  margin-top: clamp(var(--space-16), 10vh, var(--space-24));
 }
 
 .about-page-cta-row {
