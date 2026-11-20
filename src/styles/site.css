@@ -1611,27 +1611,36 @@ textarea:focus-visible {
       animation-range: 0svh 100svh;
     }
 
-    .hero-heading,
-    .hero-picture,
-    .hero-aside {
-      animation-name: hero-lift;
-      animation-duration: 1ms;
-      animation-timing-function: ease-in-out;
-      animation-fill-mode: both;
-      animation-timeline: scroll(root block);
+    /* The entrance (heroRise) is already on these elements, with the same specificity chain, so
+       both animations are listed: the entrance on time, the lift on the scroll. */
+    body.is-loaded .hero-content > .hero-heading,
+    body.is-loaded .hero-content > .hero-picture,
+    body.is-loaded .hero-content > .hero-aside {
+      animation-name: heroRise, hero-lift;
+      animation-duration: 0.8s, 1ms;
+      animation-timing-function: var(--ease), ease-in-out;
+      animation-fill-mode: both, both;
+      animation-delay: 0s, 0s;
+      animation-timeline: auto, scroll(root block);
     }
 
     /* staggered: each group starts a little after the one before */
-    .hero-heading {
-      animation-range: 0svh 65svh;
+    body.is-loaded .hero-content > .hero-heading {
+      animation-range:
+        normal,
+        0svh 65svh;
     }
 
-    .hero-picture {
-      animation-range: 12svh 78svh;
+    body.is-loaded .hero-content > .hero-picture {
+      animation-range:
+        normal,
+        12svh 78svh;
     }
 
-    .hero-aside {
-      animation-range: 24svh 91svh;
+    body.is-loaded .hero-content > .hero-aside {
+      animation-range:
+        normal,
+        24svh 91svh;
     }
   }
 }
