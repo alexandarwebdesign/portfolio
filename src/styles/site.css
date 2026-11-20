@@ -5818,7 +5818,7 @@ html.js.reveal-failsafe .reveal {
   flex-basis: 100%;
   margin: 0;
   font-size: var(--text-body-sm);
-  color: var(--color-text-muted);
+  color: rgba(28, 28, 28, 0.85); /* the muted 72 % let the line sink into the page */
 }
 
 .work-card__tag,
@@ -5828,7 +5828,8 @@ html.js.reveal-failsafe .reveal {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: var(--tracking-caps);
-  color: var(--color-text-muted);
+  color: rgba(28, 28, 28, 0.85);
+  background: rgba(28, 28, 28, 0.07); /* a chip with a body, not just a faint outline */
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-xs);
   padding: 2px 8px;
