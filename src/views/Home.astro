@@ -42,55 +42,59 @@ const columns = [
 ];
 ---
 
-<section id="hero" class="hero-section hero-stage stage">
-  <div class="hero-content container">
-    <div class="hero-heading">
-      <p class="hero-eyebrow">{t.hero.eyebrow}</p>
-      <h1 class="hero-title">{t.hero.title}</h1>
+<div class="hero-reveal">
+  <section id="hero" class="hero-section hero-stage stage">
+    <div class="hero-content container">
+      <div class="hero-heading">
+        <p class="hero-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="hero-title">{t.hero.title}</h1>
+      </div>
+      <div class="hero-picture" aria-hidden="true">
+        <Picture
+          src={heroImage}
+          formats={['avif', 'webp']}
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 900px) 62vw, 40vw"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-aside">
+        <p class="hero-subtitle">{t.hero.lead}</p>
+        <Button href="#contact" class="hero-cta" data-focus-target="#name">{t.hero.cta}</Button>
+      </div>
     </div>
-    <div class="hero-picture" aria-hidden="true">
-      <Picture
-        src={heroImage}
-        formats={['avif', 'webp']}
-        widths={[640, 960, 1280]}
-        sizes="(max-width: 900px) 62vw, 40vw"
-        alt=""
-        loading="eager"
-        fetchpriority="high"
-      />
-    </div>
-    <p class="hero-subtitle">{t.hero.lead}</p>
-    <Button href="#contact" class="hero-cta" data-focus-target="#name">{t.hero.cta}</Button>
-  </div>
-</section>
+  </section>
 
-<section class="statement-section stage">
-  <div class="container">
-    <div class="statement-ring">
-      <svg class="statement-ticks" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-        {
-          Array.from({ length: 120 }, (_, i) => i)
-            .filter((i) => i !== 30 && i !== 90)
-            .map((i) => {
-              // the upper half starts at the right side (3 o'clock) and goes counter-clockwise over the top,
-              // the lower half starts at the left side (9 o'clock) and goes counter-clockwise along the bottom
-              const k = i > 30 && i < 90 ? 90 - i : (30 - i + 120) % 120;
-              return (
-                <g class="tick" style={`--k:${k}`}>
-                  <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
-                </g>
-              );
-            })
-        }
-      </svg>
-      <p class="statement">
-        {t.statement.before}<mark class="statement-mark">{t.statement.mark}</mark>{
-          t.statement.after
-        }
-      </p>
+  <section class="statement-section stage">
+    <div class="container">
+      <div class="statement-ring">
+        <svg class="statement-ticks" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          {
+            Array.from({ length: 120 }, (_, i) => i)
+              .filter((i) => i !== 30 && i !== 90)
+              .map((i) => {
+                // the upper half starts at the right side (3 o'clock) and goes counter-clockwise over the top,
+                // the lower half starts at the left side (9 o'clock) and goes counter-clockwise along the bottom
+                const k = i > 30 && i < 90 ? 90 - i : (30 - i + 120) % 120;
+                return (
+                  <g class="tick" style={`--k:${k}`}>
+                    <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
+                  </g>
+                );
+              })
+          }
+        </svg>
+        <p class="statement">
+          {t.statement.before}<mark class="statement-mark">{t.statement.mark}</mark>{
+            t.statement.after
+          }
+        </p>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>
 
 <section id="work" class="work-section stage">
   <div class="container">

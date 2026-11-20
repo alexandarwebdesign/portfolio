@@ -1535,8 +1535,8 @@ textarea:focus-visible {
     justify-content: space-between;
     grid-template-areas:
       'heading picture .'
-      'heading picture lead'
-      'heading picture cta';
+      'heading picture aside'
+      'heading picture aside';
     grid-template-rows: auto 1fr auto;
     column-gap: 0;
     text-align: left;
@@ -1555,16 +1555,97 @@ textarea:focus-visible {
     margin-top: 0;
   }
 
-  .hero-stage .hero-subtitle {
-    grid-area: lead;
+  .hero-stage .hero-aside {
+    grid-area: aside;
     align-self: end;
+    align-items: flex-start;
+  }
+
+  .hero-stage .hero-subtitle {
     margin-top: 0;
   }
 
   .hero-stage .hero-cta {
-    grid-area: cta;
-    justify-self: start;
     margin-top: var(--space-8);
+  }
+}
+
+.hero-aside {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+}
+
+/* Hero to the sentence: the hero stays where it is (fixed) and the next section slides over it.
+   While that happens the three groups shrink a little and rise one after another, and the
+   whole hero dims by 30 %. Wide, tall screens with motion and scroll-driven animation only. */
+@media (min-width: 900px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .hero-reveal {
+      position: relative;
+    }
+
+    .hero-reveal > .hero-stage {
+      position: sticky;
+      top: 0;
+      z-index: 0;
+    }
+
+    .hero-reveal > .statement-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-stage::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgb(0 0 0 / 0.3);
+      pointer-events: none;
+      opacity: 0;
+      animation-name: hero-dim;
+      animation-duration: 1ms;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+      animation-range: 0svh 100svh;
+    }
+
+    .hero-heading,
+    .hero-picture,
+    .hero-aside {
+      animation-name: hero-lift;
+      animation-duration: 1ms;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root block);
+    }
+
+    /* staggered: each group starts a little after the one before */
+    .hero-heading {
+      animation-range: 0svh 65svh;
+    }
+
+    .hero-picture {
+      animation-range: 12svh 78svh;
+    }
+
+    .hero-aside {
+      animation-range: 24svh 91svh;
+    }
+  }
+}
+
+@keyframes hero-lift {
+  to {
+    translate: 0 -90px;
+    scale: 0.92;
+  }
+}
+
+@keyframes hero-dim {
+  to {
+    opacity: 1;
   }
 }
 
