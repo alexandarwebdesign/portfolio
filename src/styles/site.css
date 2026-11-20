@@ -2562,6 +2562,10 @@ body.is-loaded .hero-note {
     align-content: end; /* the row sits in the lower part of the screen */
     padding-block-end: 14svh;
     align-items: start; /* both sides begin on the same line */
+    grid-template-rows: var(
+      --process-row,
+      auto
+    ); /* same row height in every card, set in site.ts */
   }
 
   .process__name {

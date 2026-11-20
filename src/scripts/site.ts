@@ -161,6 +161,31 @@ function initClusterScroll() {
 }
 
 // SMIL ignores prefers-reduced-motion: pause it.
+// The three process cards start their text on the same line: every row gets the height of the
+// tallest one (the rows sit at the bottom, so a shorter row would otherwise start lower).
+function initProcessRows() {
+  const root = document.querySelector<HTMLElement>('.process');
+  const texts = root ? [...root.querySelectorAll<HTMLElement>('.process__text')] : [];
+  if (!root || texts.length < 2) return;
+  const measure = () => {
+    root.style.removeProperty('--process-row');
+    let tallest = 0;
+    for (const t of texts) {
+      for (const child of Array.from(t.children))
+        tallest = Math.max(tallest, (child as HTMLElement).offsetHeight);
+    }
+    if (tallest) root.style.setProperty('--process-row', `${tallest}px`);
+  };
+  measure();
+  void document.fonts?.ready.then(measure);
+  let width = root.clientWidth;
+  new ResizeObserver(() => {
+    if (root.clientWidth === width) return;
+    width = root.clientWidth;
+    measure();
+  }).observe(root);
+}
+
 function initReducedMotionSvg() {
   if (!reduceMotion()) return;
   document.querySelectorAll('svg').forEach((svg) => {
@@ -696,6 +721,7 @@ function init() {
   initScrollReveal();
   initStatementRing();
   initClusterScroll();
+  initProcessRows();
   initSmoothScroll();
   initMobileNav();
   initFormHandling();
