@@ -881,6 +881,16 @@ textarea:focus-visible {
   background: rgba(28, 28, 28, 0.06);
 }
 
+/* The language link is an icon (a globe) in a tile the size of the home tile; its name is the aria-label. */
+.nav-lang-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-12);
+  height: var(--space-12);
+  padding: 0;
+}
+
 /* Active-page dot (Dennis pattern) */
 .nav-link[aria-current='page']::after {
   content: '';
