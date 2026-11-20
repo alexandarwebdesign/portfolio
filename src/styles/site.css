@@ -2582,11 +2582,12 @@ body.is-loaded .hero-note {
     align-items: start;
   }
 
+  /* The aside is as tall as the list: the heading at the top, the link to the contact at the bottom. */
   .faq-aside {
-    position: sticky;
-    top: var(--space-24);
+    align-self: stretch;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: var(--space-10);
   }
 
