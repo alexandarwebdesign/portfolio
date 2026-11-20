@@ -2543,6 +2543,50 @@ body.is-loaded .hero-note {
   line-height: 1.5;
 }
 
+/* The tool icons above the text: white-grey discs, each tucked a little under the one before it
+   (the first on top). Light comes from the top left: a highlight on that rim, a softer rim on the
+   other side, one shadow down and to the right that falls on the next disc. */
+.process__aside {
+  container-type: inline-size;
+}
+
+.process__tools {
+  --overlap: 0.14; /* share of a disc that the next one tucks under it */
+  --tool: min(48px, calc(100cqw / (4 - 3 * var(--overlap)))); /* four always fit in one line */
+  isolation: isolate; /* the z-index of the discs stays inside their card */
+  display: flex;
+  margin: 0 0 var(--space-6);
+}
+
+.process__tool {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--tool);
+  height: var(--tool);
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f8f8f8 0%, #e4e4e4 100%);
+  box-shadow:
+    inset 2px 2px 3px rgb(255 255 255 / 1),
+    inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
+    inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07),
+    2px 3px 4px rgb(0 0 0 / 0.14),
+    5px 7px 12px -2px rgb(0 0 0 / 0.22);
+}
+
+.process__tool + .process__tool {
+  margin-inline-start: calc(var(--tool) * var(--overlap) * -1);
+}
+
+.process__tool svg {
+  width: 54%;
+  height: 54%;
+}
+
+.process__tool--mono svg {
+  fill: var(--tool-color);
+}
+
 .process__segments {
   display: none;
 }
@@ -2588,7 +2632,7 @@ body.is-loaded .hero-note {
     grid-column: 1;
   }
 
-  .process__lead {
+  .process__aside {
     grid-column: 3;
   }
 }

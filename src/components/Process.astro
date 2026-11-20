@@ -8,6 +8,16 @@ import { Picture } from 'astro:assets';
 import understand from '../assets/images/process/understand.jpg';
 import design from '../assets/images/process/design.jpg';
 import build from '../assets/images/process/build.jpg';
+import analytics from '../assets/icons/tools/google-analytics.svg?raw';
+import searchConsole from '../assets/icons/tools/google-search-console.svg?raw';
+import meet from '../assets/icons/tools/google-meet.svg?raw';
+import figma from '../assets/icons/tools/figma.svg?raw';
+import awwwards from '../assets/icons/tools/awwwards.svg?raw';
+import chromium from '../assets/icons/tools/chromium.svg?raw';
+import vscode from '../assets/icons/tools/vscode.svg?raw';
+import github from '../assets/icons/tools/github.svg?raw';
+import claude from '../assets/icons/tools/claude.svg?raw';
+import cloudflare from '../assets/icons/tools/cloudflare.svg?raw';
 interface Props {
   index: string;
   label: string;
@@ -20,6 +30,26 @@ const scenes = [
   { image: understand, tone: 'light' },
   { image: design, tone: 'dark' },
   { image: build, tone: 'light' },
+];
+// The tools of each step, as icons only (no words). `color` is the brand colour of the one-path
+// marks; Figma, Chromium and VS Code carry their own colours.
+const tools: { name: string; svg: string; color?: string }[][] = [
+  [
+    { name: 'Google Analytics', svg: analytics, color: '#e37400' },
+    { name: 'Google Search Console', svg: searchConsole, color: '#458cf5' },
+    { name: 'Google Meet', svg: meet, color: '#00897b' },
+  ],
+  [
+    { name: 'Figma', svg: figma },
+    { name: 'Awwwards', svg: awwwards, color: '#222222' },
+    { name: 'Chromium', svg: chromium },
+  ],
+  [
+    { name: 'Visual Studio Code', svg: vscode },
+    { name: 'GitHub', svg: github, color: '#181717' },
+    { name: 'Claude', svg: claude, color: '#d97757' },
+    { name: 'Cloudflare', svg: cloudflare, color: '#f38020' },
+  ],
 ];
 ---
 
@@ -50,7 +80,24 @@ const scenes = [
                 <span class="mono-label">({String(i + 1).padStart(2, '0')})</span>
                 <h3 class="process__name">{step.title}</h3>
               </div>
-              <p class="process__lead">{step.text}</p>
+              <div class="process__aside">
+                {tools[i] && (
+                  <div
+                    class="process__tools"
+                    role="img"
+                    aria-label={tools[i].map((tool) => tool.name).join(', ')}
+                  >
+                    {tools[i].map((tool, j) => (
+                      <span
+                        class:list={['process__tool', { 'process__tool--mono': tool.color }]}
+                        style={`z-index:${tools[i].length - j}${tool.color ? `;--tool-color:${tool.color}` : ''}`}
+                        set:html={tool.svg}
+                      />
+                    ))}
+                  </div>
+                )}
+                <p class="process__lead">{step.text}</p>
+              </div>
             </div>
           </div>
         ))
