@@ -748,8 +748,17 @@ textarea:focus-visible {
   gap: 4px;
   padding: 6px;
   border-radius: var(--nav-radius);
-  background: #f4f4f4;
-  border: 1px solid rgba(28, 28, 28, 0.22);
+  /* Same style as the tool discs: lit from the top left (highlight on that rim, a softer rim on the
+     other side), one shadow down and to the right. Slightly see-through, frosted with a 2rem blur. */
+  background: linear-gradient(135deg, rgb(248 248 248 / 0.78) 0%, rgb(228 228 228 / 0.78) 100%);
+  -webkit-backdrop-filter: blur(2rem);
+  backdrop-filter: blur(2rem);
+  box-shadow:
+    inset 2px 2px 3px rgb(255 255 255 / 1),
+    inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
+    inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07),
+    2px 3px 4px rgb(0 0 0 / 0.14),
+    5px 7px 12px -2px rgb(0 0 0 / 0.22);
 }
 
 /* Home icon circle button */
@@ -1061,7 +1070,7 @@ textarea:focus-visible {
   height: var(--space-12);
   padding-inline: var(--space-5);
   border-radius: var(--nav-item-radius);
-  color: var(--color-accent);
+  color: #1c1c1c; /* the blue accent is under 3:1 on the see-through bar over the dark hero */
   font-size: var(--text-body-sm);
   font-weight: 600;
   text-decoration: none;
