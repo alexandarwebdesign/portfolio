@@ -2482,16 +2482,14 @@ body.is-loaded .hero-note {
   width: var(--space-10);
   height: var(--space-10);
   border-radius: 50%;
-  border: 1px solid var(--color-border-subtle);
+  border: 1px solid var(--color-border-subtle); /* the outline never changes or animates */
   /* the section's background colour, a very little lighter */
   background: color-mix(in srgb, var(--faq-bg) 70%, var(--color-surface));
   color: var(--color-ink);
-  transition:
-    transform var(--duration-fast) var(--ease),
-    color var(--duration-fast) var(--ease),
-    border-color var(--duration-fast) var(--ease);
+  transition: color var(--duration-fast) var(--ease);
 }
 
+/* only the lines turn, the circle and its outline stay still */
 .faq-icon::before,
 .faq-icon::after {
   content: '';
@@ -2500,6 +2498,7 @@ body.is-loaded .hero-note {
   left: 50%;
   translate: -50% -50%;
   background: currentColor;
+  transition: rotate var(--duration-fast) var(--ease);
 }
 
 .faq-icon::before {
@@ -2515,11 +2514,11 @@ body.is-loaded .hero-note {
 .faq-question:hover .faq-icon,
 .faq-item.is-open .faq-icon {
   color: var(--color-accent);
-  border-color: currentColor;
 }
 
-.faq-item.is-open .faq-icon {
-  transform: rotate(45deg);
+.faq-item.is-open .faq-icon::before,
+.faq-item.is-open .faq-icon::after {
+  rotate: 45deg;
 }
 
 /* Answer container - smooth height animation using grid */
@@ -2601,6 +2600,8 @@ body.is-loaded .hero-note {
   .faq-item,
   .faq-question,
   .faq-icon,
+  .faq-icon::before,
+  .faq-icon::after,
   .faq-answer,
   .faq-answer p {
     transition-duration: 0.01ms !important;
