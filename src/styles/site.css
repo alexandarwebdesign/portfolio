@@ -1622,28 +1622,6 @@ textarea:focus-visible {
       animation-timeline: scroll(root block);
       animation-range: 0svh 100svh;
     }
-
-    /* The picture grows against the shrinking content: 0.85 x 1.45 is about 1.23 in the end.
-       Both animations are listed because the entrance (heroRise) sits on the same element. */
-    body.is-loaded .hero-content > .hero-picture {
-      position: relative;
-      z-index: 1;
-      animation-name: heroRise, hero-grow;
-      animation-duration: 0.8s, 1ms;
-      animation-timing-function: var(--ease), linear;
-      animation-fill-mode: both, both;
-      animation-delay: 0s, 0s;
-      animation-timeline: auto, scroll(root block);
-      animation-range:
-        normal,
-        0svh 100svh;
-    }
-  }
-}
-
-@keyframes hero-grow {
-  to {
-    scale: 1.45;
   }
 }
 
