@@ -2686,6 +2686,26 @@ body.is-loaded .hero-note {
   color: var(--color-text);
 }
 
+/* The hero is the one dark section: near-black, neutral, with Apple blue (lighter on dark).
+   It remaps the colour tokens, so everything inside follows. */
+.stage.hero-stage {
+  --color-background: #101010;
+  --color-surface: #181818;
+  --color-surface-subtle: #181818;
+  --color-ink: #efefef;
+  --color-text: #efefef;
+  --color-text-muted: rgba(239, 239, 239, 0.66);
+  --color-text-soft: rgba(239, 239, 239, 0.72);
+  --color-text-light: rgba(239, 239, 239, 0.74);
+  --color-text-tertiary: rgba(239, 239, 239, 0.8);
+  --color-border: rgba(239, 239, 239, 0.4);
+  --color-border-subtle: rgba(239, 239, 239, 0.14);
+  --color-accent: #2997ff;
+  --color-accent-hover: #55adff;
+  --color-white: #101010; /* text on the accent button */
+  --color-danger: #ff7a70;
+}
+
 /* --------------------------------------------------------------------------
    6.6 Footer
    -------------------------------------------------------------------------- */
