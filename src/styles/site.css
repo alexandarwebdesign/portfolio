@@ -348,9 +348,9 @@ h3,
     inset 2px 2px 3px rgb(255 255 255 / 1), inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
     inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07), 2px 3px 4px rgb(0 0 0 / 0.14),
     5px 7px 12px -2px rgb(0 0 0 / 0.22);
-  /* The fill of the nav bar and the FAQ boxes: light at the top, a little darker at the bottom. */
-  --gradient-bar: linear-gradient(
-    180deg,
+  /* The fill of the nav bar and the FAQ boxes: light in the centre, a little darker at the edges. */
+  --gradient-bar: radial-gradient(
+    ellipse at center,
     color-mix(in srgb, var(--color-surface) 78%, transparent) 0%,
     color-mix(in srgb, var(--color-surface-subtle) 78%, transparent) 100%
   );
@@ -902,8 +902,7 @@ textarea:focus-visible {
 }
 
 /* The language switch shows both languages, Bulgarian first, each as a flag and its short name.
-   The one you are reading is in ink and full colour; the other flag is dimmed and its text stays
-   readable. The whole switch is one link to the other language (the aria-label names it). */
+   The one you are reading is in ink and full colour; the other one is black and white at 70 %. The whole switch is one link to the other language (the aria-label names it). */
 .nav-lang-link {
   display: inline-flex;
   align-items: center;
@@ -916,11 +915,15 @@ textarea:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--color-text-tertiary);
+  color: var(--color-ink);
 }
 
-.lang-option[data-active] {
-  color: var(--color-ink);
+.lang-option:not([data-active]) {
+  opacity: 0.7;
+}
+
+.lang-option:not([data-active]) img {
+  filter: grayscale(1);
 }
 
 .lang-option img {
@@ -928,11 +931,6 @@ textarea:focus-visible {
   width: 22px;
   height: 22px;
   border-radius: var(--radius-square); /* the same proportional rounding as the other squares */
-  opacity: 0.55;
-}
-
-.lang-option[data-active] img {
-  opacity: 1;
 }
 
 /* Narrow screens: the bar would not fit with the short names and the wide link padding, so the
