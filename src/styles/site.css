@@ -881,14 +881,14 @@ textarea:focus-visible {
   background: rgba(28, 28, 28, 0.06);
 }
 
-/* The language link is an icon (a globe) in a tile the size of the home tile; its name is the aria-label. */
+/* The language link: a globe and the short name of the other language, as tall as the home tile.
+   The full name is the aria-label. */
 .nav-lang-link {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: var(--space-12);
+  gap: 6px;
   height: var(--space-12);
-  padding: 0;
+  padding-block: 0;
 }
 
 /* Active-page dot (Dennis pattern) */
