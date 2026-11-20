@@ -2361,8 +2361,15 @@ body.is-loaded .hero-note {
    -------------------------------------------------------------------------- */
 
 .faq-section {
-  padding-top: var(--space-24);
-  padding-bottom: var(--section-gap);
+  display: flex;
+  align-items: center;
+  min-height: 100svh; /* the section fills the screen, the content sits in the middle */
+  padding-block: var(--space-24);
+  background: var(--color-surface-subtle); /* a little darker than the page background */
+}
+
+.faq-section > .container {
+  width: 100%;
 }
 
 .faq-layout {
@@ -2415,7 +2422,7 @@ body.is-loaded .hero-note {
 }
 
 .faq-ask__link:hover {
-  color: var(--color-accent);
+  color: var(--color-accent-hover); /* the accent itself is 4.4:1 on this darker background */
   text-decoration-color: currentColor;
 }
 
@@ -2529,7 +2536,7 @@ body.is-loaded .hero-note {
 
 @media (max-width: 768px) {
   .faq-section {
-    padding-bottom: var(--space-16);
+    padding-block: var(--space-16);
   }
 
   .faq-question {
