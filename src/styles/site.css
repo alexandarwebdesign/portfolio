@@ -2965,6 +2965,16 @@ main {
   --ring-color: var(--color-on-dark-border);
 }
 
+/* The ring sits in a wrapper that does not turn, and the wrapper fades out its last stretch above
+   the line of the base, so the ring dissolves where it disappears instead of being cut. */
+.footer-ring {
+  position: absolute;
+  inset: -100vh -100vw 0; /* larger up and to the sides, so the mask does not cut the ring there */
+  z-index: -1;
+  pointer-events: none;
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--space-24)), transparent);
+}
+
 /* The top half of one large ring: its centre is on the line of the base (the bottom edge of
    .footer-cta, which clips everything below), and it is wide enough for its arc to pass over the
    title, behind the text. */
@@ -2976,7 +2986,6 @@ main {
   left: 50%;
   bottom: 0;
   translate: -50% 50%;
-  z-index: -1;
 }
 
 .footer-inner {
@@ -3027,24 +3036,6 @@ main {
   min-height: min(22svh, 300px); /* the base takes a share of the screen, so the rows are spread */
   padding-top: var(--space-8);
   border-top: 1px solid var(--color-on-dark-border);
-  position: relative;
-}
-
-/* A soft shadow cast upward from the top edge onto the call to action, in the colour of the footer
-   itself (at 70 %), so it dissolves what rises behind it (the ring). A gradient rather than a
-   box-shadow, so nothing bleeds out at the sides: it also fades out toward both ends. */
-.footer-base::before {
-  content: '';
-  position: absolute;
-  inset: auto 0 100%;
-  height: var(--space-24);
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--color-ink-deep) 70%, transparent),
-    transparent
-  );
-  mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
-  pointer-events: none;
 }
 
 .footer-row {
