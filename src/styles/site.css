@@ -5839,3 +5839,37 @@ html.js.reveal-failsafe .reveal {
 .case-figure {
   border: 1px solid var(--color-border-subtle);
 }
+
+/* --------------------------------------------------------------------------
+   Privacy page: a plain reading column
+   -------------------------------------------------------------------------- */
+.legal-page {
+  padding-top: clamp(120px, 18vh, 200px);
+  padding-bottom: var(--section-gap);
+}
+
+.legal-body {
+  max-width: 44rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.legal-heading {
+  margin: 0 0 var(--space-3);
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+.legal-text {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.legal-updated {
+  margin: 0;
+}

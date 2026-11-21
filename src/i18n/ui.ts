@@ -116,6 +116,7 @@ const bg = {
     location: 'София, България – работя с клиенти от цял свят',
     role: 'UX/UI дизайнер и уеб разработчик',
     social: 'Профили',
+    privacy: 'Поверителност',
   },
   meta: {
     home: {
@@ -127,6 +128,11 @@ const bg = {
       title: 'За мен – Александър Павлов | UX/UI дизайнер и уеб разработчик',
       description:
         'Александър Павлов – UX/UI дизайнер и уеб разработчик от България, работи с клиенти от цял свят. От първата идея до работещия сайт.',
+    },
+    privacy: {
+      title: 'Поверителност | Александър Павлов',
+      description:
+        'Какви данни събира този сайт, защо и как да поискате да ги видите, поправите или изтриете.',
     },
     notFound: {
       title: '404 – Страницата не е намерена | Александър Павлов',
@@ -246,6 +252,7 @@ const en: typeof bg = {
     location: 'Based in Sofia, Bulgaria – working worldwide',
     role: 'UX/UI Designer & Website Developer',
     social: 'Profiles',
+    privacy: 'Privacy',
   },
   meta: {
     home: {
@@ -257,6 +264,11 @@ const en: typeof bg = {
       title: 'About – Aleksandar Pavlov | UX/UI Designer & Website Developer',
       description:
         'About Aleksandar Pavlov – UX/UI designer and website developer based in Bulgaria, working with clients worldwide. From first concept to live site.',
+    },
+    privacy: {
+      title: 'Privacy | Aleksandar Pavlov',
+      description:
+        'What data this site collects, why, and how to ask to see, correct or delete it.',
     },
     notFound: {
       title: '404 – Page not found | Aleksandar Pavlov',

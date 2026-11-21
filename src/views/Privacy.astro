@@ -1,0 +1,34 @@
+---
+// The privacy page: a plain reading page, one column.
+import { privacy } from '../data/privacy';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = privacy[lang];
+---
+
+<section class="legal-page" aria-labelledby="legal-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label">{t.label}</p>
+      <h1 id="legal-title" class="section-title">{t.title}</h1>
+    </div>
+    <div class="legal-body">
+      {
+        t.sections.map((section) => (
+          <section class="legal-section">
+            <h2 class="legal-heading">{section.heading}</h2>
+            {section.text.map((paragraph) => (
+              <p class="legal-text">{paragraph}</p>
+            ))}
+          </section>
+        ))
+      }
+      <p class="legal-updated mono-label">{t.updated}</p>
+    </div>
+  </div>
+</section>
