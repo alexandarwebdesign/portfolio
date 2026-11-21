@@ -1,7 +1,7 @@
 ---
 // The footer: revealed from under the page (sticky), one screen tall. The call to action in the
-// middle, the links, the profiles, the location and the copyright below, two rings of ticks in the
-// corners.
+// middle with one large ring of ticks arching over the title from one edge of the screen to the
+// other, the links, the profiles, the location and the copyright below.
 import Button from './Button.astro';
 import TickRing from './TickRing.astro';
 import { ui, type Lang } from '../i18n/ui';
@@ -48,12 +48,13 @@ const social = [
 
 <div class="footer-reveal">
   <footer class="footer" data-lenis-prevent>
-    <TickRing corner="tr" />
-    <TickRing corner="bl" />
     <div class="footer-inner">
       <div class="footer-cta">
-        <p class="footer-cta-title">{t.footer.title}</p>
-        <Button href={contact} data-focus-target="#name">{t.site.letsTalk}</Button>
+        <div class="footer-cta__body">
+          <TickRing corner="center" />
+          <p class="footer-cta-title">{t.footer.title}</p>
+          <Button href={contact} data-focus-target="#name">{t.site.letsTalk}</Button>
+        </div>
       </div>
       <div class="footer-base">
         <div class="footer-row">

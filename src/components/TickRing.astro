@@ -1,7 +1,8 @@
 ---
-// A ring of fine ticks, half cropped by a corner of its section (see .tick-ring in site.css).
+// A ring of fine ticks: half cropped by a corner of its section, or (center) placed by its parent
+// (see .tick-ring in site.css).
 interface Props {
-  corner: 'bl' | 'tr';
+  corner: 'bl' | 'tr' | 'center';
 }
 
 const { corner } = Astro.props;
