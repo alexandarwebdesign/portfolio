@@ -262,7 +262,8 @@ const t = {
       }
 
       .message {
-        margin-top: 250px;
+        /* the 3D numbers grow with the height of the screen, so does the gap below them */
+        margin-top: max(250px, calc(14vh + 124px));
         margin-bottom: 2rem;
         font-size: 1.5rem;
         opacity: 0.8;
