@@ -3022,7 +3022,7 @@ main {
 .footer-base {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* the two rows go to the top and the bottom of the base */
+  justify-content: space-between; /* the three rows are spread evenly over the height of the base */
   gap: var(--space-10);
   min-height: min(30svh, 380px); /* the base takes a share of the screen, so the rows are spread */
   padding-top: var(--space-8);
@@ -3032,7 +3032,7 @@ main {
 .footer-row {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   gap: var(--space-6);
   flex-wrap: wrap;
 }
@@ -3062,20 +3062,6 @@ main {
   text-decoration-color: currentColor;
 }
 
-/* The last row: the email lines up with the first line of the copyright and the location with the
-   links under it, so both columns start and end together. */
-.footer-row--meta {
-  align-items: stretch;
-}
-
-.footer-meta {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: var(--space-3);
-  align-items: flex-start;
-}
-
 .footer-email {
   display: inline-flex;
   align-items: center;
@@ -3090,13 +3076,6 @@ main {
 
 .footer-email:hover {
   text-decoration-color: currentColor;
-}
-
-.footer-legal {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-3);
 }
 
 .footer-location__pin {
@@ -3261,10 +3240,6 @@ main {
 @media (max-width: 768px) {
   .footer-row {
     flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer-legal {
     align-items: flex-start;
   }
 
