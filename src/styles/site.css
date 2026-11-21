@@ -2966,12 +2966,12 @@ main {
 }
 
 /* One large ring, as wide as the screen, centred on the call to action and set so high that its
-   top arc passes over the title (and its sides above the first letters), behind the text. The
-   footer crops what falls below it. */
+   top arc passes well over the title, behind the text. It is cropped at the line of the base
+   below (.footer-cta clips its bottom edge), so it never shows behind the links. */
 .footer-cta__body .tick-ring {
   --ring-size: 100vw;
   left: 50%;
-  top: calc(-1 * (var(--space-24) + var(--space-8)));
+  top: calc(-2 * var(--space-24));
   translate: -50% 0;
   z-index: -1;
 }
@@ -2992,6 +2992,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  clip-path: inset(-100vh -100vw 0); /* crops only the bottom, at the line of the base */
 }
 
 .footer-cta__body {
