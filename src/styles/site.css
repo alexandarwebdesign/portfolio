@@ -4537,9 +4537,9 @@ html.js.reveal-failsafe .reveal {
   overflow: visible;
 }
 
-/* On the home page the row sits on the background colour of the third picture. */
+/* On the home page the row continues the last picture of the process above it (its background). */
 .image-marquee--tinted {
-  background: #fcfbf7;
+  background: #c4c4c4;
 }
 
 /* The row dissolves at both edges instead of being cut by the screen. */
