@@ -3036,8 +3036,8 @@ main {
   content: '';
   position: absolute;
   inset: auto 0 100%;
-  height: var(--space-10);
-  background: linear-gradient(to top, rgb(0 0 0 / 35%), transparent);
+  height: var(--space-24);
+  background: linear-gradient(to top, rgb(0 0 0 / 10%), transparent);
   mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
   pointer-events: none;
 }
