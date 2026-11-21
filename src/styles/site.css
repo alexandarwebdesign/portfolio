@@ -2965,14 +2965,17 @@ main {
   --ring-color: var(--color-on-dark-border);
 }
 
-/* One large ring, as wide as the screen, centred on the call to action and set so high that its
-   top arc passes well over the title, behind the text. It is cropped at the line of the base
-   below (.footer-cta clips its bottom edge), so it never shows behind the links. */
-.footer-cta__body .tick-ring {
-  --ring-size: 100vw;
+/* The top half of one large ring: its centre is on the line of the base (the bottom edge of
+   .footer-cta, which clips everything below), and it is wide enough for its arc to pass over the
+   title, behind the text. */
+.footer-cta .tick-ring {
+  --ring-size: min(82vw, 1200px);
+  /* its radius is a little more than the distance from the line of the base to the title's
+     corners (about 42svh up and 25vw across), so the arc always clears the title */
+  --ring-size: calc(2.2 * hypot(42svh, 25vw));
   left: 50%;
-  top: calc(-2 * var(--space-24));
-  translate: -50% 0;
+  bottom: 0;
+  translate: -50% 50%;
   z-index: -1;
 }
 
@@ -2988,6 +2991,7 @@ main {
 
 /* The call to action: the middle of the screen, centred. */
 .footer-cta {
+  position: relative;
   flex: 1;
   display: flex;
   align-items: center;
