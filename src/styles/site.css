@@ -3027,7 +3027,19 @@ main {
   min-height: min(22svh, 300px); /* the base takes a share of the screen, so the rows are spread */
   padding-top: var(--space-8);
   border-top: 1px solid var(--color-on-dark-border);
-  box-shadow: 0 -12px 32px rgb(0 0 0 / 35%); /* a soft shadow cast upward onto the call to action */
+  position: relative;
+}
+
+/* A soft shadow cast upward from the top edge onto the call to action. A gradient rather than a
+   box-shadow, so nothing bleeds out at the sides: it also fades out toward both ends. */
+.footer-base::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 100%;
+  height: var(--space-10);
+  background: linear-gradient(to top, rgb(0 0 0 / 35%), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 15%, #000 85%, transparent);
+  pointer-events: none;
 }
 
 .footer-row {
