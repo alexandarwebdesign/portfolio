@@ -3196,20 +3196,26 @@ main {
   }
 }
 
-/* Short viewports: the content may exceed 100lvh, so the footer itself scrolls (and the ring, whose
-   overflow would add empty scroll, is left out) */
+/* Short viewports: the content may not fit one screen, so there is no reveal: the footer is an
+   ordinary block at the end of the page (and the ring, the dimming layer are left out) */
 @media (max-height: 480px), (max-width: 768px) and (max-height: 660px) {
-  .footer {
-    overflow-y: auto;
+  main {
+    margin-bottom: 0;
   }
 
+  .footer {
+    position: relative;
+    inset: auto;
+    height: auto;
+  }
+
+  .footer::after,
   .footer .tick-ring {
     display: none;
   }
 
   .footer-inner {
     height: auto;
-    min-height: 100%;
     padding-top: var(--space-6);
   }
 

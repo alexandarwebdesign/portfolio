@@ -118,12 +118,6 @@ function initSmoothScrollLenis() {
     smoothWheel: true,
     syncTouch: false,
     touchMultiplier: 1,
-    // The footer sits fixed behind the page: Lenis keeps smoothing over it, so the scroll never
-    // changes hands mid-way. Only on a screen too short for it does the footer scroll itself.
-    prevent: (node) => {
-      const footer = node.closest('.footer');
-      return !!footer && getComputedStyle(footer).overflowY === 'auto';
-    },
   });
   window.__lenis = lenis;
   const raf = (time: number) => {
