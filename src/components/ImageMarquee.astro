@@ -1,7 +1,7 @@
 ---
 // The image marquee: seven website concepts in a row that drifts, follows the scroll and can be
-// dragged (site script); the drift stops under the pointer so a design can be read. `tinted` puts
-// the row on the background colour of the last picture of the process above it. Still with reduced motion.
+// dragged (site script); the drift stops under the pointer so a design can be read. Still with
+// reduced motion.
 import { Picture } from 'astro:assets';
 import { ui, type Lang } from '../i18n/ui';
 import studio01 from '../assets/images/marquee/studio-01.jpg';
@@ -14,18 +14,13 @@ import studio07 from '../assets/images/marquee/studio-07.jpg';
 
 interface Props {
   lang: Lang;
-  tinted?: boolean;
 }
 
-const { lang, tinted = false } = Astro.props;
+const { lang } = Astro.props;
 const images = [studio01, studio02, studio03, studio04, studio05, studio06, studio07];
 ---
 
-<section
-  class:list={['image-marquee', 'stage', { 'image-marquee--tinted': tinted }]}
-  aria-label={ui[lang].site.marquee}
-  data-marquee
->
+<section class="image-marquee stage" aria-label={ui[lang].site.marquee} data-marquee>
   <div class="image-marquee__viewport">
     <div class="image-marquee__track" data-marquee-track>
       <div class="image-marquee__row" data-marquee-row>
