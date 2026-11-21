@@ -2919,9 +2919,14 @@ main {
   display: flex;
   align-items: stretch;
   overflow: hidden; /* crops the rings of ticks at the corners */
-  /* One flat deep ink with a faint top rim-light (no diagonal sheen, so the base and the shadow
-     over it are one colour all across) */
+  /* Semi-glassy: diagonal white-alpha sheen + faint top rim-light over deep ink */
   background:
+    linear-gradient(
+      160deg,
+      rgba(237, 237, 237, 0.07) 0%,
+      rgba(237, 237, 237, 0.015) 38%,
+      rgba(237, 237, 237, 0) 60%
+    ),
     linear-gradient(180deg, rgba(237, 237, 237, 0.09) 0, rgba(237, 237, 237, 0) 2px),
     var(--color-ink-deep);
   color: var(--color-on-dark);
