@@ -155,8 +155,21 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
       </a>
     ))
   }
-  <a href={otherHref} class="nav-mobile-link" hreflang={otherLang} lang={otherLang}
-    >{otherName.full}</a
+  <a
+    href={otherHref}
+    class="nav-mobile-link nav-mobile-lang"
+    hreflang={otherLang}
+    lang={otherLang}
+    aria-label={otherName.full}
   >
+    <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
+      <img src={bgFlag.src} width="22" height="22" alt="" />
+      <span aria-hidden="true">БГ</span>
+    </span>
+    <span class="lang-option" data-active={lang === 'en' ? '' : undefined}>
+      <img src={enFlag.src} width="22" height="22" alt="" />
+      <span aria-hidden="true">EN</span>
+    </span>
+  </a>
   <a href={contact} class="nav-mobile-link nav-mobile-cta">{t.site.letsTalk}</a>
 </div>

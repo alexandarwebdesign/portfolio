@@ -1114,6 +1114,19 @@ textarea:focus-visible {
   color: var(--color-accent);
 }
 
+/* The language in the menu is the same switch as in the bar: two flags with short names, one link */
+.nav-mobile-link.nav-mobile-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: var(--space-12);
+  font-size: var(--text-title);
+}
+
+.nav-mobile-lang:hover {
+  color: var(--color-ink);
+}
+
 .nav-mobile-cta {
   margin-top: var(--space-8);
   color: var(--color-accent);
