@@ -4533,7 +4533,7 @@ html.js.reveal-failsafe .reveal {
 .image-marquee {
   position: relative;
   width: 100%;
-  padding: 12vh 0;
+  padding: 16vh 0;
   overflow: visible;
 }
 
@@ -4612,7 +4612,7 @@ html.js.reveal-failsafe .reveal {
 
 @media (max-width: 768px) {
   .image-marquee {
-    padding: 7vh 0;
+    padding: 10vh 0;
   }
 
   .image-marquee__row {
@@ -4633,7 +4633,7 @@ html.js.reveal-failsafe .reveal {
 
 @media (max-width: 480px) {
   .image-marquee {
-    padding: 6vh 0;
+    padding: 9vh 0;
   }
 
   .image-marquee__row {
