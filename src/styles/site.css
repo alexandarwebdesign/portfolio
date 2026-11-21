@@ -2933,6 +2933,12 @@ main {
   color: var(--color-on-dark);
 }
 
+/* Hidden only until the fonts are in (see initFooterReady): its text reflowing behind the page would
+   count as a layout shift. Without scripts, or after the failsafe, it is simply visible. */
+html.js:not(.footer-ready):not(.reveal-failsafe) .footer {
+  visibility: hidden;
+}
+
 .footer .tick-ring {
   --ring-color: var(--color-on-dark-border);
 }

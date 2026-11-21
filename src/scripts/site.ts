@@ -16,6 +16,15 @@ const tempo = () =>
   parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--duration-normal')) ||
   600;
 
+// The footer sits fixed behind the page, inside the first screen, so while the web font swaps in
+// its text reflows and counts as a layout shift nobody can see. It stays hidden until the fonts
+// are in (the failsafe class shows it anyway).
+function initFooterReady() {
+  const ready = () => document.documentElement.classList.add('footer-ready');
+  if (!document.fonts) return ready();
+  void document.fonts.ready.then(() => requestAnimationFrame(ready));
+}
+
 // 1. Scroll reveal
 function initScrollReveal() {
   window.__revealReady = true;
@@ -605,6 +614,7 @@ function initMobileNav() {
 }
 
 function init() {
+  initFooterReady();
   initSmoothScrollLenis();
   initReducedMotionSvg();
   initReducedMotionVideo();
