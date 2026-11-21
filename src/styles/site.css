@@ -3022,7 +3022,9 @@ main {
 .footer-base {
   display: flex;
   flex-direction: column;
+  justify-content: space-between; /* the two rows go to the top and the bottom of the base */
   gap: var(--space-10);
+  min-height: min(30svh, 380px); /* the base takes a share of the screen, so the rows are spread */
   padding-top: var(--space-8);
   border-top: 1px solid var(--color-on-dark-border);
 }
@@ -3229,6 +3231,7 @@ main {
 @media (max-width: 768px) and (max-height: 700px) {
   .footer-base {
     gap: var(--space-6);
+    min-height: 0;
     padding-top: var(--space-6);
   }
 }
