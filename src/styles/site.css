@@ -1900,12 +1900,6 @@ body.is-loaded .hero-cta {
   border: 1px solid var(--color-border-subtle);
 }
 
-.about-figure figcaption {
-  margin: var(--space-3) 0 0;
-  font-size: var(--text-body-sm);
-  color: var(--color-text-muted);
-}
-
 .about-side {
   display: flex;
   flex-direction: column;
