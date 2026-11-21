@@ -4803,6 +4803,7 @@ html.js.reveal-failsafe .reveal {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  min-height: 24px; /* WCAG 2.5.8 target size */
   font-family: var(--font-mono);
   font-size: var(--text-label);
   font-weight: 500;
