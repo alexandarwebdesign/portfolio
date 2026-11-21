@@ -1,8 +1,9 @@
 ---
-// The original image marquee: seven website concepts in a row that drifts,
-// follows the scroll and can be dragged (site script). Still with reduced
-// motion.
+// The image marquee: seven website concepts in a row that drifts, follows the scroll and can be
+// dragged (site script); the drift stops under the pointer so a design can be read. Under it, the
+// title and the button. Still with reduced motion.
 import { Picture } from 'astro:assets';
+import Button from './Button.astro';
 import { ui, type Lang } from '../i18n/ui';
 import studio01 from '../assets/images/marquee/studio-01.jpg';
 import studio02 from '../assets/images/marquee/studio-02.jpg';
@@ -14,13 +15,30 @@ import studio07 from '../assets/images/marquee/studio-07.jpg';
 
 interface Props {
   lang: Lang;
+  // With a title and a button the row carries the call to action (home); without, it is only the row.
+  title?: string;
+  cta?: string;
 }
 
-const { lang } = Astro.props;
+const { lang, title, cta } = Astro.props;
 const images = [studio01, studio02, studio03, studio04, studio05, studio06, studio07];
 ---
 
-<section class="image-marquee" aria-label={ui[lang].site.marquee} data-marquee>
+<section
+  class="image-marquee stage"
+  aria-labelledby={title ? 'marquee-title' : undefined}
+  aria-label={title ? undefined : ui[lang].site.marquee}
+  data-marquee
+>
+  {
+    title && (
+      <div class="container">
+        <h2 id="marquee-title" class="image-marquee__title reveal">
+          {title}
+        </h2>
+      </div>
+    )
+  }
   <div class="image-marquee__viewport">
     <div class="image-marquee__track" data-marquee-track>
       <div class="image-marquee__row" data-marquee-row>
@@ -42,4 +60,13 @@ const images = [studio01, studio02, studio03, studio04, studio05, studio06, stud
       </div>
     </div>
   </div>
+  {
+    cta && (
+      <div class="container image-marquee__cta reveal">
+        <Button href="#contact" data-focus-target="#name">
+          {cta}
+        </Button>
+      </div>
+    )
+  }
 </section>
