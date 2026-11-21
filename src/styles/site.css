@@ -3023,8 +3023,8 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* the three rows are spread evenly over the height of the base */
-  gap: var(--space-10);
-  min-height: min(30svh, 380px); /* the base takes a share of the screen, so the rows are spread */
+  gap: var(--space-6);
+  min-height: min(22svh, 300px); /* the base takes a share of the screen, so the rows are spread */
   padding-top: var(--space-8);
   border-top: 1px solid var(--color-on-dark-border);
 }
