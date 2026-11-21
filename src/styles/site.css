@@ -5854,7 +5854,7 @@ html.js.reveal-failsafe .reveal {
 
 .work-card--off .work-card__media img {
   filter: grayscale(1);
-  opacity: 0.55;
+  opacity: 0.8;
 }
 
 .work-card--off:hover .work-card__media img {
