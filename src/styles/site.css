@@ -2860,7 +2860,7 @@ body.is-loaded .hero-note {
 }
 
 /* --------------------------------------------------------------------------
-   Picture cluster: title, six designs shown large in two columns, the button
+   Picture cluster: title, four designs shown large in two columns, the button
    -------------------------------------------------------------------------- */
 .cluster {
   padding-bottom: var(--section-gap);
@@ -2879,7 +2879,7 @@ body.is-loaded .hero-note {
 
 .cluster__pictures {
   list-style: none;
-  margin: var(--space-16) 0 0;
+  margin: var(--space-10) 0 0;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr;
@@ -2908,7 +2908,7 @@ body.is-loaded .hero-note {
 .cluster__cta {
   display: flex;
   justify-content: center;
-  margin-top: var(--space-16);
+  margin-top: var(--space-10);
 }
 
 /* --------------------------------------------------------------------------
