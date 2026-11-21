@@ -1,5 +1,5 @@
 ---
-// The footer: revealed from under the page (sticky), one screen tall. The call to action in the
+// The footer: fixed behind the page, one screen tall, uncovered when the page ends. The call to action in the
 // middle with the top half of a large ring of ticks arching over the title, the links, the profiles, the location and the copyright below.
 import Button from './Button.astro';
 import TickRing from './TickRing.astro';
@@ -53,98 +53,96 @@ const social = [
 ];
 ---
 
-<div class="footer-reveal">
-  <footer class="footer" data-lenis-prevent>
-    <div class="footer-inner">
-      <div class="footer-cta">
-        <div class="footer-ring" aria-hidden="true">
-          <TickRing corner="center" />
-        </div>
-        <div class="footer-cta__body">
-          <p class="footer-cta-title">{t.footer.title}</p>
-          <Button href={contact} data-focus-target="#name">{t.site.letsTalk}</Button>
-        </div>
+<footer class="footer" data-lenis-prevent>
+  <div class="footer-inner">
+    <div class="footer-cta">
+      <div class="footer-ring" aria-hidden="true">
+        <TickRing corner="center" />
       </div>
-      <div class="footer-base">
-        <div class="footer-row">
-          <nav class="footer-nav" aria-label={t.nav.label}>
-            {links.map((link) => <a href={link.href}>{link.label}</a>)}
-          </nav>
-          <div class="footer-social">
-            {
-              social.map((s) => (
-                <a
-                  href={s.url}
-                  class="footer-social-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    class="social-icon"
-                    aria-hidden="true"
-                  >
-                    <path d={s.d} />
-                  </svg>
-                </a>
-              ))
-            }
-          </div>
-        </div>
-        <div class="footer-row">
-          <a href={`mailto:${site.email}`} class="footer-email">{site.email}</a>
-          <p class="footer-copyright">
-            &copy; {year}
-            {site.name[lang]}<br />{t.footer.role}
-          </p>
-        </div>
-        <div class="footer-row">
-          <p class="footer-location">
-            <svg
-              class="footer-location__pin"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.75"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            <span>{t.footer.location}</span>
-          </p>
-          <nav class="footer-small-links" aria-label={t.footer.privacy}>
-            <a href={privacyHref} aria-current={route === 'privacy' ? 'page' : undefined}>
-              {t.footer.privacy}
-            </a>
-            <a
-              href={otherHref}
-              class="footer-lang"
-              lang={otherLang}
-              hreflang={otherLang}
-              title={otherName}
-              aria-label={otherName}
-            >
-              <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
-                <img src={bgFlag.src} width="22" height="22" alt="" />
-                <span aria-hidden="true">БГ</span>
-              </span>
-              <span class="lang-option" data-active={lang === 'en' ? '' : undefined}>
-                <img src={enFlag.src} width="22" height="22" alt="" />
-                <span aria-hidden="true">EN</span>
-              </span>
-            </a>
-          </nav>
-        </div>
+      <div class="footer-cta__body">
+        <p class="footer-cta-title">{t.footer.title}</p>
+        <Button href={contact} data-focus-target="#name">{t.site.letsTalk}</Button>
       </div>
     </div>
-  </footer>
-</div>
+    <div class="footer-base">
+      <div class="footer-row">
+        <nav class="footer-nav" aria-label={t.nav.label}>
+          {links.map((link) => <a href={link.href}>{link.label}</a>)}
+        </nav>
+        <div class="footer-social">
+          {
+            social.map((s) => (
+              <a
+                href={s.url}
+                class="footer-social-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="social-icon"
+                  aria-hidden="true"
+                >
+                  <path d={s.d} />
+                </svg>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <div class="footer-row">
+        <a href={`mailto:${site.email}`} class="footer-email">{site.email}</a>
+        <p class="footer-copyright">
+          &copy; {year}
+          {site.name[lang]}<br />{t.footer.role}
+        </p>
+      </div>
+      <div class="footer-row">
+        <p class="footer-location">
+          <svg
+            class="footer-location__pin"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <span>{t.footer.location}</span>
+        </p>
+        <nav class="footer-small-links" aria-label={t.footer.privacy}>
+          <a href={privacyHref} aria-current={route === 'privacy' ? 'page' : undefined}>
+            {t.footer.privacy}
+          </a>
+          <a
+            href={otherHref}
+            class="footer-lang"
+            lang={otherLang}
+            hreflang={otherLang}
+            title={otherName}
+            aria-label={otherName}
+          >
+            <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
+              <img src={bgFlag.src} width="22" height="22" alt="" />
+              <span aria-hidden="true">БГ</span>
+            </span>
+            <span class="lang-option" data-active={lang === 'en' ? '' : undefined}>
+              <img src={enFlag.src} width="22" height="22" alt="" />
+              <span aria-hidden="true">EN</span>
+            </span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</footer>

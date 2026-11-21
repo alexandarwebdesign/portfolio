@@ -191,7 +191,6 @@ h3,
 @media print {
   header,
   footer,
-  .footer-reveal,
   .image-marquee,
   .skip-link,
   .live-site-btn,
@@ -2890,32 +2889,34 @@ body.is-loaded .hero-note {
    6.6 Footer
    -------------------------------------------------------------------------- */
 
-/* --- Sticky reveal mechanics ---
-   The footer parks beneath the page: a 200lvh strip pulled up by -100lvh
-   hosts a sticky 100lvh footer, which the page uncovers as it scrolls past
-   its end. `main` gets z-index + opaque background so it paints above. */
+/* --- Footer reveal ---
+   The standard "curtain": the footer is fixed to the bottom of the screen, one screen tall, behind
+   the page. `main` is opaque, sits above it and leaves a margin of the same height at its end, so
+   scrolling to the end of the page uncovers the footer. */
+
+:root {
+  --footer-height: 100vh;
+}
+
+@supports (height: 100svh) {
+  :root {
+    --footer-height: 100svh;
+  }
+}
 
 main {
   position: relative;
   z-index: 1;
   background: var(--color-background);
   min-height: 100svh;
-}
-
-.footer-reveal {
-  position: relative;
-  height: 200svh;
-  margin-top: -100svh;
-  pointer-events: none;
-  z-index: 0;
-  overflow-anchor: none;
-  /* no transform — transform on a sticky ancestor breaks sticky positioning */
+  margin-bottom: var(--footer-height);
 }
 
 .footer {
-  position: sticky;
-  top: 0;
-  height: 100svh;
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 0;
+  height: var(--footer-height);
   display: flex;
   align-items: stretch;
   overflow: hidden; /* crops the rings of ticks at the corners */
@@ -2930,35 +2931,6 @@ main {
     linear-gradient(180deg, rgba(237, 237, 237, 0.09) 0, rgba(237, 237, 237, 0) 2px),
     var(--color-ink-deep);
   color: var(--color-on-dark);
-  pointer-events: auto;
-}
-
-@supports not (height: 100svh) {
-  .footer-reveal {
-    height: 200lvh;
-    margin-top: -100lvh;
-  }
-  .footer {
-    height: 100lvh;
-  }
-  main {
-    min-height: 100lvh;
-  }
-}
-
-@supports not (height: 100lvh) {
-  .footer-reveal {
-    height: 200vh;
-    margin-top: -100vh;
-  }
-
-  .footer {
-    height: 100vh;
-  }
-
-  main {
-    min-height: 100vh;
-  }
 }
 
 .footer .tick-ring {
@@ -3199,8 +3171,8 @@ main {
       animation-range: calc(100% - 100svh) 100%;
     }
 
-    /* its own rule, so the minifier cannot fold it into the animation shorthand */
-    .footer-reveal .footer::after {
+    /* its own rule (another selector), so the minifier cannot fold it into the animation shorthand */
+    main ~ .footer::after {
       animation-timeline: scroll(root block);
     }
   }
