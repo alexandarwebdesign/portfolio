@@ -2841,8 +2841,9 @@ body.is-loaded .hero-note {
       height: 0;
     }
 
+    /* the closing section starts below the last band, not against it */
     .process {
-      padding-bottom: 0;
+      padding-bottom: var(--space-24);
     }
   }
 }
