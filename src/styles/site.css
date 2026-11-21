@@ -1568,7 +1568,7 @@ textarea:focus-visible {
    lighter than the hero background. They turn very slowly; still with reduced motion. */
 .hero-ring {
   --ring-size: clamp(220px, 42vw, 640px);
-  --ring-color: #1b1b1b; /* a shade lighter than the hero background */
+  --ring-color: var(--color-border-subtle); /* a little lighter than the hero background */
   --ring-turn: 90s;
   position: absolute;
   z-index: 0;
