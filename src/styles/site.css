@@ -2860,17 +2860,22 @@ body.is-loaded .hero-note {
 }
 
 /* --------------------------------------------------------------------------
-   Picture cluster: title and button, then one row of six concepts
+   Picture cluster: title, six designs shown large, the button
    -------------------------------------------------------------------------- */
 .cluster {
   padding-bottom: var(--space-24);
 }
 
-.cluster__center {
+.cluster__rail {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-16);
+}
+
+.cluster__panel {
+  display: flex;
+  justify-content: center;
   text-align: center;
 }
 
@@ -2884,30 +2889,26 @@ body.is-loaded .hero-note {
   text-wrap: balance;
 }
 
-/* The row: swipeable by default, slides by itself where scroll-driven animation is available. */
-.cluster__track {
-  margin-top: var(--space-16);
+/* Without the pinned walk: a row you swipe. */
+.cluster__pictures {
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--space-6);
+  align-self: stretch;
+  display: flex;
+  gap: var(--space-4);
   overflow-x: auto;
   scrollbar-width: none;
   scroll-snap-type: x proximity;
 }
 
-.cluster__track::-webkit-scrollbar {
+.cluster__pictures::-webkit-scrollbar {
   display: none;
-}
-
-.cluster__pictures {
-  list-style: none;
-  margin: 0;
-  padding: 0 var(--space-6);
-  display: flex;
-  gap: var(--space-4);
-  width: max-content;
 }
 
 .cluster__picture {
   flex: none;
-  width: clamp(220px, 70vw, 420px);
+  width: clamp(260px, 82vw, 560px);
   aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: var(--border-radius);
@@ -2924,33 +2925,118 @@ body.is-loaded .hero-note {
   object-position: top;
 }
 
+.cluster__progress {
+  display: none;
+}
+
 @media (min-width: 900px) {
   .cluster__picture {
-    width: clamp(260px, 22vw, 420px);
+    width: clamp(320px, 40vw, 640px);
   }
 }
 
-@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+/* The pinned walk: the section is a long track, the stage sticks, and the page scrolls the rail
+   sideways. The designs are 52vw wide (at most 80svh tall) so their lines and components can be
+   read; inside each one the picture slowly pans the other way, and a thin line shows how far
+   along you are. */
+@media (min-width: 900px) and (min-height: 600px) and (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .cluster__track {
-      overflow: clip; /* not a scroll container, so the view timeline follows the page */
+    .cluster {
+      --cluster-card: min(52vw, 80svh);
+      --cluster-panel: 100vw;
+      --cluster-gap: var(--space-8);
+      --cluster-travel: calc(
+        2 * var(--cluster-panel) + 6 * var(--cluster-card) + 7 * var(--cluster-gap) - 100vw
+      );
+      height: calc(
+        100svh + var(--cluster-travel) / 2
+      ); /* the rail moves twice as fast as the page */
+      padding-bottom: 0;
+      view-timeline: --cluster block;
+    }
+
+    .cluster__stage {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      align-items: center;
+      overflow: clip;
+    }
+
+    .cluster__rail {
+      flex-direction: row;
+      gap: var(--cluster-gap);
+      width: max-content;
+      animation: cluster-slide linear both;
+      animation-range: contain 0% contain 100%;
     }
 
     .cluster__pictures {
-      animation: cluster-slide linear both;
-      animation-range: entry 0% cover 50%;
+      display: contents;
     }
 
-    /* its own rule, so the minifier cannot fold it into the animation shorthand */
-    .cluster__track .cluster__pictures {
-      animation-timeline: view();
+    .cluster__panel {
+      flex: none;
+      width: var(--cluster-panel);
+    }
+
+    .cluster__picture {
+      width: var(--cluster-card);
+    }
+
+    .cluster__picture img {
+      width: 118%;
+      max-width: none;
+      animation: cluster-pan linear both;
+      animation-range: contain 0% contain 100%;
+    }
+
+    .cluster__progress {
+      display: block;
+      position: absolute;
+      inset: auto var(--space-6) var(--space-8);
+      height: 2px;
+      background: var(--color-border-subtle);
+    }
+
+    .cluster__progress::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-accent);
+      transform-origin: left;
+      animation: cluster-progress linear both;
+      animation-range: contain 0% contain 100%;
+    }
+
+    /* the timeline in its own rules, so the minifier cannot fold it into the shorthand */
+    .cluster .cluster__rail,
+    .cluster .cluster__picture img,
+    .cluster .cluster__progress::after {
+      animation-timeline: --cluster;
     }
   }
 }
 
 @keyframes cluster-slide {
   to {
-    translate: min(0px, calc(100vw - 100%)) 0;
+    translate: calc(100vw - 100%) 0;
+  }
+}
+
+@keyframes cluster-pan {
+  to {
+    translate: calc(-18% / 1.18) 0;
+  }
+}
+
+@keyframes cluster-progress {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
   }
 }
 

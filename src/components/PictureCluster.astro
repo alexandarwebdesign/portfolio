@@ -1,7 +1,8 @@
 ---
-// The closing call to action: the title and the button, and under them one row of six website
-// concepts. From 900 px wide, with motion and scroll-driven animation, the row slides sideways as
-// it scrolls into view (CSS only); otherwise it is a row you swipe.
+// The closing section, a horizontal walk through six designs. From 900 px wide (and 600 px tall,
+// with motion and scroll-driven animation) it is pinned: the title comes first, then each design
+// large enough to read its interface, then the button, while the page scrolls the row sideways
+// (CSS only). Otherwise: the title, a row you swipe, the button.
 import { Picture } from 'astro:assets';
 import Button from './Button.astro';
 import s1 from '../assets/images/marquee/studio-01.jpg';
@@ -21,26 +22,31 @@ const pictures = [s1, s2, s3, s4, s5, s6];
 ---
 
 <section class="cluster stage" aria-labelledby="cluster-title">
-  <div class="container cluster__center reveal">
-    <h2 id="cluster-title" class="cluster__title">{title}</h2>
-    <Button href="#contact" data-focus-target="#name">{cta}</Button>
-  </div>
-  <div class="cluster__track" aria-hidden="true">
-    <ul class="cluster__pictures">
-      {
-        pictures.map((image) => (
-          <li class="cluster__picture">
-            <Picture
-              src={image}
-              formats={['avif', 'webp']}
-              widths={[500, 800, 1080]}
-              sizes="(max-width: 900px) 70vw, 24vw"
-              alt=""
-              loading="lazy"
-            />
-          </li>
-        ))
-      }
-    </ul>
+  <div class="cluster__stage">
+    <div class="cluster__rail">
+      <div class="cluster__panel container reveal">
+        <h2 id="cluster-title" class="cluster__title">{title}</h2>
+      </div>
+      <ul class="cluster__pictures" aria-hidden="true">
+        {
+          pictures.map((image) => (
+            <li class="cluster__picture">
+              <Picture
+                src={image}
+                formats={['avif', 'webp']}
+                widths={[800, 1080, 1400]}
+                sizes="(max-width: 900px) 82vw, 52vw"
+                alt=""
+                loading="lazy"
+              />
+            </li>
+          ))
+        }
+      </ul>
+      <div class="cluster__panel">
+        <Button href="#contact" data-focus-target="#name">{cta}</Button>
+      </div>
+    </div>
+    <div class="cluster__progress" aria-hidden="true"></div>
   </div>
 </section>
