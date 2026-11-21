@@ -2860,28 +2860,16 @@ body.is-loaded .hero-note {
 }
 
 /* --------------------------------------------------------------------------
-   Picture cluster: title, six designs shown large, the button
+   Picture cluster: title, six designs shown large in two columns, the button
    -------------------------------------------------------------------------- */
 .cluster {
-  padding-bottom: var(--space-24);
-}
-
-.cluster__rail {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-16);
-}
-
-.cluster__panel {
-  display: flex;
-  justify-content: center;
-  text-align: center;
+  padding-bottom: var(--section-gap);
 }
 
 .cluster__title {
-  margin: 0;
+  margin: 0 auto;
   max-width: 14em;
+  text-align: center;
   font-size: var(--text-section);
   font-weight: 500;
   line-height: 1.12;
@@ -2889,155 +2877,38 @@ body.is-loaded .hero-note {
   text-wrap: balance;
 }
 
-/* Without the pinned walk: a row you swipe. */
 .cluster__pictures {
   list-style: none;
-  margin: 0;
-  padding: 0 var(--space-6);
-  align-self: stretch;
-  display: flex;
-  gap: var(--space-4);
-  overflow-x: auto;
-  scrollbar-width: none;
-  scroll-snap-type: x proximity;
+  margin: var(--space-16) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
 }
 
-.cluster__pictures::-webkit-scrollbar {
-  display: none;
+@media (min-width: 700px) {
+  .cluster__pictures {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .cluster__picture {
-  flex: none;
-  width: clamp(260px, 82vw, 560px);
-  aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border-subtle);
   background: var(--color-surface-subtle);
-  scroll-snap-align: start;
 }
 
 .cluster__picture img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
+  height: auto;
 }
 
-.cluster__progress {
-  display: none;
-}
-
-@media (min-width: 900px) {
-  .cluster__picture {
-    width: clamp(320px, 40vw, 640px);
-  }
-}
-
-/* The pinned walk: the section is a long track, the stage sticks, and the page scrolls the rail
-   sideways. The designs are 52vw wide (at most 80svh tall) so their lines and components can be
-   read; inside each one the picture slowly pans the other way, and a thin line shows how far
-   along you are. */
-@media (min-width: 900px) and (min-height: 600px) and (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .cluster {
-      --cluster-card: min(52vw, 80svh);
-      --cluster-panel: 100vw;
-      --cluster-gap: var(--space-8);
-      --cluster-travel: calc(
-        2 * var(--cluster-panel) + 6 * var(--cluster-card) + 7 * var(--cluster-gap) - 100vw
-      );
-      height: calc(
-        100svh + var(--cluster-travel) / 2
-      ); /* the rail moves twice as fast as the page */
-      padding-bottom: 0;
-      view-timeline: --cluster block;
-    }
-
-    .cluster__stage {
-      position: sticky;
-      top: 0;
-      height: 100svh;
-      display: flex;
-      align-items: center;
-      overflow: clip;
-    }
-
-    .cluster__rail {
-      flex-direction: row;
-      gap: var(--cluster-gap);
-      width: max-content;
-      animation: cluster-slide linear both;
-      animation-range: contain 0% contain 100%;
-    }
-
-    .cluster__pictures {
-      display: contents;
-    }
-
-    .cluster__panel {
-      flex: none;
-      width: var(--cluster-panel);
-    }
-
-    .cluster__picture {
-      width: var(--cluster-card);
-    }
-
-    .cluster__picture img {
-      width: 118%;
-      max-width: none;
-      animation: cluster-pan linear both;
-      animation-range: contain 0% contain 100%;
-    }
-
-    .cluster__progress {
-      display: block;
-      position: absolute;
-      inset: auto var(--space-6) var(--space-8);
-      height: 2px;
-      background: var(--color-border-subtle);
-    }
-
-    .cluster__progress::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--color-accent);
-      transform-origin: left;
-      animation: cluster-progress linear both;
-      animation-range: contain 0% contain 100%;
-    }
-
-    /* the timeline in its own rules, so the minifier cannot fold it into the shorthand */
-    .cluster .cluster__rail,
-    .cluster .cluster__picture img,
-    .cluster .cluster__progress::after {
-      animation-timeline: --cluster;
-    }
-  }
-}
-
-@keyframes cluster-slide {
-  to {
-    translate: calc(100vw - 100%) 0;
-  }
-}
-
-@keyframes cluster-pan {
-  to {
-    translate: calc(-18% / 1.18) 0;
-  }
-}
-
-@keyframes cluster-progress {
-  from {
-    scale: 0 1;
-  }
-  to {
-    scale: 1 1;
-  }
+.cluster__cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-16);
 }
 
 /* --------------------------------------------------------------------------
