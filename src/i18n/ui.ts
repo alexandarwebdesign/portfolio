@@ -25,8 +25,6 @@ const bg = {
     marquee: 'Концепции на сайтове, които съм проектирал',
     selectedWork: 'Избрани проекти',
     viewCase: 'Вижте проекта',
-    online: 'Онлайн',
-    tagline: 'Правя сайтове, които продават, от 2023 г.',
     services: 'Уебсайт за вашия бизнес',
     available: 'В момента приемам нови проекти',
     faqAsk: { text: 'Не намирате отговор?', link: 'Пишете ми директно' },
@@ -111,7 +109,6 @@ const bg = {
     cta: 'Искате нещо подобно?',
   },
   footer: {
-    next: 'Следваща стъпка',
     title: 'Да работим заедно',
     location: 'София, България – работя с клиенти от цял свят',
     role: 'UX/UI дизайнер и уеб разработчик',
@@ -161,8 +158,6 @@ const en: typeof bg = {
     marquee: 'Website concepts I have designed',
     selectedWork: 'Selected work',
     viewCase: 'View case study',
-    online: 'Online',
-    tagline: 'Designing websites that convert since 2023.',
     services: 'A website for your business',
     available: 'Currently available for new projects',
     faqAsk: { text: 'Can’t find an answer?', link: 'Write to me directly' },
@@ -247,7 +242,6 @@ const en: typeof bg = {
     cta: 'Want something built like this?',
   },
   footer: {
-    next: 'Next step',
     title: 'Let’s work together',
     location: 'Based in Sofia, Bulgaria – working worldwide',
     role: 'UX/UI Designer & Website Developer',
