@@ -55,8 +55,10 @@ const tools: { name: string; svg: string; color?: string }[][] = [
 
 <section class="process stage" aria-labelledby="process-title">
   <div class="container">
-    <p class="mono-label process__label"><span class="index">({index})</span> {label}</p>
-    <h2 id="process-title" class="sr-only">{title}</h2>
+    <header class="section-header reveal">
+      <p class="mono-label"><span class="index">({index})</span> {label}</p>
+      <h2 id="process-title" class="section-title">{title}</h2>
+    </header>
   </div>
   <div class="process__track">
     <div class="process__stage">

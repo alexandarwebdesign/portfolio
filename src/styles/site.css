@@ -2621,10 +2621,6 @@ body.is-loaded .hero-note {
   padding-bottom: var(--section-gap);
 }
 
-.process__label {
-  margin: 0 0 var(--space-10);
-}
-
 .process__step {
   position: relative;
   margin-top: var(--space-8);
