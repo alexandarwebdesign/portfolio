@@ -3194,10 +3194,46 @@ main {
   transform: rotateY(360deg);
 }
 
-/* Short viewports: the content may exceed 100lvh, so the footer itself scrolls */
-@media (max-height: 480px) {
+/* While the footer is uncovered it starts 40 % darker and clears as the last screen of the page
+   scrolls past: a black layer fading from 40 % to nothing over the last 100svh of the scroll. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .footer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: rgb(0 0 0 / 40%);
+      animation: footer-clear linear both;
+      animation-range: calc(100% - 100svh) 100%;
+    }
+
+    /* its own rule, so the minifier cannot fold it into the animation shorthand */
+    .footer-reveal .footer::after {
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+@keyframes footer-clear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Short viewports: the content may exceed 100lvh, so the footer itself scrolls (and the ring, whose
+   overflow would add empty scroll, is left out) */
+@media (max-height: 480px), (max-width: 768px) and (max-height: 660px) {
   .footer {
     overflow-y: auto;
+  }
+
+  .footer .tick-ring {
+    display: none;
   }
 
   .footer-inner {
@@ -3217,6 +3253,10 @@ main {
     align-items: flex-start;
   }
 
+  .footer-legal {
+    align-items: flex-start;
+  }
+
   .footer-copyright {
     text-align: left;
   }
@@ -3232,10 +3272,6 @@ main {
 body.is-loaded .case-header .conceptual-badge,
 body.is-loaded .case-title,
 body.is-loaded .case-meta {
-  .footer .tick-ring {
-    display: none;
-  }
-
   animation: heroRise 0.8s var(--ease-signature) both;
 }
 
@@ -3253,10 +3289,6 @@ body.is-loaded .case-meta {
 
 .project-hero-full-section {
   padding-bottom: var(--space-16);
-  .footer-legal {
-    align-items: flex-start;
-  }
-
 }
 
 /* Frame wrapper for relative positioning of the logo overlay */
