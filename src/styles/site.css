@@ -2859,18 +2859,10 @@ body.is-loaded .hero-note {
 }
 
 /* --------------------------------------------------------------------------
-   Picture cluster: title and button in the centre, six concepts around them
+   Picture cluster: title and button, then one row of six concepts
    -------------------------------------------------------------------------- */
 .cluster {
-  padding-bottom: var(--section-gap);
-}
-
-.cluster__stage {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px;
+  padding-bottom: var(--space-24);
 }
 
 .cluster__center {
@@ -2891,117 +2883,74 @@ body.is-loaded .hero-note {
   text-wrap: balance;
 }
 
+/* The row: swipeable by default, slides by itself where scroll-driven animation is available. */
+.cluster__track {
+  margin-top: var(--space-16);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+}
+
+.cluster__track::-webkit-scrollbar {
+  display: none;
+}
+
 .cluster__pictures {
   list-style: none;
   margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  width: 100%;
+  padding: 0 var(--space-6);
+  display: flex;
+  gap: var(--space-4);
+  width: max-content;
 }
 
 .cluster__picture {
+  flex: none;
+  width: clamp(220px, 70vw, 420px);
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border-subtle);
   background: var(--color-surface-subtle);
+  scroll-snap-align: start;
 }
 
 .cluster__picture img {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }
 
 @media (min-width: 900px) {
-  .cluster__stage {
-    min-height: clamp(640px, 84vh, 860px);
-    justify-content: center;
-  }
-
-  .cluster__center {
-    position: relative;
-    z-index: 2;
-  }
-
-  .cluster__pictures {
-    display: block;
-    position: absolute;
-    inset: var(--space-6);
-    width: auto;
-  }
-
   .cluster__picture {
-    position: absolute;
-    width: 23%;
-  }
-
-  .cluster__picture--1 {
-    left: 0;
-    top: 0;
-  }
-
-  .cluster__picture--2 {
-    left: 8%;
-    top: 34%;
-  }
-
-  .cluster__picture--3 {
-    left: 1%;
-    top: 68%;
-  }
-
-  .cluster__picture--4 {
-    right: 0;
-    top: 5%;
-  }
-
-  .cluster__picture--5 {
-    right: 8%;
-    top: 37%;
-  }
-
-  .cluster__picture--6 {
-    right: 1%;
-    top: 68%;
+    width: clamp(260px, 22vw, 420px);
   }
 }
 
-/* Scroll mode (site.ts sets data-scroll on wide, tall screens with motion): the section is
-   a long track, the stage is pinned, and the pictures zoom out of the centre as you scroll.
-   The title and the button stay in the middle. */
-.cluster[data-scroll] {
-  --cluster-length: 400vh;
-  height: var(--cluster-length);
-  padding-bottom: 0;
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .cluster__track {
+      overflow: clip; /* not a scroll container, so the view timeline follows the page */
+    }
+
+    .cluster__pictures {
+      animation: cluster-slide linear both;
+      animation-range: entry 0% cover 50%;
+    }
+
+    /* its own rule, so the minifier cannot fold it into the animation shorthand */
+    .cluster__track .cluster__pictures {
+      animation-timeline: view();
+    }
+  }
 }
 
-.cluster[data-scroll] .cluster__stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
-  min-height: 0;
-  max-width: none;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-}
-
-.cluster[data-scroll] .cluster__pictures {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.cluster[data-scroll] .cluster__pictures .cluster__picture {
-  left: 50%;
-  top: 50%;
-  right: auto;
-  opacity: 0;
-  will-change: transform, opacity, filter;
+@keyframes cluster-slide {
+  to {
+    translate: min(0px, calc(100vw - 100%)) 0;
+  }
 }
 
 /* --------------------------------------------------------------------------

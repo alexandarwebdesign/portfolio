@@ -58,108 +58,6 @@ function initStatementRing() {
   observer.observe(ring);
 }
 
-// Picture cluster: the scaling-media effect. The section is pinned and the pictures zoom out of
-// the centre as you scroll: each one grows from small and blurred, sharpens, then grows on and
-// blurs away. Only transform, opacity and blur are written, and the frame loop stops once the
-// smoothed value has settled. Small or short screens and reduced motion keep the static layout.
-function initClusterScroll() {
-  const section = document.querySelector<HTMLElement>('[data-cluster]');
-  if (!section) return;
-  const stage = section.querySelector<HTMLElement>('.cluster__stage');
-  const items = Array.from(section.querySelectorAll<HTMLElement>('.cluster__picture'));
-  if (!stage || !items.length) return;
-  const query = matchMedia(
-    '(min-width: 900px) and (min-height: 600px) and (prefers-reduced-motion: no-preference)',
-  );
-  const SPAN = 0.5; // each picture lives for this share of the scroll
-  const spots = items.map((el) => ({
-    el,
-    x: Number(el.dataset.x),
-    y: Number(el.dataset.y),
-    size: Number(el.dataset.size),
-    at: Number(el.dataset.at),
-  }));
-  let unit = 0;
-  let target = 0;
-  let shown = 0;
-  let raf = 0;
-  let on = false;
-
-  const ramp = (x: number, a: number, b: number) => (x <= a ? 0 : x >= b ? 1 : (x - a) / (b - a));
-
-  function read() {
-    const r = section!.getBoundingClientRect();
-    const length = r.height - stage!.clientHeight;
-    target = length > 0 ? Math.max(0, Math.min(1, -r.top / length)) : 0;
-  }
-
-  function measure() {
-    unit = Math.min(stage!.clientWidth, stage!.clientHeight * 1.6);
-    for (const spot of spots) spot.el.style.width = `${spot.size * unit}px`;
-    read();
-  }
-
-  function draw() {
-    for (const spot of spots) {
-      const q = (shown - spot.at) / SPAN;
-      const style = spot.el.style;
-      if (q <= 0 || q >= 1) {
-        if (style.opacity !== '0') style.opacity = '0';
-        continue;
-      }
-      const scale = 0.35 * Math.pow(9, q); // grows faster as it comes closer
-      const blur = 9 * (1 - ramp(q, 0, 0.2)) + 16 * ramp(q, 0.55, 1);
-      const w = spot.size * unit;
-      const h = spot.el.offsetHeight;
-      style.opacity = String(ramp(q, 0, 0.15) * (1 - ramp(q, 0.8, 1)));
-      style.filter = blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : 'none';
-      style.transform = `translate3d(${(spot.x * unit * scale - w / 2).toFixed(1)}px, ${(spot.y * unit * scale - h / 2).toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
-    }
-  }
-
-  function frame() {
-    raf = 0;
-    read();
-    const d = target - shown;
-    shown = Math.abs(d) < 0.0005 ? target : shown + d * 0.14; // a little inertia so wheel steps glide
-    draw();
-    if (shown !== target) raf = requestAnimationFrame(frame);
-  }
-
-  const kick = () => {
-    if (!raf) raf = requestAnimationFrame(frame);
-  };
-  const resize = new ResizeObserver(() => {
-    if (!on) return;
-    measure();
-    kick();
-  });
-
-  function enable() {
-    on = true;
-    section!.setAttribute('data-scroll', '');
-    measure();
-    shown = target;
-    draw();
-    addEventListener('scroll', kick, { passive: true });
-    resize.observe(stage!);
-  }
-
-  function disable() {
-    on = false;
-    section!.removeAttribute('data-scroll');
-    removeEventListener('scroll', kick);
-    resize.disconnect();
-    if (raf) cancelAnimationFrame(raf);
-    raf = 0;
-    for (const spot of spots) spot.el.removeAttribute('style');
-  }
-
-  const sync = () => (query.matches ? !on && enable() : on && disable());
-  query.addEventListener('change', sync);
-  sync();
-}
-
 // SMIL ignores prefers-reduced-motion: pause it.
 // The three process cards start their text on the same line: every row gets the height of the
 // tallest one (the rows sit at the bottom, so a shorter row would otherwise start lower).
@@ -706,7 +604,6 @@ function init() {
   initPageLoadSequence();
   initScrollReveal();
   initStatementRing();
-  initClusterScroll();
   initProcessRows();
   initSmoothScroll();
   initMobileNav();
