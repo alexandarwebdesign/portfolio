@@ -3,6 +3,8 @@
 // middle with the top half of a large ring of ticks arching over the title, the links, the profiles, the location and the copyright below.
 import Button from './Button.astro';
 import TickRing from './TickRing.astro';
+import bgFlag from '../assets/icons/flags/bg.svg';
+import enFlag from '../assets/icons/flags/us.svg';
 import { ui, type Lang } from '../i18n/ui';
 import { pathFor, type RouteId } from '../i18n/routes';
 import { site } from '../data/site';
@@ -18,6 +20,12 @@ const home = pathFor('home', lang)!;
 const contact =
   route === 'home' || route === 'uslugi' ? '#contact' : `${home === '/' ? '' : home}/#contact`;
 const year = new Date().getFullYear();
+// The other language: the same page when it exists, otherwise its home page.
+const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
+const otherRoute = route === 'notFound' ? 'home' : route;
+const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
+const otherName = otherLang === 'bg' ? 'Български' : 'English';
+const privacyHref = pathFor('privacy', lang)!;
 // The same links as the navigation.
 const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? '' : home}/#${id}`);
 const links = [
@@ -85,12 +93,56 @@ const social = [
             }
           </div>
         </div>
-        <div class="footer-row">
-          <p class="footer-location">{t.footer.location}</p>
-          <p class="footer-copyright">
-            &copy; {year}
-            {site.name[lang]}<br />{t.footer.role}
-          </p>
+        <div class="footer-row footer-row--meta">
+          <div class="footer-meta">
+            <a href={`mailto:${site.email}`} class="footer-email">{site.email}</a>
+            <p class="footer-location">
+              <svg
+                class="footer-location__pin"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.75"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>{t.footer.location}</span>
+            </p>
+          </div>
+          <div class="footer-legal">
+            <p class="footer-copyright">
+              &copy; {year}
+              {site.name[lang]}<br />{t.footer.role}
+            </p>
+            <nav class="footer-small-links" aria-label={t.footer.privacy}>
+              <a href={privacyHref} aria-current={route === 'privacy' ? 'page' : undefined}>
+                {t.footer.privacy}
+              </a>
+              <a
+                href={otherHref}
+                class="footer-lang"
+                lang={otherLang}
+                hreflang={otherLang}
+                title={otherName}
+                aria-label={otherName}
+              >
+                <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
+                  <img src={bgFlag.src} width="22" height="22" alt="" />
+                  <span aria-hidden="true">БГ</span>
+                </span>
+                <span class="lang-option" data-active={lang === 'en' ? '' : undefined}>
+                  <img src={enFlag.src} width="22" height="22" alt="" />
+                  <span aria-hidden="true">EN</span>
+                </span>
+              </a>
+            </nav>
+          </div>
         </div>
       </div>
     </div>

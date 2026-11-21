@@ -3060,7 +3060,90 @@ main {
   text-decoration-color: currentColor;
 }
 
+/* The last row: the email lines up with the first line of the copyright and the location with the
+   links under it, so both columns start and end together. */
+.footer-row--meta {
+  align-items: stretch;
+}
+
+.footer-meta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.footer-email {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  font-size: var(--text-body);
+  color: var(--color-on-dark);
+  text-decoration: underline;
+  text-decoration-color: var(--color-on-dark-border);
+  text-underline-offset: 6px;
+  transition: text-decoration-color var(--duration-normal) var(--ease);
+}
+
+.footer-email:hover {
+  text-decoration-color: currentColor;
+}
+
+.footer-legal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.footer-location__pin {
+  flex: none;
+}
+
+.footer-small-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+/* The language switch, as in the navigation: both flags, the one you read in full colour, the
+   other in black and white; the whole switch is one link to the other language. */
+.footer-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 24px;
+}
+
+.footer .lang-option {
+  color: var(--color-on-dark);
+  font-size: var(--text-label);
+}
+
+.footer-small-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  font-size: var(--text-label);
+  color: var(--color-on-dark-secondary);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition:
+    color var(--duration-normal) var(--ease),
+    text-decoration-color var(--duration-normal) var(--ease);
+}
+
+.footer-small-links a:hover {
+  color: var(--color-on-dark);
+  text-decoration-color: currentColor;
+}
+
 .footer-location {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--text-label);
   text-transform: uppercase;
@@ -3149,6 +3232,10 @@ main {
 body.is-loaded .case-header .conceptual-badge,
 body.is-loaded .case-title,
 body.is-loaded .case-meta {
+  .footer .tick-ring {
+    display: none;
+  }
+
   animation: heroRise 0.8s var(--ease-signature) both;
 }
 
@@ -3166,6 +3253,10 @@ body.is-loaded .case-meta {
 
 .project-hero-full-section {
   padding-bottom: var(--space-16);
+  .footer-legal {
+    align-items: flex-start;
+  }
+
 }
 
 /* Frame wrapper for relative positioning of the logo overlay */
