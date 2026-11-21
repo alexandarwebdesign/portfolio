@@ -1,9 +1,9 @@
 ---
-// The original footer: revealed from under the page (sticky), identity and
-// social links on top, a giant roll-up "Let's work together" link below.
-import { Picture } from 'astro:assets';
-import StatusIcon from './StatusIcon.astro';
-import portrait from '../assets/images/portrait.jpg';
+// The footer: revealed from under the page (sticky), one screen tall. The call to action in the
+// middle, the links, the profiles, the location and the copyright below, two rings of ticks in the
+// corners.
+import Button from './Button.astro';
+import TickRing from './TickRing.astro';
 import { ui, type Lang } from '../i18n/ui';
 import { pathFor, type RouteId } from '../i18n/routes';
 import { site } from '../data/site';
@@ -19,6 +19,14 @@ const home = pathFor('home', lang)!;
 const contact =
   route === 'home' || route === 'uslugi' ? '#contact' : `${home === '/' ? '' : home}/#contact`;
 const year = new Date().getFullYear();
+// The same links as the navigation.
+const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? '' : home}/#${id}`);
+const links = [
+  { href: hash('work'), label: t.nav.work },
+  { href: pathFor('about', lang)!, label: t.nav.about },
+  { href: pathFor('uslugi', lang)!, label: t.nav.services },
+  { href: contact, label: t.nav.contact },
+];
 const social = [
   {
     url: 'https://x.com/pavvlov_16',
@@ -40,41 +48,18 @@ const social = [
 
 <div class="footer-reveal">
   <footer class="footer" data-lenis-prevent>
+    <TickRing corner="tr" />
+    <TickRing corner="bl" />
     <div class="footer-inner">
-      <div class="footer-bottom-row">
-        <div class="footer-info">
-          <div class="footer-identity">
-            <Picture
-              src={portrait}
-              formats={['avif', 'webp']}
-              widths={[80, 160]}
-              sizes="80px"
-              class="footer-avatar"
-              alt={site.name[lang]}
-              loading="lazy"
-            />
-            <div class="footer-name-block">
-              <span class="footer-status">
-                <StatusIcon class="footer-status-icon" />
-                {t.site.online}
-              </span>
-              <p class="footer-tagline">{t.site.tagline}</p>
-            </div>
-          </div>
-          <p class="footer-location">{t.footer.location}</p>
-          {
-            route !== 'uslugi' && (
-              <a href={pathFor('uslugi', lang)} class="footer-lang-link">
-                {t.site.services}
-              </a>
-            )
-          }
-        </div>
-        <div class="footer-right">
-          <p class="footer-copyright">
-            &copy; {year}
-            {site.name[lang]}<br />{t.footer.role}
-          </p>
+      <div class="footer-cta">
+        <p class="footer-cta-title">{t.footer.title}</p>
+        <Button href={contact} data-focus-target="#name">{t.site.letsTalk}</Button>
+      </div>
+      <div class="footer-base">
+        <div class="footer-row">
+          <nav class="footer-nav" aria-label={t.nav.label}>
+            {links.map((link) => <a href={link.href}>{link.label}</a>)}
+          </nav>
           <div class="footer-social">
             {
               social.map((s) => (
@@ -100,15 +85,14 @@ const social = [
             }
           </div>
         </div>
+        <div class="footer-row">
+          <p class="footer-location">{t.footer.location}</p>
+          <p class="footer-copyright">
+            &copy; {year}
+            {site.name[lang]}<br />{t.footer.role}
+          </p>
+        </div>
       </div>
-
-      <p class="mono-label footer-eyebrow">{t.footer.next}</p>
-      <a
-        href={contact}
-        class="footer-cta-title link-roll"
-        data-text={t.footer.title}
-        data-focus-target="#name"><span>{t.footer.title}</span></a
-      >
     </div>
   </footer>
 </div>

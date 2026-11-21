@@ -1564,9 +1564,9 @@ textarea:focus-visible {
   z-index: 1;
 }
 
-/* Two quiet rings of fine ticks, half cropped by the corners (bottom left, top right): a shade
-   lighter than the hero background. They turn very slowly; still with reduced motion. */
-.hero-ring {
+/* Quiet rings of fine ticks, half cropped by the corners (bottom left, top right): a shade
+   lighter than the background they sit on. They turn very slowly; still with reduced motion. */
+.tick-ring {
   --ring-size: clamp(220px, 42vw, 640px);
   --ring-color: var(--color-border-subtle); /* a little lighter than the hero background */
   --ring-turn: 90s;
@@ -1579,27 +1579,27 @@ textarea:focus-visible {
   pointer-events: none;
 }
 
-.hero-ring line {
+.tick-ring line {
   vector-effect: non-scaling-stroke;
 }
 
-.hero-ring--bl {
+.tick-ring--bl {
   left: calc(var(--ring-size) / -2);
   bottom: calc(var(--ring-size) / -2);
 }
 
-.hero-ring--tr {
+.tick-ring--tr {
   right: calc(var(--ring-size) / -2);
   top: calc(var(--ring-size) / -2);
 }
 
 @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
-  .hero-ring {
-    animation: hero-ring-turn var(--ring-turn) linear infinite;
+  .tick-ring {
+    animation: tick-ring-turn var(--ring-turn) linear infinite;
   }
 }
 
-@keyframes hero-ring-turn {
+@keyframes tick-ring-turn {
   to {
     rotate: 360deg;
   }
@@ -3012,7 +3012,8 @@ main {
   top: 0;
   height: 100svh;
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
+  overflow: hidden; /* crops the rings of ticks at the corners */
   /* Semi-glassy: diagonal white-alpha sheen + faint top rim-light over deep ink */
   background:
     linear-gradient(
@@ -3055,83 +3056,82 @@ main {
   }
 }
 
+.footer .tick-ring {
+  --ring-size: clamp(180px, 30vw, 440px); /* smaller than in the hero, clear of the links */
+  --ring-color: var(--color-on-dark-border);
+}
+
 .footer-inner {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  padding: 0 clamp(20px, 4vw, 64px) 40px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(96px, 14vh, 140px) clamp(20px, 4vw, 64px) var(--space-8);
 }
 
-.footer-eyebrow {
-  color: var(--color-on-dark-secondary);
+/* The call to action: the middle of the screen, centred. */
+.footer-cta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  text-align: center;
 }
 
-/* Giant roll-link CTA. */
 .footer-cta-title {
-  display: inline-block;
+  margin: 0;
   font-size: var(--text-cta);
   font-weight: 500;
   letter-spacing: var(--tracking-tight);
   line-height: 1.1;
   color: var(--color-on-dark);
-  margin: 16px 0 clamp(32px, 5vh, 56px);
-  padding-bottom: 0.15em;
+  text-wrap: balance;
 }
 
-/* Bottom row */
-.footer-bottom-row {
+/* The base: a hairline, then two rows. */
+.footer-base {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-on-dark-border);
+}
+
+.footer-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: var(--space-8);
+  gap: var(--space-6);
   flex-wrap: wrap;
-  padding: clamp(24px, 4vh, 40px) 0;
 }
 
-.footer-info {
+.footer-nav {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-5);
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-8);
 }
 
-.footer-identity {
-  display: flex;
+.footer-nav a {
+  display: inline-flex;
   align-items: center;
-  gap: var(--space-4);
-}
-
-.footer-avatar {
-  width: 80px;
-  height: 80px;
-  min-width: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: top;
-  flex-shrink: 0;
-}
-
-.footer-name-block {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.footer-status {
-  display: flex;
-  align-items: center;
-  font-size: var(--text-body-sm);
-  font-weight: 600;
-  color: #34c759;
-}
-
-.footer-status-icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-}
-
-.footer-tagline {
-  font-size: var(--text-body-sm);
+  min-height: 44px;
+  font-size: var(--text-body);
   color: var(--color-on-dark-secondary);
-  margin: 0;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 6px;
+  transition:
+    color var(--duration-normal) var(--ease),
+    text-decoration-color var(--duration-normal) var(--ease);
+}
+
+.footer-nav a:hover {
+  color: var(--color-on-dark);
+  text-decoration-color: currentColor;
 }
 
 .footer-location {
@@ -3141,13 +3141,6 @@ main {
   letter-spacing: var(--tracking-caps);
   color: var(--color-on-dark-secondary);
   margin: 0;
-}
-
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-5);
 }
 
 .footer-copyright {
@@ -3192,30 +3185,26 @@ main {
   transform: rotateY(360deg);
 }
 
-/* Short viewports: bottom-anchored content could exceed 100lvh - top-align
-   and allow the footer itself to scroll as a safety valve */
+/* Short viewports: the content may exceed 100lvh, so the footer itself scrolls */
 @media (max-height: 480px) {
   .footer {
-    align-items: flex-start;
     overflow-y: auto;
   }
 
   .footer-inner {
-    padding-top: 24px;
+    height: auto;
+    min-height: 100%;
+    padding-top: var(--space-6);
   }
 
-  .footer-cta-title {
-    margin-bottom: 32px;
+  .footer-cta {
+    padding-bottom: var(--space-8);
   }
 }
 
 @media (max-width: 768px) {
-  .footer-bottom-row {
+  .footer-row {
     flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .footer-right {
     align-items: flex-start;
   }
 
@@ -5776,16 +5765,6 @@ html.js.reveal-failsafe .reveal {
   .offer-form-row {
     grid-template-columns: 1fr;
   }
-}
-
-.footer-lang-link {
-  display: inline-block;
-  margin-top: var(--space-2);
-  font-size: var(--text-body-sm);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  min-height: 44px;
-  line-height: 44px;
 }
 
 /* --------------------------------------------------------------------------
