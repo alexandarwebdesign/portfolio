@@ -2841,9 +2841,8 @@ body.is-loaded .hero-note {
       height: 0;
     }
 
-    /* the closing section starts below the last band, not against it */
     .process {
-      padding-bottom: var(--space-24);
+      padding-bottom: 0;
     }
   }
 }
@@ -4534,25 +4533,13 @@ html.js.reveal-failsafe .reveal {
 .image-marquee {
   position: relative;
   width: 100%;
-  padding: 0 0 var(--space-24);
+  padding: 12vh 0;
   overflow: visible;
 }
 
-.image-marquee__title {
-  margin: 0 auto var(--space-12);
-  max-width: 14em;
-  text-align: center;
-  font-size: var(--text-section);
-  font-weight: 500;
-  line-height: 1.12;
-  letter-spacing: var(--tracking-tight);
-  text-wrap: balance;
-}
-
-.image-marquee__cta {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-12);
+/* On the home page the row sits on the background colour of the third picture. */
+.image-marquee--tinted {
+  background: #fcfbf7;
 }
 
 /* The row dissolves at both edges instead of being cut by the screen. */
