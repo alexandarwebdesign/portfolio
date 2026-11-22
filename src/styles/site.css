@@ -2654,8 +2654,7 @@ body.is-loaded .hero-cta {
 
 /* The hero is the one dark section: near-black, neutral, with Apple blue (lighter on dark).
    It remaps the colour tokens, so everything inside follows. */
-.stage.hero-stage,
-.stage--dark {
+.stage.hero-stage {
   --color-background: #101010;
   --color-surface: #181818;
   --color-surface-subtle: #181818;
