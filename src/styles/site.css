@@ -4663,8 +4663,8 @@ html.js.reveal-failsafe .reveal {
 
 .case-fact__mark {
   display: inline-flex;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   color: var(--color-ink);
 }
 
