@@ -20,13 +20,13 @@ const name = site.name[lang];
 const home = pathFor('home', lang)!;
 // On the home page the sections are on the page itself.
 const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? '' : home}/#${id}`);
-const contact = route === 'uslugi' ? '#contact' : hash('contact');
+const contact = hash('contact');
 const focusField = '#name';
 
 const links = [
   { href: hash('work'), label: t.nav.work, current: false },
   { href: pathFor('about', lang)!, label: t.nav.about, current: route === 'about' },
-  { href: pathFor('uslugi', lang)!, label: t.nav.services, current: route === 'uslugi' },
+  { href: hash('services'), label: t.nav.services, current: false },
 ];
 
 // The other language: the same page when it exists, otherwise its home page.

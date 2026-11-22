@@ -1,7 +1,6 @@
 import { site } from './site';
 import { services } from './services';
 import { faq } from './faq';
-import { uslugiCopy } from './uslugi';
 import type { CaseContent } from './projects/types';
 import type { Lang } from '../i18n/ui';
 
@@ -163,36 +162,4 @@ export function caseSchema(
     }
   }
   return nodes;
-}
-
-export function uslugiSchema(lang: Lang, path: string): Node[] {
-  const uslugi = uslugiCopy[lang];
-  return [
-    {
-      '@type': 'ProfessionalService',
-      '@id': abs(`${path}#service`),
-      name: uslugi.hero.eyebrow,
-      description: uslugi.meta.description,
-      url: abs(path),
-      inLanguage: lang,
-      provider: { '@id': ids.person },
-      areaServed: { '@type': 'Country', name: 'Bulgaria' },
-      email: site.email,
-      makesOffer: uslugi.prices.items.map((item, i) => ({
-        '@type': 'Offer',
-        name: item.title,
-        // The first two are starting prices; the last one is monthly.
-        priceSpecification:
-          i < 2
-            ? { '@type': 'PriceSpecification', minPrice: item.amount, priceCurrency: 'EUR' }
-            : {
-                '@type': 'UnitPriceSpecification',
-                price: item.amount,
-                priceCurrency: 'EUR',
-                unitText: 'MON',
-              },
-      })),
-    },
-    faqPage(lang, uslugi.faq.items),
-  ];
 }

@@ -1953,10 +1953,6 @@ body.is-loaded .hero-cta {
   text-underline-offset: 4px;
 }
 
-body.is-loaded .hero-note {
-  animation-delay: 0.5s;
-}
-
 .service-index {
   font-family: var(--font-mono);
   font-size: var(--text-label);
@@ -5279,35 +5275,7 @@ html.js.reveal-failsafe .reveal {
   transform: translateX(3px);
 }
 
-/* ==========================================================================
-   Offer page (/uslugi) - Bulgarian local-business offer.
-   Built from the site's own components (hero, section-header, service-row,
-   project-card, faq, contact). Only the small gaps below are new.
-   ========================================================================== */
-
-.offer-page .tbd {
-  outline: 1px dashed var(--color-error);
-  outline-offset: 2px;
-  border-radius: var(--radius-xs);
-}
-
 /* Long Bulgarian headline: same hero, smaller than the 2-word English one */
-.offer-page .hero-title {
-  font-size: clamp(36px, calc(3.6vw + 12px), 80px);
-  max-width: 22ch;
-}
-
-.hero-note {
-  margin: var(--space-6) 0 0;
-  font-size: var(--text-body-sm);
-  color: var(--color-text-muted);
-  text-align: center;
-}
-
-.hero-proof {
-  text-wrap: balance;
-}
-
 /* One-sentence statement after the hero, with the key phrase marked */
 .statement-section {
   padding-block: var(--section-gap);
@@ -5462,92 +5430,13 @@ html.js.reveal-failsafe .reveal {
   transform: skewX(6deg);
 }
 
-.hero-proof a {
-  display: inline-block;
-  padding-block: 12px;
-  margin-block: -12px;
-  color: var(--color-ink);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 /* service-row variants: statement-only rows and rows with a price column */
-.service-row--static {
-  grid-template-columns: auto 1fr;
-}
-
-.service-row--price {
-  grid-template-columns: auto 1fr minmax(0, 38ch) clamp(180px, 17vw, 260px);
-}
-
-.service-price {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--text-service);
-  letter-spacing: var(--tracking-tight);
-  white-space: nowrap;
-  text-align: right;
-}
-
-@media (max-width: 1024px) {
-  .service-row--price {
-    grid-template-columns: auto 1fr;
-  }
-
-  .service-row--price .service-desc,
-  .service-row--price .service-price {
-    grid-column: 2;
-    max-width: none;
-    text-align: left;
-  }
-}
-
 /* "За мен" must not break onto two lines in the nav pill */
 .nav-link {
   white-space: nowrap;
 }
 
-.offer-page .services-list {
-  margin-bottom: var(--space-6);
-}
-
-.section-note {
-  margin: 0 0 var(--space-16);
-  max-width: 60ch;
-  font-size: var(--text-body-sm);
-  color: var(--color-text-muted);
-}
-
 /* Birse proof: one project card + text, same 2-column rhythm as the work grid */
-.offer-proof {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--card-gap);
-  align-items: center;
-}
-
-.offer-proof__text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-6);
-  padding-inline: var(--space-4);
-}
-
-.offer-proof__text .about-page-para {
-  margin: 0;
-}
-
-@media (max-width: 900px) {
-  .offer-proof {
-    grid-template-columns: 1fr;
-  }
-
-  .offer-proof__text {
-    padding-inline: 0;
-  }
-}
-
 /* --------------------------------------------------------------------------
    Work cards on the home page: two columns, the left flush with the
    container's left edge and the right with its right edge, the right one

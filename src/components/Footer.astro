@@ -17,8 +17,7 @@ interface Props {
 const { lang, route } = Astro.props;
 const t = ui[lang];
 const home = pathFor('home', lang)!;
-const contact =
-  route === 'home' || route === 'uslugi' ? '#contact' : `${home === '/' ? '' : home}/#contact`;
+const contact = route === 'home' ? '#contact' : `${home === '/' ? '' : home}/#contact`;
 const year = new Date().getFullYear();
 // The other language: the same page when it exists, otherwise its home page.
 const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
@@ -31,7 +30,7 @@ const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? ''
 const links = [
   { href: hash('work'), label: t.nav.work },
   { href: pathFor('about', lang)!, label: t.nav.about },
-  { href: pathFor('uslugi', lang)!, label: t.nav.services },
+  { href: hash('services'), label: t.nav.services },
   { href: contact, label: t.nav.contact },
 ];
 const social = [
