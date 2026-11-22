@@ -1,0 +1,44 @@
+---
+// The last screen of a case study, before the next project: what comes next in one line, the
+// main call to action on the left, and the client's mark drawn in ASCII on the right
+// (the script in site.ts reads the SVG and redraws it as characters).
+import Button from '../Button.astro';
+
+interface Props {
+  id: string;
+  kicker: string;
+  title: string;
+  text: string;
+  cta: string;
+  href: string;
+  /** The client's mark: an SVG, dark shapes on a light ground. */
+  art: { src: string; alt: string; width: number; height: number };
+}
+
+const { id, kicker, title, text, cta, href, art } = Astro.props;
+---
+
+<section class="case-closing" aria-labelledby={id}>
+  <div class="container case-closing__inner">
+    <div class="case-closing__text">
+      <p class="case-closing__kicker">{kicker}</p>
+      <h2 {id}>{title}</h2>
+      <p class="case-closing__sentence">{text}</p>
+      <div class="case-closing__action">
+        <Button {href}>{cta}</Button>
+      </div>
+    </div>
+    <div class="case-closing__art" data-ascii-art={art.src} role="img" aria-label={art.alt}>
+      <img
+        src={art.src}
+        alt=""
+        width={art.width}
+        height={art.height}
+        class="case-closing__fallback"
+        loading="lazy"
+        aria-hidden="true"
+      />
+      <pre class="ascii-art" aria-hidden="true" hidden></pre>
+    </div>
+  </div>
+</section>

@@ -566,6 +566,324 @@ function initCaseCarousels() {
   });
 }
 
+// The client's mark as ASCII art, as a slab seen in perspective, with a faint band of light. The characters stay upright:
+// the 3D is done in the grid. For every cell a few rays go through the slab (turned and thick, like
+// the CSS transform it replaces) and are followed until they enter the shape. Entering through the
+// face gives a character by how dark the mark is there; entering through a side wall gives a lighter
+// one, by how the wall is lit and how deep the ray went in.
+function initAsciiArt() {
+  // Code characters instead of a plain ramp: each level is a small set of them, light to dense, and a
+  // fixed pattern picks one inside the set, so the art reads as a page of code.
+  const RAMP = [' ', '.,', ':;', '-=+', '<>/\\', '()[]{}', '$#&*'];
+  const SIDE = [' ', '.,', ':;', '-/']; // the walls of the slab: lighter than the face
+  const code = (set: string, x: number, y: number) =>
+    set[(x * 7 + y * 13 + ((x * y) % 5)) % set.length];
+  const SOLID = 0.35; // the mask value from which a point is inside the shape
+  const TURN = { x: 37, y: -32, z: -8 }; // degrees, as the CSS rotateX / rotateY / rotateZ
+  const PERSPECTIVE = 1100; // px, as the CSS perspective()
+  const THICK = 0.22; // the depth of the slab, as a part of the mark's width
+  const FIT = 0.88; // the width of the mark, as a part of the box
+  const LIGHT = { x: -0.55, y: -0.83 }; // where the light comes from, in the mark's own plane
+  const SAMPLES = [-1 / 3, 0, 1 / 3]; // rays per cell: 3 x 3
+  document.querySelectorAll<HTMLElement>('[data-ascii-art]').forEach((root) => {
+    const pre = root.querySelector<HTMLPreElement>('pre.ascii-art');
+    const src = root.dataset.asciiArt;
+    if (!pre || !src) return;
+    const image = new Image();
+    image.onload = () => {
+      const MW = 360;
+      const MH = Math.round(MW * (image.naturalHeight / image.naturalWidth));
+      // the mark as a mask: 0 empty, 1 solid
+      const mask = new Float32Array(MW * MH);
+      const canvas = document.createElement('canvas');
+      canvas.width = MW;
+      canvas.height = MH;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      if (!ctx) return;
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0, 0, MW, MH);
+      ctx.drawImage(image, 0, 0, MW, MH);
+      const px = ctx.getImageData(0, 0, MW, MH).data;
+      for (let i = 0; i < MW * MH; i++) {
+        mask[i] = 1 - (px[i * 4] * 0.299 + px[i * 4 + 1] * 0.587 + px[i * 4 + 2] * 0.114) / 255;
+      }
+      const at = (x: number, y: number) =>
+        x < 0 || y < 0 || x >= MW || y >= MH ? 0 : mask[y * MW + x];
+      // smooth: the mask between its pixels, so edges and walls are not stepped
+      const sample = (fx: number, fy: number) => {
+        const x = Math.floor(fx - 0.5);
+        const y = Math.floor(fy - 0.5);
+        const tx = fx - 0.5 - x;
+        const ty = fy - 0.5 - y;
+        return (
+          (at(x, y) * (1 - tx) + at(x + 1, y) * tx) * (1 - ty) +
+          (at(x, y + 1) * (1 - tx) + at(x + 1, y + 1) * tx) * ty
+        );
+      };
+
+      // R = Ry * Rx * Rz (the CSS order), then its transpose takes world to object
+      const rad = Math.PI / 180;
+      const [cx, sx] = [Math.cos(TURN.x * rad), Math.sin(TURN.x * rad)];
+      const [cy, sy] = [Math.cos(TURN.y * rad), Math.sin(TURN.y * rad)];
+      const [cz, sz] = [Math.cos(TURN.z * rad), Math.sin(TURN.z * rad)];
+      type M = number[][];
+      const mul = (a: M, b: M): M =>
+        a.map((_, i) =>
+          b[0].map((_, j) => a[i][0] * b[0][j] + a[i][1] * b[1][j] + a[i][2] * b[2][j]),
+        );
+      const R = mul(
+        [
+          [cy, 0, sy],
+          [0, 1, 0],
+          [-sy, 0, cy],
+        ],
+        mul(
+          [
+            [1, 0, 0],
+            [0, cx, -sx],
+            [0, sx, cx],
+          ],
+          [
+            [cz, -sz, 0],
+            [sz, cz, 0],
+            [0, 0, 1],
+          ],
+        ),
+      );
+      const Rt = R[0].map((_, j) => R.map((row) => row[j]));
+      const toObject = (v: number[]) =>
+        Rt.map((row) => row[0] * v[0] + row[1] * v[1] + row[2] * v[2]);
+
+      let gridCols = 0;
+      let gridRows = 0;
+      let kind = new Uint8Array(0);
+      let level = new Uint8Array(0);
+      let sweep = { from: 0, length: 1 }; // where the band starts and how far it travels, in `along`
+      const along = (x: number, y: number) => (x / gridCols) * 0.8 + (y / gridRows) * 0.5;
+
+      // Draw the grid. A soft band of light crosses it slowly: inside the band a character is one
+      // level lighter and the pick inside its set shifts a little, so it glints. t is in ms.
+      const paint = (t: number) => {
+        const phase = sweep.from + ((t / 7000) % sweep.length);
+        let out = '';
+        for (let y = 0; y < gridRows; y++) {
+          for (let x = 0; x < gridCols; x++) {
+            const i = y * gridCols + x;
+            if (!kind[i]) {
+              out += ' ';
+              continue;
+            }
+            const near = Math.max(0, 1 - Math.abs(along(x, y) - phase) / 0.14);
+            const glint = near * near;
+            let lv = level[i];
+            if (glint > 0.5) lv = Math.max(kind[i] === 1 ? 1 : 0, lv - 1);
+            const set = kind[i] === 1 ? RAMP[lv] : SIDE[lv];
+            out += code(set, x + Math.floor(glint * 3), y);
+          }
+          out += '\n';
+        }
+        pre.textContent = out;
+      };
+
+      let raf = 0;
+      let visible = false;
+      let lastFrame = 0;
+      const loop = (t: number) => {
+        raf = 0;
+        if (!visible || document.hidden) return;
+        if (t - lastFrame > 60) {
+          lastFrame = t;
+          paint(t);
+        }
+        raf = requestAnimationFrame(loop);
+      };
+      const start = () => {
+        if (!raf && visible && !reduceMotion()) raf = requestAnimationFrame(loop);
+      };
+
+      const build = () => {
+        const W = root.clientWidth;
+        const H = root.clientHeight;
+        if (!W || !H) return;
+        // one character of the monospace face, at the size set in CSS
+        pre.hidden = false;
+        pre.textContent = '';
+        const span = document.createElement('span');
+        span.textContent = 'M'.repeat(20);
+        pre.append(span);
+        const cellW = span.getBoundingClientRect().width / 20;
+        const lineH = parseFloat(getComputedStyle(pre).lineHeight);
+        if (!cellW || !lineH) return;
+        const cols = Math.max(24, Math.floor(W / cellW));
+        const rows = Math.max(8, Math.floor(H / lineH));
+        const aspect = image.naturalHeight / image.naturalWidth;
+        let markW = W * FIT;
+        let markH = markW * aspect;
+        let depth = markW * THICK;
+        let pixel = markW / MW; // one mask pixel, in px
+        let shiftU = 0; // where the turned slab sits on the screen, so it can be centred in the box
+        let shiftV = 0;
+        const origin = toObject([0, 0, PERSPECTIVE]);
+        const maskAt = (ox: number, oy: number) =>
+          sample((ox / markW + 0.5) * MW, (oy / markH + 0.5) * MH);
+
+        // Follow one ray through the slab, from its face to its back. Returns the face (with the
+        // darkness of the mark), a wall (with its light and depth), or nothing.
+        const cast = (u: number, v: number) => {
+          const d = toObject([u + shiftU, v + shiftV, -PERSPECTIVE]);
+          if (d[2] >= 0) return null;
+          const tFace = -origin[2] / d[2];
+          const tBack = (-depth - origin[2]) / d[2];
+          const length = Math.hypot(d[0], d[1], d[2]) * (tBack - tFace);
+          const steps = Math.max(2, Math.min(420, Math.ceil(length / (pixel * 0.5))));
+          let before = tFace;
+          for (let i = 0; i <= steps; i++) {
+            const t = tFace + ((tBack - tFace) * i) / steps;
+            const m = maskAt(origin[0] + t * d[0], origin[1] + t * d[1]);
+            if (m < SOLID) {
+              before = t;
+              continue;
+            }
+            if (i === 0) return { face: true, m, lit: 0, depthAt: 0 };
+            // the ray entered through a wall between `before` and `t`: find where
+            let lo = before;
+            let hi = t;
+            for (let j = 0; j < 7; j++) {
+              const mid = (lo + hi) / 2;
+              if (maskAt(origin[0] + mid * d[0], origin[1] + mid * d[1]) >= SOLID) hi = mid;
+              else lo = mid;
+            }
+            const ox = origin[0] + hi * d[0];
+            const oy = origin[1] + hi * d[1];
+            // the wall faces where the mask falls away
+            const gx = maskAt(ox + pixel, oy) - maskAt(ox - pixel, oy);
+            const gy = maskAt(ox, oy + pixel) - maskAt(ox, oy - pixel);
+            const len = Math.hypot(gx, gy) || 1;
+            const lit = Math.max(0, (-gx / len) * LIGHT.x + (-gy / len) * LIGHT.y);
+            const depthAt = Math.min(1, Math.max(0, -(origin[2] + hi * d[2]) / depth));
+            return { face: false, m: 0, lit, depthAt };
+          }
+          return null;
+        };
+
+        // The tilt pushes the slab right and down, and a box cuts what leaves it. So measure where the
+        // slab lands, then centre it in the box and shrink it if it does not fit.
+        const extent = () => {
+          let u0 = Infinity;
+          let u1 = -Infinity;
+          let v0 = Infinity;
+          let v1 = -Infinity;
+          for (let v = -H; v <= H; v += 10) {
+            for (let u = -W; u <= W; u += 10) {
+              if (!cast(u, v)) continue;
+              u0 = Math.min(u0, u);
+              u1 = Math.max(u1, u);
+              v0 = Math.min(v0, v);
+              v1 = Math.max(v1, v);
+            }
+          }
+          return { u0, u1, v0, v1 };
+        };
+        for (let pass = 0; pass < 3; pass++) {
+          shiftU = 0;
+          shiftV = 0;
+          const e = extent();
+          if (!isFinite(e.u0)) break;
+          const scale = Math.min(
+            1.3,
+            Math.max(0.5, Math.min((W * 0.9) / (e.u1 - e.u0), (H * 0.9) / (e.v1 - e.v0))),
+          );
+          markW *= scale;
+          markH = markW * aspect;
+          depth = markW * THICK;
+          pixel = markW / MW;
+        }
+        shiftU = 0;
+        shiftV = 0;
+        const e = extent();
+        if (isFinite(e.u0)) {
+          shiftU = (e.u0 + e.u1) / 2;
+          shiftV = (e.v0 + e.v1) / 2;
+        }
+
+        const last = RAMP.length - 1;
+        const rays = SAMPLES.length * SAMPLES.length;
+        gridCols = cols;
+        gridRows = rows;
+        kind = new Uint8Array(cols * rows); // 0 empty, 1 face, 2 wall
+        level = new Uint8Array(cols * rows); // the level of the character within RAMP or SIDE
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            let face = 0;
+            let dark = 0;
+            let wall = 0;
+            let tone = 0;
+            for (const dy of SAMPLES) {
+              for (const dx of SAMPLES) {
+                const hit = cast((x + 0.5 + dx) * cellW - W / 2, (y + 0.5 + dy) * lineH - H / 2);
+                if (!hit) continue;
+                if (hit.face) {
+                  face++;
+                  dark += hit.m;
+                } else {
+                  wall++;
+                  tone += (0.4 + 0.6 * hit.lit) * (1 - 0.6 * hit.depthAt);
+                }
+              }
+            }
+            if (face + wall < rays * 0.4) continue;
+            const i = y * cols + x;
+            if (face >= wall) {
+              kind[i] = 1;
+              level[i] = Math.max(1, Math.min(last, Math.round((dark / face) ** 0.85 * last)));
+            } else {
+              kind[i] = 2;
+              level[i] = Math.max(
+                0,
+                Math.min(SIDE.length - 1, Math.round((tone / wall) * (SIDE.length - 1))),
+              );
+            }
+          }
+        }
+        // the band travels only across the mark, then rests a short while before it starts again
+        let first = Infinity;
+        let lastAlong = -Infinity;
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            if (!kind[y * cols + x]) continue;
+            first = Math.min(first, along(x, y));
+            lastAlong = Math.max(lastAlong, along(x, y));
+          }
+        }
+        const REST = 0.12; // the pause between two passes, in the same unit as the band's width
+        sweep = { from: first - 0.06 - REST / 2, length: lastAlong - first + 0.12 + REST };
+        root.classList.add('is-ascii');
+        paint(0);
+      };
+
+      let timer = 0;
+      let lastWidth = root.clientWidth;
+      new ResizeObserver(() => {
+        if (root.clientWidth === lastWidth) return; // only a change of width needs a new grid
+        lastWidth = root.clientWidth;
+        clearTimeout(timer);
+        timer = window.setTimeout(build, 150);
+      }).observe(root);
+      build();
+      // it only runs while it is on screen, in a visible tab, and never for reduced motion
+      new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting;
+          start();
+        },
+        { rootMargin: '10% 0px' },
+      ).observe(root);
+      document.addEventListener('visibilitychange', start);
+    };
+    image.src = src;
+  });
+}
+
 // The footer sits under the page; a focused link there scrolls it into view.
 function initFooterFocusReveal() {
   const footer = document.querySelector('.footer');
@@ -635,6 +953,7 @@ function init() {
     initParallax();
     initImageMarquee();
     initCaseCarousels();
+    initAsciiArt();
     initFooterFocusReveal();
   };
   if ('requestIdleCallback' in window) requestIdleCallback(deferred, { timeout: 1500 });
