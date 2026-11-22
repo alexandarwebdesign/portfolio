@@ -3035,16 +3035,10 @@ html.js:not(.footer-ready):not(.reveal-failsafe) .footer {
 /* Content stream blocks use the generic .reveal blur-up (section 7). */
 
 /* Case hero entrance - staggered rise on load (matches homepage hero). */
-body.is-loaded .case-header .conceptual-badge,
 body.is-loaded .case-title,
 body.is-loaded .case-meta-row {
   animation: heroRise 0.8s var(--ease-signature) both;
 }
-
-body.is-loaded .case-header .conceptual-badge {
-  animation-delay: 0.05s;
-}
-
 body.is-loaded .case-title {
   animation-delay: 0.15s;
 }
@@ -3199,19 +3193,6 @@ body.is-loaded .case-meta-row {
   height: 40px;
   border-radius: var(--radius-sm);
 }
-
-.conceptual-badge {
-  display: inline-block;
-  padding: 6px 12px;
-  background-color: var(--color-accent);
-  color: var(--color-white);
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border-radius: var(--radius-xs);
-}
-
 /* Content Widths */
 .concept-content {
   max-width: 800px;
@@ -4585,27 +4566,12 @@ html.js.reveal-failsafe .reveal {
 .case-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(46px, 5vw, 92px);
+  font-size: clamp(56px, 7.5vw, 128px);
   font-weight: 500;
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
   color: var(--color-text);
 }
-
-.case-header .conceptual-badge {
-  display: inline-block;
-  padding: 6px 14px;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--color-text-tertiary);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-xs);
-  background: transparent;
-}
-
 .case-meta-row {
   display: grid;
   gap: var(--space-6);
@@ -4667,7 +4633,7 @@ html.js.reveal-failsafe .reveal {
 
 .case-meta-col li {
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
+  font-size: var(--text-body);
   font-weight: 600;
   line-height: 1.5;
   color: var(--color-text);
