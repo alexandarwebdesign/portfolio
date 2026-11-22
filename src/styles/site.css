@@ -2654,7 +2654,8 @@ body.is-loaded .hero-cta {
 
 /* The hero is the one dark section: near-black, neutral, with Apple blue (lighter on dark).
    It remaps the colour tokens, so everything inside follows. */
-.stage.hero-stage {
+.stage.hero-stage,
+.stage--dark {
   --color-background: #101010;
   --color-surface: #181818;
   --color-surface-subtle: #181818;
@@ -3037,7 +3038,7 @@ html.js:not(.footer-ready):not(.reveal-failsafe) .footer {
 /* Case hero entrance - staggered rise on load (matches homepage hero). */
 body.is-loaded .case-header .conceptual-badge,
 body.is-loaded .case-title,
-body.is-loaded .case-meta {
+body.is-loaded .case-meta-row {
   animation: heroRise 0.8s var(--ease-signature) both;
 }
 
@@ -3049,12 +3050,8 @@ body.is-loaded .case-title {
   animation-delay: 0.15s;
 }
 
-body.is-loaded .case-meta {
+body.is-loaded .case-meta-row {
   animation-delay: 0.3s;
-}
-
-.project-hero-full-section {
-  padding-bottom: var(--space-16);
 }
 
 /* Frame wrapper for relative positioning of the logo overlay */
@@ -3102,26 +3099,6 @@ body.is-loaded .case-meta {
 }
 
 /* Hero spans the full viewport (desktop + mobile) - break out of .container */
-.project-hero-full-section > .container {
-  max-width: none;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.project-hero-full-section .project-hero-image {
-  border-radius: 0;
-  object-fit: cover;
-}
-
-/* Desktop only: full-height hero. Mobile keeps its own 50vh rule. */
-@media (min-width: 769px) {
-  .project-hero-full-section .project-hero-image {
-    height: 100vh;
-  }
-}
-
 @media (max-width: 768px) {
   .project-hero-image {
     border-radius: var(--border-radius);
@@ -4552,23 +4529,27 @@ html.js.reveal-failsafe .reveal {
    ========================================================================== */
 
 /* Case header - minimal title block (replaces verbose hero) */
+/* Case header: the dark stage of the home hero (rings of ticks, title on the left, the facts on
+   the right), with the hero picture in a frame at the bottom of it. */
 .case-header {
-  padding: clamp(120px, 14vh, 200px) 0 clamp(48px, 6vh, 80px);
-  text-align: center;
   position: relative;
+  overflow: clip; /* the rings are half cropped by the corners */
+  padding: clamp(120px, 16vh, 180px) 0 clamp(56px, 8vh, 96px);
 }
 
 .case-header .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(32px, 5vw, 56px);
+  position: relative;
+  z-index: 1;
+}
+
+.case-header__top {
+  display: grid;
+  gap: var(--space-10);
+  margin-bottom: clamp(48px, 8vh, 96px);
 }
 
 .case-back {
-  position: absolute;
-  top: clamp(96px, 12vh, 160px);
-  left: clamp(24px, 5vw, 56px);
+  justify-self: start;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -4595,21 +4576,21 @@ html.js.reveal-failsafe .reveal {
   transform: translateX(-3px);
 }
 
+.case-header__main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
 .case-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: var(--text-hero);
+  font-size: clamp(46px, 5vw, 92px);
   font-weight: 500;
   line-height: var(--leading-display);
   letter-spacing: var(--tracking-display);
   color: var(--color-text);
-}
-
-/* Desktop only: breathing room above the case title */
-@media (min-width: 769px) {
-  .case-title {
-    margin-top: clamp(40px, 6vh, 96px);
-  }
 }
 
 .case-header .conceptual-badge {
@@ -4626,23 +4607,38 @@ html.js.reveal-failsafe .reveal {
   background: transparent;
 }
 
-/* Case meta - 3-column metadata strip */
-.case-meta {
-  padding: clamp(32px, 4vh, 64px) 0 clamp(80px, 10vh, 140px);
-}
-
 .case-meta-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(24px, 4vw, 64px);
-  max-width: 1100px;
-  margin: 0 auto;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .case-header__top {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    grid-template-areas:
+      'back back'
+      'main meta';
+    column-gap: var(--space-16);
+    align-items: start;
+  }
+
+  .case-back {
+    grid-area: back;
+  }
+
+  .case-header__main {
+    grid-area: main;
+  }
+
+  .case-meta-row {
+    grid-area: meta;
+  }
 }
 
 .case-meta-col {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
 .case-meta-col .case-meta-label {
@@ -4676,6 +4672,21 @@ html.js.reveal-failsafe .reveal {
   font-weight: 600;
   line-height: 1.5;
   color: var(--color-text);
+}
+
+/* The hero picture: framed like the one on the home page, inside the container */
+.case-header .project-hero-image-frame {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.case-header .project-hero-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: 80svh;
+  border-radius: 0;
+  object-fit: cover;
 }
 
 /* Case palette strip */
@@ -4726,14 +4737,6 @@ html.js.reveal-failsafe .reveal {
 }
 
 /* Floating round CTA over hero image */
-.project-hero-full-section {
-  position: relative;
-}
-
-.project-hero-full-section .container {
-  position: relative;
-}
-
 /* Case blocks - tinted backdrop per device showcase, break container to full bleed */
 .case-block {
   padding: clamp(80px, 10vh, 160px) 0;
@@ -4939,16 +4942,7 @@ html.js.reveal-failsafe .reveal {
 @media (max-width: 768px) {
   /* Case header mobile */
   .case-header {
-    padding: clamp(96px, 18vh, 160px) 24px clamp(32px, 5vh, 56px);
-  }
-
-  .case-back {
-    position: static;
-    align-self: flex-start;
-  }
-
-  .case-header .container {
-    gap: clamp(24px, 5vw, 40px);
+    padding-top: clamp(96px, 18vh, 140px);
   }
 
   .case-title {
@@ -4959,10 +4953,6 @@ html.js.reveal-failsafe .reveal {
   .case-meta-row {
     grid-template-columns: repeat(2, 1fr);
     gap: clamp(24px, 6vw, 40px);
-  }
-
-  .case-meta {
-    padding: 24px 24px clamp(64px, 10vh, 96px);
   }
 
   /* Case palette mobile */
@@ -5023,21 +5013,9 @@ html.js.reveal-failsafe .reveal {
     font-size: 28px;
   }
 
-  /* 1. Hero frame: kill side padding + image height 50vh */
-  .project-hero-full-section > .container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .project-hero-image-frame {
-    border-radius: 0;
-  }
-
-  .project-hero-image {
-    border-radius: 0;
-    height: 50vh;
-    width: 100%;
-    object-fit: cover;
+  /* 1. Hero frame: a taller crop on a phone */
+  .case-header .project-hero-image {
+    aspect-ratio: 4 / 3;
   }
 
   .block-fullwidth .single-image {
