@@ -6,7 +6,7 @@ import DeviceDesktop from '../components/case/DeviceDesktop.astro';
 import DevicePhones from '../components/case/DevicePhones.astro';
 import DeviceCarousel from '../components/case/DeviceCarousel.astro';
 import FullBleed from '../components/case/FullBleed.astro';
-import CaseCta from '../components/case/CaseCta.astro';
+import CaseClosing from '../components/case/CaseClosing.astro';
 import NextTeaser from '../components/NextTeaser.astro';
 import hero from '../assets/images/case/birse-hero.jpg';
 import storefront from '../assets/images/case/birse-storefront.jpg';
@@ -38,6 +38,8 @@ const { lang } = Astro.props;
 const c = caseText[lang];
 const home = pathFor('home', lang)!;
 const homeHash = (id: string) => `${home === '/' ? '' : home}/#${id}`;
+// Results are hidden until the real numbers exist (data stays in birseCopy.results).
+const showResults = false;
 
 const t = birseCopy[lang];
 ---
@@ -90,7 +92,7 @@ const t = birseCopy[lang];
         />
       </CaseProof>
 
-      <CaseProof id="birse-proof-desktop-states" {...t.desktop}>
+      <CaseProof id="birse-proof-desktop-states" {...t.desktop} band>
         <DeviceCarousel
           id="case-carousel-birse"
           slides={[d1, d2, d3].map((image, i) => ({ image, alt: t.desktop.slides[i] }))}
@@ -107,27 +109,26 @@ const t = birseCopy[lang];
         />
       </CaseProof>
 
-      <CaseProof id="birse-proof-roles" kicker={t.roles.kicker} title={t.roles.title}>
-        <ul class="case-roles" slot="text">
-          {
-            t.roles.items.map(([role, text]) => (
-              <li>
-                <strong>{role}</strong>
-                <span>{text}</span>
-              </li>
-            ))
-          }
-        </ul>
-        <div class="case-results" slot="text">
-          <h3 id="birse-proof-results">{t.results.title}</h3>
-          <p>{t.results.text}</p>
-        </div>
-      </CaseProof>
-
-      <CaseCta title={c.ctaTitle} cta={c.cta} href={homeHash('contact')} />
+      {
+        showResults && (
+          <CaseProof id="birse-proof-results" kicker={t.results.kicker} title={t.results.title}>
+            <p slot="text">{t.results.text}</p>
+          </CaseProof>
+        )
+      }
     </div>
   </div>
 </section>
+
+<CaseClosing
+  id="birse-closing"
+  kicker={c.closingKicker}
+  title={c.ctaTitle}
+  text={c.closingText}
+  cta={c.cta}
+  href={homeHash('contact')}
+  art={{ src: footerLogo.src, alt: 'Birsé', width: footerLogo.width, height: footerLogo.height }}
+/>
 
 <NextTeaser
   href={pathFor('forma', lang)!}

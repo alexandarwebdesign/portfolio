@@ -252,7 +252,7 @@ h3,
 
   /* ---------- Color: warm paper + ink + single interactive accent ---------- */
   --color-background: #efefef;
-  --color-surface: #f7f7f7;
+  --color-surface: var(--color-white); /* the lightest surface, the same as --color-white */
   --color-surface-subtle: #e4e4e4;
   --color-ink: #1c1c1c;
   --color-ink-deep: #141414;
@@ -356,7 +356,7 @@ h3,
      and fades out sideways and down to a darker colour (the FAQ section ends it on its own
      background colour). */
   --gradient-bar-shape: ellipse 53.9% 172.8% at 50% 0%;
-  --gradient-bar-start: color-mix(in srgb, var(--color-surface) 78%, transparent);
+  --gradient-bar-start: #fff; /* the highlight: white, fully opaque */
   --gradient-bar: radial-gradient(
     var(--gradient-bar-shape),
     var(--gradient-bar-start) 0%,
@@ -3748,7 +3748,7 @@ html.js.reveal-failsafe .reveal {
 
 /* Dynamic body section padding */
 .project-dynamic-body-section {
-  padding-bottom: 4rem;
+  padding-bottom: 0;
 }
 
 .project-content-stream .rich-text > *:first-child {
@@ -4499,13 +4499,21 @@ html.js.reveal-failsafe .reveal {
 
 /* Case header - minimal title block (replaces verbose hero) */
 /* Case header: the title on the left, the facts on the right, the hero picture edge to edge at the
-   bottom of it, on the darker white. */
+   bottom of it, on the lighter surface of the case pages. */
 .case-header {
   position: relative;
   padding: clamp(120px, 16vh, 180px) 0 0;
-  /* the darker white of the backgrounds; the glow of the rows ends on it */
-  background: var(--color-surface-subtle);
-  --bar-end: var(--color-surface-subtle);
+  /* the glow of the rows ends on the section's own colour */
+  --bar-end: var(--color-background);
+}
+
+/* The sections of a case page (header, steps, closing) sit on the lighter surface: inside them the
+   background token is --color-surface, so everything that reads it (fills, fades, glows) follows. */
+.case-header,
+.project-dynamic-body-section,
+.case-closing {
+  --color-background: var(--color-surface);
+  background: var(--color-background);
 }
 
 .case-header .container {
@@ -4676,12 +4684,13 @@ html.js.reveal-failsafe .reveal {
 
 .case-fact__dev {
   align-self: flex-start;
+  gap: var(--space-2);
 }
 
 .case-fact__mark {
   display: inline-flex;
-  width: 30px;
   height: 30px;
+  aspect-ratio: 21 / 32; /* the mark's own width: no empty space on its right */
   color: var(--color-ink);
 }
 
@@ -4712,7 +4721,7 @@ html.js.reveal-failsafe .reveal {
 
 .case-header .project-hero-image {
   width: 100%;
-  height: auto;
+  height: 100svh; /* the first picture fills the screen; the image is cropped, not stretched */
   border-radius: 0;
   object-fit: cover;
 }
@@ -4752,7 +4761,7 @@ html.js.reveal-failsafe .reveal {
 .case-proof {
   display: flex;
   flex-direction: column;
-  gap: clamp(24px, 4vw, 56px);
+  gap: calc(var(--proof-group) * 2 / 3); /* the text and its picture: two groups, close */
 }
 
 /* Two slots, like the sections of the home page: the title on the left, the sentence on the
@@ -4761,14 +4770,13 @@ html.js.reveal-failsafe .reveal {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  row-gap: var(--space-4);
-  padding: clamp(40px, 6vw, 96px) 0 clamp(18px, 2vw, 32px);
+  row-gap: var(--proof-in); /* label, title and sentence are one group: one small gap */
+  padding: 0;
 }
 
 @media (min-width: 900px) {
   .case-proof__text {
     grid-template-columns: minmax(0, 6fr) minmax(0, 1fr) minmax(0, 5fr);
-    row-gap: var(--space-6);
   }
 
   .case-proof__text > .case-proof__kicker {
@@ -4829,10 +4837,10 @@ html.js.reveal-failsafe .reveal {
   margin: 0;
 }
 
-.case-proof__kicker {
-  margin: 0;
+.case-proof__text > .case-proof__kicker {
+  margin: 0; /* beats .rich-text p, so only the grid gap sits between label and title */
   font-family: var(--font-mono);
-  font-size: var(--text-label);
+  font-size: var(--text-body-sm);
   font-weight: 500;
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
@@ -4843,40 +4851,135 @@ html.js.reveal-failsafe .reveal {
   margin-top: 0;
   margin-bottom: 0;
   scroll-margin-top: 120px;
-  font-size: var(--text-section);
+  font-size: clamp(36px, 4.2vw, 60px);
   letter-spacing: var(--tracking-tight);
+}
+
+.case-proof__text > p:not(.case-proof__kicker) {
+  font-size: var(--text-body-lg);
 }
 
 /* The number of each step, counted in CSS: (01), (02) ... */
 .project-content-stream {
   counter-reset: proof;
+
+  /* Spacing that shows the groups: one small gap inside a group (label, title, sentence), about
+     3x that between groups (the text and its picture), about 3x again between steps. */
+  --proof-in: var(--space-4);
+  --proof-group: var(--space-16);
+  --proof-step: calc(var(--space-24) * 2);
+  /* the line sits at the top of each step and the label stands a group below it, so the space
+     above a step is the whole step distance minus that group */
+  gap: calc(var(--proof-step) - var(--proof-group));
+}
+
+@media (min-width: 900px) {
+  .project-content-stream {
+    --proof-group: var(--space-20);
+    --proof-step: calc(var(--space-24) * 3);
+  }
 }
 
 .case-proof {
   counter-increment: proof;
+  position: relative;
+  isolation: isolate;
+  padding-top: var(--proof-group); /* from the line to the label */
+}
+
+/* The top outline of every numbered step: one hairline across the whole screen. */
+.case-proof::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--color-border-subtle);
+  z-index: -1;
+}
+
+/* A step on a filled band (the laptop): the band starts at the line and holds the text too. */
+.case-proof--band {
+  padding-bottom: var(--proof-group);
+}
+
+.case-proof--band::before {
+  height: 100%;
+  background: var(--color-surface-subtle);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.case-proof--band > .case-block {
+  background: transparent;
+  border: 0;
+  padding-block: 0;
+}
+
+/* The laptop sits right under the text: the block is as tall as the laptop, not a 100vh slot. */
+.case-proof--band .single-block.block-device.block-padding-bottom {
+  height: auto;
+  padding-block: 0;
+  align-items: flex-start;
+}
+
+.case-proof--band .single-block.block-device.block-padding-bottom .row,
+.case-proof--band .single-block.block-device.block-padding-bottom .flex-col {
+  height: auto;
+}
+
+/* The phones sit right under the text too: no top room from the section or the column. */
+.case-proof--phones .block-mobile-devices.single-block {
+  padding-block: 0;
+}
+
+.case-proof--phones .block-mobile-devices .mobile-col {
+  padding-block: 0;
+}
+
+/* The step that follows the laptop band starts where the band ends: no space between them. */
+.case-proof--band + .case-proof {
+  margin-top: calc((var(--proof-step) - var(--proof-group)) * -1);
+}
+
+/* The first step sits under the full-width picture at the top of the page: more room above it. */
+.project-content-stream > .case-proof:first-child {
+  padding-top: calc(var(--proof-group) * 2);
 }
 
 .case-proof__kicker::before {
   content: '(' counter(proof, decimal-leading-zero) ') ';
 }
 
-.case-proof > .case-block {
-  margin-top: clamp(24px, 3vw, 48px);
+/* The wrappers around a step's picture carry no spacing of their own: the gaps of the step
+   (--proof-group, --proof-step) are the only space. The laptop sits on a band of its own
+   (.case-proof--band), which holds the step's text too. */
+.case-proof > .case-block:not(.case-block--device),
+.case-proof > .case-block--bare {
+  padding-block: 0;
+}
+
+/* Three screens arrive at once: the text is read first and the screens come into view after it,
+   so this step keeps more room between them (2.5 times the group gap) than the other steps. */
+.case-proof--phones {
+  gap: calc(var(--proof-group) * 2.5);
 }
 
 .case-proof--phones .mobile-col {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: clamp(20px, 3vw, 32px);
+  gap: var(--proof-in); /* the phone and its note are one group */
 }
 
 /* The note under a phone: as wide as the phone, left-aligned, a hairline above it ties it to the
    phone. Two degrees of text: the title leads, the sentence is smaller. It does not move. */
 .case-device-note {
   width: 68%; /* the width of .mobile-device */
-  padding-top: var(--space-5);
-  border-top: 1px solid var(--color-border-subtle);
+  padding-top: var(--space-8);
+  padding-inline: var(--space-4);
+  box-sizing: border-box;
   text-align: left;
   color: var(--color-text);
 }
@@ -4888,7 +4991,7 @@ html.js.reveal-failsafe .reveal {
 }
 
 .case-device-note h3 {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-3); /* one small gap, the same whether the title has one line or two */
   font-family: var(--font-display);
   font-size: var(--text-body-lg);
   font-weight: 600;
@@ -4897,19 +5000,19 @@ html.js.reveal-failsafe .reveal {
   text-wrap: balance;
 }
 
-@media (min-width: 900px) {
-  /* room for two lines, so the three sentences start on one line */
-  .case-device-note h3 {
-    min-height: 2.5em;
-  }
-}
-
 .case-device-note p {
   margin: 0;
   font-size: var(--text-body-sm);
   line-height: 1.6;
   color: var(--color-text-tertiary);
   text-wrap: pretty;
+}
+
+@media (max-width: 899px) {
+  .case-device-note p {
+    font-size: var(--text-body);
+    line-height: 1.55;
+  }
 }
 
 /* Peak-end CTA - restrained */
@@ -5000,38 +5103,17 @@ html.js.reveal-failsafe .reveal {
   }
 
   /* Case blocks - tighter mobile padding */
-  body.birse-page .project-content-stream {
-    gap: var(--space-10);
-  }
-
   .case-block--device {
     padding: clamp(48px, 8vh, 88px) 16px;
-  }
-
-  body.birse-page .case-block--device.case-block--bare {
-    padding-top: clamp(16px, 3vh, 32px);
-    padding-bottom: clamp(16px, 3vh, 32px);
   }
 
   .case-cta-eyebrow {
     font-size: clamp(24px, 7vw, 36px);
   }
 
-  .case-proof {
-    gap: clamp(16px, 4vh, 32px);
-  }
-
-  .case-proof__text {
-    padding: clamp(32px, 8vw, 56px) 0 18px;
-  }
-
-  .case-proof__kicker {
-    font-size: 11px;
-  }
-
   .case-proof--phones .block-mobile-devices .mobile-devices-row {
     flex-direction: column;
-    gap: clamp(32px, 7vh, 56px);
+    gap: var(--proof-group); /* each phone with its note is a group */
   }
 
   .case-proof--phones .block-mobile-devices .mobile-col {
@@ -5045,7 +5127,7 @@ html.js.reveal-failsafe .reveal {
   }
 
   .case-device-note {
-    width: min(72%, 280px); /* the width of the phone */
+    width: min(88%, 340px); /* wider than the phone: a sentence in 238 px is too narrow to read */
   }
 
   .block-fullwidth .single-image {
@@ -5644,4 +5726,171 @@ a {
   .footer a:not(.footer-social-link):hover {
     color: var(--color-accent-on-dark);
   }
+}
+
+/* --------------------------------------------------------------------------
+   Case study closing: one screen before the next project. The text and the call to action on
+   the left, the client's mark as ASCII on the right (initAsciiArt in site.ts).
+   -------------------------------------------------------------------------- */
+.case-closing {
+  min-height: calc(100svh + var(--space-24)); /* a screen and a little more */
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-24);
+  border-top: 1px solid var(--color-border-subtle);
+  position: relative;
+  overflow: clip; /* the mark leaves the frame on the right and at the bottom: the screen is its frame */
+}
+
+/* Where the mark leaves the frame it fades into the page: a wide, soft fade on the right and at the
+   bottom, only where the art sits beside the text. */
+@media (min-width: 900px) {
+  .case-closing::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+          to left,
+          var(--color-background) 0,
+          color-mix(in srgb, var(--color-background) 80%, transparent) 20%,
+          color-mix(in srgb, var(--color-background) 40%, transparent) 55%,
+          transparent
+        )
+        right / clamp(200px, 24vw, 380px) 100% no-repeat,
+      linear-gradient(
+          to top,
+          var(--color-background) 0,
+          color-mix(in srgb, var(--color-background) 80%, transparent) 20%,
+          color-mix(in srgb, var(--color-background) 40%, transparent) 55%,
+          transparent
+        )
+        bottom / 100% clamp(180px, 26vh, 320px) no-repeat;
+  }
+}
+
+/* On narrow screens the mark sits above the text: it fades out toward the right and the bottom. */
+@media (max-width: 899px) {
+  .case-closing__art {
+    mask-image:
+      linear-gradient(to right, #000 55%, transparent),
+      linear-gradient(to bottom, #000 70%, transparent);
+    mask-composite: intersect;
+    -webkit-mask-composite: source-in;
+  }
+}
+
+.case-closing__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-16);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .case-closing__inner {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-20);
+  }
+}
+
+.case-closing__text {
+  display: grid;
+  row-gap: var(--space-4); /* label, title and sentence are one group */
+  justify-items: start;
+}
+
+.case-closing__kicker {
+  margin: 0;
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.case-closing h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(44px, 5vw, 80px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.case-closing__sentence {
+  margin: 0;
+  max-width: 32em;
+  font-size: var(--text-body-lg);
+  color: var(--color-text-tertiary);
+}
+
+.case-closing__action {
+  margin-top: var(--space-12); /* the action is its own group, 3x the inner gap away */
+}
+
+/* On narrow screens the mark leads, the text follows (one element, reordered). */
+@media (max-width: 899px) {
+  .case-closing__art {
+    order: -1;
+  }
+}
+
+.case-closing__art {
+  position: relative;
+  min-width: 0;
+  width: 116%; /* bigger than its column: it grows to the right, past the edge of the screen */
+  max-width: 840px;
+  justify-self: start;
+  /* The mark is a slab seen in perspective, drawn into the character grid by the script. */
+  aspect-ratio: 1 / 1;
+  isolation: isolate;
+}
+
+/* A soft ground under the mark, so it does not float: a faint shade, off to the lower right. */
+.case-closing__art::before {
+  content: '';
+  position: absolute;
+  inset: 12% -8% -6% 8%;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--color-ink) 7%, transparent),
+    transparent
+  );
+  pointer-events: none;
+}
+
+@media (min-width: 900px) {
+  .case-closing__art {
+    transform: translate(14%, 28%); /* right and down, so part of it leaves the frame */
+  }
+}
+
+.case-closing__fallback {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.case-closing__art.is-ascii .case-closing__fallback {
+  display: none;
+}
+
+.ascii-art {
+  margin: 0;
+  /* a real monospace face: the art needs every character the same width */
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+  font-size: clamp(9px, 0.95vw, 14px);
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: pre;
+  color: color-mix(
+    in srgb,
+    var(--color-ink) 62%,
+    var(--color-background)
+  ); /* lighter than the text */
+  user-select: none;
 }

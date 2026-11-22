@@ -6,7 +6,6 @@ import DeviceDesktop from '../components/case/DeviceDesktop.astro';
 import DevicePhones from '../components/case/DevicePhones.astro';
 import DeviceCarousel from '../components/case/DeviceCarousel.astro';
 import FullBleed from '../components/case/FullBleed.astro';
-import CaseCta from '../components/case/CaseCta.astro';
 import NextTeaser from '../components/NextTeaser.astro';
 import hero from '../assets/images/case/forma-hero.jpg';
 import project from '../assets/images/case/forma-project.jpg';
@@ -102,7 +101,7 @@ const t = formaCopy[lang];
         </div>
       </CaseProof>
 
-      <CaseProof id="forma-proof-portfolio" {...t.portfolio}>
+      <CaseProof id="forma-proof-portfolio" {...t.portfolio} band>
         <DeviceCarousel
           id="case-carousel-forma"
           slides={[project, homeShot, portfolio, portfolio2, aboutShot, services, contact].map(
@@ -127,8 +126,6 @@ const t = formaCopy[lang];
       <CaseProof id="forma-proof-brand" {...t.brand}>
         <FullBleed image={brand} alt={t.brand.alt} logo={{ src: logo.src }} label={t.brand.label} />
       </CaseProof>
-
-      <CaseCta title={c.ctaTitle} cta={c.cta} href={homeHash('contact')} />
     </div>
   </div>
 </section>
