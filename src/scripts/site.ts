@@ -225,12 +225,11 @@ function initFormHandling() {
     errors: {
       name: msg.errName!,
       email: msg.errEmail!,
-      service: msg.errService!,
       message: msg.errMessage!,
     },
   };
   const status = document.getElementById('form-status');
-  const fields = ['name', 'email', 'service', 'message'] as const;
+  const fields = ['name', 'email', 'message'] as const;
 
   const setStatus = (text: string, state?: string) => {
     if (!status) return;
@@ -255,7 +254,6 @@ function initFormHandling() {
     if (!data.name || data.name.trim().length < 2) errors.name = messages.errors.name;
     if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))
       errors.email = messages.errors.email;
-    if (!data.service) errors.service = messages.errors.service;
     if (!data.message || data.message.trim().length < 10) errors.message = messages.errors.message;
     return errors;
   };
@@ -274,7 +272,7 @@ function initFormHandling() {
   };
   for (const id of fields) {
     const input = form.querySelector<HTMLElement>(`#${id}`);
-    input?.addEventListener(id === 'service' ? 'change' : 'blur', () => checkField(id));
+    input?.addEventListener('blur', () => checkField(id));
     input?.addEventListener('input', () => {
       if (input.getAttribute('aria-invalid') === 'true') checkField(id);
     });
@@ -302,6 +300,9 @@ function initFormHandling() {
       setStatus(messages.fix(invalid.length), 'error');
       return;
     }
+
+    // The service is optional: an empty one is left out of the email.
+    if (!data.service) formData.delete('service');
 
     const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
     const original = button.innerHTML;

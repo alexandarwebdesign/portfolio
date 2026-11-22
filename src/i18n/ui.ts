@@ -36,14 +36,12 @@ const bg = {
   form: {
     label: 'Форма за контакт',
     name: 'Име и фамилия',
-    namePlaceholder: 'Вашето име',
     email: 'Имейл',
     emailPlaceholder: 'ime@firma.bg',
     service: 'От какво имате нужда?',
-    servicePlaceholder: 'Изберете услуга',
+    servicePlaceholder: 'Изберете услуга (по желание)',
     message: 'Разкажете ми за проекта',
-    messagePlaceholder:
-      'Разкажете ми за проекта – цели, срок, лого или материали, които вече имате…',
+    messagePlaceholder: 'Цели, срок, материали…',
     send: 'Изпрати съобщението',
     helper: 'Отговарям лично, обикновено до 24 часа. Без ангажимент.',
     sending: 'Изпращам съобщението…',
@@ -55,7 +53,6 @@ const bg = {
     errors: {
       name: 'Въведете името си.',
       email: 'Въведете валиден имейл.',
-      service: 'Изберете услуга.',
       message: 'Напишете малко повече – поне 10 знака, за да ви отговоря смислено.',
     },
     subject: 'Ново запитване от портфолиото',
@@ -169,14 +166,12 @@ const en: typeof bg = {
   form: {
     label: 'Contact form',
     name: 'Full name',
-    namePlaceholder: 'Your full name',
     email: 'Email',
     emailPlaceholder: 'you@company.com',
     service: 'What do you need?',
-    servicePlaceholder: 'Select Service',
+    servicePlaceholder: 'Choose a service (optional)',
     message: 'Tell me about your project',
-    messagePlaceholder:
-      'Tell me about your project - goals, timeline, any existing brand assets...',
+    messagePlaceholder: 'Goals, timeline, materials…',
     send: 'Send Message',
     helper: 'I reply personally, usually within 24 hours. No commitment.',
     sending: 'Sending your message…',
@@ -188,7 +183,6 @@ const en: typeof bg = {
     errors: {
       name: 'Please enter your full name.',
       email: 'Please enter a valid email address.',
-      service: 'Please select a service.',
       message: 'Tell me a little more - 10+ characters helps me reply usefully.',
     },
     subject: 'New Project Inquiry from Portfolio',

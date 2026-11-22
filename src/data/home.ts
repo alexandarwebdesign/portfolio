@@ -76,7 +76,6 @@ const bg = {
   contact: {
     label: 'Контакт',
     title: ['Имате проект', 'наум?'],
-    lead: 'Разкажете ми какво изграждате. Ще ви кажа точно как бих подходил.',
     reply: 'Отговарям до 24 часа.',
     email: 'Предпочитате имейл?',
   },
@@ -155,7 +154,6 @@ const en: typeof bg = {
   contact: {
     label: 'Contact',
     title: ['Have a project', 'in mind?'],
-    lead: 'Tell me what you’re building. I’ll tell you exactly how I’d approach it.',
     reply: 'I reply within 24 hours.',
     email: 'Prefer email?',
   },

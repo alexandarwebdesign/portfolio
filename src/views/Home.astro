@@ -11,7 +11,6 @@ import AboutIndex from '../components/AboutIndex.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
 import FaqSection from '../components/FaqSection.astro';
 import ContactForm from '../components/ContactForm.astro';
-import StatusIcon from '../components/StatusIcon.astro';
 import portrait from '../assets/images/portrait.jpg';
 import heroImage from '../assets/images/hero/hero.jpg';
 import { home, work } from '../data/home';
@@ -213,15 +212,10 @@ const columns = [
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <div class="availability-signal">
-          <StatusIcon class="availability-icon" />
-          <span>{s.available}</span>
-        </div>
         <h2 class="contact-title">
           <span>{t.contact.title[0]}</span>
           <span>{t.contact.title[1]}</span>
         </h2>
-        <p class="contact-subtitle">{t.contact.lead}</p>
         <div class="contact-email">
           <p class="email-label">{t.contact.email}</p>
           <a href={`mailto:${site.email}`} class="email-link" aria-label={s.emailTo}>{site.email}</a
