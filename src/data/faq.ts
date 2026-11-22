@@ -21,7 +21,7 @@ const bg = [
   },
   {
     q: 'Можете ли да преработите съществуващ сайт?',
-    a: 'Да. Редизайнът минава през същите пет етапа като нов сайт. Ако вече имате бранд или съдържание, те влизат направо в проучването.',
+    a: 'Да. Редизайнът минава през същите три етапа като нов сайт. Ако вече имате бранд или съдържание, те влизат направо в първия етап.',
   },
 ];
 
@@ -48,7 +48,7 @@ const en: typeof bg = [
   },
   {
     q: 'Can you redesign an existing website?',
-    a: 'Yes. Redesigns follow the same five-stage process as new builds. If you have existing branding or content, it feeds directly into the discovery stage.',
+    a: 'Yes. Redesigns follow the same three stages as new builds. If you have existing branding or content, it feeds directly into the first stage.',
   },
 ];
 
