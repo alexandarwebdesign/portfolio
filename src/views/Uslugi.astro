@@ -1,12 +1,13 @@
 ---
 // The offer page for local businesses, in both languages (/uslugi, /en/services).
-import HeroShader from '../components/HeroShader.astro';
+import { Picture } from 'astro:assets';
+import TickRing from '../components/TickRing.astro';
 import Button from '../components/Button.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import WorkCard from '../components/WorkCard.astro';
 import FaqSection from '../components/FaqSection.astro';
-import OfferForm from '../components/OfferForm.astro';
-import StatusIcon from '../components/StatusIcon.astro';
+import ContactForm from '../components/ContactForm.astro';
 import birseCard from '../assets/images/birse-card.jpg';
+import heroImage from '../assets/images/hero/hero.jpg';
 import { uslugiCopy } from '../data/uslugi';
 import { ui, type Lang } from '../i18n/ui';
 import { pathFor } from '../i18n/routes';
@@ -23,18 +24,33 @@ const birsePath = pathFor('birse', lang)!;
 const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
 ---
 
-<section id="hero" class="hero-section hero-section--shader">
-  <HeroShader />
-  <div class="hero-content">
-    <p class="hero-eyebrow">{t.hero.eyebrow}</p>
-    <h1 class="hero-title">{t.hero.title.join(' ')}</h1>
-    <p class="hero-subtitle">{t.hero.lead}</p>
-    <Button href="#contact" class="hero-cta" data-focus-target="#offer-name">{t.hero.cta}</Button>
-    <p class="hero-note hero-proof">
-      <a href="#ceni">{t.prices.items[0].title.split(' (')[0]} {t.prices.items[0].price}</a> · {
-        t.hero.reply
-      }
-    </p>
+<section id="hero" class="hero-section hero-stage stage">
+  <TickRing corner="bl" />
+  <TickRing corner="tr" />
+  <div class="hero-content container">
+    <div class="hero-heading">
+      <p class="hero-eyebrow">{t.hero.eyebrow}</p>
+      <h1 class="hero-title">{t.hero.title.join(' ')}</h1>
+    </div>
+    <div class="hero-picture" aria-hidden="true">
+      <Picture
+        src={heroImage}
+        formats={['avif', 'webp']}
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 900px) 62vw, 40vw"
+        alt=""
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="hero-aside">
+      <p class="hero-subtitle">{t.hero.lead}</p>
+      <Button href="#contact" class="hero-cta" data-focus-target="#name">{t.hero.cta}</Button>
+      <p class="hero-note hero-proof">
+        <a href="#ceni">{t.prices.items[0].title.split(' (')[0]} {t.prices.items[0].price}</a><br />
+        {t.hero.reply}
+      </p>
+    </div>
   </div>
 </section>
 
@@ -103,10 +119,26 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
   </div>
 </section>
 
+<section id="birse" class="work-section" aria-labelledby="birse-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(04)</span> {t.proof.label}</p>
+      <h2 id="birse-title" class="section-title">{t.proof.title}</h2>
+    </div>
+    <div class="offer-proof">
+      <WorkCard name="Birsé" category={t.proof.category} image={birseCard} href={birsePath} />
+      <div class="offer-proof__text reveal">
+        <p class="about-page-para">{t.proof.text}</p>
+        <Button href={birsePath} variant="secondary">{t.proof.link}</Button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="ceni" class="services-section" aria-labelledby="ceni-title">
   <div class="container">
     <div class="section-header reveal">
-      <p class="mono-label"><span class="index">(04)</span> {t.prices.label}</p>
+      <p class="mono-label"><span class="index">(05)</span> {t.prices.label}</p>
       <h2 id="ceni-title" class="section-title">{t.prices.title}</h2>
     </div>
     <div class="services-list">
@@ -125,23 +157,7 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
     </div>
     <p class="section-note reveal">{t.prices.note}</p>
     <div class="services-cta reveal">
-      <Button href="#contact" data-focus-target="#offer-name">{t.hero.cta}</Button>
-    </div>
-  </div>
-</section>
-
-<section id="birse" class="work-section" aria-labelledby="birse-title">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="mono-label"><span class="index">(05)</span> {t.proof.label}</p>
-      <h2 id="birse-title" class="section-title">{t.proof.title}</h2>
-    </div>
-    <div class="offer-proof">
-      <ProjectCard name="Birsé" category={t.proof.category} image={birseCard} href={birsePath} />
-      <div class="offer-proof__text reveal">
-        <p class="about-page-para">{t.proof.text}</p>
-        <Button href={birsePath} variant="secondary">{t.proof.link}</Button>
-      </div>
+      <Button href="#contact" data-focus-target="#name">{t.hero.cta}</Button>
     </div>
   </div>
 </section>
@@ -152,7 +168,7 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
   label={t.faq.label}
   title={t.faq.title}
   items={t.faq.items}
-  focus="#offer-name"
+  focus="#name"
 />
 
 <section id="contact" class="contact-section stage">
@@ -162,22 +178,18 @@ const n = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <div class="availability-signal">
-          <StatusIcon class="availability-icon" />
-          <span>{ui[lang].site.available}</span>
-        </div>
         <h2 class="contact-title">
-          <span>{t.contact.title[0]}</span><span>{t.contact.title[1]}</span>
+          <span>{t.contact.title[0]}</span>
+          <span>{t.contact.title[1]}</span>
         </h2>
-        <p class="contact-subtitle">{t.hero.reply}</p>
         <div class="contact-email">
           <p class="email-label">{t.contact.email}</p>
-          <a href={`mailto:${site.email}`} class="email-link" aria-label={t.form.emailLabel}
+          <a href={`mailto:${site.email}`} class="email-link" aria-label={ui[lang].site.emailTo}
             >{site.email}</a
           >
         </div>
       </div>
-      <OfferForm {lang} />
+      <ContactForm {lang} />
     </div>
   </div>
 </section>
