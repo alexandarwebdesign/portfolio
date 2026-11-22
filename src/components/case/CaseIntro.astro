@@ -105,13 +105,13 @@ const [role, clientCol, year] = meta;
       </div>
     </dl>
   </div>
-  <div class="container case-header__picture">
+  <div class="case-header__picture">
     <div class="project-hero-image-frame">
       <Picture
         src={hero.image}
         formats={['avif', 'webp']}
         widths={[800, 1080, 1600, 2400].filter((w) => w <= hero.image.width)}
-        sizes="(max-width: 1648px) calc(100vw - 48px), 1600px"
+        sizes="100vw"
         alt={hero.alt}
         class="project-hero-image"
         id="project-hero-full-image"
