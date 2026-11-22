@@ -4481,11 +4481,10 @@ html.js.reveal-failsafe .reveal {
    ========================================================================== */
 
 /* Case header - minimal title block (replaces verbose hero) */
-/* Case header: the dark stage of the home hero (rings of ticks, title on the left, the facts on
-   the right), with the hero picture in a frame at the bottom of it. */
+/* Case header: the title on the left, the facts on the right, the hero picture edge to edge at the
+   bottom of it, on the darker white. */
 .case-header {
   position: relative;
-  overflow: clip; /* the rings are half cropped by the corners */
   padding: clamp(120px, 16vh, 180px) 0 0;
   /* the darker white of the backgrounds; the glow of the rows ends on it */
   background: var(--color-surface-subtle);
@@ -4697,8 +4696,6 @@ html.js.reveal-failsafe .reveal {
 .case-header .project-hero-image {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
-  max-height: 80svh;
   border-radius: 0;
   object-fit: cover;
 }
@@ -5016,11 +5013,6 @@ html.js.reveal-failsafe .reveal {
 
   .case-device-note h3 {
     font-size: 28px;
-  }
-
-  /* 1. Hero frame: a taller crop on a phone */
-  .case-header .project-hero-image {
-    aspect-ratio: 4 / 3;
   }
 
   .block-fullwidth .single-image {

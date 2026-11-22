@@ -3,7 +3,6 @@
 // year and sector, palette) and the framed hero picture with a floating logo.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import TickRing from '../TickRing.astro';
 import pfgMark from '../../assets/images/case/pfg-mark.svg?raw';
 
 interface Props {
@@ -24,8 +23,6 @@ const [role, clientCol, year] = meta;
 ---
 
 <section id="project-hero" class="case-header">
-  <TickRing corner="bl" />
-  <TickRing corner="tr" />
   <div class="container case-header__top">
     <a href={back.href} class="case-back">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
