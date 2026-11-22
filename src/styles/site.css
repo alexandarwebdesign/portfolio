@@ -2220,13 +2220,16 @@ body.is-loaded .hero-note {
   overflow: visible;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .service-row {
     grid-template-columns: auto 1fr;
   }
 
-  .service-desc {
+  .service-body {
     grid-column: 2;
+  }
+
+  .service-desc {
     max-width: none;
   }
 
