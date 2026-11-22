@@ -2216,7 +2216,8 @@ body.is-loaded .hero-cta {
    colour of the section behind (--bar-end), so the dark end blends into it. Used by the FAQ boxes and
    the rows of the about index. */
 .faq-item,
-.about-index-row {
+.about-index-row,
+.case-fact {
   background: radial-gradient(
     var(--gradient-bar-shape),
     var(--gradient-bar-start) 0%,
@@ -2226,7 +2227,8 @@ body.is-loaded .hero-cta {
 
 /* Rows: the nav's hairline on top and bottom and its fill. */
 .faq-item,
-.about-index-row {
+.about-index-row,
+.case-fact {
   border-block: 1px solid var(--color-border-subtle); /* the nav's hairline, top and bottom only */
 }
 
@@ -2235,7 +2237,8 @@ body.is-loaded .hero-cta {
 }
 
 .faq-item + .faq-item,
-.about-index-row + .about-index-row {
+.about-index-row + .about-index-row,
+.case-fact + .case-fact {
   margin-top: -1px; /* neighbours share one line */
 }
 
@@ -4575,12 +4578,7 @@ html.js.reveal-failsafe .reveal {
   grid-template-columns: 10rem minmax(0, 1fr);
   column-gap: var(--space-4);
   align-items: center;
-  padding-block: var(--space-4);
-  border-top: 1px solid var(--color-border-subtle);
-}
-
-.case-fact:last-child {
-  border-bottom: 1px solid var(--color-border-subtle);
+  padding: var(--space-5) var(--space-6);
 }
 
 .case-fact dt {
@@ -4625,22 +4623,23 @@ html.js.reveal-failsafe .reveal {
   gap: var(--space-4);
 }
 
-.case-fact__name {
-  font-size: var(--text-title);
-  line-height: 1.15;
-  color: var(--color-text);
-}
-
 .case-fact__link,
 .case-fact__dev {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   min-height: 24px; /* WCAG 2.5.8 target size */
+  font-size: var(--text-body-lg);
+  line-height: 1.25;
   color: var(--color-text);
   text-decoration: none;
   border-bottom: 1px solid var(--color-border-subtle);
   transition: border-color 400ms var(--ease);
+}
+
+.case-fact__link svg {
+  width: 18px;
+  height: 18px;
 }
 
 .case-fact__link:hover,
@@ -4654,8 +4653,8 @@ html.js.reveal-failsafe .reveal {
 
 .case-fact__mark {
   display: inline-flex;
-  width: 20px;
-  height: 20px;
+  width: 26px;
+  height: 26px;
   color: var(--color-ink);
 }
 

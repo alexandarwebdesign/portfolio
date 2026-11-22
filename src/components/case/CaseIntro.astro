@@ -13,7 +13,7 @@ interface Props {
   hero: { image: ImageMetadata; alt: string };
   logo: { src: string; width?: number; height?: number; class?: string };
   /** The client and the address of its site. */
-  client: { name: string; href: string; siteLabel: string };
+  client: { href: string; siteLabel: string };
   /** Who built it (the PFG Bulgaria mark sits left of the link). */
   dev?: { label: string; name: string; href: string };
   palette: { label: string; colors: string[] };
@@ -51,7 +51,6 @@ const [role, clientCol, year] = meta;
       <div class="case-fact">
         <dt>{clientCol.label}</dt>
         <dd class="case-fact__client">
-          <span class="case-fact__name">{client.name}</span>
           <a href={client.href} class="case-fact__link" target="_blank" rel="noopener noreferrer">
             {client.siteLabel}
             <svg
