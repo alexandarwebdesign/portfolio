@@ -1,6 +1,6 @@
 // The privacy page. Draft text: the facts come from the code (the forms and what they send, no
-// cookies and no analytics on the site); the retention sentence and the wording are for the owner
-// to confirm.
+// cookies and no analytics on the site); the retention period (12 months for an enquiry) was
+// confirmed by the owner, the accounting records follow the period set by law (no number on purpose).
 import { site } from './site';
 
 export const privacy = {
@@ -40,7 +40,7 @@ export const privacy = {
       {
         heading: 'Колко дълго го пазя',
         text: [
-          'Толкова, колкото е нужно, за да ви отговоря и за работата след това, после го изтривам.',
+          'Запитване, което не води до проект, пазя до 12 месеца след последното съобщение, после го изтривам. Ако работим заедно, пазя кореспонденцията, докато трае работата и поддръжката. Фактурите и счетоводните документи пазя за срока, определен в закона. Можете да поискате изтриване по всяко време.',
         ],
       },
       {
@@ -87,7 +87,7 @@ export const privacy = {
       {
         heading: 'How long I keep it',
         text: [
-          'As long as it is needed to reply to you and for any work that follows, then I delete it.',
+          'I keep an enquiry that does not lead to a project for up to 12 months after the last message, then delete it. If we work together, I keep the correspondence for as long as the work and support last. Invoices and accounting records I keep for the period set by law. You can ask me to delete your data at any time.',
         ],
       },
       {
