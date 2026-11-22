@@ -8,6 +8,7 @@ const site = `<a href="https://www.birse.bg/" target="_blank" rel="noopener nore
 export const birseCopy = {
   en: {
     badge: 'Redesign finished',
+    devLabel: 'Development',
     meta: [
       {
         label: 'Role / Services',
@@ -117,6 +118,7 @@ export const birseCopy = {
   },
   bg: {
     badge: 'Редизайнът е завършен',
+    devLabel: 'Разработка',
     meta: [
       {
         label: 'Роля / услуги',
