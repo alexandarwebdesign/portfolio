@@ -117,9 +117,11 @@ const t = birseCopy[lang];
             ))
           }
         </ul>
+        <div class="case-results" slot="text">
+          <h3 id="birse-proof-results">{t.results.title}</h3>
+          <p>{t.results.text}</p>
+        </div>
       </CaseProof>
-
-      <CaseProof id="birse-proof-results" {...t.results} />
 
       <CaseCta title={c.ctaTitle} cta={c.cta} href={homeHash('contact')} />
     </div>
