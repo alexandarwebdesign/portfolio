@@ -3227,6 +3227,7 @@ body.is-loaded .case-meta-row {
 .project-next-teaser-section {
   padding: clamp(6rem, 12vw, 10rem) 0;
   border-top: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-subtle);
 }
 
 .project-next-teaser {
@@ -3481,7 +3482,6 @@ html.js .about-page-cta-row.reveal {
    pending more case studies, but on /about we use it as the closer) */
 .about-page .project-next-teaser-section {
   display: block !important;
-  background: var(--color-surface-subtle);
 }
 
 @media (max-width: 900px) {
