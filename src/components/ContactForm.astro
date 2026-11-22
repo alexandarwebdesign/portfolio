@@ -7,9 +7,11 @@ import { services } from '../data/services';
 
 interface Props {
   lang: Lang;
+  /** The e-mail subject, when the form is not on the home page (tells the enquiries apart). */
+  subject?: string;
 }
 
-const { lang } = Astro.props;
+const { lang, subject } = Astro.props;
 const t = ui[lang].form;
 const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
 ---
@@ -31,7 +33,7 @@ const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
   data-err-message={t.errors.message}
 >
   <input type="hidden" name="access_key" value={import.meta.env.PUBLIC_WEB3FORMS_KEY} />
-  <input type="hidden" name="subject" value={t.subject} />
+  <input type="hidden" name="subject" value={subject ?? t.subject} />
   <input type="hidden" name="from_name" value={t.from} />
   <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" />
 

@@ -5799,19 +5799,6 @@ html.js.reveal-failsafe .reveal {
   }
 }
 
-/* Two fields side by side on wide screens, stacked on phones */
-.offer-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: var(--space-4);
-}
-
-@media (max-width: 600px) {
-  .offer-form-row {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* --------------------------------------------------------------------------
    Work cards on the home page: two columns, the left flush with the
    container's left edge and the right with its right edge, the right one

@@ -21,7 +21,7 @@ const home = pathFor('home', lang)!;
 // On the home page the sections are on the page itself.
 const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? '' : home}/#${id}`);
 const contact = route === 'uslugi' ? '#contact' : hash('contact');
-const focusField = route === 'uslugi' ? '#offer-name' : '#name';
+const focusField = '#name';
 
 const links = [
   { href: hash('work'), label: t.nav.work, current: false },
