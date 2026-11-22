@@ -1,6 +1,6 @@
 ---
 // Three phones side by side, each with a short note; the middle one may play
-// a video. The outer phones drift with the scroll (site script).
+// a video. Phones and notes stay still so the text can be read.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
@@ -18,7 +18,6 @@ interface Props {
 }
 
 const { label, phones } = Astro.props;
-const speed = ['1', undefined, '-1'];
 ---
 
 <div class="case-block case-block--device case-block--bare" style="--case-tint:#e4e4e4;">
@@ -26,7 +25,7 @@ const speed = ['1', undefined, '-1'];
     <div class="mobile-devices-row">
       {
         phones.map((phone, i) => (
-          <div class="mobile-col" data-parallax-speed={speed[i]}>
+          <div class="mobile-col">
             <div class:list={['mobile-device', { 'video-toggle': phone.video }]}>
               {phone.video ? (
                 <div class="mobile-screen">

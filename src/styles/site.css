@@ -266,6 +266,8 @@ h3,
   --color-white: #fafafa;
   --color-accent: #0066cc; /* Apple link blue on light */
   --color-accent-hover: #0058b0;
+  --color-accent-on-dark: #2997ff; /* the accent on the dark hero and footer */
+  --color-accent-hover-on-dark: #55adff;
   --color-success: #1f9c44;
   --color-error: #b3261e;
   /* On-dark (footer, contact band) */
@@ -332,6 +334,10 @@ h3,
   --border-radius: var(--radius-lg);
   --border-radius-sm: 2px;
   --border-radius-button: var(--radius-md);
+  /* a quiet shadow for pictures that are not inside a device frame: low, medium spread */
+  --shadow-picture:
+    0 1px 2px rgb(0 0 0 / 0.05), 0 8px 24px -8px rgb(0 0 0 / 0.14),
+    0 24px 56px -20px rgb(0 0 0 / 0.16);
   --section-gap: clamp(120px, 18vh, 220px);
 
   /* ---------- Components ---------- */
@@ -2668,8 +2674,8 @@ body.is-loaded .hero-cta {
   --color-text-tertiary: rgba(239, 239, 239, 0.8);
   --color-border: rgba(239, 239, 239, 0.4);
   --color-border-subtle: rgba(239, 239, 239, 0.14);
-  --color-accent: #2997ff;
-  --color-accent-hover: #55adff;
+  --color-accent: var(--color-accent-on-dark);
+  --color-accent-hover: var(--color-accent-hover-on-dark);
   --color-white: #101010; /* text on the accent button */
   --color-danger: #ff7a70;
 }
@@ -4315,13 +4321,14 @@ html.js.reveal-failsafe .reveal {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg); /* pictures take the largest radius */
+  box-shadow: var(--shadow-picture);
   background: var(--color-background);
 }
 
 .block-mobile-devices .mobile-screen::before {
   content: '';
   display: block;
-  padding-top: 203%;
+  padding-top: 199.7%; /* the ratio of the screenshots, so a video is as tall as they are */
 }
 
 .block-mobile-devices .mobile-screen--img::before {
@@ -4859,30 +4866,50 @@ html.js.reveal-failsafe .reveal {
 
 .case-proof--phones .mobile-col {
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   gap: clamp(20px, 3vw, 32px);
 }
 
+/* The note under a phone: as wide as the phone, left-aligned, a hairline above it ties it to the
+   phone. Two degrees of text: the title leads, the sentence is smaller. It does not move. */
 .case-device-note {
-  width: min(72%, 280px);
-  text-align: center;
+  width: 68%; /* the width of .mobile-device */
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-subtle);
+  text-align: left;
   color: var(--color-text);
 }
 
+@media (max-width: 720px) {
+  .case-device-note {
+    width: 76%;
+  }
+}
+
 .case-device-note h3 {
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-3);
   font-family: var(--font-display);
-  font-size: var(--text-title);
-  font-weight: 500;
-  line-height: 1.1;
+  font-size: var(--text-body-lg);
+  font-weight: 600;
+  line-height: 1.25;
   letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+@media (min-width: 900px) {
+  /* room for two lines, so the three sentences start on one line */
+  .case-device-note h3 {
+    min-height: 2.5em;
+  }
 }
 
 .case-device-note p {
   margin: 0;
   font-size: var(--text-body-sm);
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--color-text-tertiary);
+  text-wrap: pretty;
 }
 
 /* Peak-end CTA - restrained */
@@ -5018,11 +5045,7 @@ html.js.reveal-failsafe .reveal {
   }
 
   .case-device-note {
-    width: min(86%, 340px);
-  }
-
-  .case-device-note h3 {
-    font-size: 28px;
+    width: min(72%, 280px); /* the width of the phone */
   }
 
   .block-fullwidth .single-image {
@@ -5227,6 +5250,7 @@ html.js.reveal-failsafe .reveal {
   margin-inline: auto;
   border-radius: var(--border-radius);
   overflow: hidden;
+  box-shadow: var(--shadow-picture);
 }
 
 .case-figure-img {
@@ -5601,4 +5625,23 @@ html.js.reveal-failsafe .reveal {
 
 .legal-updated {
   margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Links: every link that is not a button turns the accent blue on hover. The buttons (the
+   Button component) and the icon tiles (home, social) keep their own hover.
+   -------------------------------------------------------------------------- */
+a {
+  transition: color var(--duration-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  a:not(.button-primary, .button-secondary, .nav-home, .footer-social-link):hover {
+    color: var(--color-accent);
+  }
+
+  /* on the dark footer: the lighter blue (the accent itself is too dark there) */
+  .footer a:not(.footer-social-link):hover {
+    color: var(--color-accent-on-dark);
+  }
 }
