@@ -1294,54 +1294,6 @@ textarea:focus-visible {
   mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
 }
 
-.hero-section--shader {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-}
-
-.hero-shader {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.hero-shader__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transform: scale(1.08);
-  filter: blur(14px);
-  transition:
-    opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 1.5s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 1.3s cubic-bezier(0.22, 1, 0.36, 1);
-  will-change: opacity, transform, filter;
-  mix-blend-mode: screen;
-}
-
-.hero-section--shader.is-shader-ready .hero-shader__canvas {
-  opacity: 1;
-  transform: scale(1);
-  filter: blur(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-shader__canvas {
-    transform: none;
-    filter: none;
-    transition: opacity 0.4s ease;
-  }
-}
-
-.hero-section--shader .hero-content {
-  position: relative;
-  z-index: 2;
-}
-
 .hero-content {
   display: flex;
   flex-direction: column;
