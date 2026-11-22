@@ -4535,7 +4535,7 @@ html.js.reveal-failsafe .reveal {
 }
 @media (min-width: 900px) {
   .case-header__top {
-    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     grid-template-areas:
       'back back'
       'main facts';
@@ -4562,11 +4562,19 @@ html.js.reveal-failsafe .reveal {
   margin: 0;
 }
 
+@media (min-width: 900px) {
+  /* every row as tall as the tallest one */
+  .case-facts {
+    display: grid;
+    grid-auto-rows: 1fr;
+  }
+}
+
 .case-fact {
   display: grid;
-  grid-template-columns: minmax(110px, 2fr) 5fr;
-  column-gap: var(--space-6);
-  align-items: baseline;
+  grid-template-columns: 10rem minmax(0, 1fr);
+  column-gap: var(--space-4);
+  align-items: center;
   padding-block: var(--space-4);
   border-top: 1px solid var(--color-border-subtle);
 }
@@ -4595,10 +4603,24 @@ html.js.reveal-failsafe .reveal {
   color: var(--color-text-muted);
 }
 
+/* role and year: the values in one line of text, a dot between them */
+.case-fact .case-fact__list {
+  display: block;
+}
+
+.case-fact__list > span {
+  white-space: nowrap;
+}
+
+.case-fact__list > span:not(:last-child)::after {
+  content: '\00b7';
+  margin-inline: 0.5em;
+}
+
 .case-fact .case-fact__client {
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: var(--space-4);
 }

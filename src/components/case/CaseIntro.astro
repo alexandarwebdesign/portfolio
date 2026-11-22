@@ -44,7 +44,7 @@ const [role, clientCol, year] = meta;
     <dl class="case-facts">
       <div class="case-fact">
         <dt>{role.label}</dt>
-        <dd>
+        <dd class="case-fact__list">
           {role.items.map((item) => <span set:html={item} />)}
         </dd>
       </div>
@@ -86,7 +86,7 @@ const [role, clientCol, year] = meta;
       }
       <div class="case-fact">
         <dt>{year.label}</dt>
-        <dd>
+        <dd class="case-fact__list">
           {year.items.map((item) => <span set:html={item} />)}
         </dd>
       </div>
