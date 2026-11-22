@@ -3066,11 +3066,11 @@ body.is-loaded .case-facts {
   width: 11.11vw;
   height: 11.11vw;
   padding: 2.5vw;
-  /* the navbar's glass: its gradient, its frosting, its hairline, rims and shadow */
+  /* the navbar's glass (its gradient, hairline, rims and shadow), with a lighter frosting, in a circle */
   background: var(--gradient-bar);
-  backdrop-filter: blur(2rem);
-  -webkit-backdrop-filter: blur(2rem);
-  border-radius: var(--radius-md); /* 18px, like the navbar */
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  border-radius: 50%;
   box-shadow:
     0 0 0 1px var(--color-border-subtle),
     inset 0 2px 3px rgb(255 255 255 / 1),
