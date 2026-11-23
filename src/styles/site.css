@@ -4334,6 +4334,8 @@ html.js.reveal-failsafe .reveal {
   touch-action: pan-y;
   user-select: none;
   -webkit-user-select: none;
+  padding-block: var(--space-16); /* room for the picture shadow inside the mask */
+  margin-block: calc(var(--space-16) * -1);
   mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
 }
 
@@ -4360,7 +4362,7 @@ html.js.reveal-failsafe .reveal {
   padding-right: 2.4rem;
 }
 
-/* Flat editorial tiles: no glass frame, no shadow - just rounded media with a hairline. */
+/* Editorial tiles: rounded media with a hairline and the quiet picture shadow. */
 .image-marquee__item {
   flex-shrink: 0;
   width: clamp(400px, 50vw, 820px);
@@ -4369,6 +4371,7 @@ html.js.reveal-failsafe .reveal {
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border-subtle); /* the pale designs would melt into the page */
   overflow: hidden;
+  box-shadow: var(--shadow-picture);
   transform: translateZ(0);
 }
 
@@ -4641,18 +4644,12 @@ html.js.reveal-failsafe .reveal {
   line-height: 1.25;
   color: var(--color-text);
   text-decoration: none;
-  border-bottom: 1px solid var(--color-border-subtle);
-  transition: border-color 400ms var(--ease);
 }
 
-.case-fact__link svg {
+.case-fact__link svg,
+.case-fact__dev .case-fact__arrow {
   width: 18px;
   height: 18px;
-}
-
-.case-fact__link:hover,
-.case-fact__dev:hover {
-  border-color: var(--color-ink);
 }
 
 .case-fact__dev {
@@ -4665,6 +4662,11 @@ html.js.reveal-failsafe .reveal {
   height: 30px;
   aspect-ratio: 21 / 32; /* the mark's own width: no empty space on its right */
   color: var(--color-ink);
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.case-fact__dev:hover .case-fact__mark {
+  color: var(--color-accent);
 }
 
 .case-fact__mark svg {
@@ -5384,7 +5386,7 @@ html.js.reveal-failsafe .reveal {
   html.js .statement-ticks line {
     stroke-dasharray: 100px;
     stroke-dashoffset: 100px;
-    transition: stroke-dashoffset 260ms var(--ease-out) calc(700ms + var(--k) * 18ms);
+    transition: stroke-dashoffset 130ms var(--ease-out) calc(350ms + var(--k) * 9ms);
   }
 
   html.js .statement-ring.is-drawn .statement-ticks line {
@@ -5394,7 +5396,7 @@ html.js.reveal-failsafe .reveal {
   /* every line starts a little higher than its place and settles down as it appears */
   html.js .statement-ticks .tick {
     transform: translateY(-2px); /* user units: about 15px on desktop, 7px on a phone */
-    transition: transform 420ms var(--ease-out) calc(700ms + var(--k) * 18ms);
+    transition: transform 210ms var(--ease-out) calc(350ms + var(--k) * 9ms);
   }
 
   html.js .statement-ring.is-drawn .statement-ticks .tick {
@@ -5403,12 +5405,12 @@ html.js.reveal-failsafe .reveal {
 
   html.js .statement-ring::before {
     clip-path: inset(0 100% 0 0);
-    transition: clip-path 700ms var(--ease-out);
+    transition: clip-path 350ms var(--ease-out);
   }
 
   html.js .statement-ring::after {
     clip-path: inset(0 0 0 100%);
-    transition: clip-path 700ms var(--ease-out);
+    transition: clip-path 350ms var(--ease-out);
   }
 
   html.js .statement-ring.is-drawn::before,
@@ -5610,6 +5612,9 @@ html.js.reveal-failsafe .reveal {
   border: 1px solid var(--color-border-subtle);
   border-radius: var(--radius-xs);
   padding: 2px 8px;
+  margin-top: var(
+    --space-4
+  ); /* title to subtitle and subtitle to tag look equally far apart (about 22px between the letters) */
 }
 
 @media (max-width: 800px) {
@@ -5696,7 +5701,7 @@ a {
   }
 
   /* on the dark footer: the lighter blue (the accent itself is too dark there) */
-  .footer a:not(.footer-social-link):hover {
+  .footer a:not(.footer-social-link, .button-primary, .button-secondary):hover {
     color: var(--color-accent-on-dark);
   }
 }
