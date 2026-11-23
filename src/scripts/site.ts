@@ -653,6 +653,8 @@ function initAsciiArt() {
       let gridRows = 0;
       let kind = new Uint8Array(0);
       let level = new Uint8Array(0);
+      let run = 0; // a newer build makes an older one stop
+      const yieldToMain = () => new Promise<void>((resolve) => setTimeout(resolve));
       let sweep = { from: 0, length: 1 }; // where the band starts and how far it travels, in `along`
       const along = (x: number, y: number) => (x / gridCols) * 0.8 + (y / gridRows) * 0.5;
 
@@ -696,7 +698,10 @@ function initAsciiArt() {
         if (!raf && visible && !reduceMotion()) raf = requestAnimationFrame(loop);
       };
 
-      const build = () => {
+      // The build takes a few hundred ms of calculation: it gives the main thread back between its
+      // parts, so scrolling and taps are not blocked while it runs.
+      const build = async () => {
+        const mine = ++run;
         const W = root.clientWidth;
         const H = root.clientHeight;
         if (!W || !H) return;
@@ -763,12 +768,13 @@ function initAsciiArt() {
 
         // The tilt pushes the slab right and down, and a box cuts what leaves it. So measure where the
         // slab lands, then centre it in the box and shrink it if it does not fit.
-        const extent = () => {
+        const extent = async () => {
           let u0 = Infinity;
           let u1 = -Infinity;
           let v0 = Infinity;
           let v1 = -Infinity;
           for (let v = -H; v <= H; v += 10) {
+            if (((v + H) / 10) % 8 === 0) await yieldToMain();
             for (let u = -W; u <= W; u += 10) {
               if (!cast(u, v)) continue;
               u0 = Math.min(u0, u);
@@ -782,7 +788,8 @@ function initAsciiArt() {
         for (let pass = 0; pass < 3; pass++) {
           shiftU = 0;
           shiftV = 0;
-          const e = extent();
+          const e = await extent();
+          if (mine !== run) return;
           if (!isFinite(e.u0)) break;
           const scale = Math.min(
             1.3,
@@ -795,7 +802,8 @@ function initAsciiArt() {
         }
         shiftU = 0;
         shiftV = 0;
-        const e = extent();
+        const e = await extent();
+        if (mine !== run) return;
         if (isFinite(e.u0)) {
           shiftU = (e.u0 + e.u1) / 2;
           shiftV = (e.v0 + e.v1) / 2;
@@ -803,11 +811,13 @@ function initAsciiArt() {
 
         const last = RAMP.length - 1;
         const rays = SAMPLES.length * SAMPLES.length;
-        gridCols = cols;
-        gridRows = rows;
-        kind = new Uint8Array(cols * rows); // 0 empty, 1 face, 2 wall
-        level = new Uint8Array(cols * rows); // the level of the character within RAMP or SIDE
+        const nextKind = new Uint8Array(cols * rows); // 0 empty, 1 face, 2 wall
+        const nextLevel = new Uint8Array(cols * rows); // the level of the character within RAMP or SIDE
         for (let y = 0; y < rows; y++) {
+          if (y % 4 === 0) {
+            await yieldToMain();
+            if (mine !== run) return;
+          }
           for (let x = 0; x < cols; x++) {
             let face = 0;
             let dark = 0;
@@ -829,17 +839,21 @@ function initAsciiArt() {
             if (face + wall < rays * 0.4) continue;
             const i = y * cols + x;
             if (face >= wall) {
-              kind[i] = 1;
-              level[i] = Math.max(1, Math.min(last, Math.round((dark / face) ** 0.85 * last)));
+              nextKind[i] = 1;
+              nextLevel[i] = Math.max(1, Math.min(last, Math.round((dark / face) ** 0.85 * last)));
             } else {
-              kind[i] = 2;
-              level[i] = Math.max(
+              nextKind[i] = 2;
+              nextLevel[i] = Math.max(
                 0,
                 Math.min(SIDE.length - 1, Math.round((tone / wall) * (SIDE.length - 1))),
               );
             }
           }
         }
+        gridCols = cols;
+        gridRows = rows;
+        kind = nextKind;
+        level = nextLevel;
         // the band travels only across the mark, then rests a short while before it starts again
         let first = Infinity;
         let lastAlong = -Infinity;
@@ -857,14 +871,27 @@ function initAsciiArt() {
       };
 
       let timer = 0;
+      let built = false;
       let lastWidth = root.clientWidth;
       new ResizeObserver(() => {
         if (root.clientWidth === lastWidth) return; // only a change of width needs a new grid
         lastWidth = root.clientWidth;
+        if (!built) return; // the first build, when the mark is near, uses the width it has by then
         clearTimeout(timer);
         timer = window.setTimeout(build, 150);
       }).observe(root);
-      build();
+      // The first build waits until the mark is about a screen away: it is far below the fold, and its
+      // calculation would only block the first seconds of the page.
+      const near = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+          near.disconnect();
+          built = true;
+          build();
+        },
+        { rootMargin: '100% 0px' },
+      );
+      near.observe(root);
       // it only runs while it is on screen, in a visible tab, and never for reduced motion
       new IntersectionObserver(
         ([entry]) => {
