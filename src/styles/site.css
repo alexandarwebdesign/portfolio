@@ -4564,6 +4564,15 @@ html.js.reveal-failsafe .reveal {
   padding: var(--space-8) var(--space-6);
 }
 
+/* a phone has no room for the label beside the value: it goes above it */
+@media (max-width: 599px) {
+  .case-fact {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-2);
+    padding: var(--space-6);
+  }
+}
+
 .case-fact dt {
   font-family: var(--font-mono);
   font-size: var(--text-label);
@@ -4596,6 +4605,14 @@ html.js.reveal-failsafe .reveal {
 .case-fact__list > span:not(:last-child)::after {
   content: '\00b7';
   margin-inline: 0.5em;
+}
+
+/* the items sit in a row that may wrap, so a long list never leaves the screen */
+@media (max-width: 899px) {
+  .case-fact .case-fact__list {
+    display: flex;
+    flex-flow: row wrap;
+  }
 }
 
 .case-fact .case-fact__client {
