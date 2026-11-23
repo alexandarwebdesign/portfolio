@@ -9,16 +9,21 @@ import FullBleed from '../components/case/FullBleed.astro';
 import CaseClosing from '../components/case/CaseClosing.astro';
 import NextTeaser from '../components/NextTeaser.astro';
 import hero from '../assets/images/case/tunora-hero.jpg';
-import scrollShot from '../assets/images/case/tunora-scroll.jpg';
-import privacy from '../assets/images/case/tunora-privacy.jpg';
-import features2 from '../assets/images/case/tunora-features-2.jpg';
-import features3 from '../assets/images/case/tunora-features-3.jpg';
-import players from '../assets/images/case/tunora-players.jpg';
-import pricing from '../assets/images/case/tunora-pricing.jpg';
-import faq from '../assets/images/case/tunora-faq.jpg';
-import mobileHero from '../assets/images/case/tunora-mobile-hero.jpg';
-import mobileFeatures from '../assets/images/case/tunora-mobile-features.jpg';
-import mobilePricing from '../assets/images/case/tunora-mobile-pricing.jpg';
+import scrollHome from '../assets/images/case/tunora-scroll.jpg';
+import scrollPrivacy from '../assets/images/case/tunora-scroll-privacy.jpg';
+import scrollPricing from '../assets/images/case/tunora-scroll-pricing.jpg';
+import slide1 from '../assets/images/case/tunora-slide-1.jpg';
+import slide2 from '../assets/images/case/tunora-slide-2.jpg';
+import slide3 from '../assets/images/case/tunora-slide-3.jpg';
+import slide4 from '../assets/images/case/tunora-slide-4.jpg';
+import slide5 from '../assets/images/case/tunora-slide-5.jpg';
+import slide6 from '../assets/images/case/tunora-slide-6.jpg';
+import phone1 from '../assets/images/case/tunora-phone-1.jpg';
+import phone2 from '../assets/images/case/tunora-phone-2.jpg';
+import phone3 from '../assets/images/case/tunora-phone-3.jpg';
+import phone4 from '../assets/images/case/tunora-phone-4.jpg';
+import phone5 from '../assets/images/case/tunora-phone-5.jpg';
+import phone6 from '../assets/images/case/tunora-phone-6.jpg';
 import brand from '../assets/images/case/tunora-brand.jpg';
 import birseCard from '../assets/images/case/birse-card.jpg';
 import mark from '../assets/images/case/tunora-mark.svg';
@@ -57,35 +62,57 @@ const t = tunoraCopy[lang];
     <div id="project-content-stream" class="project-content-stream">
       <CaseProof id="tunora-proof-trust" {...t.trust}>
         <DeviceDesktop
-          image={scrollShot}
+          image={scrollHome}
           alt={t.trust.alt}
           scroll={{ end: '-76%', duration: '22s' }}
         />
       </CaseProof>
 
       <CaseProof id="tunora-proof-privacy" {...t.privacy}>
-        <DeviceDesktop image={privacy} alt={t.privacy.alt} bare />
+        <DeviceDesktop
+          image={scrollPrivacy}
+          alt={t.privacy.alt}
+          scroll={{ end: '-42%', duration: '16s' }}
+        />
       </CaseProof>
 
-      <CaseProof id="tunora-proof-features" {...t.portfolio} band>
-        <DeviceCarousel
-          id="case-carousel-tunora"
-          slides={[features2, features3, players, pricing, faq].map((image, i) => ({
-            image,
-            alt: t.portfolio.slides[i],
-          }))}
-          prev={c.prev}
-          next={c.next}
+      <CaseProof id="tunora-proof-pricing" {...t.pricing}>
+        <DeviceDesktop
+          image={scrollPricing}
+          alt={t.pricing.alt}
+          scroll={{ end: '-61.6%', duration: '20s' }}
         />
       </CaseProof>
 
       <CaseProof id="tunora-proof-mobile" {...t.mobile} phones>
         <DevicePhones
           label={t.mobile.label}
-          phones={[mobileHero, mobileFeatures, mobilePricing].map((image, i) => ({
+          phones={[phone1, phone2, phone3].map((image, i) => ({
             image,
             ...t.mobile.phones[i],
           }))}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-mobile-details" {...t.mobile2} phones>
+        <DevicePhones
+          label={t.mobile2.label}
+          phones={[phone4, phone5, phone6].map((image, i) => ({
+            image,
+            ...t.mobile2.phones[i],
+          }))}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-states" {...t.portfolio} band>
+        <DeviceCarousel
+          id="case-carousel-tunora"
+          slides={[slide1, slide2, slide3, slide4, slide5, slide6].map((image, i) => ({
+            image,
+            alt: t.portfolio.slides[i],
+          }))}
+          prev={c.prev}
+          next={c.next}
         />
       </CaseProof>
 
