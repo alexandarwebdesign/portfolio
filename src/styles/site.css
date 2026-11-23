@@ -2969,31 +2969,19 @@ html.js:not(.footer-ready):not(.reveal-failsafe) .footer {
   }
 }
 
-/* Phones: the footer is a block at the end of the page, one screen tall (taller only when its content
-   needs it), and it is the same markup as on a desktop: only the layout changes. The title and the button
-   are centred in the space above the base; the base is a centred stack: the links spread over the full
-   width, the profiles, the email, the language, the location; then the copyright on the left and
-   Privacy on the right of one row. */
+/* Phones: the footer keeps the curtain of the other screens: fixed behind the page, one screen tall,
+   uncovered when the page ends. That fixed, dark, full-screen element is also what Safari 26 on iOS
+   tints its top and bottom bars from, so they stay dark (a footer that is an ordinary block leaves
+   nothing at the edges and the bars go light). It is the same markup as on a desktop: only the layout of
+   the content changes. The title and the button are centred in the space above the base; the base is a
+   centred stack: the links spread over the full width, the profiles, the email, the language, the
+   location; then the copyright on the left and Privacy on the right of one row. */
 @media (max-width: 768px) {
-  main {
-    margin-bottom: 0;
-  }
-
-  .footer {
-    position: relative;
-    inset: auto;
-    height: auto;
-    min-height: 100svh;
-  }
-
-  .footer::after,
   .footer .tick-ring {
     display: none;
   }
 
   .footer-inner {
-    height: auto;
-    min-height: 100svh;
     padding: var(--space-6);
   }
 
