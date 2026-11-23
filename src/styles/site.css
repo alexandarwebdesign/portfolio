@@ -346,11 +346,12 @@ h3,
   --input-padding: 20px;
 
   /* ---------- Glass (Espacio recipe) ---------- */
-  /* A lit disc: highlight on the top-left rim, a turned-away rim bottom-right, one shadow falling
-     down and to the right. Used by the nav bar and the tool discs. */
+  /* A lit disc: the light comes from the top left along one axis (5 across to 7 down, 144.5deg), so
+     the highlight on the top-left rim, the turned-away rim bottom-right, the shadow falling down and
+     to the right and the fill (see .process__tool) all lie on that same line. Used by the tool discs. */
   --shadow-disc:
-    inset 2px 2px 3px rgb(255 255 255 / 1), inset 5px 5px 12px -2px rgb(255 255 255 / 0.9),
-    inset -1.5px -1.5px 2px rgb(0 0 0 / 0.07), 2px 3px 4px rgb(0 0 0 / 0.14),
+    inset 2px 3px 3px rgb(255 255 255 / 1), inset 5px 7px 12px -2px rgb(255 255 255 / 0.9),
+    inset -1.5px -2.1px 2px rgb(0 0 0 / 0.07), 2px 3px 4px rgb(0 0 0 / 0.14),
     5px 7px 12px -2px rgb(0 0 0 / 0.22);
   /* The fill of the nav bar and the FAQ boxes: a light glow that starts at the middle of the top edge
      and fades out sideways and down to a darker colour (the FAQ section ends it on its own
@@ -2466,7 +2467,8 @@ body.is-loaded .hero-cta {
 
 /* The tool icons above the text: white-grey discs, each tucked a little under the one before it
    (the first on top). Light comes from the top left: a highlight on that rim, a softer rim on the
-   other side, one shadow down and to the right that falls on the next disc. */
+   other side, one shadow down and to the right that falls on the next disc, and a fill that goes from
+   white to grey along the same line. */
 .process__aside {
   container-type: inline-size;
 }
@@ -2486,10 +2488,10 @@ body.is-loaded .hero-cta {
   width: var(--tool);
   height: var(--tool);
   border-radius: 50%;
-  /* the nav's glow, but the dark end is opaque: the discs overlap, and a see-through end would show the
-     edge of the disc underneath */
-  background: radial-gradient(
-    var(--gradient-bar-shape),
+  /* the nav's white highlight fading to the darker surface, along the light's axis (the angle of the
+     shadow below); both ends are opaque, the discs overlap and must not show each other through */
+  background: linear-gradient(
+    144.5deg,
     var(--gradient-bar-start) 0%,
     var(--color-surface-subtle) 100%
   );
