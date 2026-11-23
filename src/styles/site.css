@@ -4617,9 +4617,11 @@ html.js.reveal-failsafe .reveal {
   color: var(--color-text-muted);
 }
 
-/* role and year: the values in one line of text, a dot between them */
+/* role and year: the values in a row of text with a dot between them; the row may wrap (between the
+   values, never inside one), so a long list never leaves the table or the screen */
 .case-fact .case-fact__list {
-  display: block;
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .case-fact__list > span {
@@ -4629,14 +4631,6 @@ html.js.reveal-failsafe .reveal {
 .case-fact__list > span:not(:last-child)::after {
   content: '\00b7';
   margin-inline: 0.5em;
-}
-
-/* the items sit in a row that may wrap, so a long list never leaves the screen */
-@media (max-width: 899px) {
-  .case-fact .case-fact__list {
-    display: flex;
-    flex-flow: row wrap;
-  }
 }
 
 .case-fact .case-fact__client {
@@ -4657,6 +4651,7 @@ html.js.reveal-failsafe .reveal {
   line-height: 1.25;
   color: var(--color-text);
   text-decoration: none;
+  overflow-wrap: anywhere; /* a long address breaks instead of leaving the table */
 }
 
 .case-fact__link svg,
