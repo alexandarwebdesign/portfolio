@@ -397,6 +397,80 @@ html {
   /* Disable scroll anchoring globally — it fights the sticky-reveal footer,
      compensating by ~navbar height when the sticky engages. */
   overflow-anchor: none;
+  /* the browser's scrollbar is hidden: the page has its own (.scrollbar, initScrollbar in site.ts) */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Scrollbar: one thin thumb on the right edge. White with the "difference" blend, so it reads dark on
+   the light page and light on the dark footer. It shows while the page scrolls, and when the pointer
+   is on it; it is dragged to scroll. */
+.scrollbar {
+  --scrollbar-width: 4px;
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: var(--space-5);
+  z-index: 110;
+  pointer-events: none;
+  /* on the container, so it blends with the page behind it, not with its own empty box */
+  mix-blend-mode: difference;
+}
+
+.scrollbar__thumb {
+  position: absolute;
+  top: 0;
+  right: var(--space-2);
+  width: var(--scrollbar-width);
+  border-radius: var(--scrollbar-width);
+  background: var(--color-white);
+  opacity: 0;
+  transition:
+    opacity var(--duration-fast) var(--ease),
+    width var(--duration-fast) var(--ease),
+    border-radius var(--duration-fast) var(--ease);
+}
+
+/* a wider area to take hold of, around the thumb */
+.scrollbar__thumb::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(-1 * var(--space-2));
+}
+
+.scrollbar.is-visible .scrollbar__thumb {
+  opacity: 0.55;
+}
+
+@media (pointer: fine) {
+  .scrollbar__thumb {
+    pointer-events: auto;
+    cursor: grab;
+  }
+
+  .scrollbar__thumb:hover,
+  .scrollbar.is-dragging .scrollbar__thumb {
+    --scrollbar-width: 8px;
+    opacity: 0.85;
+  }
+
+  .scrollbar.is-dragging .scrollbar__thumb {
+    cursor: grabbing;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollbar__thumb {
+    transition: none;
+  }
+}
+
+@media print {
+  .scrollbar {
+    display: none;
+  }
 }
 
 /* Ambient Background Animations */

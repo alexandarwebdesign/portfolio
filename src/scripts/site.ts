@@ -943,6 +943,84 @@ function initNavUnderFooter() {
   update();
 }
 
+// Scrollbar (see Scrollbar.astro): the thumb follows the page, shows while it scrolls and can be dragged.
+function initScrollbar() {
+  const bar = document.querySelector<HTMLElement>('[data-scrollbar]');
+  const thumb = bar?.querySelector<HTMLElement>('.scrollbar__thumb');
+  if (!bar || !thumb) return;
+  const root = document.documentElement;
+  const INSET = 8; // px kept free above and below the track
+  const MIN = 40; // the shortest thumb, px
+  const HIDE_AFTER = 1000; // ms after the last scroll
+  let max = 0; // the furthest the page can scroll
+  let track = 0;
+  let size = 0;
+  let frame = 0;
+  let hideTimer = 0;
+  let drag: { startY: number; startScroll: number } | null = null;
+
+  const place = () => {
+    const part = max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0;
+    thumb.style.transform = `translateY(${INSET + part * (track - size)}px)`;
+  };
+  const measure = () => {
+    max = root.scrollHeight - innerHeight;
+    track = innerHeight - INSET * 2;
+    size = Math.max(MIN, (track * innerHeight) / root.scrollHeight);
+    bar.hidden = max <= 1;
+    thumb.style.height = `${size}px`;
+    place();
+  };
+  const show = () => {
+    bar.classList.add('is-visible');
+    clearTimeout(hideTimer);
+    if (!drag) hideTimer = window.setTimeout(() => bar.classList.remove('is-visible'), HIDE_AFTER);
+  };
+  const scrollPageTo = (top: number) =>
+    window.__lenis
+      ? window.__lenis.scrollTo(top, { immediate: true })
+      : scrollTo({ top, behavior: 'instant' });
+
+  addEventListener(
+    'scroll',
+    () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        place();
+        show();
+      });
+    },
+    { passive: true },
+  );
+  addEventListener('resize', measure, { passive: true });
+  // the height of the page changes while images and sections are drawn
+  new ResizeObserver(measure).observe(root);
+
+  thumb.addEventListener('pointerdown', (event) => {
+    if (event.button !== 0 || track <= size) return;
+    event.preventDefault();
+    drag = { startY: event.clientY, startScroll: scrollY };
+    thumb.setPointerCapture(event.pointerId);
+    bar.classList.add('is-dragging');
+    show();
+  });
+  thumb.addEventListener('pointermove', (event) => {
+    if (!drag) return;
+    scrollPageTo(drag.startScroll + ((event.clientY - drag.startY) * max) / (track - size));
+  });
+  const release = (event: PointerEvent) => {
+    if (!drag) return;
+    drag = null;
+    bar.classList.remove('is-dragging');
+    if (thumb.hasPointerCapture(event.pointerId)) thumb.releasePointerCapture(event.pointerId);
+    show();
+  };
+  thumb.addEventListener('pointerup', release);
+  thumb.addEventListener('pointercancel', release);
+  measure();
+}
+
 function initMobileNav() {
   const burger = document.querySelector<HTMLButtonElement>('.nav-burger');
   const menu = document.getElementById('nav-mobile-menu');
@@ -1180,6 +1258,7 @@ function init() {
   initProcessRows();
   initSmoothScroll();
   initMobileNav();
+  initScrollbar();
   initFormHandling();
   initContactHashFocus();
 
