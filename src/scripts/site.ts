@@ -930,7 +930,8 @@ function initSafariBars() {
     top: null,
     bottom: null,
   };
-  const opaque = (c: string) => c.startsWith('rgb(') || (c.startsWith('color(') && !c.includes('/'));
+  const opaque = (c: string) =>
+    c.startsWith('rgb(') || (c.startsWith('color(') && !c.includes('/'));
   const fallback = () => getComputedStyle(document.body).backgroundColor;
   const colorAt = (y: number) => {
     for (const el of document.elementsFromPoint(innerWidth / 2, y)) {
