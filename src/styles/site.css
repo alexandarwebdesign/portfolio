@@ -853,7 +853,11 @@ textarea:focus-visible {
   background: rgba(239, 239, 239, 0.97); /* --color-background at near-opacity */
   backdrop-filter: blur(12px) saturate(1.2);
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
-  display: flex;
+  /* Closed, the menu is display: none, not only transparent: Safari 26 on iOS paints its top and bottom
+     bars from a full-width fixed element at the screen edge, and a transparent or hidden one is still
+     sampled (this light one made the bars light over the dark hero and footer). The display change
+     is part of the transition, so the fade still plays on open and on close. */
+  display: none;
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
@@ -868,11 +872,13 @@ textarea:focus-visible {
   transition:
     opacity var(--duration-normal) var(--ease),
     transform var(--duration-normal) var(--ease),
-    visibility 0s linear var(--duration-normal);
+    visibility 0s linear var(--duration-normal),
+    display var(--duration-normal) allow-discrete;
   will-change: opacity, transform;
 }
 
 .nav-mobile-menu.is-open {
+  display: flex;
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0) scale(1);
@@ -922,6 +928,19 @@ textarea:focus-visible {
 .nav-mobile-menu.is-open .nav-mobile-link {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* where the open menu and its links start from when it goes from display: none to open */
+@starting-style {
+  .nav-mobile-menu.is-open {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.985);
+  }
+
+  .nav-mobile-menu.is-open .nav-mobile-link {
+    opacity: 0;
+    transform: translateY(18px);
+  }
 }
 .nav-mobile-menu.is-open .nav-mobile-link:nth-child(1) {
   transition-delay: 60ms;
@@ -1050,7 +1069,7 @@ textarea:focus-visible {
       margin: 0;
       padding: 0;
       pointer-events: none;
-      z-index: 98; /* under the bar (100) and the menu (99) */
+      z-index: 1000; /* above everything else at the edges: Safari takes the topmost one */
     }
 
     .edge-strip--top {
