@@ -951,17 +951,66 @@ function initLanguageSwitchScroll() {
       const atEnd = maxScroll() > 0 && scrollY >= maxScroll() - 2;
       const box = index >= 0 ? list[index].getBoundingClientRect() : null;
       const fraction = box && box.height > 0 ? Math.min(1, -box.top / box.height) : 0;
+      // between two sections (past the end of this one): the gap in pixels, it does not scale with the text
+      const extra = box ? Math.max(0, -box.bottom) : 0;
+      // inside the section: the chain of children that holds the top of the screen, so a long section
+      // is followed block by block (the text of the other language wraps differently)
+      const path: [number, string][] = [];
+      let leaf = 0;
+      let gap = 0; // pixels past the end of the last block, when the top of the screen is between two blocks
+      if (box && index >= 0 && box.bottom > 0) {
+        let el: Element = list[index];
+        while (path.length < 8) {
+          let next = -1;
+          Array.from(el.children).forEach((child, i) => {
+            const style = getComputedStyle(child);
+            if (['fixed', 'sticky', 'absolute'].includes(style.position)) return;
+            if (style.display === 'none') return;
+            const r = child.getBoundingClientRect();
+            if (r.height > 0 && r.top <= 0) next = i;
+          });
+          if (next < 0) break;
+          el = el.children[next];
+          path.push([next, el.tagName]);
+          const r = el.getBoundingClientRect();
+          if (r.bottom <= 0) {
+            gap = -r.bottom;
+            leaf = 1;
+            break;
+          }
+          leaf = Math.min(1, Math.max(0, -r.top / r.height));
+        }
+      }
       sessionStorage.setItem(
         LANG_SCROLL_KEY,
-        JSON.stringify({ to: link.pathname, index, fraction, atEnd, at: Date.now() }),
+        JSON.stringify({
+          to: link.pathname,
+          index,
+          fraction,
+          extra,
+          path,
+          leaf,
+          gap,
+          atEnd,
+          at: Date.now(),
+        }),
       );
     } catch {
       /* no storage: the switch simply opens at the top */
     }
   });
 
-  let saved: { to: string; index: number; fraction: number; atEnd: boolean; at: number } | null =
-    null;
+  let saved: {
+    to: string;
+    index: number;
+    fraction: number;
+    extra: number;
+    path: [number, string][];
+    leaf: number;
+    gap: number;
+    atEnd: boolean;
+    at: number;
+  } | null = null;
   try {
     saved = JSON.parse(sessionStorage.getItem(LANG_SCROLL_KEY) || 'null');
     sessionStorage.removeItem(LANG_SCROLL_KEY);
@@ -982,24 +1031,66 @@ function initLanguageSwitchScroll() {
     if (saved.atEnd) return maxScroll();
     const el = sections()[saved.index];
     if (!el) return scrollY;
-    return el.getBoundingClientRect().top + scrollY + saved.fraction * el.offsetHeight;
+    // the same chain of blocks in the other language, if it is all there
+    if (saved.path?.length) {
+      let node: Element | undefined = el;
+      for (const [i, tag] of saved.path) {
+        node = node?.children[i];
+        if (!node || node.tagName !== tag) {
+          node = undefined;
+          break;
+        }
+      }
+      if (node) {
+        const r = node.getBoundingClientRect();
+        return r.top + scrollY + saved.leaf * r.height + (saved.gap || 0);
+      }
+    }
+    return (
+      el.getBoundingClientRect().top +
+      scrollY +
+      saved.fraction * el.offsetHeight +
+      (saved.extra || 0)
+    );
   };
   const go = (top: number) => scrollTo({ top, behavior: 'instant' });
   document.documentElement.classList.add('lang-restored');
-  let placed = target();
-  go(placed);
-  show();
-  // images and sections that were not drawn yet change the heights: once the page has loaded, place it
-  // again, unless the reader has already moved
-  addEventListener(
-    'load',
-    () => {
-      if (Math.abs(scrollY - placed) > 2) return;
-      placed = target();
-      go(placed);
-    },
-    { once: true },
-  );
+  // The page stays hidden until it has loaded: before that the heights are not known and the place
+  // would be wrong. A timer in Base.astro shows it anyway after 3 s.
+  const place = () => {
+    const want = target();
+    go(want);
+  };
+  place();
+  if (document.readyState === 'complete') show();
+  else
+    addEventListener(
+      'load',
+      () => {
+        place();
+        show();
+      },
+      { once: true },
+    );
+  // Images and sections that were not drawn yet change the heights while the page settles: keep the
+  // place for a few seconds, until the reader moves.
+  let moved = false;
+  const stop = () => (moved = true);
+  for (const type of ['wheel', 'touchstart', 'pointerdown', 'keydown'])
+    addEventListener(type, stop, { once: true, passive: true });
+  const watch = new ResizeObserver(() => {
+    if (!moved) place();
+  });
+  watch.observe(document.documentElement);
+  // some changes of the height are not reported to the observer: look again every 100 ms
+  const poll = setInterval(() => {
+    if (!moved) place();
+  }, 100);
+  setTimeout(() => {
+    watch.disconnect();
+    clearInterval(poll);
+    show();
+  }, 4000);
 }
 
 function init() {
