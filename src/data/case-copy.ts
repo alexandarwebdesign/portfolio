@@ -15,7 +15,7 @@ export const birseCopy = {
         items: ['UX Strategy', 'UI/UX Redesign', 'Design System &amp; Handoff'],
       },
       { label: 'Client', items: [site, 'Fine jewelry, est. 2013', `Dev partner: ${pfg}`] },
-      { label: 'Year &amp; Sector', items: ['2026 ©', 'E-Commerce · Jewelry'] },
+      { label: 'Year & Sector', items: ['2026 ©', 'E-Commerce · Jewelry'] },
     ],
     heroAlt: 'BirSé fine jewelry brand hero',
     storefront: {
@@ -237,7 +237,7 @@ export const formaCopy = {
     meta: [
       { label: 'Role / Services', items: ['UX Strategy', 'UI Design', 'Web Development'] },
       { label: 'Client', items: ['FORMA Architects', 'Luxury architect persona'] },
-      { label: 'Year &amp; Sector', items: ['2026 ©', 'Architecture · Luxury'] },
+      { label: 'Year & Sector', items: ['2026 ©', 'Architecture · Luxury'] },
     ],
     heroAlt: 'FORMA Architects project hero image',
     live: 'View live site',
@@ -372,7 +372,7 @@ export const tunoraCopy = {
     meta: [
       { label: 'Role / Services', items: ['Product Design', 'UI Design', 'Web Development'] },
       { label: 'Client', items: ['Tunora', 'My own product'] },
-      { label: 'Year &amp; Sector', items: ['2026 ©', 'Software · Windows'] },
+      { label: 'Year & Sector', items: ['2026 ©', 'Software · Windows'] },
     ],
     heroAlt: 'Tunora, a now-playing widget for Windows, over a dark glowing scene',
     live: 'View live site',
