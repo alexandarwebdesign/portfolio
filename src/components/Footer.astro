@@ -24,6 +24,8 @@ const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
 const otherRoute = route === 'notFound' ? 'home' : route;
 const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
 const otherName = otherLang === 'bg' ? 'Български' : 'English';
+// the accessible name starts with the text the switch shows (BG/БГ and EN), then says where it goes
+const switchLabel = `${lang === 'bg' ? 'БГ' : 'BG'} EN: ${otherName}`;
 const privacyHref = pathFor('privacy', lang)!;
 // The same links as the navigation.
 const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? '' : home}/#${id}`);
@@ -129,7 +131,7 @@ const social = [
             lang={otherLang}
             hreflang={otherLang}
             title={otherName}
-            aria-label={otherName}
+            aria-label={switchLabel}
           >
             <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
               <img src={bgFlag.src} width="22" height="22" alt="" />

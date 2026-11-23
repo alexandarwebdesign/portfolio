@@ -34,6 +34,8 @@ const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
 const otherRoute = route === 'notFound' ? 'home' : route;
 const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
 const otherName = { bg: { full: 'Български' }, en: { full: 'English' } }[otherLang];
+// the accessible name starts with the text the switch shows (BG/БГ and EN), then says where it goes
+const switchLabel = `${lang === 'bg' ? 'БГ' : 'BG'} EN: ${otherName.full}`;
 ---
 
 <header>
@@ -79,7 +81,7 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
         hreflang={otherLang}
         lang={otherLang}
         title={otherName.full}
-        aria-label={otherName.full}
+        aria-label={switchLabel}
       >
         <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
           <img src={bgFlag.src} width="22" height="22" alt="" />
@@ -159,7 +161,7 @@ const otherName = { bg: { full: 'Български' }, en: { full: 'English' } 
     class="nav-mobile-link nav-mobile-lang"
     hreflang={otherLang}
     lang={otherLang}
-    aria-label={otherName.full}
+    aria-label={switchLabel}
   >
     <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
       <img src={bgFlag.src} width="22" height="22" alt="" />
