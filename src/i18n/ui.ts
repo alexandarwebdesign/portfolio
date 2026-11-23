@@ -162,7 +162,7 @@ const en: typeof bg = {
   },
   meta: {
     home: {
-      title: 'UX/UI Designer & Web Developer Sofia, Bulgaria | Aleksandar Pavlov',
+      title: 'UX/UI Designer & Web Developer in Sofia | Aleksandar Pavlov',
       description:
         'UX/UI specialist turning interface psychology into websites that convert. Beautiful, proven to work, and built to last. Based in Sofia, Bulgaria.',
     },

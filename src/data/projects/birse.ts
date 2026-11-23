@@ -30,9 +30,9 @@ const filterPoints: [number, number][] = [
 
 const bg: CaseContent = {
   meta: {
-    title: 'Birsé – UX/UI редизайн на онлайн магазин за бижута | Александър Павлов',
+    title: 'Birsé – редизайн на магазин за бижута | Александър Павлов',
     description:
-      'Мобилен UX/UI редизайн на BirSé, българска къща за фини бижута, онлайн от 2013 г. Начална страница, продуктови страници и поръчка, преработени около това как пазаруват 80 % от клиентите – от телефона.',
+      'Мобилен UX/UI редизайн на BirSé, българска къща за бижута от 2013 г.: начална, продуктови страници и поръчка за 80 %-те клиенти от телефона.',
   },
   name: 'Birsé',
   status: 'Редизайнът е завършен',
@@ -239,9 +239,9 @@ const bg: CaseContent = {
 
 const en: CaseContent = {
   meta: {
-    title: 'Birsé – Jewelry E-commerce UX/UI Redesign | Aleksandar Pavlov',
+    title: 'Birsé – Jewelry Store UX/UI Redesign | Aleksandar Pavlov',
     description:
-      'A mobile-first UX/UI redesign for BirSé, a Bulgarian fine-jewelry house online since 2013. Storefront, product pages and checkout redesigned around how 80% of the audience actually shops – on a phone.',
+      'A mobile-first UX/UI redesign for BirSé, a Bulgarian jewelry house online since 2013: storefront, product pages and checkout for the 80% on mobile.',
   },
   name: 'Birsé',
   status: 'Redesign finished',

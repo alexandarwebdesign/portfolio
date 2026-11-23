@@ -7,9 +7,9 @@ const live = 'https://tunora-site.pages.dev/';
 // reads its text from case-copy.ts.
 const bg: CaseContent = {
   meta: {
-    title: 'Tunora – сайт за собствен продукт за Windows | Александър Павлов',
+    title: 'Tunora – сайт на мой продукт за Windows | Александър Павлов',
     description:
-      'Собствен продукт: уиджет за музика за Windows и сайтът му. Продуктов дизайн, UI дизайн и изработка на страница, която показва продукта в действие и казва ясно какво се случва с данните.',
+      'Собствен продукт: уиджет за музика за Windows и сайтът му. Продуктов и UI дизайн и изработка на страница, която показва продукта и казва какво става с данните.',
   },
   name: 'Tunora',
   status: 'Собствен продукт',
@@ -23,9 +23,9 @@ const bg: CaseContent = {
 
 const en: CaseContent = {
   meta: {
-    title: 'Tunora – Website for My Own Windows Product | Aleksandar Pavlov',
+    title: 'Tunora – Site for My Windows Product | Aleksandar Pavlov',
     description:
-      'My own product: a now-playing widget for Windows and its website. Product design, UI design and development of a page that shows the product at work and says plainly what happens to your data.',
+      'My own product: a now-playing widget for Windows and its website. Product design, UI and development of a page that shows it and says what happens to your data.',
   },
   name: 'Tunora',
   status: 'Own product',

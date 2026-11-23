@@ -28,7 +28,7 @@ const live = 'https://forma-architetects.netlify.app/';
 
 const bg: CaseContent = {
   meta: {
-    title: 'FORMA Architects – концептуален сайт за луксозна архитектура | Александър Павлов',
+    title: 'FORMA Architects – концептуален сайт | Александър Павлов',
     description:
       'Концептуален проект: сайт за измислено бутиково архитектурно студио за луксозни резиденции. UX стратегия, UI дизайн и изработка в духа на „тихия лукс“.',
   },
@@ -204,9 +204,9 @@ const bg: CaseContent = {
 
 const en: CaseContent = {
   meta: {
-    title: 'FORMA Architects – Luxury Architecture Concept Website | Aleksandar Pavlov',
+    title: 'FORMA Architects – Concept Website | Aleksandar Pavlov',
     description:
-      'Conceptual project: a website for a fictional boutique architecture studio designing luxury residences. UX strategy, UI design and development in a “quiet luxury” direction.',
+      'Conceptual project: a website for a fictional boutique architecture studio for luxury residences. UX strategy, UI and development in a “quiet luxury” style.',
   },
   name: 'FORMA Architects',
   status: 'Conceptual project',
