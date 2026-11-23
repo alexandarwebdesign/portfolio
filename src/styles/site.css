@@ -2965,8 +2965,8 @@ html.js:not(.footer-ready):not(.reveal-failsafe) .footer {
   transform: rotateY(360deg);
 }
 
-/* While the footer is uncovered it starts 40 % darker and clears as the last screen of the page
-   scrolls past: a black layer fading from 40 % to nothing over the last 100svh of the scroll. */
+/* While the footer is uncovered it starts fully black and clears as the last screen of the page
+   scrolls past: a black layer fading from 100 % to nothing over the last 100svh of the scroll. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: scroll()) {
     .footer::after {
@@ -2975,7 +2975,7 @@ html.js:not(.footer-ready):not(.reveal-failsafe) .footer {
       inset: 0;
       z-index: 2;
       pointer-events: none;
-      background: rgb(0 0 0 / 40%);
+      background: rgb(0 0 0);
       animation: footer-clear linear both;
       animation-range: calc(100% - 100svh) 100%;
     }
@@ -3193,7 +3193,7 @@ body.is-loaded .case-facts {
 .project-next-teaser-section {
   padding: clamp(6rem, 12vw, 10rem) 0;
   border-top: 1px solid var(--color-border-subtle);
-  background: var(--color-surface-subtle);
+  background: var(--color-surface); /* the lightest surface */
 }
 
 .project-next-teaser {
