@@ -10,14 +10,14 @@ import CaseClosing from '../components/case/CaseClosing.astro';
 import NextTeaser from '../components/NextTeaser.astro';
 import hero from '../assets/images/case/tunora-hero.jpg';
 import scrollHome from '../assets/images/case/tunora-scroll.jpg';
-import scrollPrivacy from '../assets/images/case/tunora-scroll-privacy.jpg';
-import scrollPricing from '../assets/images/case/tunora-scroll-pricing.jpg';
+import firstScreen from '../assets/images/case/tunora-first-screen.jpg';
+import features from '../assets/images/case/tunora-features.jpg';
+import terminal from '../assets/images/case/tunora-terminal.jpg';
+import download from '../assets/images/case/tunora-download.jpg';
+import footerShot from '../assets/images/case/tunora-footer.jpg';
 import slide1 from '../assets/images/case/tunora-slide-1.jpg';
 import slide2 from '../assets/images/case/tunora-slide-2.jpg';
 import slide3 from '../assets/images/case/tunora-slide-3.jpg';
-import slide4 from '../assets/images/case/tunora-slide-4.jpg';
-import slide5 from '../assets/images/case/tunora-slide-5.jpg';
-import slide6 from '../assets/images/case/tunora-slide-6.jpg';
 import phone1 from '../assets/images/case/tunora-phone-1.jpg';
 import phone2 from '../assets/images/case/tunora-phone-2.jpg';
 import phone3 from '../assets/images/case/tunora-phone-3.jpg';
@@ -68,20 +68,21 @@ const t = tunoraCopy[lang];
         />
       </CaseProof>
 
-      <CaseProof id="tunora-proof-privacy" {...t.privacy}>
-        <DeviceDesktop
-          image={scrollPrivacy}
-          alt={t.privacy.alt}
-          scroll={{ end: '-42%', duration: '16s' }}
-        />
+      <CaseProof id="tunora-proof-hero" {...t.hero}>
+        <DeviceDesktop image={firstScreen} alt={t.hero.alt} bare />
       </CaseProof>
 
-      <CaseProof id="tunora-proof-pricing" {...t.pricing}>
-        <DeviceDesktop
-          image={scrollPricing}
-          alt={t.pricing.alt}
-          scroll={{ end: '-61.6%', duration: '20s' }}
-        />
+      <CaseProof id="tunora-proof-features" {...t.features}>
+        <DeviceDesktop image={features} alt={t.features.alt} bare />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-trust-moments" {...t.decisions}>
+        <DeviceDesktop image={terminal} alt={t.decisions.alt} bare />
+        <DeviceDesktop image={download} alt={t.decisions.altModal} bare />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-footer" {...t.footer}>
+        <DeviceDesktop image={footerShot} alt={t.footer.alt} bare />
       </CaseProof>
 
       <CaseProof id="tunora-proof-mobile" {...t.mobile} phones>
@@ -107,7 +108,7 @@ const t = tunoraCopy[lang];
       <CaseProof id="tunora-proof-states" {...t.portfolio} band>
         <DeviceCarousel
           id="case-carousel-tunora"
-          slides={[slide1, slide2, slide3, slide4, slide5, slide6].map((image, i) => ({
+          slides={[slide1, slide2, slide3].map((image, i) => ({
             image,
             alt: t.portfolio.slides[i],
           }))}

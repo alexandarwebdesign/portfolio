@@ -382,17 +382,31 @@ export const tunoraCopy = {
       text: 'Tunora is a small Windows widget that shows and controls whatever music is playing. I designed and built it, so the page had to do what a store listing would: let a visitor understand it in a second. Instead of describing the widget, the first rows of the page are small live demos of it, under one headline that says what they do.',
       alt: 'The Tunora home page scrolling slowly in a laptop frame: the first screen, the strip of albums and the cards with widget demos',
     },
-    privacy: {
-      kicker: 'Trust',
-      title: 'Privacy as a feature, in plain words',
-      text: 'A widget that reads what you listen to has to earn trust before it is installed. The page first says it works with virtually every player, then answers the worry in three short lines: no account, nothing leaves the PC, no analytics that identify you. A small status window beside them shows the same, as numbers.',
-      alt: 'The Tunora page scrolling in a laptop frame: the supported players in a ring and the privacy section with a terminal-style status window',
+    hero: {
+      kicker: 'First screen',
+      title: 'Everything that decides fits in one look',
+      text: 'The headline, one sentence and two buttons all sit above the fold, in one centered column. Around them the page says “music” before anyone reads: a glowing rim that frames the screen, a portrait lit by the music peeking from the bottom, and glass badges of players and album covers on both sides. One word of the headline is a serif italic, “glowing”.',
+      alt: 'The first screen of the Tunora website: a glowing rim, the headline, two buttons and a portrait with glass player badges',
     },
-    pricing: {
-      kicker: 'Decision',
-      title: 'Free first, the price second, then the doubts',
-      text: 'The free plan comes first, with a plain list of what it includes. Pro stands beside it with a one-time price and a “Coming soon” tag, because it cannot be bought yet. The questions that follow answer the usual doubts (the account, the price, the data, the Windows warning) before the closing call to download.',
-      alt: 'The Tunora page scrolling in a laptop frame: the pricing plans, the questions and the closing screen',
+    features: {
+      kicker: 'Feature cards',
+      title: 'Each card is the widget in one of its real states',
+      text: 'The cards sit in one large rounded block with a very small gap between them, so the grid reads as one object. Each one pairs a sentence with a demo of the widget in a real state, and the colors and radii of the demos come from the app’s own interface files, so the page shows the real widget, not an imitation of it.',
+      alt: 'The Tunora feature cards: the headline above a grid of cards with live widget demos',
+    },
+    decisions: {
+      kicker: 'Trust',
+      title: 'Two moments that earn trust before the install',
+      text: 'The privacy section shows its promise instead of only stating it: a status window types a command, the values scan and settle to zero, a padlock is drawn and stamped “secured”. With reduced motion, the final state appears at once. Then, when someone presses download, a dialog warns about the one thing Windows will do: Tunora is not code-signed yet, so Windows shows a warning the first time. The dialog says what will appear, the two clicks that follow, and why, with a fallback button if the download did not start.',
+      alt: 'The Tunora privacy section with a terminal-style status window that ends in a secured padlock',
+      altModal:
+        'The download dialog of Tunora over the blurred first screen: what Windows will show and the two steps to continue',
+    },
+    footer: {
+      kicker: 'Closing',
+      title: 'A night sky for a closing, in pure CSS',
+      text: 'The footer is a starfield with four shooting stars and warm and cool beams of light rising from the bottom, with no script and no image. Below the links comes one honest line: Tunora is not made by, or affiliated with, the music services it works with.',
+      alt: 'The Tunora footer: a night sky with stars and soft colored light beams above the links',
     },
     mobile: {
       kicker: 'Mobile',
@@ -443,13 +457,10 @@ export const tunoraCopy = {
     portfolio: {
       kicker: 'Desktop states',
       title: 'One surface, one hairline, one accent, top to bottom',
-      text: 'The same dark surface, hairline border and single accent carry through the feature cards, the supported players, the privacy section and the pricing. Every card pairs one sentence with a small working demo: scroll to change the volume, synced lyrics, a widget that shrinks to a circle when idle, a lock mode that lets clicks pass through.',
+      text: 'The same dark surface, hairline border and single accent carry through the feature cards, the supported players and the pricing. Every card pairs one sentence with a small working demo: scroll to change the volume, synced lyrics, a widget that shrinks to a circle when idle, a lock mode that lets clicks pass through.',
       slides: [
-        'Tunora features: the headline and the first cards with the seek bar and the album glow',
-        'Tunora features: scroll to set volume, synced lyrics, idle circle and lock mode',
         'Tunora features: the idle circle, lock mode, custom themes and dynamic album colors',
         'Tunora supported players: Spotify, YouTube, Apple Music and more in a ring',
-        'Tunora privacy: three short statements beside a terminal-style status window',
         'Tunora pricing: a free plan and a one-time Pro unlock',
       ],
     },
@@ -476,17 +487,31 @@ export const tunoraCopy = {
       text: 'Tunora е малък уиджет за Windows, който показва и управлява музиката, която свири. Проектирал съм и изработил съм го сам, затова страницата трябваше да свърши работата на листинг в магазин: посетителят да го разбере за секунда. Вместо да описва уиджета, първите редове на страницата са малки живи демонстрации, под едно заглавие, което казва какво правят.',
       alt: 'Началната страница на Tunora, която се превърта бавно в рамка на лаптоп: първият екран, лентата с албуми и картите с демонстрации на уиджета',
     },
-    privacy: {
-      kicker: 'Доверие',
-      title: 'Поверителността като възможност, с прости думи',
-      text: 'Уиджет, който чете какво слушате, трябва да спечели доверие още преди да бъде инсталиран. Страницата първо казва, че работи почти с всеки плейър, после отговаря на опасението в три кратки реда: няма акаунт, нищо не напуска компютъра, няма анализ, който да ви идентифицира. Малък прозорец със състояние до тях показва същото с числа.',
-      alt: 'Страницата на Tunora, която се превърта в рамка на лаптоп: поддържаните плейъри в дъга и секцията за поверителност с прозорец със състояние като терминал',
+    hero: {
+      kicker: 'Първи екран',
+      title: 'Всичко, което решава, се събира в един поглед',
+      text: 'Заглавието, едно изречение и два бутона са над сгъвката, в една центрирана колона. Около тях страницата казва „музика“ преди някой да е чел: светещ контур, който рамкира екрана, портрет, осветен от музиката, който се подава отдолу, и стъклени значки на плейъри и обложки от двете страни. Една дума от заглавието е курсивен сериф: „glowing“.',
+      alt: 'Първият екран на сайта на Tunora: светещ контур, заглавие, два бутона и портрет със стъклени значки на плейъри',
     },
-    pricing: {
-      kicker: 'Решение',
-      title: 'Първо безплатното, после цената, после съмненията',
-      text: 'Безплатният план е пръв, със ясен списък какво включва. До него е Pro с еднократна цена и етикет „Coming soon“, защото още не може да се купи. Въпросите след това отговарят на обичайните съмнения (акаунта, цената, данните, предупреждението на Windows) преди финалния призив за изтегляне.',
-      alt: 'Страницата на Tunora, която се превърта в рамка на лаптоп: плановете с цени, въпросите и затварящият екран',
+    features: {
+      kicker: 'Карти с възможности',
+      title: 'Всяка карта е уиджетът в едно от истинските му състояния',
+      text: 'Картите стоят в един голям заоблен блок с много малка междина между тях, така че мрежата се чете като един предмет. Всяка съчетава изречение с демонстрация на уиджета в реално състояние, а цветовете и радиусите на демонстрациите са от файловете на самото приложение, така че страницата показва истинския уиджет, а не имитация.',
+      alt: 'Картите с възможности на Tunora: заглавие над мрежа от карти с демонстрации на уиджета',
+    },
+    decisions: {
+      kicker: 'Доверие',
+      title: 'Два момента, които печелят доверие още преди инсталацията',
+      text: 'Секцията за поверителност показва обещанието си, а не само го казва: прозорец със състояние изписва команда, стойностите се сканират и спират на нула, чертае се катинар и се подпечатва „secured“. При намалено движение крайното състояние се показва веднага. После, когато някой натисне изтегляне, прозорец го предупреждава за единственото, което Windows ще направи: Tunora още не е подписана, затова при първото пускане Windows показва предупреждение. Прозорецът казва какво ще се появи, двата клика след това и защо, с резервен бутон, ако изтеглянето не е започнало.',
+      alt: 'Секцията за поверителност на Tunora с прозорец със състояние като терминал, който завършва със защитен катинар',
+      altModal:
+        'Прозорецът за изтегляне на Tunora над размазания първи екран: какво ще покаже Windows и двете стъпки за продължаване',
+    },
+    footer: {
+      kicker: 'Финал',
+      title: 'Нощно небе за финал, само с CSS',
+      text: 'Футърът е звездно небе с четири падащи звезди и топли и студени лъчи светлина, които се издигат отдолу, без скрипт и без изображение. Под връзките има един честен ред: Tunora не е направена от музикалните услуги, с които работи, и не е свързана с тях.',
+      alt: 'Футърът на Tunora: нощно небе със звезди и меки цветни лъчи светлина над връзките',
     },
     mobile: {
       kicker: 'Мобилно',
@@ -537,13 +562,10 @@ export const tunoraCopy = {
     portfolio: {
       kicker: 'Състояния на десктоп',
       title: 'Една повърхност, една тънка линия, един акцент отгоре до долу',
-      text: 'Същата тъмна повърхност, тънка рамка и един акцент минават през картите с възможности, поддържаните плейъри, поверителността и цените. Всяка карта съчетава едно изречение с малка работеща демонстрация: скрол за промяна на звука, синхронизирани текстове, уиджет, който се свива в кръг, когато е неактивен, и режим на заключване, през който кликовете минават.',
+      text: 'Същата тъмна повърхност, тънка рамка и един акцент минават през картите с възможности, поддържаните плейъри и цените. Всяка карта съчетава едно изречение с малка работеща демонстрация: скрол за промяна на звука, синхронизирани текстове, уиджет, който се свива в кръг, когато е неактивен, и режим на заключване, през който кликовете минават.',
       slides: [
-        'Tunora – възможности: заглавието и първите карти с лентата за превъртане и светенето по албума',
-        'Tunora – възможности: скрол за звука, синхронизирани текстове, кръг в покой и заключване',
         'Tunora – възможности: кръг в покой, заключване, собствени теми и цветове от албума',
         'Tunora – поддържани плейъри: Spotify, YouTube, Apple Music и други в дъга',
-        'Tunora – поверителност: три кратки твърдения до прозорец със състояние като терминал',
         'Tunora – цени: безплатен план и еднократно отключване на Pro',
       ],
     },
