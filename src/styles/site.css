@@ -165,8 +165,7 @@ h2,
 h3,
 .hero-title,
 .section-title,
-.case-title,
-.project-section-title {
+.case-title {
   text-wrap: balance;
 }
 
@@ -294,7 +293,6 @@ html.lang-restored .project-next-teaser-section {
   --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
   --font-display: var(--font-body); /* one family everywhere: Manrope */
   --font-mono: var(--font-body);
-  --text-hero: clamp(56px, 11vw, 176px);
   --text-section: clamp(32px, 3.3vw, 56px);
   --text-cta: clamp(40px, 5.5vw, 96px); /* footer roll-link, stays large */
   --text-title: clamp(24px, 2vw, 36px);
@@ -354,11 +352,9 @@ html.lang-restored .project-next-teaser-section {
   --section-gap: clamp(120px, 18vh, 220px);
 
   /* ---------- Components ---------- */
-  --card-gap: 32px;
-  --card-padding: 32px;
   --input-padding: 20px;
 
-  /* ---------- Glass (Espacio recipe) ---------- */
+  /* ---------- Glass ---------- */
   /* A lit disc: the light comes from the top left along one axis (5 across to 7 down, 144.5deg), so
      the highlight on the top-left rim, the turned-away rim bottom-right, the shadow falling down and
      to the right and the fill (see .process__tool) all lie on that same line. Used by the tool discs. */
@@ -376,20 +372,6 @@ html.lang-restored .project-next-teaser-section {
     var(--gradient-bar-start) 0%,
     color-mix(in srgb, var(--color-surface-subtle) 78%, transparent) 100%
   );
-  --glass-bg: rgba(250, 250, 250, 0.55);
-  --glass-blur: blur(12px) saturate(1.4);
-  --glass-radius: 4px;
-
-  /* ---------- Glass pill (restored pre-plan checkpoint recipe) ----------
-     Used by the project-card pill chip. Navbar keeps --glass-bg/--glass-blur
-     above; the checkpoint's blur(12px) lives in --glass-blur-card to avoid
-     the name collision. Shadow/accent tints migrated from old blue to var(--color-accent). */
-  --glass-bg-hover: rgba(250, 250, 250, 0.8);
-  --glass-border: rgba(250, 250, 250, 0.9);
-  --glass-blur-card: blur(12px);
-  --glass-accent-bg-strong: rgba(250, 250, 250, 0.86); /* project pill hover */
-  --color-accent-muted: rgba(0, 102, 204, 0.4); /* soft accent - hover borders */
-  --text-sm: 14px; /* pill category (checkpoint value) */
 }
 
 /* ==========================================================================
@@ -709,47 +691,6 @@ textarea:focus-visible {
 
 .button-secondary:hover .btn-hover-text {
   transform: translateY(-100%);
-}
-
-/* --------------------------------------------------------------------------
-   5.1.1 Roll-up text link
-   -------------------------------------------------------------------------- */
-
-.link-roll {
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  font-size: var(--text-button);
-  font-weight: 600;
-  color: var(--color-ink);
-  text-decoration: none;
-  line-height: 1.3;
-}
-
-.link-roll > span {
-  display: block;
-  transition: transform var(--duration-fast) var(--ease);
-}
-
-.link-roll::after {
-  content: attr(data-text);
-  /* fallback for engines without alt syntax */
-  content: attr(data-text) / '';
-  /* empty alt - excluded from accessible name */
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translateY(110%);
-  transition: transform var(--duration-fast) var(--ease);
-  color: var(--color-accent);
-}
-
-.link-roll:hover > span {
-  transform: translateY(-110%);
-}
-
-.link-roll:hover::after {
-  transform: translateY(0);
 }
 
 /* --------------------------------------------------------------------------
@@ -2059,12 +2000,6 @@ body.is-loaded .hero-cta {
   column-gap: 0.25em;
 }
 
-.contact-subtitle {
-  font-size: var(--text-body);
-  color: var(--color-text-light);
-  max-width: 38ch;
-}
-
 .contact-email {
   margin-top: var(--space-16);
 }
@@ -2086,29 +2021,6 @@ body.is-loaded .hero-cta {
 
 .email-link:hover {
   opacity: 0.7;
-}
-
-/* --------------------------------------------------------------------------
-   Availability Signal (on-dark mono label + pulsing dot)
-   -------------------------------------------------------------------------- */
-
-.availability-signal {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  font-weight: 500;
-  color: var(--color-text-light);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-}
-
-.availability-icon {
-  flex-shrink: 0;
-  display: block;
-  width: 28px;
-  height: 28px;
 }
 
 .contact-form {
@@ -3156,33 +3068,6 @@ body.is-loaded .case-facts {
   margin-bottom: 0;
 }
 
-.project-section-title {
-  font-family: var(--font-display);
-  font-size: var(--text-service);
-  font-weight: 500;
-  letter-spacing: var(--tracking-display);
-  padding-top: var(--space-10);
-  border-top: 1px solid var(--color-border-subtle);
-  margin-bottom: var(--space-8);
-  color: var(--color-text);
-}
-
-/* Project Concept Section */
-.project-concept-section {
-  padding: var(--space-24) 0;
-}
-
-/* Content Widths */
-.concept-content {
-  max-width: 800px;
-}
-
-.testimonial-content {
-  background: #fafafa;
-  border-left: 2px solid var(--color-accent);
-  padding: clamp(1.5rem, 4vw, 3rem) clamp(2rem, 5vw, 4rem);
-}
-
 .project-next-teaser-section {
   padding: clamp(6rem, 12vw, 10rem) 0;
   border-top: 1px solid var(--color-border-subtle);
@@ -3459,17 +3344,6 @@ html.js .about-page-cta-row.reveal {
    ========================================================================== */
 
 /* Page Load Animation */
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
 /* Stagger children */
 /* Scroll Reveal - blur-up */
@@ -3533,18 +3407,6 @@ html.js.reveal-failsafe .reveal {
   .button-secondary:hover {
     transform: none;
   }
-
-  .link-roll:hover > span {
-    transform: none;
-  }
-
-  .link-roll::after {
-    display: none;
-  }
-
-  .link-roll:hover {
-    color: var(--color-accent);
-  }
 }
 
 /* ==========================================================================
@@ -3597,13 +3459,6 @@ html.js.reveal-failsafe .reveal {
   .button-secondary {
     padding: 14px 28px;
     font-size: var(--text-body-sm);
-  }
-}
-
-@media (max-width: 445px) {
-  .availability-icon {
-    width: clamp(28px, 8vw, 40px);
-    height: clamp(28px, 8vw, 40px);
   }
 }
 
@@ -3799,31 +3654,6 @@ html.js.reveal-failsafe .reveal {
   display: block;
 }
 
-/* Wide Video Block (.content-wide-video)
-   Equivalent of the reference's device-nodevice section -
-   full-width rounded video with a floating caption card */
-.content-wide-video {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  position: relative;
-  border-radius: 0;
-  overflow: hidden;
-  background: #121212;
-}
-
-.content-wide-video::before {
-  content: '';
-  display: block;
-  padding-top: 56.5%;
-  /* 16:9-ish, matches reference */
-}
-
-/* Birsé: let an <img> (inside <picture>) fill the wide-video band like the video does */
-.content-wide-video picture {
-  display: contents;
-}
-
 /* Birsé phones: stronger, phone-like corner radius that stays proportional
    across breakpoints (phone slot is ~20-25vw wide, so ~2.6vw ≈ 12% radius).
    clip-path mirrors it so the <img> rounds even inside a display:contents <picture>. */
@@ -3839,16 +3669,6 @@ html.js.reveal-failsafe .reveal {
 
 .block-mobile-devices.bmd-birse .mobile-screen-img {
   clip-path: none;
-}
-
-.content-wide-video .screen-video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-  display: block;
 }
 
 /* 1. Full-width (single image, contained) */
@@ -4095,10 +3915,6 @@ html.js.reveal-failsafe .reveal {
   height: 120%;
   top: -10%;
   bottom: auto;
-}
-
-.block-fullwidth .dark-overlay {
-  background: #141414;
 }
 
 .block-fullwidth-logo {
@@ -4757,49 +4573,6 @@ html.js.reveal-failsafe .reveal {
   }
 }
 
-/* Roles list: one tight gap inside each row, hairlines between rows */
-.case-roles {
-  margin: var(--space-4) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.case-roles li {
-  display: grid;
-  grid-template-columns: minmax(120px, 200px) 1fr;
-  gap: var(--space-4);
-  padding: var(--space-4) 0;
-  border-top: 1px solid var(--color-border);
-}
-
-.case-roles li:last-child {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.case-roles strong {
-  font-weight: 600;
-  color: var(--color-text-primary);
-}
-
-@media (max-width: 600px) {
-  .case-roles li {
-    grid-template-columns: 1fr;
-    gap: var(--space-2);
-  }
-}
-
-/* The results note closing the roles step */
-.project-dynamic-body-section .case-results h3 {
-  margin: 0 0 var(--space-3);
-  font-size: var(--text-title);
-  font-weight: 500;
-  color: var(--color-text);
-}
-
-.case-results p {
-  margin: 0;
-}
-
 .case-proof__text > .case-proof__kicker {
   margin: 0; /* beats .rich-text p, so only the grid gap sits between label and title */
   font-family: var(--font-mono);
@@ -5122,19 +4895,6 @@ html.js.reveal-failsafe .reveal {
 
   .block-fullwidth-logo {
     width: clamp(168px, 19.45vw, 336px);
-  }
-
-  /* 4. Wide video: no rounded corners, full-bleed (parallax label kept) */
-  .content-wide-video {
-    width: 100vw;
-    max-width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    border-radius: 0;
-  }
-
-  .content-wide-video .screen-video {
-    border-radius: 0;
   }
 
   /* 5. Device: near-full-bleed. Parent .case-block--device already spans
@@ -5617,7 +5377,6 @@ html.js.reveal-failsafe .reveal {
 .about-page-photo,
 .image-marquee__item,
 .project-next-teaser__media,
-.project-image-wrapper,
 .case-figure {
   border: 1px solid var(--color-border-subtle);
 }
