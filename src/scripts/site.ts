@@ -948,12 +948,22 @@ function initMobileNav() {
   const menu = document.getElementById('nav-mobile-menu');
   if (!burger || !menu) return;
 
+  // While the menu is open the page behind it can neither be reached with Tab nor scrolled.
+  const page = Array.from(document.querySelectorAll<HTMLElement>('main, .footer'));
+  const lockPage = (locked: boolean) => {
+    page.forEach((el) => (el.inert = locked));
+    if (locked) window.__lenis?.stop();
+    else window.__lenis?.start();
+  };
+
   const open = () => {
     menu.classList.add('is-open');
     burger.setAttribute('aria-expanded', 'true');
     burger.setAttribute('aria-label', burger.dataset.closeLabel!);
     menu.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    lockPage(true);
+    menu.querySelector<HTMLElement>('.nav-mobile-link')?.focus({ preventScroll: true });
   };
   const close = () => {
     menu.classList.remove('is-open');
@@ -961,6 +971,7 @@ function initMobileNav() {
     burger.setAttribute('aria-label', burger.dataset.openLabel!);
     menu.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    lockPage(false);
   };
 
   burger.addEventListener('click', () =>
