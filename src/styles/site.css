@@ -3168,16 +3168,6 @@ body.is-loaded .case-facts {
   padding: var(--space-24) 0;
 }
 
-.project-palette {
-  display: flex;
-  gap: 5px;
-}
-
-.palette-swatch {
-  flex: 1;
-  height: 40px;
-  border-radius: var(--radius-sm);
-}
 /* Content Widths */
 .concept-content {
   max-width: 800px;
