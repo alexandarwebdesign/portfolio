@@ -589,6 +589,8 @@ function initAsciiArt() {
     const pre = root.querySelector<HTMLPreElement>('pre.ascii-art');
     const src = root.dataset.asciiArt;
     if (!pre || !src) return;
+    // a mark with thin bars and narrow gaps needs a shallower slab, or the walls fill its gaps
+    const thick = Number(root.dataset.asciiDepth) || THICK;
     const image = new Image();
     image.onload = () => {
       const MW = 360;
@@ -719,7 +721,7 @@ function initAsciiArt() {
         const aspect = image.naturalHeight / image.naturalWidth;
         let markW = W * FIT;
         let markH = markW * aspect;
-        let depth = markW * THICK;
+        let depth = markW * thick;
         let pixel = markW / MW; // one mask pixel, in px
         let shiftU = 0; // where the turned slab sits on the screen, so it can be centred in the box
         let shiftV = 0;
@@ -795,7 +797,7 @@ function initAsciiArt() {
           );
           markW *= scale;
           markH = markW * aspect;
-          depth = markW * THICK;
+          depth = markW * thick;
           pixel = markW / MW;
         }
         shiftU = 0;

@@ -6,8 +6,10 @@ import DeviceDesktop from '../components/case/DeviceDesktop.astro';
 import DevicePhones from '../components/case/DevicePhones.astro';
 import DeviceCarousel from '../components/case/DeviceCarousel.astro';
 import FullBleed from '../components/case/FullBleed.astro';
+import CaseClosing from '../components/case/CaseClosing.astro';
 import NextTeaser from '../components/NextTeaser.astro';
 import hero from '../assets/images/case/forma-hero.jpg';
+import firstScreen from '../assets/images/case/forma-first-screen.jpg';
 import project from '../assets/images/case/forma-project.jpg';
 import homeShot from '../assets/images/case/forma-home.jpg';
 import portfolio from '../assets/images/case/forma-portfolio.jpg';
@@ -75,30 +77,7 @@ const t = formaCopy[lang];
       </CaseProof>
 
       <CaseProof id="forma-proof-hero" {...t.hero}>
-        <div class="case-block case-block--fullbleed">
-          <div class="content-wide-video video-toggle">
-            <video
-              class="screen-video"
-              poster={heroVideo.poster}
-              autoplay
-              muted
-              loop
-              playsinline
-              preload="metadata"
-              width="1920"
-              height="1088"
-              aria-label={t.hero.alt}
-            >
-              <source src={`${heroVideo.src}.av1.mp4`} type='video/mp4; codecs="av01.0.05M.08"' />
-              <source src={`${heroVideo.src}.h264.mp4`} type="video/mp4" />
-            </video>
-            <div class="wide-video-label" data-parallax-speed="2" aria-hidden="true">
-              <img src={mark.src} class="wide-video-label__icon" alt="" />
-              <p class="wide-video-label__eyebrow">{t.hero.eyebrow}</p>
-              <p class="wide-video-label__heading">{t.hero.heading}</p>
-            </div>
-          </div>
-        </div>
+        <DeviceDesktop image={firstScreen} alt={t.hero.alt} bare />
       </CaseProof>
 
       <CaseProof id="forma-proof-portfolio" {...t.portfolio} band>
@@ -129,6 +108,17 @@ const t = formaCopy[lang];
     </div>
   </div>
 </section>
+
+<CaseClosing
+  id="forma-closing"
+  kicker={c.closingKicker}
+  title={c.ctaTitle}
+  text={c.closingText}
+  cta={c.cta}
+  href={homeHash('contact')}
+  art={{ src: mark.src, alt: 'FORMA Architects', width: mark.width, height: mark.height }}
+  contained
+/>
 
 <NextTeaser
   href={pathFor('birse', lang)!}

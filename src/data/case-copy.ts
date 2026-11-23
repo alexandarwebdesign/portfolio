@@ -250,10 +250,8 @@ export const formaCopy = {
     hero: {
       kicker: 'Hero experience',
       title: 'A cinematic opener, not a brochure hero',
-      text: 'Luxury prospects buy into atmosphere before details. The full-width hero video gives the page a quiet architectural presence, then lets the work lead instead of explaining too much too early.',
-      alt: 'FORMA Architects full-width hero walkthrough',
-      eyebrow: 'Full width hero',
-      heading: 'Uncompromising visual presence',
+      text: 'Luxury prospects buy into atmosphere before details. A full-width first screen gives the page a quiet architectural presence, then lets the work lead instead of explaining too much too early.',
+      alt: 'The first screen of the FORMA Architects site at full width: an interior with large windows, a headline and a button',
     },
     portfolio: {
       kicker: 'Portfolio system',
@@ -318,10 +316,8 @@ export const formaCopy = {
     hero: {
       kicker: 'Първи екран',
       title: 'Кинематографично начало, а не брошура',
-      text: 'Клиентите в луксозния сегмент първо купуват атмосферата, после детайлите. Видеото на цялата ширина дава на страницата тихо архитектурно присъствие и оставя работата да води, вместо да обяснява твърде много твърде рано.',
-      alt: 'Видео: първият екран на FORMA Architects на цялата ширина',
-      eyebrow: 'Първи екран на цялата ширина',
-      heading: 'Безкомпромисно визуално присъствие',
+      text: 'Клиентите в луксозния сегмент първо купуват атмосферата, после детайлите. Първият екран на цялата ширина дава на страницата тихо архитектурно присъствие и оставя работата да води, вместо да обяснява твърде много твърде рано.',
+      alt: 'Първият екран на сайта на FORMA Architects на цялата ширина: интериор с големи прозорци, заглавие и бутон',
     },
     portfolio: {
       kicker: 'Портфолио',

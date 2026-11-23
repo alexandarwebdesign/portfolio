@@ -13,9 +13,13 @@ interface Props {
   href: string;
   /** The client's mark: an SVG, dark shapes on a light ground. */
   art: { src: string; alt: string; width: number; height: number };
+  /** The depth of the 3D slab as a part of the mark's width (default 0.22); less for thin marks. */
+  depth?: number;
+  /** A mark that must be seen whole (two letters, say) leaves the frame only a little. */
+  contained?: boolean;
 }
 
-const { id, kicker, title, text, cta, href, art } = Astro.props;
+const { id, kicker, title, text, cta, href, art, depth, contained = false } = Astro.props;
 ---
 
 <section class="case-closing" aria-labelledby={id}>
@@ -28,7 +32,13 @@ const { id, kicker, title, text, cta, href, art } = Astro.props;
         <Button {href}>{cta}</Button>
       </div>
     </div>
-    <div class="case-closing__art" data-ascii-art={art.src} role="img" aria-label={art.alt}>
+    <div
+      class:list={['case-closing__art', { 'case-closing__art--contained': contained }]}
+      data-ascii-art={art.src}
+      data-ascii-depth={depth}
+      role="img"
+      aria-label={art.alt}
+    >
       <img
         src={art.src}
         alt=""
