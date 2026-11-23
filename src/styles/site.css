@@ -785,6 +785,10 @@ textarea:focus-visible {
   width: max-content;
   max-width: calc(100vw - 40px);
   border-radius: var(--nav-radius);
+  /* Under the footer: initNavUnderFooter sets --nav-clip to how far the revealed footer reaches up
+     into the bar, and that part is cut. Without it nothing is cut (the negative values leave room for
+     the shadow). */
+  clip-path: inset(-60px -60px var(--nav-clip, -60px) -60px);
   /* The tool discs' recipe, but lit from straight above instead of the top left: the highlight is
      on the top rim, a softer rim on the bottom, one shadow falling straight down, and the gradient
      runs top to bottom, so everything is centred on the bar. Slightly see-through, frosted with a

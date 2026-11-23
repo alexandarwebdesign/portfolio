@@ -917,6 +917,32 @@ function initFooterFocusReveal() {
   });
 }
 
+// The footer is revealed under the page: the bar stays above the page but goes under the footer, so
+// the part of it that is over the revealed footer is cut away (--nav-clip, used in site.css).
+function initNavUnderFooter() {
+  const nav = document.querySelector<HTMLElement>('.nav');
+  const main = document.querySelector('main');
+  if (!nav || !main) return;
+  const SPILL = -60; // the bar's shadow is outside its box: when nothing is cut, let it show
+  let frame = 0;
+  let last = SPILL;
+  const update = () => {
+    frame = 0;
+    const edge = main.getBoundingClientRect().bottom; // where the page ends and the footer begins
+    const cut = Math.max(0, nav.getBoundingClientRect().bottom - edge);
+    const value = cut > 0 ? cut : SPILL;
+    if (value === last) return;
+    last = value;
+    nav.style.setProperty('--nav-clip', `${value}px`);
+  };
+  const request = () => {
+    if (!frame) frame = requestAnimationFrame(update);
+  };
+  addEventListener('scroll', request, { passive: true });
+  addEventListener('resize', request, { passive: true });
+  update();
+}
+
 function initMobileNav() {
   const burger = document.querySelector<HTMLButtonElement>('.nav-burger');
   const menu = document.getElementById('nav-mobile-menu');
@@ -1148,6 +1174,7 @@ function init() {
     initCaseCarousels();
     initAsciiArt();
     initFooterFocusReveal();
+    initNavUnderFooter();
   };
   if ('requestIdleCallback' in window) requestIdleCallback(deferred, { timeout: 1500 });
   else setTimeout(deferred, 1);
