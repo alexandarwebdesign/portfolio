@@ -2486,7 +2486,13 @@ body.is-loaded .hero-cta {
   width: var(--tool);
   height: var(--tool);
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-subtle) 100%);
+  /* the nav's glow, but the dark end is opaque: the discs overlap, and a see-through end would show the
+     edge of the disc underneath */
+  background: radial-gradient(
+    var(--gradient-bar-shape),
+    var(--gradient-bar-start) 0%,
+    var(--color-surface-subtle) 100%
+  );
   box-shadow: var(--shadow-disc);
 }
 
