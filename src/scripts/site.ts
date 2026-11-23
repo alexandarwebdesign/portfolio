@@ -934,6 +934,7 @@ const LANG_SCROLL_KEY = 'lang-switch-scroll';
 const samePath = (a: string, b: string) => a.replace(/\/+$/, '') === b.replace(/\/+$/, '');
 
 function initLanguageSwitchScroll() {
+  const show = () => document.documentElement.classList.remove('lang-pending');
   const sections = () => Array.from(document.querySelectorAll<HTMLElement>('main section'));
   const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
 
@@ -967,8 +968,14 @@ function initLanguageSwitchScroll() {
   } catch {
     saved = null;
   }
-  if (!saved || !samePath(saved.to, location.pathname) || Date.now() - saved.at > 15000) return;
-  if (saved.index < 0 && !saved.atEnd) return;
+  if (!saved || !samePath(saved.to, location.pathname) || Date.now() - saved.at > 15000) {
+    show();
+    return;
+  }
+  if (saved.index < 0 && !saved.atEnd) {
+    show();
+    return;
+  }
 
   const target = () => {
     if (!saved) return 0;
@@ -981,6 +988,7 @@ function initLanguageSwitchScroll() {
   document.documentElement.classList.add('lang-restored');
   let placed = target();
   go(placed);
+  show();
   // images and sections that were not drawn yet change the heights: once the page has loaded, place it
   // again, unless the reader has already moved
   addEventListener(

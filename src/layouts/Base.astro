@@ -41,6 +41,21 @@ const preload = lang === 'bg' ? [manropeCyrillic] : [manropeLatin];
     <script is:inline>
       var d = document.documentElement;
       d.classList.add('js');
+      // after a language switch the page is hidden until it is scrolled to where the reader was
+      // (initLanguageSwitchScroll), so the top of the page never flashes
+      try {
+        var s = JSON.parse(sessionStorage.getItem('lang-switch-scroll') || 'null');
+        if (
+          s &&
+          s.to.replace(/\/+$/, '') === location.pathname.replace(/\/+$/, '') &&
+          Date.now() - s.at < 15000
+        ) {
+          d.classList.add('lang-pending');
+          setTimeout(function () {
+            d.classList.remove('lang-pending');
+          }, 2000);
+        }
+      } catch (e) {}
       setTimeout(function () {
         window.__revealReady || d.classList.add('reveal-failsafe');
       }, 3000);

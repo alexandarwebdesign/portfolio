@@ -180,6 +180,12 @@ h3,
 
 /* After a language switch the page is placed by section heights, so the sections are drawn in full
    (their estimated 1200px would put the place wrong); set by initLanguageSwitchScroll. */
+/* Until the page is placed after a language switch nothing is shown (the inline script in Base.astro
+   sets the class, initLanguageSwitchScroll clears it; a timer clears it too). */
+html.lang-pending body {
+  visibility: hidden;
+}
+
 html.lang-restored .project-dynamic-body-section,
 html.lang-restored .project-next-teaser-section {
   content-visibility: visible;
