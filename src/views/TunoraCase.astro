@@ -9,12 +9,7 @@ import FullBleed from '../components/case/FullBleed.astro';
 import CaseClosing from '../components/case/CaseClosing.astro';
 import NextTeaser from '../components/NextTeaser.astro';
 import hero from '../assets/images/case/tunora-hero.jpg';
-import scrollHome from '../assets/images/case/tunora-scroll.jpg';
-import firstScreen from '../assets/images/case/tunora-first-screen.jpg';
-import features from '../assets/images/case/tunora-features.jpg';
-import terminal from '../assets/images/case/tunora-terminal.jpg';
 import download from '../assets/images/case/tunora-download.jpg';
-import footerShot from '../assets/images/case/tunora-footer.jpg';
 import slide1 from '../assets/images/case/tunora-slide-1.jpg';
 import slide2 from '../assets/images/case/tunora-slide-2.jpg';
 import slide3 from '../assets/images/case/tunora-slide-3.jpg';
@@ -41,6 +36,17 @@ const c = caseText[lang];
 const home = pathFor('home', lang)!;
 const homeHash = (id: string) => `${home === '/' ? '' : home}/#${id}`;
 const t = tunoraCopy[lang];
+const clip = (name: string, width: number, height: number) => ({
+  src: `/video/tunora-${name}`,
+  poster: `/video/tunora-${name}-poster.webp`,
+  width,
+  height,
+});
+const monitorVideo = clip('monitor', 1600, 1000);
+const heroVideo = clip('hero', 1920, 1080);
+const featuresVideo = clip('features', 1920, 1080);
+const privacyVideo = clip('privacy', 1920, 1080);
+const footerVideo = clip('footer', 1920, 1080);
 ---
 
 <CaseIntro
@@ -61,28 +67,24 @@ const t = tunoraCopy[lang];
   <div class="container">
     <div id="project-content-stream" class="project-content-stream">
       <CaseProof id="tunora-proof-trust" {...t.trust}>
-        <DeviceDesktop
-          image={scrollHome}
-          alt={t.trust.alt}
-          scroll={{ end: '-76%', duration: '22s' }}
-        />
+        <DeviceDesktop alt={t.trust.alt} video={monitorVideo} />
       </CaseProof>
 
       <CaseProof id="tunora-proof-hero" {...t.hero}>
-        <DeviceDesktop image={firstScreen} alt={t.hero.alt} bare />
+        <DeviceDesktop alt={t.hero.alt} video={heroVideo} bare />
       </CaseProof>
 
       <CaseProof id="tunora-proof-features" {...t.features}>
-        <DeviceDesktop image={features} alt={t.features.alt} bare />
+        <DeviceDesktop alt={t.features.alt} video={featuresVideo} bare />
       </CaseProof>
 
       <CaseProof id="tunora-proof-trust-moments" {...t.decisions}>
-        <DeviceDesktop image={terminal} alt={t.decisions.alt} bare />
+        <DeviceDesktop alt={t.decisions.alt} video={privacyVideo} bare />
         <DeviceDesktop image={download} alt={t.decisions.altModal} bare />
       </CaseProof>
 
       <CaseProof id="tunora-proof-footer" {...t.footer}>
-        <DeviceDesktop image={footerShot} alt={t.footer.alt} bare />
+        <DeviceDesktop alt={t.footer.alt} video={footerVideo} bare />
       </CaseProof>
 
       <CaseProof id="tunora-proof-mobile" {...t.mobile} phones>

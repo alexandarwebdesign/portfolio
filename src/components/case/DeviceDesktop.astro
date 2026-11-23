@@ -1,6 +1,6 @@
 ---
 // The original iMac-style device frame with a screenshot (slowly scrolling
-// through a tall page) or a video, or a bare figure without a frame.
+// through a tall page) or a video, or a bare figure (a picture or a video) without a frame.
 import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
@@ -20,17 +20,37 @@ const widths = image ? [500, 800, 1080, 1600].filter((w) => w <= image.width) : 
 
 <div class="case-block case-block--device case-block--bare" style="--case-tint:#e4e4e4;">
   {
-    bare && image ? (
+    bare && (image || video) ? (
       <div class="case-figure reveal">
-        <Picture
-          src={image}
-          formats={['avif', 'webp']}
-          {widths}
-          sizes="(max-width: 900px) 92vw, 1600px"
-          {alt}
-          class="case-figure-img"
-          loading="lazy"
-        />
+        {video ? (
+          <video
+            poster={video.poster}
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            width={video.width}
+            height={video.height}
+            class="case-figure-img"
+            aria-label={alt}
+          >
+            <source src={`${video.src}.av1.mp4`} type='video/mp4; codecs="av01.0.05M.08"' />
+            <source src={`${video.src}.h264.mp4`} type="video/mp4" />
+          </video>
+        ) : (
+          image && (
+            <Picture
+              src={image}
+              formats={['avif', 'webp']}
+              {widths}
+              sizes="(max-width: 900px) 92vw, 1600px"
+              {alt}
+              class="case-figure-img"
+              loading="lazy"
+            />
+          )
+        )}
       </div>
     ) : (
       <div class="content-image-block image-layout-block layout-full_width reveal">
