@@ -1,6 +1,7 @@
 import type { ImageMetadata } from 'astro';
 import birseCard from '../assets/images/birse-card.jpg';
 import formaCard from '../assets/images/forma-card.jpg';
+import tunoraCard from '../assets/images/case/tunora-card.jpg';
 import swisCard from '../assets/images/swis-saas.jpg';
 import creativeCard from '../assets/images/creative-asset.jpg';
 
@@ -166,7 +167,7 @@ export interface WorkItem {
   category: { bg: string; en: string };
   image: ImageMetadata;
   /** Route id of the case study; projects without one show their status. */
-  route?: 'birse' | 'forma';
+  route?: 'birse' | 'forma' | 'tunora';
   status?: { bg: string; en: string };
   /** Corner tag on the card, e.g. self-initiated work. */
   tag?: { bg: string; en: string };
@@ -185,6 +186,13 @@ export const work: WorkItem[] = [
     image: formaCard,
     route: 'forma',
     tag: { bg: 'Концепция', en: 'Concept' },
+  },
+  {
+    name: 'Tunora',
+    category: { bg: 'Софтуер · уиджет за Windows', en: 'Software · Windows widget' },
+    image: tunoraCard,
+    route: 'tunora',
+    tag: { bg: 'Собствен продукт', en: 'Own product' },
   },
   {
     name: 'Swis SaaS',

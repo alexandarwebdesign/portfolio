@@ -119,11 +119,15 @@ export function aboutSchema(lang: Lang, path: string): Node[] {
   ];
 }
 
-const published: Record<string, string> = { birse: '2026-03-01', forma: '2026-03-01' };
+const published: Record<string, string> = {
+  birse: '2026-03-01',
+  forma: '2026-03-01',
+  tunora: '2026-11-23',
+};
 
 export function caseSchema(
   lang: Lang,
-  route: 'birse' | 'forma',
+  route: 'birse' | 'forma' | 'tunora',
   path: string,
   content: CaseContent,
   image: string,

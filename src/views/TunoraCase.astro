@@ -1,0 +1,123 @@
+---
+// The Tunora case study: my own Windows product and its website, in both languages.
+import CaseIntro from '../components/case/CaseIntro.astro';
+import CaseProof from '../components/case/CaseProof.astro';
+import DeviceDesktop from '../components/case/DeviceDesktop.astro';
+import DevicePhones from '../components/case/DevicePhones.astro';
+import DeviceCarousel from '../components/case/DeviceCarousel.astro';
+import FullBleed from '../components/case/FullBleed.astro';
+import CaseClosing from '../components/case/CaseClosing.astro';
+import NextTeaser from '../components/NextTeaser.astro';
+import hero from '../assets/images/case/tunora-hero.jpg';
+import scrollShot from '../assets/images/case/tunora-scroll.jpg';
+import privacy from '../assets/images/case/tunora-privacy.jpg';
+import features2 from '../assets/images/case/tunora-features-2.jpg';
+import features3 from '../assets/images/case/tunora-features-3.jpg';
+import players from '../assets/images/case/tunora-players.jpg';
+import pricing from '../assets/images/case/tunora-pricing.jpg';
+import faq from '../assets/images/case/tunora-faq.jpg';
+import mobileHero from '../assets/images/case/tunora-mobile-hero.jpg';
+import mobileFeatures from '../assets/images/case/tunora-mobile-features.jpg';
+import mobilePricing from '../assets/images/case/tunora-mobile-pricing.jpg';
+import brand from '../assets/images/case/tunora-brand.jpg';
+import birseCard from '../assets/images/case/birse-card.jpg';
+import mark from '../assets/images/case/tunora-mark.svg';
+import { caseText } from '../data/cases';
+import { tunoraCopy } from '../data/case-copy';
+import { pathFor } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = caseText[lang];
+const home = pathFor('home', lang)!;
+const homeHash = (id: string) => `${home === '/' ? '' : home}/#${id}`;
+const t = tunoraCopy[lang];
+---
+
+<CaseIntro
+  back={{ href: homeHash('work'), label: c.allWork }}
+  title="Tunora"
+  meta={t.meta}
+  hero={{ image: hero, alt: t.heroAlt }}
+  logo={{ src: mark.src, width: 68, height: 68 }}
+  client={{ href: 'https://tunora-site.pages.dev/', siteLabel: 'tunora-site.pages.dev' }}
+  palette={{ label: c.palette, colors: ['#0a0a0e', '#131319', '#8e8e99', '#f5f5f7', '#1db954'] }}
+/>
+
+<section
+  id="project-dynamic-body"
+  class="project-dynamic-body-section case-blocks"
+  aria-label={c.body}
+>
+  <div class="container">
+    <div id="project-content-stream" class="project-content-stream">
+      <CaseProof id="tunora-proof-trust" {...t.trust}>
+        <DeviceDesktop
+          image={scrollShot}
+          alt={t.trust.alt}
+          scroll={{ end: '-76%', duration: '22s' }}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-privacy" {...t.privacy}>
+        <DeviceDesktop image={privacy} alt={t.privacy.alt} bare />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-features" {...t.portfolio} band>
+        <DeviceCarousel
+          id="case-carousel-tunora"
+          slides={[features2, features3, players, pricing, faq].map((image, i) => ({
+            image,
+            alt: t.portfolio.slides[i],
+          }))}
+          prev={c.prev}
+          next={c.next}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-mobile" {...t.mobile} phones>
+        <DevicePhones
+          label={t.mobile.label}
+          phones={[mobileHero, mobileFeatures, mobilePricing].map((image, i) => ({
+            image,
+            ...t.mobile.phones[i],
+          }))}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-brand" {...t.brand}>
+        <FullBleed
+          image={brand}
+          alt={t.brand.alt}
+          logo={{ src: mark.src, width: 120, height: 120 }}
+          label={t.brand.label}
+        />
+      </CaseProof>
+    </div>
+  </div>
+</section>
+
+<CaseClosing
+  id="tunora-closing"
+  kicker={c.closingKicker}
+  title={c.ctaTitle}
+  text={c.closingText}
+  cta={c.cta}
+  href={homeHash('contact')}
+  art={{ src: mark.src, alt: 'Tunora', width: mark.width, height: mark.height }}
+  depth={0.14}
+  contained
+/>
+
+<NextTeaser
+  href={pathFor('birse', lang)!}
+  label={c.nextProject}
+  left="Bir"
+  right="Sé"
+  image={birseCard}
+  ariaLabel={`${c.viewCase}: Birsé`}
+/>

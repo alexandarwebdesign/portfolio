@@ -5,6 +5,7 @@ import { getImage } from 'astro:assets';
 import Base from './Base.astro';
 import BirseCase from '../views/BirseCase.astro';
 import FormaCase from '../views/FormaCase.astro';
+import TunoraCase from '../views/TunoraCase.astro';
 import type { Lang } from '../i18n/ui';
 import { pathFor } from '../i18n/routes';
 import type { CaseContent } from '../data/projects/types';
@@ -12,7 +13,7 @@ import { caseSchema } from '../data/schema';
 
 interface Props {
   lang: Lang;
-  route: 'birse' | 'forma';
+  route: 'birse' | 'forma' | 'tunora';
   content: CaseContent;
 }
 
@@ -29,5 +30,7 @@ const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src
   crumb={content.name}
   bodyClass={route === 'birse' ? 'birse-page' : undefined}
 >
-  {route === 'birse' ? <BirseCase {lang} /> : <FormaCase {lang} />}
+  {route === 'birse' && <BirseCase {lang} />}
+  {route === 'forma' && <FormaCase {lang} />}
+  {route === 'tunora' && <TunoraCase {lang} />}
 </Base>

@@ -199,7 +199,7 @@ const bg: CaseContent = {
       ],
     },
   ],
-  next: { route: 'birse', name: 'Birsé' },
+  next: { route: 'tunora', name: 'Tunora' },
 };
 
 const en: CaseContent = {
@@ -375,7 +375,7 @@ const en: CaseContent = {
       ],
     },
   ],
-  next: { route: 'birse', name: 'Birsé' },
+  next: { route: 'tunora', name: 'Tunora' },
 };
 
 export const forma = { bg, en };

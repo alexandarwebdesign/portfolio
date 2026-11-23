@@ -365,3 +365,134 @@ export const formaCopy = {
     },
   },
 };
+
+export const tunoraCopy = {
+  en: {
+    badge: 'Own product',
+    meta: [
+      { label: 'Role / Services', items: ['Product Design', 'UI Design', 'Web Development'] },
+      { label: 'Client', items: ['Tunora', 'My own product'] },
+      { label: 'Year &amp; Sector', items: ['2026 ©', 'Software · Windows'] },
+    ],
+    heroAlt: 'The first screen of the Tunora website',
+    live: 'View live site',
+    trust: {
+      kicker: 'Positioning',
+      title: 'Show the widget at work, not a description of it',
+      text: 'Tunora is a small Windows widget that shows and controls whatever music is playing. I designed and built it, so the page had to do what a store listing would: let a visitor understand it in a second. Instead of describing the widget, the first rows of the page are small live demos of it, under one headline that says what they do.',
+      alt: 'The Tunora home page scrolling slowly in a desktop frame: the first screen, the scrolling strip of albums and the cards with widget demos',
+    },
+    privacy: {
+      kicker: 'Trust',
+      title: 'Privacy as a feature, in plain words',
+      text: 'A widget that reads what you listen to has to earn trust before it is installed. The privacy section says three things in three short lines: no account, nothing leaves the PC, no analytics that identify you. It comes before the pricing, so the visitor meets the price already trusting the product.',
+      alt: 'The Tunora privacy section: three short statements beside a terminal-style status window',
+    },
+    portfolio: {
+      kicker: 'Feature system',
+      title: 'One card per idea, each with its own demo',
+      text: 'Every card pairs one sentence with a small working demo: scroll to change the volume, synced lyrics, a widget that shrinks to a circle when idle, a lock mode that lets clicks pass through. The same dark surface, hairline border and single accent carry through the features, the supported players, the pricing and the questions.',
+      slides: [
+        'Tunora features: scroll to set volume and synced lyrics',
+        'Tunora features: idle circle, custom themes, dynamic album colors and lock mode',
+        'Tunora supported players: YouTube, Spotify, Apple Music and more floating in a ring',
+        'Tunora pricing: a free plan and a one-time Pro unlock',
+        'Tunora questions: a short FAQ with the first answer open',
+      ],
+    },
+    mobile: {
+      kicker: 'Mobile',
+      title: 'A Windows widget still gets pitched from a phone',
+      text: 'The first visit to a desktop app’s page often happens on a phone, with the install coming later at a PC. The mobile layout keeps the promise, the download button and the first demo in the first screens, and stacks the cards into one column.',
+      label: 'Mobile screens section',
+      phones: [
+        {
+          title: 'First screen',
+          text: 'The promise, the platform badge and the download button come first; the portrait below says “music” before any more words.',
+          alt: 'The Tunora mobile first screen with the headline and the download button',
+        },
+        {
+          title: 'Feature cards',
+          text: 'One column, one demo per card: the sentence and its demo are read together, with no sideways scrolling.',
+          alt: 'The Tunora mobile feature cards with the widget demo',
+        },
+        {
+          title: 'Pricing',
+          text: 'The free plan comes first, with the list of what it includes; the one-time Pro price follows below it.',
+          alt: 'The Tunora mobile pricing section with the free plan',
+        },
+      ],
+    },
+    brand: {
+      kicker: 'Brand system',
+      title: 'Dark, quiet, one accent',
+      text: `The page is a near-black ${swatch('0A0A0E')} where white is the only action color, so the widget demos and the album art are the only things with color. A serif italic picks out one word in each headline.`,
+      alt: 'The bottom edge of the Tunora closing screen: a thin glowing border over a dark sky with shooting stars',
+      label: 'Full width image',
+    },
+  },
+  bg: {
+    badge: 'Собствен продукт',
+    meta: [
+      { label: 'Роля / услуги', items: ['Продуктов дизайн', 'UI дизайн', 'Уеб разработка'] },
+      { label: 'Клиент', items: ['Tunora', 'Собствен продукт'] },
+      { label: 'Година и сектор', items: ['2026 ©', 'Софтуер · Windows'] },
+    ],
+    heroAlt: 'Първият екран на сайта на Tunora',
+    live: 'Вижте живия сайт',
+    trust: {
+      kicker: 'Позициониране',
+      title: 'Уиджетът в действие, а не описание на уиджета',
+      text: 'Tunora е малък уиджет за Windows, който показва и управлява музиката, която свири. Проектирал съм и изработил съм го сам, затова страницата трябваше да свърши работата на листинг в магазин: посетителят да го разбере за секунда. Вместо да описва уиджета, първите редове на страницата са малки живи демонстрации, под едно заглавие, което казва какво правят.',
+      alt: 'Началната страница на Tunora, която се превърта бавно в рамка на настолен екран: първият екран, лентата с албуми и картите с демонстрации на уиджета',
+    },
+    privacy: {
+      kicker: 'Доверие',
+      title: 'Поверителността като възможност, с прости думи',
+      text: 'Уиджет, който чете какво слушате, трябва да спечели доверие още преди да бъде инсталиран. Секцията за поверителност казва три неща в три кратки реда: няма акаунт, нищо не напуска компютъра, няма анализ, който да ви идентифицира. Тя е преди цените, така че посетителят стига до цената, след като вече вярва на продукта.',
+      alt: 'Секцията за поверителност на Tunora: три кратки твърдения до прозорец с вид на терминал',
+    },
+    portfolio: {
+      kicker: 'Възможности',
+      title: 'Една карта за една идея, всяка със своя демонстрация',
+      text: 'Всяка карта съчетава едно изречение с малка работеща демонстрация: скрол за промяна на звука, синхронизирани текстове, уиджет, който се свива в кръг, когато е неактивен, и режим на заключване, през който кликовете минават. Същата тъмна повърхност, тънка рамка и един акцент минават през възможностите, поддържаните плейъри, цените и въпросите.',
+      slides: [
+        'Tunora – възможности: скрол за промяна на звука и синхронизирани текстове',
+        'Tunora – възможности: кръг в покой, собствени теми, цветове от обложката и режим на заключване',
+        'Tunora – поддържани плейъри: YouTube, Spotify, Apple Music и други в кръг',
+        'Tunora – цени: безплатен план и еднократно отключване на Pro',
+        'Tunora – въпроси: кратък списък с отворен първи отговор',
+      ],
+    },
+    mobile: {
+      kicker: 'Мобилно',
+      title: 'Уиджет за Windows пак се представя от телефон',
+      text: 'Първото посещение на страница на настолно приложение често е от телефон, а инсталацията идва по-късно на компютъра. Мобилният изглед държи обещанието, бутона за изтегляне и първата демонстрация в първите екрани, а картите са в една колона.',
+      label: 'Мобилни екрани',
+      phones: [
+        {
+          title: 'Първи екран',
+          text: 'Първо са обещанието, означението за платформата и бутонът за изтегляне; портретът под тях казва „музика“ преди още думи.',
+          alt: 'Мобилният първи екран на Tunora със заглавието и бутона за изтегляне',
+        },
+        {
+          title: 'Карти с възможности',
+          text: 'Една колона, една демонстрация на карта: изречението и демонстрацията се четат заедно, без скрол встрани.',
+          alt: 'Мобилните карти с възможности на Tunora с демонстрация на уиджета',
+        },
+        {
+          title: 'Цени',
+          text: 'Първи е безплатният план със списъка какво включва; еднократната цена на Pro е под него.',
+          alt: 'Мобилната секция с цени на Tunora с безплатния план',
+        },
+      ],
+    },
+    brand: {
+      kicker: 'Бранд система',
+      title: 'Тъмно, тихо, един акцент',
+      text: `Страницата е почти черна ${swatch('0A0A0E')}, а бялото е единственият цвят за действие, така че демонстрациите на уиджета и обложките на албумите са единственото цветно. Курсивен сериф откроява по една дума във всяко заглавие.`,
+      alt: 'Долният ръб на затварящия екран на Tunora: тънка светеща рамка над тъмно небе с падащи звезди',
+      label: 'Снимка на цялата ширина',
+    },
+  },
+};

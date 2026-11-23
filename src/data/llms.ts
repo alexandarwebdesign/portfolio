@@ -6,7 +6,8 @@ import { faq } from './faq';
 import { about } from './about';
 import { birse } from './projects/birse';
 import { forma } from './projects/forma';
-import { birseCopy, formaCopy } from './case-copy';
+import { tunora } from './projects/tunora';
+import { birseCopy, formaCopy, tunoraCopy } from './case-copy';
 import { pathFor } from '../i18n/routes';
 import type { CaseContent } from './projects/types';
 
@@ -22,7 +23,7 @@ const intro = `# ${site.name.en}
 
 The site is bilingual: Bulgarian is the default at ${url('/')}, English is under ${url('/en')}.`;
 
-const caseLine = (route: 'birse' | 'forma', content: CaseContent) =>
+const caseLine = (route: 'birse' | 'forma' | 'tunora', content: CaseContent) =>
   `- [${content.name}](${url(pathFor(route, 'en')!)}): ${content.status}. ${content.lead} Live: ${content.live.href}`;
 
 const contact = `## Contact
@@ -33,7 +34,7 @@ const contact = `## Contact
 
 const bulgarian = `## Bulgarian pages
 
-- [Начало](${url('/')}), [За мен](${url('/about')}), [Birsé](${url('/birse')}), [FORMA Architects](${url('/forma-architects')}): Bulgarian versions of the English pages.`;
+- [Начало](${url('/')}), [За мен](${url('/about')}), [Birsé](${url('/birse')}), [FORMA Architects](${url('/forma-architects')}), [Tunora](${url('/tunora')}): Bulgarian versions of the English pages.`;
 
 export function llms(): string {
   return `${intro}
@@ -46,6 +47,7 @@ ${services.en.map((s) => `- [${s.title}](${url('/en#services')}): ${s.text}`).jo
 
 ${caseLine('birse', birse.en)}
 ${caseLine('forma', forma.en)}
+${caseLine('tunora', tunora.en)}
 ${work
   .filter((item) => item.status)
   .map((item) => `- ${item.name} (${item.category.en}): ${item.status!.en}, not yet published.`)
@@ -96,7 +98,7 @@ const caseSections = (copy: Record<string, unknown>) =>
     .join('\n\n');
 
 const caseFull = (
-  route: 'birse' | 'forma',
+  route: 'birse' | 'forma' | 'tunora',
   content: CaseContent,
   copy: { meta: { label: string; items: string[] }[] } & Record<string, unknown>,
 ) => `### ${content.name}
@@ -130,6 +132,8 @@ ${process.en.map((s, i) => `${i + 1}. ${s.title}: ${s.text}`).join('\n')}
 ${caseFull('birse', birse.en, birseCopy.en)}
 
 ${caseFull('forma', forma.en, formaCopy.en)}
+
+${caseFull('tunora', tunora.en, tunoraCopy.en)}
 
 ## About
 
