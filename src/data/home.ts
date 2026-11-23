@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro';
 import birseCard from '../assets/images/birse-card-street.jpg';
-import formaCard from '../assets/images/forma-card.jpg';
+import formaCard from '../assets/images/case/forma-card.jpg';
 import tunoraCard from '../assets/images/case/tunora-card.jpg';
 import swisCard from '../assets/images/swis-saas.jpg';
 

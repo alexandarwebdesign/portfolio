@@ -1,16 +1,16 @@
 import type { CaseContent } from './types';
-import hero from '../../assets/images/birse-hero.jpg';
+import hero from '../../assets/images/case/birse-hero.jpg';
 import pdp from '../../assets/images/birse-pdp.jpg';
-import checkout from '../../assets/images/birse-checkout.jpg';
-import filters from '../../assets/images/birse-mobile-1.jpg';
-import category from '../../assets/images/birse-mobile-2.jpg';
-import mobileCheckout from '../../assets/images/birse-mobile-3.jpg';
-import mobilePdp from '../../assets/images/birse-mobile-4.jpg';
-import drawer from '../../assets/images/birse-mobile-5.jpg';
-import drillDown from '../../assets/images/birse-mobile-6.jpg';
-import storefront from '../../assets/images/birse-storefront.jpg';
-import desktopCategory from '../../assets/images/birse-category.jpg';
-import cart from '../../assets/images/birse-cart.jpg';
+import checkout from '../../assets/images/case/birse-checkout.jpg';
+import filters from '../../assets/images/case/birse-mobile-1.jpg';
+import category from '../../assets/images/case/birse-mobile-2.jpg';
+import mobileCheckout from '../../assets/images/case/birse-mobile-3.jpg';
+import mobilePdp from '../../assets/images/case/birse-mobile-4.jpg';
+import drawer from '../../assets/images/case/birse-mobile-5.jpg';
+import drillDown from '../../assets/images/case/birse-mobile-6.jpg';
+import storefront from '../../assets/images/case/birse-storefront.jpg';
+import desktopCategory from '../../assets/images/case/birse-desktop-2.jpg';
+import cart from '../../assets/images/case/birse-desktop-3.jpg';
 
 // Marker positions are shared by both languages.
 const pdpPoints: [number, number][] = [

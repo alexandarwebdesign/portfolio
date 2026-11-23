@@ -1,13 +1,13 @@
 import type { CaseContent } from './types';
-import hero from '../../assets/images/forma-hero.jpg';
+import hero from '../../assets/images/case/forma-hero.jpg';
 import home from '../../assets/images/forma-home.jpg';
 import cta from '../../assets/images/forma-cta.jpg';
 import contact from '../../assets/images/forma-contact.jpg';
 import services from '../../assets/images/forma-services.jpg';
 import project from '../../assets/images/forma-project.jpg';
 import about from '../../assets/images/forma-about.jpg';
-import mobileHome from '../../assets/images/forma-mobile-home.jpg';
-import mobileServices from '../../assets/images/forma-mobile-services.jpg';
+import mobileHome from '../../assets/images/case/forma-mobile-home.jpg';
+import mobileServices from '../../assets/images/case/forma-mobile-services.jpg';
 
 // Marker positions are shared by both languages.
 const homePoints: [number, number][] = [
