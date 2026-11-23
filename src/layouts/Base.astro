@@ -1,0 +1,81 @@
+---
+import Seo from '../components/Seo.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Scrollbar from '../components/Scrollbar.astro';
+import { toLang, ui } from '../i18n/ui';
+import type { RouteId } from '../i18n/routes';
+import manropeLatin from '../assets/fonts/manrope-latin.woff2?url';
+import manropeCyrillic from '../assets/fonts/manrope-cyrillic.woff2?url';
+import '../styles/site.css';
+
+interface Props {
+  title: string;
+  description: string;
+  route: RouteId;
+  noindex?: boolean;
+  schema?: Record<string, unknown>[];
+  crumb?: string;
+  /** Page class on <body>, as on the original site (about-page, case pages). */
+  bodyClass?: string;
+}
+
+const { title, description, route, noindex, schema, crumb, bodyClass } = Astro.props;
+const lang = toLang(Astro.currentLocale);
+// The fonts of the first screen: Latin for English, Cyrillic for Bulgarian.
+const preload = lang === 'bg' ? [manropeCyrillic] : [manropeLatin];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <Seo {title} {description} {lang} {route} {noindex} {schema} {crumb} />
+    {
+      preload.map((href) => (
+        <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+      ))
+    }
+    <!-- Reveal-on-scroll hides content only when scripts run; failsafe after 3 s. -->
+    <script is:inline>
+      var d = document.documentElement;
+      d.classList.add('js');
+      // after a language switch the page is hidden until it is scrolled to where the reader was
+      // (initLanguageSwitchScroll), so the top of the page never flashes
+      try {
+        var s = JSON.parse(sessionStorage.getItem('lang-switch-scroll') || 'null');
+        if (
+          s &&
+          s.to.replace(/\/+$/, '') === location.pathname.replace(/\/+$/, '') &&
+          Date.now() - s.at < 15000
+        ) {
+          d.classList.add('lang-pending');
+          setTimeout(function () {
+            d.classList.remove('lang-pending');
+          }, 3000);
+        }
+      } catch (e) {}
+      setTimeout(function () {
+        window.__revealReady || d.classList.add('reveal-failsafe');
+      }, 3000);
+    </script>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#efefef" />
+  </head>
+  <body class={bodyClass}>
+    <a href="#main-content" class="skip-link">{ui[lang].skip}</a>
+    <Header {lang} {route} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer {lang} {route} />
+    <Scrollbar />
+    <script>
+      import '../scripts/site';
+    </script>
+  </body>
+</html>

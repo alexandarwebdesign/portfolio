@@ -1,0 +1,145 @@
+---
+// The case header: back link, title, the facts table (role, client with its site, who built it,
+// year and sector, palette) and the framed hero picture with a floating logo.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import pfgMark from '../../assets/images/case/pfg-mark.svg?raw';
+
+interface Props {
+  back: { href: string; label: string };
+  title: string;
+  meta: { label: string; items: string[] }[];
+  hero: { image: ImageMetadata; alt: string };
+  logo: { src: string; width?: number; height?: number; class?: string };
+  /** The client and the address of its site. */
+  client: { href: string; siteLabel: string };
+  /** Who built it (the PFG Bulgaria mark sits left of the link). */
+  dev?: { label: string; name: string; href: string };
+  palette: { label: string; colors: string[] };
+}
+
+const { back, title, meta, hero, logo, client, dev, palette } = Astro.props;
+const [role, clientCol, year] = meta;
+---
+
+<section id="project-hero" class="case-header">
+  <div class="container case-header__top">
+    <a href={back.href} class="case-back">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path
+          d="M10 12L6 8L10 4"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <span>{back.label}</span>
+    </a>
+    <div class="case-header__main">
+      <h1 class="case-title" id="project-title">{title}</h1>
+    </div>
+    <dl class="case-facts">
+      <div class="case-fact">
+        <dt>{role.label}</dt>
+        <dd class="case-fact__list">
+          {role.items.map((item) => <span set:html={item} />)}
+        </dd>
+      </div>
+      <div class="case-fact">
+        <dt>{clientCol.label}</dt>
+        <dd class="case-fact__client">
+          <a href={client.href} class="case-fact__link" target="_blank" rel="noopener noreferrer">
+            {client.siteLabel}
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="8 7 17 7 17 16"></polyline>
+            </svg>
+          </a>
+        </dd>
+      </div>
+      {
+        dev && (
+          <div class="case-fact">
+            <dt>{dev.label}</dt>
+            <dd>
+              <a href={dev.href} class="case-fact__dev" target="_blank" rel="noopener noreferrer">
+                <span class="case-fact__mark" aria-hidden="true" set:html={pfgMark} />
+                {dev.name}
+                <svg
+                  class="case-fact__arrow"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="7" y1="17" x2="17" y2="7" />
+                  <polyline points="8 7 17 7 17 16" />
+                </svg>
+              </a>
+            </dd>
+          </div>
+        )
+      }
+      <div class="case-fact">
+        <dt>{year.label}</dt>
+        <dd class="case-fact__list">
+          {year.items.map((item) => <span set:html={item} />)}
+        </dd>
+      </div>
+      <div class="case-fact">
+        <dt>{palette.label}</dt>
+        <dd class="case-fact__palette">
+          {
+            palette.colors.map((color) => (
+              <span
+                class="palette-dot"
+                style={`background:${color};`}
+                title={color.toUpperCase()}
+              />
+            ))
+          }
+        </dd>
+      </div>
+    </dl>
+  </div>
+  <div class="case-header__picture">
+    <div class="project-hero-image-frame">
+      <Picture
+        src={hero.image}
+        formats={['avif', 'webp']}
+        widths={[800, 1080, 1600, 2400].filter((w) => w <= hero.image.width)}
+        sizes="100vw"
+        alt={hero.alt}
+        class="project-hero-image"
+        id="project-hero-full-image"
+        loading="eager"
+        fetchpriority="high"
+      />
+      <div class:list={['project-hero-logo-wrap', logo.class]} data-parallax-speed="3">
+        <img
+          src={logo.src}
+          alt=""
+          class="project-hero-logo"
+          aria-hidden="true"
+          width={logo.width}
+          height={logo.height}
+        />
+      </div>
+    </div>
+  </div>
+</section>

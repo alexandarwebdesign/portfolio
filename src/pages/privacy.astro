@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Privacy from '../views/Privacy.astro';
+import { ui } from '../i18n/ui';
+const meta = ui.bg.meta.privacy;
+---
+
+<Base
+  title={meta.title}
+  description={meta.description}
+  route="privacy"
+  crumb={ui.bg.footer.privacy}
+>
+  <Privacy lang="bg" />
+</Base>

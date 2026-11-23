@@ -1,0 +1,72 @@
+---
+// The original about page: portrait beside the story, the facts index, two
+// buttons, the image marquee and the Birsé teaser.
+import { Picture } from 'astro:assets';
+import Button from '../components/Button.astro';
+import AboutIndex from '../components/AboutIndex.astro';
+import ImageMarquee from '../components/ImageMarquee.astro';
+import NextTeaser from '../components/NextTeaser.astro';
+import portrait from '../assets/images/portrait.jpg';
+import birseCard from '../assets/images/case/birse-card.jpg';
+import { about } from '../data/about';
+import { ui, type Lang } from '../i18n/ui';
+import { pathFor } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = about[lang];
+const s = ui[lang].site;
+const home = pathFor('home', lang)!;
+const homeHash = (hash: string) => `${home === '/' ? '' : home}/#${hash}`;
+---
+
+<section class="about-page-section" aria-labelledby="about-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(02)</span> {t.label}</p>
+      <h1 id="about-title" class="section-title">{t.title.join(' ')}</h1>
+    </div>
+
+    <div class="about-page-grid">
+      <div class="about-page-photo reveal">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[500, 720, 1080, 1600]}
+          sizes="(max-width: 900px) calc(100vw - 48px), 40vw"
+          alt={t.alt}
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="about-page-content">
+        <div class="about-page-bio reveal">
+          <p class="about-page-para">{t.lead}</p>
+          {t.text.map((paragraph) => <p class="about-page-para">{paragraph}</p>)}
+        </div>
+
+        <AboutIndex facts={t.facts} class="reveal" />
+
+        <div class="about-page-cta-row reveal">
+          <Button href={homeHash('contact')}>{t.start}</Button>
+          <Button href={homeHash('faq')} variant="secondary">{t.process}</Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ImageMarquee {lang} />
+
+<NextTeaser
+  href={pathFor('birse', lang)!}
+  label={s.selectedWork}
+  left="Bir"
+  right="Sé"
+  image={birseCard}
+  ariaLabel={`${s.viewCase}: Birsé`}
+/>

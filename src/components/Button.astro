@@ -1,0 +1,34 @@
+---
+// The original buttons: an accent block (the only element with a shadow) or a
+// hairline outline, with the label sliding up to a copy of itself on hover.
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = {
+  variant?: 'primary' | 'secondary';
+} & (
+  | ({ href: string } & Omit<HTMLAttributes<'a'>, 'href'>)
+  | ({ href?: undefined } & HTMLAttributes<'button'>)
+);
+
+const { variant = 'primary', class: className, ...rest } = Astro.props;
+const classes = [`button-${variant}`, className];
+const label = await Astro.slots.render('default');
+---
+
+{
+  rest.href === undefined ? (
+    <button class:list={classes} {...(rest as HTMLAttributes<'button'>)}>
+      <span class="btn-content">
+        <span class="btn-text" set:html={label} />
+        <span class="btn-hover-text" aria-hidden="true" set:html={label} />
+      </span>
+    </button>
+  ) : (
+    <a class:list={classes} {...rest}>
+      <span class="btn-content">
+        <span class="btn-text" set:html={label} />
+        <span class="btn-hover-text" aria-hidden="true" set:html={label} />
+      </span>
+    </a>
+  )
+}

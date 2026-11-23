@@ -1,0 +1,22 @@
+---
+// A ring of fine ticks: half cropped by a corner of its section, or (center) placed by its parent
+// (see .tick-ring in site.css).
+interface Props {
+  corner: 'bl' | 'tr' | 'center';
+}
+
+const { corner } = Astro.props;
+---
+
+<svg
+  class={`tick-ring tick-ring--${corner}`}
+  viewBox="0 0 100 100"
+  aria-hidden="true"
+  focusable="false"
+>
+  {
+    Array.from({ length: 120 }, (_, i) => (
+      <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
+    ))
+  }
+</svg>

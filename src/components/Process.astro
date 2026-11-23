@@ -1,0 +1,115 @@
+---
+// Process: three bands of one screen each. From 800 px wide (and 700 px tall,
+// no reduced motion, with scroll-driven animation) the first pins and each next
+// band is unmasked from the bottom up over it as you scroll; otherwise they are
+// plain bands. Each picture is one scene (subject in the centre, free space left
+// and right for the text); the tone says which text colour sits on it.
+import { Picture } from 'astro:assets';
+import understand from '../assets/images/process/understand.jpg';
+import design from '../assets/images/process/design.jpg';
+import build from '../assets/images/process/build.jpg';
+import analytics from '../assets/icons/tools/google-analytics.svg?raw';
+import searchConsole from '../assets/icons/tools/google-search-console.svg?raw';
+import meet from '../assets/icons/tools/google-meet.svg?raw';
+import figma from '../assets/icons/tools/figma.svg?raw';
+import awwwards from '../assets/icons/tools/awwwards.svg?raw';
+import chromium from '../assets/icons/tools/chromium.svg?raw';
+import vscode from '../assets/icons/tools/vscode.svg?raw';
+import github from '../assets/icons/tools/github.svg?raw';
+import claude from '../assets/icons/tools/claude.svg?raw';
+import cloudflare from '../assets/icons/tools/cloudflare.svg?raw';
+interface Props {
+  index: string;
+  label: string;
+  title: string;
+  steps: { title: string; text: string }[];
+}
+
+const { index, label, title, steps } = Astro.props;
+const scenes = [
+  { image: understand, tone: 'light' },
+  { image: design, tone: 'dark' },
+  { image: build, tone: 'light' },
+];
+// The tools of each step, as icons only (no words). `color` is the brand colour of the one-path
+// marks; Figma, Chromium and VS Code carry their own colours.
+const tools: { name: string; svg: string; color?: string }[][] = [
+  [
+    { name: 'Google Analytics', svg: analytics, color: '#e37400' },
+    { name: 'Google Search Console', svg: searchConsole, color: '#458cf5' },
+    { name: 'Google Meet', svg: meet, color: '#00897b' },
+  ],
+  [
+    { name: 'Figma', svg: figma },
+    { name: 'Awwwards', svg: awwwards, color: '#222222' },
+    { name: 'Chromium', svg: chromium },
+  ],
+  [
+    { name: 'Visual Studio Code', svg: vscode },
+    { name: 'GitHub', svg: github, color: '#181717' },
+    { name: 'Claude', svg: claude, color: '#d97757' },
+    { name: 'Cloudflare', svg: cloudflare, color: '#f38020' },
+  ],
+];
+---
+
+<section class="process stage" aria-labelledby="process-title">
+  <div class="container">
+    <header class="section-header reveal">
+      <p class="mono-label"><span class="index">({index})</span> {label}</p>
+      <h2 id="process-title" class="section-title">{title}</h2>
+    </header>
+  </div>
+  <div class="process__track">
+    <div class="process__stage">
+      {
+        steps.map((step, i) => (
+          <div class="process__step" data-tone={scenes[i]?.tone}>
+            <div class="process__picture">
+              {scenes[i] && (
+                <Picture
+                  src={scenes[i].image}
+                  formats={['avif', 'webp']}
+                  widths={[800, 1400, 2000, 2560]}
+                  sizes="100vw"
+                  alt=""
+                  loading="lazy"
+                />
+              )}
+            </div>
+            <div class="process__text">
+              <div class="process__head">
+                <span class="mono-label">({String(i + 1).padStart(2, '0')})</span>
+                <h3 class="process__name">{step.title}</h3>
+              </div>
+              <div class="process__aside">
+                {tools[i] && (
+                  <div
+                    class="process__tools"
+                    role="img"
+                    aria-label={tools[i].map((tool) => tool.name).join(', ')}
+                  >
+                    {tools[i].map((tool, j) => (
+                      <span
+                        class:list={['process__tool', { 'process__tool--mono': tool.color }]}
+                        style={`z-index:${tools[i].length - j}${tool.color ? `;--tool-color:${tool.color}` : ''}`}
+                        set:html={tool.svg}
+                      />
+                    ))}
+                  </div>
+                )}
+                <p class="process__lead">{step.text}</p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="process__segments" aria-hidden="true">
+      <div class="process__seg process__seg--dwell"></div>
+      <div class="process__seg process__seg--1"></div>
+      <div class="process__seg process__seg--2"></div>
+      <div class="process__seg process__seg--tail"></div>
+    </div>
+  </div>
+</section>

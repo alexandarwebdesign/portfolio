@@ -1,0 +1,49 @@
+---
+// A work card: the picture, then the name and one line below it. The tag
+// ("Concept") or the status ("In development") sits in the caption. Work
+// without a case study is grey and has no link.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  name: string;
+  category: string;
+  image: ImageMetadata;
+  href?: string;
+  status?: string;
+  tag?: string;
+  /** Position in the list, so a single column keeps the reading order. */
+  index?: number;
+}
+
+const { name, category, image, href, status, tag, index = 0 } = Astro.props;
+---
+
+<article class:list={['work-card', 'reveal', { 'work-card--off': !href }]} style={`--i:${index}`}>
+  <div class="work-card__media">
+    <Picture
+      src={image}
+      formats={['avif', 'webp']}
+      widths={[500, 800, 1080, 1600].filter((w) => w <= image.width)}
+      sizes="(max-width: 800px) 100vw, 47vw"
+      alt=""
+      loading="lazy"
+    />
+  </div>
+  <div class="work-card__cap">
+    <h3 class="work-card__name">
+      {
+        href ? (
+          <a href={href} class="work-card__link">
+            {name}
+          </a>
+        ) : (
+          name
+        )
+      }
+    </h3>
+    <p class="work-card__meta">{category}</p>
+    {tag && <span class="work-card__tag">{tag}</span>}
+    {status && <span class="work-card__status">{status}</span>}
+  </div>
+</article>

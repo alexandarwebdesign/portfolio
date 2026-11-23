@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../views/Home.astro';
+import { ui } from '../../i18n/ui';
+import { homeSchema } from '../../data/schema';
+const meta = ui.en.meta.home;
+---
+
+<Base
+  title={meta.title}
+  description={meta.description}
+  route="home"
+  schema={homeSchema('en', '/en')}
+>
+  <Home lang="en" />
+</Base>

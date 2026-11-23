@@ -1,0 +1,46 @@
+---
+// The original pulsing green "available" mark (SMIL; paused with reduced
+// motion by the site script).
+interface Props {
+  class: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg class={className} width="19" height="19" viewBox="0 0 19 19" fill="none" aria-hidden="true">
+  <circle cx="9.5" cy="9.5" r="1.5" fill="#1f9c44"
+    ><animate attributeName="r" values="1.5;1.8;1.5" dur="2s" repeatCount="indefinite"
+    ></animate></circle
+  >
+  <circle cx="9.5" cy="9.5" r="2.25" stroke="#1f9c44" stroke-width="0.5" fill="none"
+    ><animate attributeName="r" values="2.25;3;2.25" dur="2s" repeatCount="indefinite"
+    ></animate><animate
+      attributeName="opacity"
+      values="0.8;0.3;0.8"
+      dur="2s"
+      repeatCount="indefinite"></animate></circle
+  >
+  <circle cx="9.5" cy="9.5" r="4.25" stroke="#1f9c44" stroke-width="0.5" fill="none"
+    ><animate
+      attributeName="r"
+      values="4.25;5.2;4.25"
+      dur="2s"
+      begin="0.3s"
+      repeatCount="indefinite"></animate><animate
+      attributeName="opacity"
+      values="0.6;0.15;0.6"
+      dur="2s"
+      begin="0.3s"
+      repeatCount="indefinite"></animate></circle
+  >
+  <circle cx="9.5" cy="9.5" r="5.4" stroke="#1f9c44" stroke-width="0.2" fill="none"
+    ><animate attributeName="r" values="5.4;7;5.4" dur="2s" begin="0.6s" repeatCount="indefinite"
+    ></animate><animate
+      attributeName="opacity"
+      values="0.4;0;0.4"
+      dur="2s"
+      begin="0.6s"
+      repeatCount="indefinite"></animate></circle
+  >
+</svg>

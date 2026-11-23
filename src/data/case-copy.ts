@@ -1,0 +1,580 @@
+// The words of the two case study pages, in both languages. The pages and
+// llms-full.txt both read from here, so they cannot drift apart.
+const swatch = (hex: string) =>
+  `<span class="inline-color-swatch" style="background:#${hex};" aria-hidden="true"></span>${hex}`;
+const pfg = 'PFG Bulgaria';
+const site = 'BirSé (birse.bg)';
+
+export const birseCopy = {
+  en: {
+    badge: 'Redesign finished',
+    devLabel: 'Development',
+    meta: [
+      {
+        label: 'Role / Services',
+        items: ['UX Strategy', 'UI/UX Redesign', 'Design System &amp; Handoff'],
+      },
+      { label: 'Client', items: [site, 'Fine jewelry, est. 2013', `Dev partner: ${pfg}`] },
+      { label: 'Year & Sector', items: ['2026 ©', 'E-Commerce · Jewelry'] },
+    ],
+    heroAlt: 'BirSé fine jewelry brand hero',
+    storefront: {
+      kicker: 'Storefront elevation',
+      title: 'A live store, lifted without a rebuild',
+      text: 'BirSé already ranked and sold, so the work had to feel premium without breaking the platform. The storefront keeps the existing commerce logic, then adds editorial spacing, stronger category entry points, and a warmer jewelry tone.',
+      alt: 'BirSé homepage on desktop - Black Month promotional banner, trust strip and featured jewelry',
+    },
+    pdp: {
+      kicker: 'Product detail page',
+      title: 'Confidence where price hesitation happens',
+      text: 'The product page puts the discounted price, the installment option, trust details, and the add-to-cart path in the same decision zone. The goal is not decoration; it is removing doubt before the shopper leaves the page.',
+      alt: 'BirSé product page on desktop - gallery, discounted price, add-to-cart, installment option and trust details',
+    },
+    checkout: {
+      kicker: 'Checkout flow',
+      title: 'A checkout that keeps the next step in reach',
+      text: 'Checkout runs in three steps: contact, delivery, payment. A progress bar shows where the shopper is, and the order summary stays visible beside the form, so the flow feels controlled instead of long. Cash on delivery is available.',
+      alt: 'BirSé desktop checkout - three-step progress (contact, delivery, payment) with a persistent order summary',
+    },
+    mobile: {
+      kicker: 'Mobile commerce',
+      title: 'Every decision was judged on a 375px screen first',
+      text: '80% of traffic is mobile, so the biggest improvements live where the thumb does the work: filter entry, product scanning, and checkout confidence.',
+      label: 'Filters, category page and checkout on mobile',
+      phones: [
+        {
+          title: 'Filters as a bottom sheet',
+          text: 'The grid stays visible first; filters slide up only when needed, with live result feedback to avoid dead-end searches.',
+          alt: 'BirSé mobile filter bottom sheet - price range and filter groups with a result-count button',
+        },
+        {
+          title: 'Category scanning',
+          text: 'Filter chips, product density, and pagination stay familiar so shoppers can compare jewelry without relearning the store.',
+          alt: 'BirSé mobile category page - gold earrings with filter and sort buttons',
+        },
+        {
+          title: 'Next step always in reach',
+          text: 'On mobile, the order total and the continue button stay fixed at the bottom, with a short SSL and returns reassurance beneath them.',
+          alt: 'BirSé mobile checkout - contact step with the order total and continue button fixed at the bottom',
+        },
+      ],
+    },
+    navigation: {
+      kicker: 'Product and navigation',
+      title: 'Fewer taps to trust, browse, and buy',
+      text: 'The navigation drawer and product page are designed for shoppers who arrive from ads and need orientation quickly: clear hierarchy, visible categories, and buying confidence above the fold.',
+      label: 'Product page and navigation on mobile',
+      phones: [
+        {
+          title: 'Product page confidence',
+          text: 'The discounted price with the old price struck through, an installment button, and a fixed add-to-cart bar answer cost questions at the decision moment.',
+          alt: 'BirSé mobile product page - gallery, price, installment button and a fixed add-to-cart bar',
+        },
+        {
+          title: 'Visible menu choices',
+          text: 'The drawer surfaces categories, promotions, and blog entry points without burying the main shopping paths.',
+          alt: 'BirSé mobile navigation drawer - main categories, promotions link and store phone number',
+        },
+        {
+          title: 'Two-tap drill-down',
+          text: 'Audience tabs and subcategories reduce wandering, so a shopper can reach the right jewelry type quickly.',
+          alt: 'BirSé mobile navigation drill-down - gold jewelry with audience tabs and subcategories',
+        },
+      ],
+    },
+    desktop: {
+      kicker: 'Desktop states',
+      title: 'The wider screens carry the full system',
+      text: 'The desktop views show the same product logic at a calmer scale: promotional hierarchy, category browsing, cart confidence, and UI states that feel consistent instead of assembled page by page.',
+      slides: [
+        'BirSé desktop homepage with the Black Month promotional banner and trust strip',
+        'BirSé desktop category page - gold earrings with filters and sorting',
+        'BirSé desktop cart - item, quantity, order summary and checkout button',
+      ],
+    },
+    visual: {
+      kicker: 'Visual system',
+      title: 'Warm luxury, built for clarity',
+      text: `DM Serif Display adds softness to headlines and product names, while DM Sans keeps the commerce UI readable. Muted gold ${swatch('C9A96E')} and a deep burgundy ${swatch('7C2529')} make premium cues visible without making the store loud.`,
+      alt: 'BirSé fine jewelry brand hero',
+    },
+    roles: {
+      kicker: 'Roles',
+      title: 'Who did what',
+      items: [
+        ['My role', 'UX strategy, UI/UX redesign, design system and handoff.'],
+        [
+          'What I designed',
+          'Storefront, category and product pages, cart, checkout, and the mobile menu and filters.',
+        ],
+        ['What PFG did', 'Development and implementation of the design on the existing platform.'],
+      ],
+    },
+    results: {
+      kicker: 'Results',
+      title: 'Numbers come after launch',
+      text: 'No performance numbers are published yet. Conversion and mobile results will be added here once there is enough data since launch.',
+    },
+  },
+  bg: {
+    badge: 'Редизайнът е завършен',
+    devLabel: 'Разработка',
+    meta: [
+      {
+        label: 'Роля / услуги',
+        items: ['UX стратегия', 'UI/UX редизайн', 'Дизайн система и предаване'],
+      },
+      { label: 'Клиент', items: [site, 'Фини бижута, от 2013 г.', `Изработка: ${pfg}`] },
+      { label: 'Година и сектор', items: ['2026 ©', 'Онлайн търговия · бижута'] },
+    ],
+    heroAlt: 'Бранд снимка на бижутата BirSé',
+    storefront: {
+      kicker: 'Начална страница',
+      title: 'Работещ магазин, издигнат без ново изграждане',
+      text: 'BirSé вече се класираше в Google и продаваше, затова работата трябваше да изглежда премиум, без да чупи платформата. Началната страница запазва търговската логика и добавя редакционни разстояния, по-силни входове към категориите и по-топъл тон, подходящ за бижута.',
+      alt: 'Началната страница на BirSé на десктоп – банер „Black Month“, лента с гаранции и избрани бижута',
+    },
+    pdp: {
+      kicker: 'Продуктова страница',
+      title: 'Увереност там, където цената кара да се колебаеш',
+      text: 'Продуктовата страница събира намалената цена, плащането на вноски, гаранциите и пътя към количката в една зона на решение. Целта не е украса, а да махне съмнението, преди купувачът да напусне страницата.',
+      alt: 'Продуктовата страница на BirSé на десктоп – галерия, намалена цена, количка, вноски и гаранции',
+    },
+    checkout: {
+      kicker: 'Поръчка',
+      title: 'Поръчка, в която следващата стъпка е винаги под ръка',
+      text: 'Поръчката минава през три стъпки: контакт, доставка, плащане. Лентата за напредък показва докъде е купувачът, а обобщението стои до формата, така че процесът се усеща контролиран, а не дълъг. Може да се плати с наложен платеж.',
+      alt: 'Поръчката на BirSé на десктоп – три стъпки (контакт, доставка, плащане) и обобщение на поръчката отстрани',
+    },
+    mobile: {
+      kicker: 'Мобилна търговия',
+      title: 'Всяко решение беше преценено първо на екран от 375 px',
+      text: '80 % от посещенията са от телефон, затова най-големите подобрения са там, където работи палецът: филтрите, разглеждането на продукти и увереността при поръчка.',
+      label: 'Филтри, категория и поръчка на телефон',
+      phones: [
+        {
+          title: 'Филтри в долен панел',
+          text: 'Продуктите се виждат първи; филтрите излизат отдолу само при нужда и показват броя резултати на живо, за да няма търсения без изход.',
+          alt: 'Филтрите на BirSé на телефон – ценови диапазон, групи филтри и бутон с броя резултати',
+        },
+        {
+          title: 'Разглеждане на категория',
+          text: 'Бутоните за филтри, плътността на продуктите и страниците остават познати, за да се сравняват бижута, без магазинът да се учи наново.',
+          alt: 'Категория на BirSé на телефон – златни обеци с бутони за филтриране и подреждане',
+        },
+        {
+          title: 'Следващата стъпка винаги е под ръка',
+          text: 'На телефон сумата и бутонът „Продължи“ стоят закрепени долу, а под тях има кратко уверение за SSL и връщане.',
+          alt: 'Поръчка на BirSé на телефон – стъпка за контакт със сумата и бутона за продължаване, закрепени долу',
+        },
+      ],
+    },
+    navigation: {
+      kicker: 'Продукт и навигация',
+      title: 'По-малко докосвания до доверие, избор и покупка',
+      text: 'Менюто и продуктовата страница са направени за хора, които идват от реклама и трябва бързо да се ориентират: ясна йерархия, видими категории и увереност за покупката още в първия екран.',
+      label: 'Продуктова страница и навигация на телефон',
+      phones: [
+        {
+          title: 'Увереност на продуктовата страница',
+          text: 'Намалената цена до зачеркнатата стара, бутон за вноски и закрепена лента „Добави в количката“ отговарят на въпросите за цената в момента на решение.',
+          alt: 'Продуктова страница на BirSé на телефон – галерия, цена, бутон за вноски и закрепена лента за количката',
+        },
+        {
+          title: 'Видим избор в менюто',
+          text: 'Менюто показва категориите, промоциите и блога, без да заравя основните пътища за пазаруване.',
+          alt: 'Менюто на BirSé на телефон – основни категории, промоции и телефон на магазина',
+        },
+        {
+          title: 'Две докосвания до целта',
+          text: 'Разделите по аудитория и подкатегориите намаляват лутането, така че купувачът стига бързо до точния вид бижу.',
+          alt: 'Навигацията на BirSé на телефон – златни бижута с раздели по аудитория и подкатегории',
+        },
+      ],
+    },
+    desktop: {
+      kicker: 'Десктоп',
+      title: 'По-широките екрани носят цялата система',
+      text: 'Десктоп изгледите показват същата продуктова логика в по-спокоен мащаб: йерархия на промоциите, разглеждане на категории, увереност в количката и състояния на интерфейса, които изглеждат последователни, а не сглобени страница по страница.',
+      slides: [
+        'Началната страница на BirSé на десктоп с банера „Black Month“ и лентата с гаранции',
+        'Категория на BirSé на десктоп – златни обеци с филтри и подреждане',
+        'Количката на BirSé на десктоп – продукт, количество, обобщение и бутон за поръчка',
+      ],
+    },
+    visual: {
+      kicker: 'Визуална система',
+      title: 'Топъл лукс, направен за яснота',
+      text: `DM Serif Display добавя мекота на заглавията и имената на продуктите, а DM Sans държи търговския интерфейс четим. Приглушеното злато ${swatch('C9A96E')} и дълбокото бордо ${swatch('7C2529')} показват премиум сигналите, без магазинът да крещи.`,
+      alt: 'Бранд снимка на бижутата BirSé',
+    },
+    roles: {
+      kicker: 'Роли',
+      title: 'Кой какво направи',
+      items: [
+        [
+          'Моята роля',
+          'UX стратегия, UI/UX редизайн, дизайн система и предаване на разработчиците.',
+        ],
+        [
+          'Какво проектирах',
+          'Началната страница, категориите и продуктовите страници, количката, поръчката, мобилното меню и филтрите.',
+        ],
+        ['Какво направи PFG', 'Разработка и внедряване на дизайна на съществуващата платформа.'],
+      ],
+    },
+    results: {
+      kicker: 'Резултати',
+      title: 'Числата идват след пускането',
+      text: 'Все още не публикувам числа. Резултатите за конверсиите и мобилните посещения ще се появят тук, когато се събере достатъчно данни.',
+    },
+  },
+};
+
+export const formaCopy = {
+  en: {
+    badge: 'Conceptual Project',
+    meta: [
+      { label: 'Role / Services', items: ['UX Strategy', 'UI Design', 'Web Development'] },
+      { label: 'Client', items: ['FORMA Architects', 'Luxury architect persona'] },
+      { label: 'Year & Sector', items: ['2026 ©', 'Architecture · Luxury'] },
+    ],
+    heroAlt: 'FORMA Architects project hero image',
+    live: 'View live site',
+    trust: {
+      kicker: 'Positioning',
+      title: 'Trust before the first call',
+      text: 'FORMA was built around a fictional luxury architecture studio serving Miami, Dubai, and the Greek Islands. The homepage had to feel established immediately, so the first desktop pass opens with scale, restraint, and portfolio-led proof.',
+      alt: 'Walkthrough video of the FORMA Architects homepage and portfolio',
+    },
+    hero: {
+      kicker: 'Hero experience',
+      title: 'A cinematic opener, not a brochure hero',
+      text: 'Luxury prospects buy into atmosphere before details. A full-width first screen gives the page a quiet architectural presence, then lets the work lead instead of explaining too much too early.',
+      alt: 'The first screen of the FORMA Architects site at full width: an interior with large windows, a headline and a button',
+    },
+    portfolio: {
+      kicker: 'Portfolio system',
+      title: 'A magazine spread, not a uniform grid',
+      text: 'The portfolio hierarchy gives hero projects room to breathe while supporting pages stay quiet. The carousel shows how the same brass rule, typography scale, and editorial spacing carry across the full desktop experience.',
+      slides: [
+        'FORMA Architects project detail page for Desert Monolith',
+        'FORMA Architects homepage desktop view',
+        'FORMA Architects editorial portfolio listing desktop view',
+        'FORMA Architects secondary portfolio desktop state',
+        'FORMA Architects about page desktop view',
+        'FORMA Architects services page desktop view',
+        'FORMA Architects contact page desktop view',
+      ],
+    },
+    mobile: {
+      kicker: 'Mobile experience',
+      title: 'The luxury tone had to survive a narrow viewport',
+      text: 'The mobile views keep the same quiet confidence as desktop: large imagery, simple navigation moments, and service content that qualifies without feeling sales-heavy.',
+      label: 'Mobile screens section',
+      phones: [
+        {
+          title: 'Mobile homepage',
+          text: 'The first screen keeps the brand cinematic while making the portfolio entry obvious on touch.',
+          alt: 'FORMA Architects mobile homepage',
+        },
+        {
+          title: 'Touch walkthrough',
+          text: 'The interaction stays simple: movement supports the work, but the UI never asks the user to decode a new pattern.',
+          alt: 'Walkthrough of the FORMA Architects mobile site',
+        },
+        {
+          title: 'Service clarity',
+          text: 'The service page explains scope without over-selling, so a qualified prospect knows whether to continue.',
+          alt: 'FORMA Architects mobile services page',
+        },
+      ],
+    },
+    brand: {
+      kicker: 'Brand system',
+      title: 'Quiet luxury, enforced by restraint',
+      text: `The brass accent ${swatch('B8956A')} appears only in moments that deserve attention. The result is a site that feels expensive because it stays controlled.`,
+      alt: 'FORMA Architects social preview composition with the brand logo overlay',
+      label: 'Full width image',
+    },
+  },
+  bg: {
+    badge: 'Концептуален проект',
+    meta: [
+      { label: 'Роля / услуги', items: ['UX стратегия', 'UI дизайн', 'Уеб разработка'] },
+      { label: 'Клиент', items: ['FORMA Architects', 'Персона: луксозно архитектурно студио'] },
+      { label: 'Година и сектор', items: ['2026 ©', 'Архитектура · лукс'] },
+    ],
+    heroAlt: 'Заглавна снимка на проекта FORMA Architects',
+    live: 'Вижте живия сайт',
+    trust: {
+      kicker: 'Позициониране',
+      title: 'Доверие още преди първия разговор',
+      text: 'FORMA е измислено луксозно архитектурно студио с проекти в Маями, Дубай и гръцките острови. Началната страница трябваше веднага да изглежда утвърдена, затова първият екран на десктоп започва с мащаб, сдържаност и доказателства чрез портфолиото.',
+      alt: 'Видео: началната страница и портфолиото на FORMA Architects',
+    },
+    hero: {
+      kicker: 'Първи екран',
+      title: 'Кинематографично начало, а не брошура',
+      text: 'Клиентите в луксозния сегмент първо купуват атмосферата, после детайлите. Първият екран на цялата ширина дава на страницата тихо архитектурно присъствие и оставя работата да води, вместо да обяснява твърде много твърде рано.',
+      alt: 'Първият екран на сайта на FORMA Architects на цялата ширина: интериор с големи прозорци, заглавие и бутон',
+    },
+    portfolio: {
+      kicker: 'Портфолио',
+      title: 'Разтвор от списание, а не еднаква мрежа',
+      text: 'Йерархията в портфолиото дава въздух на водещите проекти, а помощните страници остават тихи. Каруселът показва как една и съща месингова линия, типографска скала и редакционни разстояния минават през целия десктоп сайт.',
+      slides: [
+        'FORMA Architects – страницата на проекта Desert Monolith',
+        'FORMA Architects – началната страница на десктоп',
+        'FORMA Architects – редакционният списък с проекти на десктоп',
+        'FORMA Architects – второ състояние на портфолиото на десктоп',
+        'FORMA Architects – страницата „За нас“ на десктоп',
+        'FORMA Architects – страницата с услуги на десктоп',
+        'FORMA Architects – страницата за контакт на десктоп',
+      ],
+    },
+    mobile: {
+      kicker: 'Мобилно',
+      title: 'Луксозният тон трябваше да оцелее на тесен екран',
+      text: 'Мобилните изгледи пазят същата тиха увереност като десктопа: големи снимки, прости моменти на навигация и съдържание за услугите, което отсява клиентите, без да звучи натрапчиво.',
+      label: 'Мобилни екрани',
+      phones: [
+        {
+          title: 'Мобилна начална страница',
+          text: 'Първият екран пази кинематографичния бранд и прави входа към портфолиото очевиден при докосване.',
+          alt: 'Мобилната начална страница на FORMA Architects',
+        },
+        {
+          title: 'Разходка с докосване',
+          text: 'Взаимодействието остава просто: движението подкрепя работата, но интерфейсът никога не кара човек да разгадава нов модел.',
+          alt: 'Видео: мобилният сайт на FORMA Architects',
+        },
+        {
+          title: 'Ясни услуги',
+          text: 'Страницата с услуги обяснява обхвата, без да надценява, така че подходящият клиент знае дали да продължи.',
+          alt: 'Страницата с услуги на FORMA Architects на телефон',
+        },
+      ],
+    },
+    brand: {
+      kicker: 'Бранд система',
+      title: 'Тих лукс, постигнат чрез сдържаност',
+      text: `Месинговият акцент ${swatch('B8956A')} се появява само в моменти, които заслужават внимание. Резултатът е сайт, който изглежда скъп, защото остава под контрол.`,
+      alt: 'Композиция за социални мрежи на FORMA Architects с логото отгоре',
+      label: 'Снимка на цялата ширина',
+    },
+  },
+};
+
+export const tunoraCopy = {
+  en: {
+    badge: 'Own product',
+    meta: [
+      { label: 'Role / Services', items: ['Product Design', 'UI Design', 'Web Development'] },
+      { label: 'Client', items: ['Tunora', 'My own product'] },
+      { label: 'Year & Sector', items: ['2026 ©', 'Software · Windows'] },
+    ],
+    heroAlt: 'Tunora, a now-playing widget for Windows, over a dark glowing scene',
+    live: 'View live site',
+    trust: {
+      kicker: 'Positioning',
+      title: 'Show the widget at work, not a description of it',
+      text: 'Tunora is a small Windows widget that shows and controls whatever music is playing. I designed and built it, so the page had to do what a store listing would: let a visitor understand it in a second. Instead of describing the widget, the first rows of the page are small live demos of it, under one headline that says what they do.',
+      alt: 'Video: the Tunora home page scrolling in a monitor frame, from the first screen through the features, the players and the questions to the footer',
+    },
+    hero: {
+      kicker: 'First screen',
+      title: 'Everything that decides fits in one look',
+      text: 'The headline, one sentence and two buttons all sit above the fold, in one centered column. Around them the page says “music” before anyone reads: a glowing rim that frames the screen, a portrait lit by the music peeking from the bottom, and glass badges of players and album covers on both sides. One word of the headline is a serif italic, “glowing”.',
+      alt: 'Video: the first screen of the Tunora website loading, with a glowing rim, the headline, two buttons and a portrait with glass player badges',
+    },
+    features: {
+      kicker: 'Feature cards',
+      title: 'Each card is the widget in one of its real states',
+      text: 'The cards sit in one large rounded block with a very small gap between them, so the grid reads as one object. Each one pairs a sentence with a demo of the widget in a real state, and the colors and radii of the demos come from the app’s own interface files, so the page shows the real widget, not an imitation of it.',
+      alt: 'Video: the Tunora feature cards scrolling by, each with a live widget demo',
+    },
+    decisions: {
+      kicker: 'Trust',
+      title: 'Two moments that earn trust before the install',
+      text: 'The privacy section shows its promise instead of only stating it: a status window types a command, the values scan and settle to zero, a padlock is drawn and stamped “secured”. With reduced motion, the final state appears at once. Then, when someone presses download, a dialog warns about the one thing Windows will do: Tunora is not code-signed yet, so Windows shows a warning the first time. The dialog says what will appear, the two clicks that follow, and why, with a fallback button if the download did not start.',
+      alt: 'Video: the Tunora privacy section, where a terminal-style status window types a command, scans its values and ends in a secured padlock',
+      altModal:
+        'The download dialog of Tunora over the blurred first screen: what Windows will show and the two steps to continue',
+    },
+    footer: {
+      kicker: 'Closing',
+      title: 'A night sky for a closing, in pure CSS',
+      text: 'The footer is a starfield with four shooting stars and warm and cool beams of light rising from the bottom, with no script and no image. Below the links comes one honest line: Tunora is not made by, or affiliated with, the music services it works with.',
+      alt: 'Video: the Tunora footer, a night sky with stars, shooting stars and soft colored light beams above the links',
+    },
+    mobile: {
+      kicker: 'Mobile',
+      title: 'A Windows widget still gets pitched from a phone',
+      text: 'The first visit to a desktop app’s page often happens on a phone, with the install coming later at a PC. The mobile layout keeps the promise, the download button and the first demos in the first screens, and stacks the cards into one column.',
+      label: 'Mobile screens section',
+      phones: [
+        {
+          title: 'First screen',
+          text: 'The promise, the platform badge and the download button come first; the portrait below says “music” before any more words.',
+          alt: 'The Tunora mobile first screen with the headline and the download button',
+        },
+        {
+          title: 'Controls and glow',
+          text: 'One card, one idea: the widget with its seek bar, then the same widget glowing in the color of the album.',
+          alt: 'The Tunora mobile feature cards: the controls and the glow that follows the album art',
+        },
+        {
+          title: 'Lyrics and idle state',
+          text: 'Each card is a sentence and its demo, read together, with no sideways scrolling. Pro features carry a small tag.',
+          alt: 'The Tunora mobile feature cards: synced lyrics and the idle circle',
+        },
+      ],
+    },
+    mobile2: {
+      kicker: 'Mobile details',
+      title: 'The decision part is one column, too',
+      text: 'Privacy, pricing and questions are the part a visitor reads when they are deciding. On a phone they are stacked cards and single lines, so the path to the download button never needs a pinch or a sideways swipe.',
+      label: 'Mobile screens section, privacy, pricing and questions',
+      phones: [
+        {
+          title: 'Privacy',
+          text: 'The three statements become three stacked cards, each with an icon, a bold line and one sentence.',
+          alt: 'The Tunora mobile privacy section with three stacked cards',
+        },
+        {
+          title: 'Pricing',
+          text: 'The free plan opens the section, with the list of what it includes; the one-time Pro price follows below it.',
+          alt: 'The Tunora mobile pricing section with the free plan',
+        },
+        {
+          title: 'Questions',
+          text: 'Every question is a single line; opening one shows its answer in place, without leaving the page.',
+          alt: 'The Tunora mobile questions list with the first answer open',
+        },
+      ],
+    },
+    portfolio: {
+      kicker: 'Desktop states',
+      title: 'One surface, one hairline, one accent, top to bottom',
+      text: 'The same dark surface, hairline border and single accent carry through the feature cards, the supported players and the pricing. Every card pairs one sentence with a small working demo: scroll to change the volume, synced lyrics, a widget that shrinks to a circle when idle, a lock mode that lets clicks pass through.',
+      slides: [
+        'Tunora features: the idle circle, lock mode, custom themes and dynamic album colors',
+        'Tunora supported players: Spotify, YouTube, Apple Music and more in a ring',
+        'Tunora pricing: a free plan and a one-time Pro unlock',
+      ],
+    },
+    brand: {
+      kicker: 'Brand system',
+      title: 'Dark, quiet, one accent',
+      text: `The page is a near-black ${swatch('0A0A0E')} where white is the only action color, so the widget demos and the album art are the only things with color. A serif italic picks out one word in each headline.`,
+      alt: 'Tunora brand image: a glowing music widget floating over a dark scene',
+      label: 'Full width image',
+    },
+  },
+  bg: {
+    badge: 'Собствен продукт',
+    meta: [
+      { label: 'Роля / услуги', items: ['Продуктов дизайн', 'UI дизайн', 'Уеб разработка'] },
+      { label: 'Клиент', items: ['Tunora', 'Собствен продукт'] },
+      { label: 'Година и сектор', items: ['2026 ©', 'Софтуер · Windows'] },
+    ],
+    heroAlt: 'Tunora, уиджет за музика за Windows, върху тъмна светеща сцена',
+    live: 'Вижте живия сайт',
+    trust: {
+      kicker: 'Позициониране',
+      title: 'Уиджетът в действие, а не описание на уиджета',
+      text: 'Tunora е малък уиджет за Windows, който показва и управлява музиката, която свири. Проектирал съм и изработил съм го сам, затова страницата трябваше да свърши работата на листинг в магазин: посетителят да го разбере за секунда. Вместо да описва уиджета, първите редове на страницата са малки живи демонстрации, под едно заглавие, което казва какво правят.',
+      alt: 'Видео: началната страница на Tunora, която се превърта в рамка на монитор от първия екран през възможностите, плейърите и въпросите до футъра',
+    },
+    hero: {
+      kicker: 'Първи екран',
+      title: 'Всичко, което решава, се събира в един поглед',
+      text: 'Заглавието, едно изречение и два бутона са над сгъвката, в една центрирана колона. Около тях страницата казва „музика“ преди някой да е чел: светещ контур, който рамкира екрана, портрет, осветен от музиката, който се подава отдолу, и стъклени значки на плейъри и обложки от двете страни. Една дума от заглавието е курсивен сериф: „glowing“.',
+      alt: 'Видео: първият екран на сайта на Tunora при зареждане, със светещ контур, заглавие, два бутона и портрет със стъклени значки на плейъри',
+    },
+    features: {
+      kicker: 'Карти с възможности',
+      title: 'Всяка карта е уиджетът в едно от истинските му състояния',
+      text: 'Картите стоят в един голям заоблен блок с много малка междина между тях, така че мрежата се чете като един предмет. Всяка съчетава изречение с демонстрация на уиджета в реално състояние, а цветовете и радиусите на демонстрациите са от файловете на самото приложение, така че страницата показва истинския уиджет, а не имитация.',
+      alt: 'Видео: картите с възможности на Tunora, които се превъртат, всяка с жива демонстрация на уиджета',
+    },
+    decisions: {
+      kicker: 'Доверие',
+      title: 'Два момента, които печелят доверие още преди инсталацията',
+      text: 'Секцията за поверителност показва обещанието си, а не само го казва: прозорец със състояние изписва команда, стойностите се сканират и спират на нула, чертае се катинар и се подпечатва „secured“. При намалено движение крайното състояние се показва веднага. После, когато някой натисне изтегляне, прозорец го предупреждава за единственото, което Windows ще направи: Tunora още не е подписана, затова при първото пускане Windows показва предупреждение. Прозорецът казва какво ще се появи, двата клика след това и защо, с резервен бутон, ако изтеглянето не е започнало.',
+      alt: 'Видео: секцията за поверителност на Tunora, в която прозорец със състояние като терминал изписва команда, сканира стойностите си и завършва със защитен катинар',
+      altModal:
+        'Прозорецът за изтегляне на Tunora над размазания първи екран: какво ще покаже Windows и двете стъпки за продължаване',
+    },
+    footer: {
+      kicker: 'Финал',
+      title: 'Нощно небе за финал, само с CSS',
+      text: 'Футърът е звездно небе с четири падащи звезди и топли и студени лъчи светлина, които се издигат отдолу, без скрипт и без изображение. Под връзките има един честен ред: Tunora не е направена от музикалните услуги, с които работи, и не е свързана с тях.',
+      alt: 'Видео: футърът на Tunora, нощно небе със звезди, падащи звезди и меки цветни лъчи светлина над връзките',
+    },
+    mobile: {
+      kicker: 'Мобилно',
+      title: 'Уиджет за Windows пак се представя от телефон',
+      text: 'Първото посещение на страница на настолно приложение често е от телефон, а инсталацията идва по-късно на компютъра. Мобилният изглед държи обещанието, бутона за изтегляне и първите демонстрации в първите екрани, а картите са в една колона.',
+      label: 'Мобилни екрани',
+      phones: [
+        {
+          title: 'Първи екран',
+          text: 'Първо са обещанието, означението за платформата и бутонът за изтегляне; портретът под тях казва „музика“ преди още думи.',
+          alt: 'Мобилният първи екран на Tunora със заглавието и бутона за изтегляне',
+        },
+        {
+          title: 'Управление и светене',
+          text: 'Една карта, една идея: уиджетът с лентата за превъртане, после същият уиджет, светещ в цвета на албума.',
+          alt: 'Мобилните карти на Tunora: управлението и светенето по цветовете на албума',
+        },
+        {
+          title: 'Текстове и покой',
+          text: 'Всяка карта е изречение и демонстрацията му, които се четат заедно, без скрол встрани. Функциите на Pro имат малък етикет.',
+          alt: 'Мобилните карти на Tunora: синхронизирани текстове и кръгът в покой',
+        },
+      ],
+    },
+    mobile2: {
+      kicker: 'Мобилни детайли',
+      title: 'И частта за решението е в една колона',
+      text: 'Поверителността, цените и въпросите са частта, която посетителят чете, когато решава. На телефон те са подредени карти и единични редове, така че пътят до бутона за изтегляне не иска нито щипване, нито плъзгане встрани.',
+      label: 'Мобилни екрани: поверителност, цени и въпроси',
+      phones: [
+        {
+          title: 'Поверителност',
+          text: 'Трите твърдения стават три подредени карти, всяка с икона, удебелен ред и едно изречение.',
+          alt: 'Мобилната секция за поверителност на Tunora с три подредени карти',
+        },
+        {
+          title: 'Цени',
+          text: 'Безплатният план отваря секцията със списъка какво включва; еднократната цена на Pro е под него.',
+          alt: 'Мобилната секция с цени на Tunora с безплатния план',
+        },
+        {
+          title: 'Въпроси',
+          text: 'Всеки въпрос е един ред; отварянето му показва отговора на място, без да се напуска страницата.',
+          alt: 'Мобилният списък с въпроси на Tunora с отворен първи отговор',
+        },
+      ],
+    },
+    portfolio: {
+      kicker: 'Състояния на десктоп',
+      title: 'Една повърхност, една тънка линия, един акцент отгоре до долу',
+      text: 'Същата тъмна повърхност, тънка рамка и един акцент минават през картите с възможности, поддържаните плейъри и цените. Всяка карта съчетава едно изречение с малка работеща демонстрация: скрол за промяна на звука, синхронизирани текстове, уиджет, който се свива в кръг, когато е неактивен, и режим на заключване, през който кликовете минават.',
+      slides: [
+        'Tunora – възможности: кръг в покой, заключване, собствени теми и цветове от албума',
+        'Tunora – поддържани плейъри: Spotify, YouTube, Apple Music и други в дъга',
+        'Tunora – цени: безплатен план и еднократно отключване на Pro',
+      ],
+    },
+    brand: {
+      kicker: 'Бранд система',
+      title: 'Тъмно, тихо, един акцент',
+      text: `Страницата е почти черна ${swatch('0A0A0E')}, а бялото е единственият цвят за действие, така че демонстрациите на уиджета и обложките на албумите са единственото цветно. Курсивен сериф откроява по една дума във всяко заглавие.`,
+      alt: 'Бранд изображение на Tunora: светещ уиджет за музика, който се носи над тъмна сцена',
+      label: 'Снимка на цялата ширина',
+    },
+  },
+};

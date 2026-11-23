@@ -1,0 +1,36 @@
+---
+// Page shell of a case study: meta, structured data and the original layout
+// (the page itself is BirseCase / FormaCase).
+import { getImage } from 'astro:assets';
+import Base from './Base.astro';
+import BirseCase from '../views/BirseCase.astro';
+import FormaCase from '../views/FormaCase.astro';
+import TunoraCase from '../views/TunoraCase.astro';
+import type { Lang } from '../i18n/ui';
+import { pathFor } from '../i18n/routes';
+import type { CaseContent } from '../data/projects/types';
+import { caseSchema } from '../data/schema';
+
+interface Props {
+  lang: Lang;
+  route: 'birse' | 'forma' | 'tunora';
+  content: CaseContent;
+}
+
+const { lang, route, content } = Astro.props;
+const cover = await getImage({ src: content.hero.image, width: 1600, format: 'jpg' });
+const schema = caseSchema(lang, route, pathFor(route, lang)!, content, cover.src);
+---
+
+<Base
+  title={content.meta.title}
+  description={content.meta.description}
+  {route}
+  {schema}
+  crumb={content.name}
+  bodyClass={route === 'birse' ? 'birse-page' : undefined}
+>
+  {route === 'birse' && <BirseCase {lang} />}
+  {route === 'forma' && <FormaCase {lang} />}
+  {route === 'tunora' && <TunoraCase {lang} />}
+</Base>

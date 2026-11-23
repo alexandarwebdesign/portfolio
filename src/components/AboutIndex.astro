@@ -1,0 +1,38 @@
+---
+// The original hairline index (mono key, bold value) with the turning globe on
+// "Based" and the pulsing status mark.
+import StatusIcon from './StatusIcon.astro';
+import type { Fact } from '../data/about';
+
+interface Props {
+  facts: Fact[];
+  class?: string;
+}
+
+const { facts, class: className } = Astro.props;
+---
+
+<dl class:list={['about-index', className]}>
+  {
+    facts.map((fact) => (
+      <div class="about-index-row">
+        <dt>{fact.term}</dt>
+        <dd class:list={{ 'about-based-dd': fact.icon === 'globe' }}>
+          {fact.icon === 'globe' && (
+            <span class="about-index-globe" aria-hidden="true">
+              <span class="globe-wrap">
+                <span class="globe-circle" />
+                <span class="globe-circle" />
+                <span class="globe-circle" />
+                <span class="globe-hor" />
+                <span class="globe-hor-middle" />
+              </span>
+            </span>
+          )}
+          {fact.icon === 'status' && <StatusIcon class="about-status-icon" />}
+          {fact.desc}
+        </dd>
+      </div>
+    ))
+  }
+</dl>

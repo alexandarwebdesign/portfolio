@@ -1,0 +1,153 @@
+---
+// The Tunora case study: my own Windows product and its website, in both languages.
+import CaseIntro from '../components/case/CaseIntro.astro';
+import CaseProof from '../components/case/CaseProof.astro';
+import DeviceDesktop from '../components/case/DeviceDesktop.astro';
+import DevicePhones from '../components/case/DevicePhones.astro';
+import DeviceCarousel from '../components/case/DeviceCarousel.astro';
+import FullBleed from '../components/case/FullBleed.astro';
+import CaseClosing from '../components/case/CaseClosing.astro';
+import NextTeaser from '../components/NextTeaser.astro';
+import hero from '../assets/images/case/tunora-hero.jpg';
+import download from '../assets/images/case/tunora-download.jpg';
+import slide1 from '../assets/images/case/tunora-slide-1.jpg';
+import slide2 from '../assets/images/case/tunora-slide-2.jpg';
+import slide3 from '../assets/images/case/tunora-slide-3.jpg';
+import phone1 from '../assets/images/case/tunora-phone-1.jpg';
+import phone2 from '../assets/images/case/tunora-phone-2.jpg';
+import phone3 from '../assets/images/case/tunora-phone-3.jpg';
+import phone4 from '../assets/images/case/tunora-phone-4.jpg';
+import phone5 from '../assets/images/case/tunora-phone-5.jpg';
+import phone6 from '../assets/images/case/tunora-phone-6.jpg';
+import brand from '../assets/images/case/tunora-brand.jpg';
+import birseCard from '../assets/images/case/birse-card.jpg';
+import mark from '../assets/images/case/tunora-mark.svg';
+import { caseText } from '../data/cases';
+import { tunoraCopy } from '../data/case-copy';
+import { pathFor } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = caseText[lang];
+const home = pathFor('home', lang)!;
+const homeHash = (id: string) => `${home === '/' ? '' : home}/#${id}`;
+const t = tunoraCopy[lang];
+const clip = (name: string, width: number, height: number) => ({
+  src: `/video/tunora-${name}`,
+  poster: `/video/tunora-${name}-poster.webp`,
+  width,
+  height,
+});
+const monitorVideo = clip('monitor', 1600, 1000);
+const heroVideo = clip('hero', 1600, 1370);
+const featuresVideo = clip('features', 1600, 900);
+const privacyVideo = clip('privacy', 1600, 900);
+const footerVideo = clip('footer', 1600, 662);
+---
+
+<CaseIntro
+  back={{ href: homeHash('work'), label: c.allWork }}
+  title="Tunora"
+  meta={t.meta}
+  hero={{ image: hero, alt: t.heroAlt }}
+  logo={{ src: mark.src, width: 68, height: 68 }}
+  client={{ href: 'https://tunora-site.pages.dev/', siteLabel: 'tunora-site.pages.dev' }}
+  palette={{ label: c.palette, colors: ['#0a0a0e', '#131319', '#8e8e99', '#f5f5f7', '#1db954'] }}
+/>
+
+<section
+  id="project-dynamic-body"
+  class="project-dynamic-body-section case-blocks"
+  aria-label={c.body}
+>
+  <div class="container">
+    <div id="project-content-stream" class="project-content-stream">
+      <CaseProof id="tunora-proof-trust" {...t.trust}>
+        <DeviceDesktop alt={t.trust.alt} video={monitorVideo} />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-hero" {...t.hero}>
+        <DeviceDesktop alt={t.hero.alt} video={heroVideo} bare />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-features" {...t.features}>
+        <DeviceDesktop alt={t.features.alt} video={featuresVideo} bare />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-trust-moments" {...t.decisions}>
+        <DeviceDesktop alt={t.decisions.alt} video={privacyVideo} bare />
+        <DeviceDesktop image={download} alt={t.decisions.altModal} bare />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-footer" {...t.footer}>
+        <DeviceDesktop alt={t.footer.alt} video={footerVideo} bare />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-mobile" {...t.mobile} phones>
+        <DevicePhones
+          label={t.mobile.label}
+          phones={[phone1, phone2, phone3].map((image, i) => ({
+            image,
+            ...t.mobile.phones[i],
+          }))}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-mobile-details" {...t.mobile2} phones>
+        <DevicePhones
+          label={t.mobile2.label}
+          phones={[phone4, phone5, phone6].map((image, i) => ({
+            image,
+            ...t.mobile2.phones[i],
+          }))}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-states" {...t.portfolio} band>
+        <DeviceCarousel
+          id="case-carousel-tunora"
+          slides={[slide1, slide2, slide3].map((image, i) => ({
+            image,
+            alt: t.portfolio.slides[i],
+          }))}
+          prev={c.prev}
+          next={c.next}
+        />
+      </CaseProof>
+
+      <CaseProof id="tunora-proof-brand" {...t.brand}>
+        <FullBleed
+          image={brand}
+          alt={t.brand.alt}
+          logo={{ src: mark.src, width: 120, height: 120 }}
+          label={t.brand.label}
+        />
+      </CaseProof>
+    </div>
+  </div>
+</section>
+
+<CaseClosing
+  id="tunora-closing"
+  kicker={c.closingKicker}
+  title={c.ctaTitle}
+  text={c.closingText}
+  cta={c.cta}
+  href={homeHash('contact')}
+  art={{ src: mark.src, alt: 'Tunora', width: mark.width, height: mark.height }}
+  depth={0.14}
+  contained
+/>
+
+<NextTeaser
+  href={pathFor('birse', lang)!}
+  label={c.nextProject}
+  left="Bir"
+  right="Sé"
+  image={birseCard}
+  ariaLabel={`${c.viewCase}: Birsé`}
+/>

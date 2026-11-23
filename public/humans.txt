@@ -1,0 +1,14 @@
+/* TEAM */
+  Designer & Developer: Aleksandar Pavlov
+  Role: UX/UI Designer & Website Developer
+  Contact: alexandar.webdesign [at] gmail.com
+  Location: Sofia, Bulgaria
+
+/* SITE */
+  Languages: Bulgarian, English
+  Built with: Astro, hand-written CSS, no UI framework
+  Hosting: Cloudflare Pages
+  Fonts: Forum, Manrope (self-hosted)
+
+/* THANKS */
+  To every client who chose craft over templates.

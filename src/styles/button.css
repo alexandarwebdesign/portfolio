@@ -1,0 +1,130 @@
+/* --------------------------------------------------------------------------
+   5.1 Buttons
+   -------------------------------------------------------------------------- */
+
+/* Accent pill with lift + glow and text-slide swap on hover */
+.button-primary,
+.button-secondary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 18px 36px;
+  border-radius: var(--border-radius-button);
+  font-family: var(--font-body);
+  font-size: var(--text-button);
+  font-weight: 600;
+  letter-spacing: 0.24px;
+  line-height: var(--leading-normal);
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition:
+    transform var(--duration-fast) var(--ease),
+    background-color var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease),
+    opacity var(--duration-fast) var(--ease);
+}
+
+.button-primary {
+  background: var(--color-accent);
+  color: var(--color-white);
+  border: 1px solid var(--color-border-subtle);
+  box-shadow:
+    0 8px 18px rgba(0, 102, 204, 0.2),
+    inset 0 1px 0 rgba(250, 250, 250, 0.16);
+}
+
+.button-primary:hover {
+  background: var(--color-accent-hover);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow:
+    0 12px 24px rgba(0, 102, 204, 0.26),
+    inset 0 1px 0 rgba(250, 250, 250, 0.2);
+}
+
+.button-primary:active {
+  transform: translateY(0);
+  transition-duration: 80ms; /* press lands faster than the hover lift */
+}
+
+/* Disabled: flat grey, no shadow, no lift (loading and success keep their own look) */
+.button-primary:disabled:not(.loading):not(.success),
+.button-secondary:disabled,
+.button-primary[aria-disabled='true'],
+.button-secondary[aria-disabled='true'] {
+  background: var(--color-surface-subtle);
+  color: var(--color-text-muted);
+  border-color: var(--color-border-subtle);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Button Text Slide Animation */
+.btn-content {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  z-index: 1;
+}
+
+.btn-text,
+.btn-hover-text {
+  transition: transform var(--duration-fast) var(--ease);
+}
+
+.btn-text {
+  display: block;
+}
+
+.btn-hover-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+}
+
+.button-primary:hover .btn-text {
+  transform: translateY(-100%);
+}
+
+.button-primary:hover .btn-hover-text {
+  transform: translateY(-100%);
+}
+
+.button-secondary {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.button-secondary:hover {
+  border-color: var(--color-ink);
+  transform: translateY(-2px) scale(1.02);
+}
+
+.button-secondary:active {
+  transform: translateY(0);
+  transition-duration: 80ms; /* press lands faster than the hover lift */
+}
+
+.button-secondary:hover .btn-text {
+  transform: translateY(-100%);
+}
+
+.button-secondary:hover .btn-hover-text {
+  transform: translateY(-100%);
+}
+
+/* Keep the button's own radius when it has the focus ring (the general :focus-visible rule in
+   site.css sets a smaller one, and this file is loaded before it). */
+.button-primary:focus-visible,
+.button-secondary:focus-visible {
+  border-radius: var(--border-radius-button);
+}

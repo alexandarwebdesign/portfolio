@@ -1,0 +1,72 @@
+---
+import { getImage } from 'astro:assets';
+import { languages, type Lang } from '../i18n/ui';
+import { pathFor, type RouteId } from '../i18n/routes';
+import { site } from '../data/site';
+import { breadcrumb as crumbNode, person, website } from '../data/schema';
+import portrait from '../assets/images/portrait.jpg';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Lang;
+  route: RouteId;
+  noindex?: boolean;
+  /** Page-specific JSON-LD nodes. */
+  schema?: Record<string, unknown>[];
+  /** Name of the page in the breadcrumb (Home → name); omitted on home. */
+  crumb?: string;
+}
+
+const { title, description, lang, route, noindex = false, schema = [], crumb } = Astro.props;
+
+const absolute = (path: string) => new URL(path, site.url).href;
+const ogLocale: Record<Lang, string> = { bg: 'bg_BG', en: 'en_US' };
+
+const self = pathFor(route, lang);
+const canonical = !noindex && self ? absolute(self) : undefined;
+// hreflang only when every language exists; x-default points to English.
+const alternates = languages.flatMap((l) => {
+  const path = pathFor(route, l);
+  return path ? [{ lang: l, href: absolute(path) }] : [];
+});
+const paired = !noindex && alternates.length === languages.length;
+const xDefault = alternates.find((a) => a.lang === 'en')?.href;
+const image = absolute('/og-image.jpg');
+
+const photo = await getImage({ src: portrait, width: 800, format: 'jpg' });
+const graph = [
+  website(lang),
+  person(lang, photo.src),
+  ...(crumb && self ? [crumbNode(lang, pathFor('home', lang)!, crumb, self)] : []),
+  ...schema,
+];
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph });
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex" />}
+{canonical && <link rel="canonical" href={canonical} />}
+{paired && alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+{paired && xDefault && <link rel="alternate" hreflang="x-default" href={xDefault} />}
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name[lang]} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+{canonical && <meta property="og:url" content={canonical} />}
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content={ogLocale[lang]} />
+{
+  paired &&
+    languages
+      .filter((l) => l !== lang)
+      .map((l) => <meta property="og:locale:alternate" content={ogLocale[l]} />)
+}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content={site.twitter} />
+<meta name="twitter:creator" content={site.twitter} />
+{!noindex && <script type="application/ld+json" set:html={jsonLd} />}

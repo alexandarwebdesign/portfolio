@@ -1,0 +1,176 @@
+---
+// The original navigation: a glass home tile beside a glass pill with a
+// rotating rim light, centred at the top. On phones only the home tile and a
+// menu button stay; the menu opens as a full-screen overlay. The other
+// language is the last link (two languages, both kept).
+import { ui, type Lang } from '../i18n/ui';
+import { pathFor, type RouteId } from '../i18n/routes';
+import { site } from '../data/site';
+import bgFlag from '../assets/icons/flags/bg.svg';
+import enFlag from '../assets/icons/flags/us.svg';
+
+interface Props {
+  lang: Lang;
+  route: RouteId;
+}
+
+const { lang, route } = Astro.props;
+const t = ui[lang];
+const name = site.name[lang];
+const home = pathFor('home', lang)!;
+// On the home page the sections are on the page itself.
+const hash = (id: string) => (route === 'home' ? `#${id}` : `${home === '/' ? '' : home}/#${id}`);
+const contact = hash('contact');
+const focusField = '#name';
+
+const links = [
+  { href: hash('work'), label: t.nav.work, current: false },
+  { href: pathFor('about', lang)!, label: t.nav.about, current: route === 'about' },
+  { href: hash('services'), label: t.nav.services, current: false },
+];
+
+// The other language: the same page when it exists, otherwise its home page.
+const otherLang: Lang = lang === 'bg' ? 'en' : 'bg';
+const otherRoute = route === 'notFound' ? 'home' : route;
+const otherHref = pathFor(otherRoute, otherLang) ?? pathFor('home', otherLang)!;
+const otherName = { bg: { full: 'Български' }, en: { full: 'English' } }[otherLang];
+// the accessible name starts with the text the switch shows (BG/БГ and EN), then says where it goes
+const switchLabel = `${lang === 'bg' ? 'БГ' : 'BG'} EN: ${otherName.full}`;
+---
+
+<header>
+  <div class="nav">
+    <a
+      href={home}
+      class="nav-home"
+      aria-label={`${name} – ${t.nav.home}`}
+      aria-current={route === 'home' ? 'page' : undefined}
+    >
+      <svg width="22" height="23" viewBox="0 0 15 16" fill="none" aria-hidden="true">
+        <path
+          d="M2.99 15.33c-.95 0-1.72-.8-1.72-1.79V6.35c0-.54.24-1.06.65-1.4L6.64 1.02a1.68 1.68 0 0 1 2.15 0l4.73 3.93c.41.34.64.86.64 1.4v7.19c0 .99-.77 1.79-1.72 1.79H2.99Z"
+          stroke="currentColor"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+        <path
+          d="M5.7 15.33v-4.49c0-.43.17-.85.47-1.16.3-.3.71-.47 1.14-.47h.81c.43 0 .84.17 1.14.47.3.31.47.73.47 1.16v4.49"
+          stroke="currentColor"
+          stroke-width="1.25"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <span class="nav-home-name" aria-hidden="true">{name}</span>
+    </a>
+    <nav class="nav-pill" aria-label={t.nav.label}>
+      <span class="nav-sep" aria-hidden="true"></span>
+      {
+        links.map((link) => (
+          <a href={link.href} class="nav-link" aria-current={link.current ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+      <a href={contact} class="nav-link nav-contact-link" data-focus-target={focusField}>
+        {t.nav.contact}
+      </a>
+      <span class="nav-sep" aria-hidden="true"></span>
+      <a
+        href={otherHref}
+        class="nav-link nav-lang-link"
+        hreflang={otherLang}
+        lang={otherLang}
+        title={otherName.full}
+        aria-label={switchLabel}
+      >
+        <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
+          <img src={bgFlag.src} width="22" height="22" alt="" />
+          <span aria-hidden="true">{lang === 'bg' ? 'БГ' : 'BG'}</span>
+        </span>
+        <span class="lang-option" data-active={lang === 'en' ? '' : undefined}>
+          <img src={enFlag.src} width="22" height="22" alt="" />
+          <span aria-hidden="true">EN</span>
+        </span>
+      </a>
+    </nav>
+    <button
+      type="button"
+      class="nav-burger"
+      aria-label={t.site.openMenu}
+      aria-expanded="false"
+      aria-controls="nav-mobile-menu"
+      data-open-label={t.site.openMenu}
+      data-close-label={t.site.closeMenu}
+    >
+      <svg
+        width="20"
+        height="14"
+        viewBox="0 0 20 14"
+        fill="none"
+        aria-hidden="true"
+        class="nav-burger-icon"
+      >
+        <line
+          class="bar bar-1"
+          x1="0"
+          y1="1"
+          x2="20"
+          y2="1"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"></line>
+        <line
+          class="bar bar-2"
+          x1="0"
+          y1="7"
+          x2="20"
+          y2="7"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"></line>
+        <line
+          class="bar bar-3"
+          x1="0"
+          y1="13"
+          x2="20"
+          y2="13"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"></line>
+      </svg>
+    </button>
+  </div>
+</header>
+<div
+  class="nav-mobile-menu"
+  id="nav-mobile-menu"
+  aria-hidden="true"
+  role="dialog"
+  aria-label={t.site.menuLabel}
+>
+  <a href={home} class="nav-mobile-link">{t.nav.home}</a>
+  {
+    links.map((link) => (
+      <a href={link.href} class="nav-mobile-link" aria-current={link.current ? 'page' : undefined}>
+        {link.label}
+      </a>
+    ))
+  }
+  <a
+    href={otherHref}
+    class="nav-mobile-link nav-mobile-lang"
+    hreflang={otherLang}
+    lang={otherLang}
+    aria-label={switchLabel}
+  >
+    <span class="lang-option" data-active={lang === 'bg' ? '' : undefined}>
+      <img src={bgFlag.src} width="22" height="22" alt="" />
+      <span aria-hidden="true">{lang === 'bg' ? 'БГ' : 'BG'}</span>
+    </span>
+    <span class="lang-option" data-active={lang === 'en' ? '' : undefined}>
+      <img src={enFlag.src} width="22" height="22" alt="" />
+      <span aria-hidden="true">EN</span>
+    </span>
+  </a>
+  <a href={contact} class="nav-mobile-link nav-mobile-cta">{t.site.letsTalk}</a>
+</div>

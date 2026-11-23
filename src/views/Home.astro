@@ -1,0 +1,228 @@
+---
+// The home page: the dark hero, the statement, work, process, the image marquee,
+// about, services, FAQ and the contact form.
+import { Picture } from 'astro:assets';
+import Button from '../components/Button.astro';
+import WorkCard from '../components/WorkCard.astro';
+import Process from '../components/Process.astro';
+import TickRing from '../components/TickRing.astro';
+import ImageMarquee from '../components/ImageMarquee.astro';
+import AboutIndex from '../components/AboutIndex.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import FaqSection from '../components/FaqSection.astro';
+import ContactForm from '../components/ContactForm.astro';
+import portrait from '../assets/images/portrait.jpg';
+import heroImage from '../assets/images/hero/hero.jpg';
+import { home, work } from '../data/home';
+import { about } from '../data/about';
+import { services } from '../data/services';
+import { faq } from '../data/faq';
+import { site } from '../data/site';
+import { ui, type Lang } from '../i18n/ui';
+import { pathFor } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = home[lang];
+const s = ui[lang].site;
+// Numbered labels start after the process section (02).
+const steps = t.process.steps;
+const n = (i: number) => String(i + 1).padStart(2, '0');
+const shapes = ['circle', 'triangle', 'hexagon'] as const;
+const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
+const count = String(work.length).padStart(2, '0');
+// Two columns, the second one dropped: 1st and 3rd on the left, 2nd and 4th on the right.
+const indexed = work.map((item, index) => ({ item, index }));
+const columns = [
+  indexed.filter(({ index }) => index % 2 === 0),
+  indexed.filter(({ index }) => index % 2 === 1),
+];
+---
+
+<div class="hero-reveal">
+  <section id="hero" class="hero-section hero-stage stage">
+    <TickRing corner="bl" />
+    <TickRing corner="tr" />
+    <div class="hero-content container">
+      <div class="hero-heading">
+        <p class="hero-eyebrow">{t.hero.eyebrow}</p>
+        <h1 class="hero-title">{t.hero.title}</h1>
+      </div>
+      <div class="hero-picture" aria-hidden="true">
+        <Picture
+          src={heroImage}
+          formats={['avif', 'webp']}
+          widths={[640, 960, 1280]}
+          sizes="(max-width: 900px) 62vw, 40vw"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <div class="hero-aside">
+        <p class="hero-subtitle">{t.hero.lead}</p>
+        <Button href="#contact" class="hero-cta" data-focus-target="#name">{t.hero.cta}</Button>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement-section stage">
+    <div class="container">
+      <div class="statement-ring">
+        <svg class="statement-ticks" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          {
+            Array.from({ length: 120 }, (_, i) => i)
+              .filter((i) => i !== 30 && i !== 90)
+              .map((i) => {
+                // the upper half starts at the right side (3 o'clock) and goes counter-clockwise over the top,
+                // the lower half starts at the left side (9 o'clock) and goes counter-clockwise along the bottom
+                const k = i > 30 && i < 90 ? 90 - i : (30 - i + 120) % 120;
+                return (
+                  <g class="tick" style={`--k:${k}`}>
+                    <line x1="50" y1="0" x2="50" y2="3" transform={`rotate(${i * 3} 50 50)`} />
+                  </g>
+                );
+              })
+          }
+        </svg>
+        <p class="statement">
+          {t.statement.before}<mark class="statement-mark">{t.statement.mark}</mark>{
+            t.statement.after
+          }
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section id="work" class="work-section stage">
+  <div class="container">
+    <header class="section-header reveal">
+      <p class="mono-label">
+        <span class="index">(01)</span>
+        {t.work.label} &middot; {count}
+        {t.work.count}
+      </p>
+      <h2 class="section-title">{t.work.title}</h2>
+    </header>
+    <div class="work-stagger">
+      {
+        columns.map((column, c) => (
+          <div class:list={['work-col', { 'work-col--b': c === 1 }]}>
+            {column.map(({ item, index }) => (
+              <WorkCard
+                name={item.name}
+                index={index}
+                category={item.category[lang]}
+                image={item.image}
+                href={item.route && pathFor(item.route, lang)}
+                status={item.status?.[lang]}
+                tag={item.tag?.[lang]}
+              />
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<Process index="02" label={t.process.label} title={t.process.title} steps={steps} />
+
+<ImageMarquee {lang} />
+
+<section id="about" class="about-section stage">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">({n(2)})</span> {t.about.label}</p>
+      <h2 class="section-title">{t.about.title}</h2>
+    </div>
+    <div class="about-split reveal">
+      <figure class="about-figure">
+        <Picture
+          src={portrait}
+          formats={['avif', 'webp']}
+          widths={[600, 900, 1400]}
+          sizes="(max-width: 900px) 100vw, 40vw"
+          alt={t.about.alt}
+          loading="lazy"
+        />
+      </figure>
+      <div class="about-side">
+        <p class="about-text">{t.about.text}</p>
+        <AboutIndex facts={about[lang].facts} />
+        <Button href={pathFor('about', lang)} variant="secondary">{t.about.link}</Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="services-section stage">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">({n(3)})</span> {t.services.label}</p>
+      <h2 class="section-title">{t.services.title.join(' ')}</h2>
+    </div>
+    <div class="services-list">
+      {
+        services[lang].map((service, i) => (
+          <div class="service-row reveal" data-service={serviceIds[i]}>
+            <span class="service-index" aria-hidden="true">
+              ({String(i + 1).padStart(2, '0')})
+            </span>
+            <h3 class="service-title">{service.title}</h3>
+            <div class="service-body">
+              <p class="service-desc">{service.text}</p>
+              <a
+                href="#contact"
+                class="service-pick"
+                data-service-pick={serviceIds[i]}
+                data-focus-target="#name"
+              >
+                {t.services.pick} <span aria-hidden="true">→</span>
+                <span class="sr-only">: {service.title}</span>
+              </a>
+            </div>
+            <ServiceIcon shape={shapes[i % shapes.length]} />
+          </div>
+        ))
+      }
+    </div>
+    <div class="services-cta reveal">
+      <Button href="#contact">{t.services.cta}</Button>
+    </div>
+  </div>
+</section>
+
+<FaqSection
+  lang={lang}
+  index={`(${n(4)})`}
+  label={t.faq.label}
+  title={t.faq.title}
+  items={faq[lang]}
+/>
+
+<section id="contact" class="contact-section stage">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">({n(5)})</span> {t.contact.label}</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h2 class="contact-title">
+          <span>{t.contact.title[0]}</span>
+          <span>{t.contact.title[1]}</span>
+        </h2>
+        <div class="contact-email">
+          <p class="email-label">{t.contact.email}</p>
+          <a href={`mailto:${site.email}`} class="email-link" aria-label={s.emailTo}>{site.email}</a
+          >
+        </div>
+      </div>
+      <ContactForm {lang} />
+    </div>
+  </div>
+</section>
