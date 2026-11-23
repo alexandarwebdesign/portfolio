@@ -3,7 +3,6 @@ import birseCard from '../assets/images/birse-card.jpg';
 import formaCard from '../assets/images/forma-card.jpg';
 import tunoraCard from '../assets/images/case/tunora-card.jpg';
 import swisCard from '../assets/images/swis-saas.jpg';
-import creativeCard from '../assets/images/creative-asset.jpg';
 
 const bg = {
   hero: {
@@ -199,11 +198,5 @@ export const work: WorkItem[] = [
     category: { bg: 'SaaS · платформа', en: 'SaaS · Platform' },
     image: swisCard,
     status: { bg: 'В разработка', en: 'In development' },
-  },
-  {
-    name: 'Creative Asset',
-    category: { bg: '3D · интерактивно', en: '3D · Interactive' },
-    image: creativeCard,
-    status: { bg: 'Предстои', en: 'Upcoming' },
   },
 ];
