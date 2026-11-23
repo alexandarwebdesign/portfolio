@@ -2276,6 +2276,20 @@ body.is-loaded .hero-cta {
   .faq-answer p {
     padding-right: 0;
   }
+
+  /* a smaller "+" in a slightly smaller circle on phones */
+  .faq-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .faq-icon::before {
+    height: 14px;
+  }
+
+  .faq-icon::after {
+    width: 14px;
+  }
 }
 
 @media (min-width: 900px) {
