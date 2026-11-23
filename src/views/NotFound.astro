@@ -4,6 +4,9 @@
 // with `transform` only, so it runs on the compositor and costs the main thread nothing.
 // Standalone: no header or footer.
 import Seo from '../components/Seo.astro';
+import Button from '../components/Button.astro';
+import '../styles/tokens.css';
+import '../styles/button.css';
 import manropeLatin from '../assets/fonts/manrope-latin.woff2?url';
 import manropeCyrillic from '../assets/fonts/manrope-cyrillic.woff2?url';
 import { ui, type Lang } from '../i18n/ui';
@@ -19,12 +22,10 @@ const t = {
   bg: {
     message: 'Тази страница се изгуби в празнотата.',
     button: 'Обратно към сигнала',
-    label: 'Към началото',
   },
   en: {
     message: 'This page has drifted into the void.',
     button: 'Return to Signal',
-    label: 'Return to Home',
   },
 }[lang];
 // the "404" is a stack of copies one behind the other: seen from the side it is a solid block
@@ -65,7 +66,7 @@ const LAYERS = Array.from({ length: 16 }, (_, i) => i);
     <main class="content">
       <h1 class="sr-only">404</h1>
       <p class="message">{t.message}</p>
-      <a href={pathFor('home', lang)} class="home-btn" aria-label={t.label}>{t.button}</a>
+      <Button href={pathFor('home', lang)}>{t.button}</Button>
     </main>
 
     <style is:global>
@@ -90,16 +91,11 @@ const LAYERS = Array.from({ length: 16 }, (_, i) => i);
       }
 
       :root {
-        --color-background: #efefef;
-        --color-ink: #1c1c1c;
-        --color-accent: #0066cc;
-        --color-on-dark: #ededed;
-        --ease: cubic-bezier(0.55, 0, 0.1, 1);
         /* the tunnel: half the width of its cross-section, its length, and one square of the grid */
         --r: clamp(200px, 34vmin, 420px);
         --depth: 2400px;
         --cell: 80px;
-        --line: rgb(28 28 28 / 0.22);
+        --line: color-mix(in srgb, var(--color-ink) 22%, transparent);
       }
 
       * {
@@ -112,7 +108,7 @@ const LAYERS = Array.from({ length: 16 }, (_, i) => i);
         font-family: 'Manrope', sans-serif;
         background: var(--color-background);
         color: var(--color-ink);
-        overflow-x: hidden;
+        overflow: hidden;
       }
 
       .content {
@@ -124,10 +120,6 @@ const LAYERS = Array.from({ length: 16 }, (_, i) => i);
         flex-direction: column;
         align-items: center;
         justify-content: center;
-      }
-
-      body {
-        overflow: hidden;
       }
 
       .sr-only {
@@ -328,43 +320,9 @@ const LAYERS = Array.from({ length: 16 }, (_, i) => i);
         text-align: center;
       }
 
-      .home-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 18px 36px;
-        border: 1px solid transparent;
-        border-radius: 4px;
-        background: var(--color-ink);
-        color: var(--color-on-dark);
-        font-weight: 600;
-        font-size: 18px;
-        line-height: 1.5;
-        text-decoration: none;
-        transition:
-          background 450ms var(--ease),
-          transform 450ms var(--ease);
-      }
-
-      .home-btn:hover {
-        background: var(--color-accent);
-        transform: translateY(-2px);
-      }
-
-      .home-btn:focus-visible {
-        outline: 2px solid var(--color-accent);
-        outline-offset: 4px;
-      }
-
       @media (max-width: 768px) {
         .message {
           font-size: 1.125rem;
-        }
-
-        .home-btn {
-          min-width: 180px;
-          padding: 14px 28px;
-          font-size: 16px;
         }
       }
     </style>
