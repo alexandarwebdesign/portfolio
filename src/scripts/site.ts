@@ -456,7 +456,7 @@ function initImageMarquee() {
     };
 
     const tick = (now: number) => {
-      const dt = now - lastFrame;
+      const dt = Math.min(now - lastFrame, 50); // a tab left in the background must not make a jump
       lastFrame = now;
       if (!dragging) {
         if (Math.abs(velocity) > MOMENTUM_THRESHOLD) {
@@ -1125,9 +1125,17 @@ function initLanguageSwitchScroll() {
   document.documentElement.classList.add('lang-restored');
   // The page stays hidden until it has loaded: before that the heights are not known and the place
   // would be wrong. A timer in Base.astro shows it anyway after 3 s.
+  let moved = false;
+  let placedAt = -1;
   const place = () => {
-    const want = target();
-    go(want);
+    // the page is not where this script left it: the reader moved it (a scrollbar drag does not
+    // fire wheel, touch or key events), so the place is not kept any more
+    if (placedAt >= 0 && Math.abs(scrollY - placedAt) > 2) {
+      moved = true;
+      return;
+    }
+    go(target());
+    placedAt = scrollY;
   };
   place();
   if (document.readyState === 'complete') show();
@@ -1142,7 +1150,6 @@ function initLanguageSwitchScroll() {
     );
   // Images and sections that were not drawn yet change the heights while the page settles: keep the
   // place for a few seconds, until the reader moves.
-  let moved = false;
   const stop = () => (moved = true);
   for (const type of ['wheel', 'touchstart', 'pointerdown', 'keydown'])
     addEventListener(type, stop, { once: true, passive: true });
