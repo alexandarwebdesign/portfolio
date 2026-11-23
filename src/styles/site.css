@@ -123,6 +123,16 @@
   .case-block--device .single-block.block-device.block-padding-bottom {
     height: auto;
     padding-inline: 0;
+    /* room under the laptop: the block is clipped to its own box with a slanted bottom edge, which
+       cut the base of the laptop */
+    padding-bottom: var(--space-12);
+    overflow: visible;
+  }
+
+  /* the slanted edge of the block cut the base of the laptop on a phone */
+  .case-block--device .block-device,
+  .block-device {
+    clip-path: none;
   }
 
   /* Laptop near-full-width, centered, minimal side padding */
@@ -132,8 +142,6 @@
     width: 100%;
     margin: 0 auto;
     padding-inline: 0;
-    transform: scale(1.04);
-    transform-origin: center;
   }
 
   .case-block--device .carousel-outer .single-block.block-device {
@@ -836,7 +844,8 @@ textarea:focus-visible {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-/* Full-screen overlay — frosted paper, slides + scales from top (master pattern, retokened) */
+/* Full-screen overlay — frosted paper, slides + scales from top (master pattern, retokened).
+   The pages are a numbered list with hairlines; the language and the call to action sit at the bottom. */
 .nav-mobile-menu {
   position: fixed;
   inset: 0;
@@ -846,9 +855,11 @@ textarea:focus-visible {
   -webkit-backdrop-filter: blur(12px) saturate(1.2);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-10);
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding: 108px var(--space-6) max(var(--space-8), env(safe-area-inset-bottom));
+  counter-reset: menu;
   opacity: 0;
   pointer-events: none;
   transform: translateY(-18px) scale(0.985);
@@ -871,13 +882,17 @@ textarea:focus-visible {
 
 /* Links stagger up on open */
 .nav-mobile-link {
-  font-size: clamp(40px, 10vw, 64px);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  font-size: clamp(32px, 9vw, 44px);
   font-weight: 500;
   letter-spacing: var(--tracking-tight);
   color: var(--color-ink);
   text-decoration: none;
-  line-height: 1;
-  padding-block: 8px;
+  line-height: 1.1;
+  padding-block: var(--space-6);
+  border-bottom: 1px solid var(--color-border-subtle);
   opacity: 0;
   transform: translateY(18px);
   transition:
@@ -885,6 +900,23 @@ textarea:focus-visible {
     opacity calc(var(--duration-normal) * 0.72) var(--ease),
     transform calc(var(--duration-normal) * 0.72) var(--ease);
   will-change: opacity, transform;
+}
+
+.nav-mobile-link:first-child {
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+/* the number of the page, small and quiet, before its name */
+.nav-mobile-link:not(.nav-mobile-lang):not(.nav-mobile-cta)::before {
+  counter-increment: menu;
+  content: '(0' counter(menu) ')';
+  flex: none;
+  min-width: 2.6em;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
 }
 
 .nav-mobile-menu.is-open .nav-mobile-link {
@@ -906,28 +938,48 @@ textarea:focus-visible {
 .nav-mobile-menu.is-open .nav-mobile-link:nth-child(5) {
   transition-delay: 300ms;
 }
+.nav-mobile-menu.is-open .nav-mobile-link:nth-child(6) {
+  transition-delay: 360ms;
+}
 
 .nav-mobile-link:hover,
 .nav-mobile-link[aria-current='page'] {
   color: var(--color-accent);
 }
 
-/* The language in the menu is the same switch as in the bar: two flags with short names, one link */
+/* The language in the menu is the same switch as in the bar: two flags with short names, one link.
+   It starts the bottom group (the rest of the space goes above it). */
 .nav-mobile-link.nav-mobile-lang {
-  display: inline-flex;
+  margin-top: auto;
+  border-bottom: 0;
   align-items: center;
   gap: var(--space-6);
   min-height: var(--space-12);
-  font-size: var(--text-title);
+  padding-block: var(--space-8) var(--space-5);
+  font-size: var(--text-body);
 }
 
 .nav-mobile-lang:hover {
   color: var(--color-ink);
 }
 
-.nav-mobile-cta {
-  margin-top: var(--space-8);
-  color: var(--color-accent);
+/* the call to action is the site's button: a full-width accent block */
+.nav-mobile-link.nav-mobile-cta {
+  justify-content: center;
+  align-items: center;
+  padding: 18px var(--space-9, 36px);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--border-radius-button);
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-size: var(--text-button);
+  font-weight: 600;
+  letter-spacing: 0.24px;
+}
+
+.nav-mobile-link.nav-mobile-cta:hover {
+  background: var(--color-accent-hover);
+  color: var(--color-white);
 }
 
 /* Visible name beside the home icon where there is room */
@@ -1225,6 +1277,107 @@ textarea:focus-visible {
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border-subtle);
   background: var(--color-surface);
+}
+
+/* Phones: the picture fills the top of the screen and the text sits on a rounded sheet that rises from
+   the bottom. It is the same markup as the desktop hero (heading, picture, sentence and button): only
+   the layout changes, nothing is shown or hidden. The content is a grid of three rows: the picture takes
+   whatever height is left above the heading and the sentence with the button, so it can never run out
+   of the screen. */
+@media (max-width: 899px) {
+  .hero-section.hero-stage {
+    min-height: 100svh;
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .hero-stage .tick-ring {
+    display: none;
+  }
+
+  .hero-stage .hero-content {
+    display: grid;
+    grid-template-rows: minmax(160px, 1fr) auto auto;
+    grid-template-columns: 100%;
+    width: 100%;
+    max-width: none;
+    min-height: 100svh;
+    padding: 0;
+    align-items: stretch;
+    text-align: left;
+    z-index: auto;
+  }
+
+  .hero-stage .hero-picture {
+    grid-row: 1;
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    aspect-ratio: auto;
+  }
+
+  /* the image fills the cell and takes no height of its own, so the row is only as tall as the space left */
+  .hero-stage .hero-picture picture,
+  .hero-stage .hero-picture img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-stage .hero-picture img {
+    /* the photo has the laptop's floor shadow baked in: the crop keeps it under the sheet */
+    transform: none;
+    object-position: 55% 47%;
+  }
+
+  /* the sheet is the heading and the sentence with the button: the same fill, one under the other */
+  .hero-stage .hero-heading {
+    grid-row: 2;
+    position: relative; /* above the picture, over its bottom edge */
+    z-index: 1;
+    margin-top: -30px;
+    padding: var(--space-8) var(--space-6) var(--space-3);
+    background: #171717;
+    border-top: 1px solid var(--color-on-dark-border);
+    border-radius: 30px 30px 0 0;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .hero-stage .hero-aside {
+    grid-row: 3;
+    padding: var(--space-2) var(--space-6) var(--space-8);
+    background: #171717;
+    align-items: stretch;
+  }
+
+  .hero-stage .hero-eyebrow {
+    font-size: 13px;
+  }
+
+  .hero-stage .hero-title {
+    font-size: clamp(36px, 10.5vw, 44px);
+    margin-top: 0;
+    text-align: left;
+  }
+
+  .hero-stage .hero-subtitle {
+    margin-top: 0;
+    font-size: 15px;
+    line-height: 1.5;
+    max-width: 30ch;
+    text-align: left;
+  }
+
+  .hero-stage .hero-cta {
+    margin-top: var(--space-6);
+  }
 }
 
 @media (min-width: 900px) {
@@ -1941,7 +2094,7 @@ body.is-loaded .hero-cta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-4);
+  gap: var(--space-2);
   order: 2;
 }
 
@@ -2117,10 +2270,25 @@ body.is-loaded .hero-cta {
   .faq-question {
     min-height: 6rem;
     padding: var(--space-6) 0;
+    font-size: 18px;
   }
 
   .faq-answer p {
     padding-right: 0;
+  }
+
+  /* a smaller "+" in a slightly smaller circle on phones */
+  .faq-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .faq-icon::before {
+    height: 14px;
+  }
+
+  .faq-icon::after {
+    width: 14px;
   }
 }
 
@@ -2264,6 +2432,37 @@ body.is-loaded .hero-cta {
   display: none;
 }
 
+/* The text takes the colour of the picture it belongs to: light text on the dark picture, dark text
+   on the light ones. On phones it sits under the picture on the picture's own edge colour, so the
+   band reads as one piece; from 800 px it lies over the picture and has no background. */
+.process__step[data-tone='dark'] .process__text {
+  --color-text: #efefef;
+  --color-text-muted: rgba(239, 239, 239, 0.7);
+  color: #efefef;
+}
+
+.process__step[data-tone='light'] .process__text {
+  --color-text: #1c1c1c;
+  --color-text-muted: rgba(28, 28, 28, 0.78);
+  color: #1c1c1c;
+}
+
+@media (max-width: 799px) {
+  .process__step {
+    background: var(--scene-bg);
+    margin-top: 0; /* the bands touch */
+  }
+
+  .process__picture {
+    background: var(--scene-bg);
+    border-block: 0;
+  }
+
+  .process__text {
+    padding-block: var(--space-8) var(--space-12);
+  }
+}
+
 @media (min-width: 800px) {
   .process__picture {
     aspect-ratio: 21 / 9;
@@ -2287,18 +2486,6 @@ body.is-loaded .hero-cta {
 
   .process__name {
     font-size: clamp(40px, 4.4vw, 72px);
-  }
-
-  .process__step[data-tone='dark'] .process__text {
-    --color-text: #efefef;
-    --color-text-muted: rgba(239, 239, 239, 0.7);
-    color: #efefef;
-  }
-
-  .process__step[data-tone='light'] .process__text {
-    --color-text: #1c1c1c;
-    --color-text-muted: rgba(28, 28, 28, 0.78);
-    color: #1c1c1c;
   }
 
   .process__head {
@@ -2782,14 +2969,125 @@ html.js:not(.footer-ready):not(.reveal-failsafe) .footer {
   }
 }
 
+/* Phones: the footer is a block at the end of the page, one screen tall (taller only when its content
+   needs it), and it is the same markup as on a desktop: only the layout changes. The title and the button
+   are centred in the space above the base; the base is a centred stack: the links spread over the full
+   width, the profiles, the email, the language, the location; then the copyright on the left and
+   Privacy on the right of one row. */
 @media (max-width: 768px) {
-  .footer-row {
-    flex-direction: column;
-    align-items: flex-start;
+  main {
+    margin-bottom: 0;
+  }
+
+  .footer {
+    position: relative;
+    inset: auto;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .footer::after,
+  .footer .tick-ring {
+    display: none;
+  }
+
+  .footer-inner {
+    height: auto;
+    min-height: 100svh;
+    padding: var(--space-6);
+  }
+
+  .footer-cta {
+    padding-block: var(--space-8);
+  }
+
+  .footer-cta-title {
+    font-size: 36px;
+  }
+
+  .footer-cta__body {
+    gap: var(--space-6);
+  }
+
+  /* the rows dissolve: every item is placed in one two-column grid */
+  .footer-base {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    justify-items: center;
+    align-items: center;
+    gap: var(--space-5) var(--space-4);
+    min-height: 0;
+    padding-top: var(--space-5);
+  }
+
+  .footer-row,
+  .footer-small-links {
+    display: contents;
+  }
+
+  .footer-nav {
+    order: 1;
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .footer-nav a {
+    min-height: 32px;
+    font-size: var(--text-body-sm);
+  }
+
+  .footer-social {
+    order: 2;
+    grid-column: 1 / -1;
+  }
+
+  .footer-email {
+    order: 3;
+    grid-column: 1 / -1;
+    font-size: var(--text-body-sm);
+    overflow-wrap: anywhere;
+  }
+
+  .footer-lang {
+    order: 4;
+    grid-column: 1 / -1;
+  }
+
+  /* the location: smaller and quieter than the links (sentence case, no wide tracking, a softer grey that
+     still keeps a 4.5:1 contrast on the dark) */
+  .footer-location {
+    order: 5;
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    color: rgba(237, 237, 237, 0.55);
+  }
+
+  .footer-location__pin {
+    display: none; /* the pin is decoration; centred text needs no marker */
   }
 
   .footer-copyright {
+    order: 6;
+    grid-column: 1;
+    justify-self: start;
+    align-self: end;
     text-align: left;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .footer-small-links a:not(.footer-lang) {
+    order: 6;
+    grid-column: 2;
+    justify-self: end;
+    align-self: end;
+    font-size: 12px;
   }
 }
 
@@ -4045,6 +4343,29 @@ html.js.reveal-failsafe .reveal {
 }
 
 @media (max-width: 768px) {
+  /* iOS Safari: a mask on the parent of a moving layer and big blurred shadows on every tile are
+     repainted each frame, which made the drift choppy. The edges are the screen's anyway. */
+  .image-marquee__viewport {
+    mask-image: none;
+    -webkit-mask-image: none;
+    padding-block: 0;
+    margin-block: 0;
+  }
+
+  .image-marquee__item {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .image-marquee__item picture {
+    transform: none;
+  }
+
+  .image-marquee__track {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
   .image-marquee {
     padding: 10vh 0;
   }
@@ -4337,6 +4658,15 @@ html.js.reveal-failsafe .reveal {
   height: 100svh; /* the first picture fills the screen; the image is cropped, not stretched */
   border-radius: 0;
   object-fit: cover;
+}
+
+/* Phones: a 16:9 picture cropped to a tall screen shows only a blurry slice of it. It keeps a landscape
+   shape instead, so the whole composition is seen. */
+@media (max-width: 768px) {
+  .case-header .project-hero-image {
+    height: auto;
+    aspect-ratio: 4 / 3;
+  }
 }
 
 /* Case blocks - tinted backdrop per device showcase, break container to full bleed */
@@ -4679,19 +5009,26 @@ html.js.reveal-failsafe .reveal {
     top: 0;
   }
 
-  /* 2. Logo wrap 1.512× bigger (1.4 + 8%) */
-  .project-hero-logo-wrap {
-    width: calc(11.11vw * 1.512);
-    height: calc(11.11vw * 1.512);
-    padding: calc(2.5vw * 1.512);
+  /* 2. The logo badge: big enough to read on a phone, sized in vw, padding too, so the
+        logo keeps its proportion; no backdrop blur (iOS repaints it on every scroll frame) */
+  .project-hero-image-frame .project-hero-logo-wrap,
+  .block-fullwidth .project-hero-logo-wrap {
+    width: 30vw;
+    height: 30vw;
+    padding: 6.6vw;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
-  .project-hero-logo-wrap.hero-logo--birse {
-    padding: calc(1.6vw * 1.512);
+  .project-hero-image-frame .project-hero-logo-wrap.hero-logo--birse,
+  .block-fullwidth .project-hero-logo-wrap.hero-logo--birse {
+    padding: 5.7vw;
   }
 
+  .project-hero-logo-wrap .project-hero-logo,
   .block-fullwidth-logo {
-    width: clamp(168px, 19.45vw, 336px);
+    width: 100%;
+    height: 100%;
   }
 
   /* 5. Device: near-full-bleed. Parent .case-block--device already spans
@@ -5161,6 +5498,17 @@ html.js.reveal-failsafe .reveal {
   /* back to reading order once the columns are flattened */
   .work-card {
     order: var(--i);
+  }
+
+  /* the name, the line below it and the tag sit close together */
+  .work-card__cap {
+    gap: 2px var(--space-3);
+    margin-top: var(--space-3);
+  }
+
+  .work-card__tag,
+  .work-card__status {
+    margin-top: var(--space-2);
   }
 }
 

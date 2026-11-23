@@ -3,7 +3,8 @@
 // no reduced motion, with scroll-driven animation) the first pins and each next
 // band is unmasked from the bottom up over it as you scroll; otherwise they are
 // plain bands. Each picture is one scene (subject in the centre, free space left
-// and right for the text); the tone says which text colour sits on it.
+// and right for the text); the tone says which text colour sits on it, and `bg` is the
+// colour of the picture's edge: on phones the text sits under the picture on that colour.
 import { Picture } from 'astro:assets';
 import understand from '../assets/images/process/understand.jpg';
 import design from '../assets/images/process/design.jpg';
@@ -27,9 +28,9 @@ interface Props {
 
 const { index, label, title, steps } = Astro.props;
 const scenes = [
-  { image: understand, tone: 'light' },
-  { image: design, tone: 'dark' },
-  { image: build, tone: 'light' },
+  { image: understand, tone: 'light', bg: '#f5f5f5' },
+  { image: design, tone: 'dark', bg: '#2c2c2c' },
+  { image: build, tone: 'light', bg: '#c4c4c4' },
 ];
 // The tools of each step, as icons only (no words). `color` is the brand colour of the one-path
 // marks; Figma, Chromium and VS Code carry their own colours.
@@ -64,7 +65,11 @@ const tools: { name: string; svg: string; color?: string }[][] = [
     <div class="process__stage">
       {
         steps.map((step, i) => (
-          <div class="process__step" data-tone={scenes[i]?.tone}>
+          <div
+            class="process__step"
+            data-tone={scenes[i]?.tone}
+            style={scenes[i] ? `--scene-bg:${scenes[i].bg}` : undefined}
+          >
             <div class="process__picture">
               {scenes[i] && (
                 <Picture

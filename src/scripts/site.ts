@@ -377,9 +377,9 @@ function initParallax() {
     const mobile = innerWidth <= 900;
     for (const item of items) {
       item.style.transform = 'none';
-      let speed = Number(item.dataset.parallaxSpeed) || 0;
-      if (mobile && item.closest('.mobile-col')) continue;
-      if (mobile && Math.abs(speed) > 1) speed = speed > 0 ? 1 : -1;
+      // Phones: no parallax. Measuring every item on every scroll frame made the badges choppy on iOS.
+      if (mobile) continue;
+      const speed = Number(item.dataset.parallaxSpeed) || 0;
       const rect = item.getBoundingClientRect();
       const middle = scrollY + rect.top + rect.height / 2;
       item.style.transform = `translate3d(0, ${(viewportCenter - middle) * -(speed / 10)}px, 0)`;
