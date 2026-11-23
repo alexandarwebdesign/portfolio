@@ -178,6 +178,13 @@ h3,
   contain-intrinsic-size: 0 1200px;
 }
 
+/* After a language switch the page is placed by section heights, so the sections are drawn in full
+   (their estimated 1200px would put the place wrong); set by initLanguageSwitchScroll. */
+html.lang-restored .project-dynamic-body-section,
+html.lang-restored .project-next-teaser-section {
+  content-visibility: visible;
+}
+
 /* Form validation styling - only after user interaction, native-driven */
 .form-input:user-invalid {
   border-color: var(--color-danger);

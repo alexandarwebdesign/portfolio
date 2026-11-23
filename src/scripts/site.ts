@@ -927,8 +927,76 @@ function initMobileNav() {
   });
 }
 
+// Language switch: the other language opens where you were. On click the section at the top of the
+// screen (its index among the page's sections, and how far through it you are) is kept in
+// sessionStorage; the other language has the same sections, so the same place is found there.
+const LANG_SCROLL_KEY = 'lang-switch-scroll';
+const samePath = (a: string, b: string) => a.replace(/\/+$/, '') === b.replace(/\/+$/, '');
+
+function initLanguageSwitchScroll() {
+  const sections = () => Array.from(document.querySelectorAll<HTMLElement>('main section'));
+  const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
+
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element | null)?.closest<HTMLAnchorElement>('a[hreflang]');
+    if (!link || event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    try {
+      const list = sections();
+      let index = -1;
+      list.forEach((el, i) => {
+        if (el.getBoundingClientRect().top <= 0) index = i;
+      });
+      const atEnd = maxScroll() > 0 && scrollY >= maxScroll() - 2;
+      const box = index >= 0 ? list[index].getBoundingClientRect() : null;
+      const fraction = box && box.height > 0 ? Math.min(1, -box.top / box.height) : 0;
+      sessionStorage.setItem(
+        LANG_SCROLL_KEY,
+        JSON.stringify({ to: link.pathname, index, fraction, atEnd, at: Date.now() }),
+      );
+    } catch {
+      /* no storage: the switch simply opens at the top */
+    }
+  });
+
+  let saved: { to: string; index: number; fraction: number; atEnd: boolean; at: number } | null =
+    null;
+  try {
+    saved = JSON.parse(sessionStorage.getItem(LANG_SCROLL_KEY) || 'null');
+    sessionStorage.removeItem(LANG_SCROLL_KEY);
+  } catch {
+    saved = null;
+  }
+  if (!saved || !samePath(saved.to, location.pathname) || Date.now() - saved.at > 15000) return;
+  if (saved.index < 0 && !saved.atEnd) return;
+
+  const target = () => {
+    if (!saved) return 0;
+    if (saved.atEnd) return maxScroll();
+    const el = sections()[saved.index];
+    if (!el) return scrollY;
+    return el.getBoundingClientRect().top + scrollY + saved.fraction * el.offsetHeight;
+  };
+  const go = (top: number) => scrollTo({ top, behavior: 'instant' });
+  document.documentElement.classList.add('lang-restored');
+  let placed = target();
+  go(placed);
+  // images and sections that were not drawn yet change the heights: once the page has loaded, place it
+  // again, unless the reader has already moved
+  addEventListener(
+    'load',
+    () => {
+      if (Math.abs(scrollY - placed) > 2) return;
+      placed = target();
+      go(placed);
+    },
+    { once: true },
+  );
+}
+
 function init() {
   initFooterReady();
+  initLanguageSwitchScroll();
   initSmoothScrollLenis();
   initReducedMotionSvg();
   initReducedMotionVideo();
