@@ -1032,6 +1032,37 @@ textarea:focus-visible {
   }
 }
 
+/* The two strips that Safari 26 on iOS paints its top and bottom bars from (see initSafariBars): full
+   width, fixed to the edges and half off the screen, only on iOS phones. They have the colour of the
+   section at their edge, so the part that shows is invisible. */
+.edge-strip {
+  display: none;
+}
+
+@supports (-webkit-touch-callout: none) {
+  @media (max-width: 768px) {
+    .edge-strip {
+      display: block;
+      position: fixed;
+      left: 0;
+      width: 100%;
+      min-height: 12px;
+      margin: 0;
+      padding: 0;
+      pointer-events: none;
+      z-index: 98; /* under the bar (100) and the menu (99) */
+    }
+
+    .edge-strip--top {
+      top: -8px;
+    }
+
+    .edge-strip--bottom {
+      bottom: -8px;
+    }
+  }
+}
+
 /* --------------------------------------------------------------------------
    5.3 Form Elements
    -------------------------------------------------------------------------- */
@@ -1311,6 +1342,7 @@ textarea:focus-visible {
   .hero-stage .hero-picture {
     grid-row: 1;
     position: relative;
+    background: #222222; /* the colour of the picture's edge: Safari's top bar continues it */
     width: 100%;
     height: auto;
     min-height: 0;

@@ -917,6 +917,73 @@ function initFooterFocusReveal() {
   });
 }
 
+// Safari 26 on iOS no longer reads <meta name="theme-color">. It paints its top and bottom bars from a
+// full-width fixed element that touches that edge of the screen, and when there is none it falls back to
+// the page background, which is light: the dark hero and footer then sit between two light bars.
+// So two thin, invisible strips are fixed to the edges (iOS phones only, see .edge-strip in site.css).
+// Each takes the colour of the full-width section that is at its edge, so the bar continues that section.
+// Safari only reads a strip's colour when the strip appears, so a strip is replaced when its colour changes.
+function initSafariBars() {
+  if (!CSS.supports('-webkit-touch-callout', 'none')) return;
+  const phone = matchMedia('(max-width: 768px)');
+  const current: Record<'top' | 'bottom', { el: HTMLElement; color: string } | null> = {
+    top: null,
+    bottom: null,
+  };
+  const opaque = (c: string) => c.startsWith('rgb(') || (c.startsWith('color(') && !c.includes('/'));
+  const fallback = () => getComputedStyle(document.body).backgroundColor;
+  const colorAt = (y: number) => {
+    for (const el of document.elementsFromPoint(innerWidth / 2, y)) {
+      if (el.closest('.nav, .scrollbar, .edge-strip')) continue;
+      if (el.getBoundingClientRect().width < innerWidth * 0.9) continue; // a card or a button is not the section
+      const color = getComputedStyle(el).backgroundColor;
+      if (opaque(color)) return color;
+    }
+    return fallback();
+  };
+  const set = (edge: 'top' | 'bottom', color: string) => {
+    const old = current[edge];
+    if (old && old.color === color) return;
+    const el = document.createElement('div');
+    el.className = `edge-strip edge-strip--${edge}`;
+    el.setAttribute('aria-hidden', 'true');
+    el.style.backgroundColor = color;
+    document.body.append(el);
+    old?.el.remove();
+    current[edge] = { el, color };
+  };
+  let frame = 0;
+  const update = () => {
+    frame = 0;
+    if (!phone.matches) {
+      for (const edge of ['top', 'bottom'] as const) {
+        current[edge]?.el.remove();
+        current[edge] = null;
+      }
+      return;
+    }
+    if (document.querySelector('.nav-mobile-menu.is-open')) {
+      set('top', fallback()); // the open menu is paper on paper
+      set('bottom', fallback());
+      return;
+    }
+    set('top', colorAt(1));
+    set('bottom', colorAt(innerHeight - 2));
+  };
+  const request = () => {
+    if (!frame) frame = requestAnimationFrame(update);
+  };
+  addEventListener('scroll', request, { passive: true });
+  addEventListener('resize', request, { passive: true });
+  addEventListener('pageshow', request);
+  new MutationObserver(request).observe(document.body, {
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['class'], // the menu opening, the language switch settling
+  });
+  update();
+}
+
 // The footer is revealed under the page: the bar stays above the page but goes under the footer, so
 // the part of it that is over the revealed footer is cut away (--nav-clip, used in site.css).
 function initNavUnderFooter() {
@@ -1259,6 +1326,7 @@ function init() {
   initSmoothScroll();
   initMobileNav();
   initScrollbar();
+  initSafariBars();
   initFormHandling();
   initContactHashFocus();
 
