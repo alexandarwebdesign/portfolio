@@ -1,0 +1,120 @@
+/* Design tokens: the colours, type, spacing and radii of the site. Shared by site.css and the 404 page. */
+
+/* ==========================================================================
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ---------- Color: warm paper + ink + single interactive accent ---------- */
+  --color-background: #efefef;
+  --color-surface: var(--color-white); /* the lightest surface, the same as --color-white */
+  --color-surface-subtle: #e4e4e4;
+  --color-ink: #1c1c1c;
+  --color-ink-deep: #141414;
+  --color-text: var(--color-ink);
+  --color-text-muted: rgba(28, 28, 28, 0.72);
+  --color-text-soft: rgba(28, 28, 28, 0.72);
+  --color-text-light: rgba(28, 28, 28, 0.78);
+  --color-text-tertiary: rgba(28, 28, 28, 0.8);
+  --color-border: rgba(28, 28, 28, 0.45);
+  --color-border-subtle: rgba(28, 28, 28, 0.14);
+  --color-white: #fafafa;
+  --color-accent: #0066cc; /* Apple link blue on light */
+  --color-accent-hover: #0058b0;
+  --color-accent-on-dark: #2997ff; /* the accent on the dark hero and footer */
+  --color-accent-hover-on-dark: #55adff;
+  --color-success: #1f9c44;
+  --color-error: #b3261e;
+  /* On-dark (footer, contact band) */
+  --color-on-dark: #ededed;
+  --color-on-dark-secondary: rgba(237, 237, 237, 0.6);
+  --color-on-dark-border: rgba(237, 237, 237, 0.18);
+  /* Legacy alias - keep until consuming rules are rebuilt */
+  --color-danger: var(--color-error);
+
+  /* ---------- Typography ---------- */
+  --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-body); /* one family everywhere: Manrope */
+  --font-mono: var(--font-body);
+  --text-section: clamp(32px, 3.3vw, 56px);
+  --text-cta: clamp(40px, 5.5vw, 96px); /* footer roll-link, stays large */
+  --text-title: clamp(24px, 2vw, 36px);
+  --text-project: clamp(24px, 1.8vw, 32px);
+  --text-service: clamp(24px, 1vw + 20.8px, 48px);
+  --text-body-lg: clamp(20px, 1.4vw, 24px);
+  --text-body: 20px;
+  --text-body-sm: 16px;
+  --text-label: 14px;
+  --text-button: 18px;
+  --leading-display: 0.95;
+  --leading-tight: 1.05;
+  --leading-normal: 1.5;
+  --tracking-display: -0.02em;
+  --tracking-tight: -0.02em;
+  --tracking-caps: 0.08em;
+
+  /* ---------- Motion: ONE master curve ---------- */
+  --ease: cubic-bezier(0.55, 0, 0.1, 1);
+  --ease-out: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-signature: var(--ease);
+  --duration-fast: 450ms;
+  --duration-normal: 600ms;
+  --duration-slow: 900ms;
+
+  /* ---------- Spacing ---------- */
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ---------- Layout ---------- */
+  --content-width: 1600px;
+
+  /* ---------- Shape ---------- */
+  /* One way of rounding everywhere, set by the element's size (about 0.29 of the shorter side,
+     like the navigation bar: 18px on 62px). Squares use the percentage, so any size keeps it. */
+  --radius-xs: 8px; /* labels, tags, pills: about 30px high */
+  --radius-sm: 12px; /* nav items, swatches: 40-48px */
+  --radius-md: 18px; /* buttons, fields, the nav bar: 60-70px */
+  --radius-lg: 32px; /* cards, pictures, figures, videos: the largest */
+  --radius-square: 29%; /* square elements of any size */
+  --border-radius: var(--radius-lg);
+  --border-radius-sm: 2px;
+  --border-radius-button: var(--radius-md);
+  /* a quiet shadow for pictures that are not inside a device frame: low, medium spread */
+  --shadow-picture:
+    0 1px 2px rgb(0 0 0 / 0.05), 0 8px 24px -8px rgb(0 0 0 / 0.14),
+    0 24px 56px -20px rgb(0 0 0 / 0.16);
+  --section-gap: clamp(120px, 18vh, 220px);
+
+  /* ---------- Components ---------- */
+  --input-padding: 20px;
+
+  /* ---------- Glass ---------- */
+  /* A lit disc: the light comes from the top left along one axis (5 across to 7 down, 144.5deg), so
+     the highlight on the top-left rim, the turned-away rim bottom-right, the shadow falling down and
+     to the right and the fill (see .process__tool) all lie on that same line. Used by the tool discs. */
+  --shadow-disc:
+    inset 2px 3px 3px rgb(255 255 255 / 1), inset 5px 7px 12px -2px rgb(255 255 255 / 0.9),
+    inset -1.5px -2.1px 2px rgb(0 0 0 / 0.07), 2px 3px 4px rgb(0 0 0 / 0.14),
+    5px 7px 12px -2px rgb(0 0 0 / 0.22);
+  /* The fill of the nav bar and the FAQ boxes: a light glow that starts at the middle of the top edge
+     and fades out sideways and down to a darker colour (the FAQ section ends it on its own
+     background colour). */
+  --gradient-bar-shape: ellipse 53.9% 172.8% at 50% 0%;
+  --gradient-bar-start: #fff; /* the highlight: white, fully opaque */
+  --gradient-bar: radial-gradient(
+    var(--gradient-bar-shape),
+    var(--gradient-bar-start) 0%,
+    color-mix(in srgb, var(--color-surface-subtle) 78%, transparent) 100%
+  );
+}
