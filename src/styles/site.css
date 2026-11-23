@@ -4585,39 +4585,6 @@ html.js.reveal-failsafe .reveal {
   }
 }
 
-/* Peak-end CTA - restrained */
-.case-cta-block {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(20px, 3vw, 32px);
-  padding: clamp(96px, 14vh, 180px) clamp(24px, 5vw, 64px);
-  background: transparent;
-}
-
-.case-cta-eyebrow {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 500;
-  letter-spacing: var(--tracking-display);
-  line-height: 1.15;
-  color: var(--color-text);
-  max-width: 720px;
-}
-
-.case-cta-actions {
-  display: flex;
-  gap: var(--space-4);
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.case-cta-btn {
-  min-width: 220px;
-}
-
 /* ==========================================================================
 
 /* ==========================================================================
@@ -4675,10 +4642,6 @@ html.js.reveal-failsafe .reveal {
   /* Case blocks - tighter mobile padding */
   .case-block--device {
     padding: clamp(48px, 8vh, 88px) 16px;
-  }
-
-  .case-cta-eyebrow {
-    font-size: clamp(24px, 7vw, 36px);
   }
 
   .case-proof--phones .block-mobile-devices .mobile-devices-row {
