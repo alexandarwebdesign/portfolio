@@ -438,7 +438,6 @@ function initImageMarquee() {
     let dragLastT = 0;
     let velocity = 0;
     let pointer: number | null = null;
-    let hovering = false; // the drift stops under a mouse so a design can be read
     const viewport = root.querySelector<HTMLElement>('.image-marquee__viewport') ?? root;
 
     const wrap = () => {
@@ -465,7 +464,7 @@ function initImageMarquee() {
           velocity *= Math.pow(MOMENTUM_DECAY, dt / 16.67);
         } else {
           velocity = 0;
-          if (!hovering) currentX -= IDLE_SPEED * dt;
+          currentX -= IDLE_SPEED * dt;
         }
       }
       wrap();
@@ -473,12 +472,6 @@ function initImageMarquee() {
       rafId = inView ? requestAnimationFrame(tick) : null;
     };
 
-    viewport.addEventListener('pointerenter', (event) => {
-      hovering = event.pointerType === 'mouse';
-    });
-    viewport.addEventListener('pointerleave', () => {
-      hovering = false;
-    });
     viewport.addEventListener('pointerdown', (event) => {
       if (event.button !== 0) return;
       dragging = true;
