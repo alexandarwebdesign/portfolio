@@ -957,7 +957,7 @@ textarea:focus-visible {
 
 /* Narrow screens: the bar would not fit with the short names and the wide link padding, so the
    switch keeps just the flags (the aria-label names it) and the links sit a little closer. */
-@media (min-width: 481px) and (max-width: 859px) {
+@media (min-width: 769px) and (max-width: 859px) {
   .lang-option span {
     display: none;
   }
@@ -1170,21 +1170,6 @@ textarea:focus-visible {
   }
 }
 
-/* Phones: a contact tile stays beside the menu button */
-.nav-contact-mobile {
-  display: none;
-  align-items: center;
-  height: var(--space-12);
-  padding-inline: var(--space-5);
-  border-radius: var(--nav-item-radius);
-  color: var(
-    --color-ink
-  ); /* the blue accent is under 3:1 on the see-through bar over the dark hero */
-  font-size: var(--text-body-sm);
-  font-weight: 600;
-  text-decoration: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .nav-mobile-menu {
     transition: none;
@@ -1197,7 +1182,9 @@ textarea:focus-visible {
   }
 }
 
-@media (max-width: 480px) {
+/* Phones and small tablets: the bar is only the menu button, everything else (the pages, the language,
+   the contact) is inside the menu. */
+@media (max-width: 768px) {
   .nav {
     left: auto;
     right: clamp(20px, 5vw, 40px);
@@ -1209,8 +1196,7 @@ textarea:focus-visible {
     display: none;
   }
 
-  .nav-burger,
-  .nav-contact-mobile {
+  .nav-burger {
     display: flex;
   }
 }

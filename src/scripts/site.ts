@@ -919,6 +919,10 @@ function initMobileNav() {
   menu.addEventListener('click', (event) => {
     if (event.target === menu) close();
   });
+  // the bar comes back above 768 px (a tablet turned sideways): the menu must not stay open over it
+  matchMedia('(min-width: 769px)').addEventListener('change', (event) => {
+    if (event.matches) close();
+  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && menu.classList.contains('is-open')) {
       close();
