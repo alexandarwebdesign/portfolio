@@ -929,7 +929,9 @@ function initNavUnderFooter() {
   const update = () => {
     frame = 0;
     const edge = main.getBoundingClientRect().bottom; // where the page ends and the footer begins
-    const cut = Math.max(0, nav.getBoundingClientRect().bottom - edge);
+    const box = nav.getBoundingClientRect();
+    const scale = nav.offsetHeight ? box.height / nav.offsetHeight : 1; // the bar is scaled on desktop; clip-path is in its own units
+    const cut = Math.max(0, (box.bottom - edge) / scale);
     const value = cut > 0 ? cut : SPILL;
     if (value === last) return;
     last = value;

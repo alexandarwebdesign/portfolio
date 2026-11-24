@@ -81,6 +81,8 @@
   /* Side inset from the screen edge to the content: 24px up to 1024px wide, growing to 184px at 1920px
      (the look of the 1920 design). Wider screens keep the content centred at --content-width. */
   --page-inset: clamp(24px, calc(24px + (100vw - 1024px) * 0.1786), 184px);
+  /* The top bar (tan(atan2(length, 1px)) turns a length into a plain number): 1 at 1920px and wider, down to 0.8 at 1280px and narrower (desktop only). */
+  --nav-scale: clamp(0.8, calc(0.8 + tan(atan2(100vw - 1280px, 1px)) * 0.0003125), 1);
   /* The padding a centred .container needs so its text starts at --page-inset from the edge. */
   --container-pad: max(
     24px,
