@@ -486,8 +486,8 @@ textarea {
   max-width: var(--content-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--space-6);
-  padding-right: var(--space-6);
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
 }
 
 /* ==========================================================================
@@ -1135,7 +1135,7 @@ textarea:focus-visible {
   flex-direction: column;
   align-items: center;
   gap: 0;
-  padding: 0 var(--space-6);
+  padding: 0 var(--container-pad);
   max-width: 1160px;
 }
 
@@ -2472,7 +2472,8 @@ body.is-loaded .hero-cta {
   .process__text {
     position: absolute;
     inset-block: 0;
-    inset-inline: 6%;
+    /* 115px = the 6% of 1920; in between the text lines up with the rest of the page */
+    inset-inline: max(6%, min(var(--page-inset), 115px));
     padding: 0;
     grid-template-columns: 32% 1fr 24%;
     align-content: end; /* the row sits in the lower part of the screen */

@@ -78,6 +78,14 @@
 
   /* ---------- Layout ---------- */
   --content-width: 1600px;
+  /* Side inset from the screen edge to the content: 24px up to 1024px wide, growing to 184px at 1920px
+     (the look of the 1920 design). Wider screens keep the content centred at --content-width. */
+  --page-inset: clamp(24px, calc(24px + (100vw - 1024px) * 0.1786), 184px);
+  /* The padding a centred .container needs so its text starts at --page-inset from the edge. */
+  --container-pad: max(
+    24px,
+    calc(var(--page-inset) - max(0px, (100vw - var(--content-width)) / 2))
+  );
 
   /* ---------- Shape ---------- */
   /* One way of rounding everywhere, set by the element's size (about 0.29 of the shorter side,
