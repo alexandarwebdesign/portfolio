@@ -1697,6 +1697,7 @@ body.is-loaded .hero-cta {
   letter-spacing: -0.2px;
   color: var(--color-text);
   text-align: right;
+  text-wrap: balance; /* a long value that wraps splits into even lines, never one orphaned word */
 }
 
 @media (max-width: 600px) {
@@ -1715,6 +1716,22 @@ body.is-loaded .hero-cta {
   flex-shrink: 0;
   width: 24px;
   height: 24px;
+}
+
+/* The "Based" value: the globe is part of the text line and, when the value is too long for one line,
+   it breaks between the two parts, never inside one. */
+.about-index-row .about-based-dd {
+  display: block;
+}
+
+.about-based-dd .about-index-globe {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: var(--space-3);
+}
+
+.about-index-part {
+  display: inline-block;
 }
 
 /* Small moving globe accent (the reused icon) on the "Based" index row. */
