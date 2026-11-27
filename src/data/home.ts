@@ -3,6 +3,8 @@ import birseCard from '../assets/images/birse-card-street.jpg';
 import formaCard from '../assets/images/case/forma-card.jpg';
 import tunoraCard from '../assets/images/case/tunora-card.jpg';
 import swisCard from '../assets/images/swis-saas.jpg';
+import homoNovusCard from '../assets/images/case/homo-novus-card.jpg';
+import settleCard from '../assets/images/case/settle-card.jpg';
 
 const bg = {
   hero: {
@@ -167,6 +169,8 @@ export interface WorkItem {
   image: ImageMetadata;
   /** Route id of the case study; projects without one show their status. */
   route?: 'birse' | 'forma' | 'tunora';
+  /** A live site of its own, for work without a case study page. */
+  url?: string;
   status?: { bg: string; en: string };
   /** Corner tag on the card, e.g. self-initiated work. */
   tag?: { bg: string; en: string };
@@ -192,6 +196,26 @@ export const work: WorkItem[] = [
     image: tunoraCard,
     route: 'tunora',
     tag: { bg: 'Собствен продукт', en: 'Own product' },
+  },
+  {
+    name: 'Homo Novus',
+    category: {
+      bg: 'Изследване на WebGL · жива ДНК спирала',
+      en: 'Exploring WebGL · A living DNA helix',
+    },
+    image: homoNovusCard,
+    url: 'https://homo-novus.pages.dev/',
+    tag: { bg: 'Творчески експеримент', en: 'Creative experiment' },
+  },
+  {
+    name: 'Settle',
+    category: {
+      bg: 'Изследване на WebGL · от хаос към ред',
+      en: 'Exploring WebGL · From noise to order',
+    },
+    image: settleCard,
+    url: 'https://settle-cfm.pages.dev/',
+    tag: { bg: 'Творчески експеримент', en: 'Creative experiment' },
   },
   {
     name: 'Swis SaaS',

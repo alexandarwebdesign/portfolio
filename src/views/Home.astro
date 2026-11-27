@@ -34,7 +34,7 @@ const n = (i: number) => String(i + 1).padStart(2, '0');
 const shapes = ['circle', 'triangle', 'hexagon'] as const;
 const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
 const count = String(work.length).padStart(2, '0');
-// Two columns, the second one dropped: 1st and 3rd on the left, 2nd and 4th on the right.
+// Two columns, the second one dropped: the odd items on the left, the even ones on the right.
 const indexed = work.map((item, index) => ({ item, index }));
 const columns = [
   indexed.filter(({ index }) => index % 2 === 0),
@@ -118,7 +118,7 @@ const columns = [
                 index={index}
                 category={item.category[lang]}
                 image={item.image}
-                href={item.route && pathFor(item.route, lang)}
+                href={item.route ? pathFor(item.route, lang) : item.url}
                 status={item.status?.[lang]}
                 tag={item.tag?.[lang]}
               />
