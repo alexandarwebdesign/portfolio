@@ -58,7 +58,7 @@
 /* Metric-matched fallback so layout does not shift when Manrope swaps in */
 @font-face {
   font-family: 'Manrope Fallback';
-  src: local('Arial');
+  src: local('Arial'), local('Liberation Sans'), local('Arimo');
   size-adjust: 102%;
   ascent-override: 96%;
   descent-override: 25%;
@@ -220,6 +220,7 @@ html.lang-restored .project-next-teaser-section {
   .button-secondary,
   .video-toggle video,
   .screen-video,
+  .loop-toggle,
   .carousel-btn-track {
     display: none !important;
   }
@@ -4191,9 +4192,58 @@ html.js.reveal-failsafe .reveal {
   }
 }
 
-/* video-toggle: pause/play on click (handled by existing JS) */
-.video-toggle {
+/* The pause / play button over a looping video (added by initLoopVideos). The icon shows on
+   hover and keyboard focus, and stays while the video is paused. */
+.case-figure {
+  position: relative;
+}
+
+.overlay-device-image {
+  pointer-events: none; /* the device frame lies over the screen: clicks pass to the button */
+}
+
+.loop-toggle {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: inherit;
   cursor: pointer;
+}
+
+.loop-toggle:focus-visible {
+  outline-offset: -4px;
+}
+
+.loop-toggle svg {
+  width: 56px;
+  height: 56px;
+  padding: 16px;
+  fill: #ededed;
+  background: rgb(20 20 20 / 0.72);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.loop-toggle:focus-visible svg,
+.loop-toggle[data-paused] svg {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .loop-toggle:hover svg {
+    opacity: 1;
+  }
+}
+
+.loop-toggle:not([data-paused]) .loop-toggle__play,
+.loop-toggle[data-paused] .loop-toggle__pause {
+  display: none;
 }
 
 /* Mobile devices block */

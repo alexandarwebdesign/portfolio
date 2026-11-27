@@ -22,8 +22,9 @@ interface Props {
 
 const { title, description, route, noindex, schema, crumb, bodyClass } = Astro.props;
 const lang = toLang(Astro.currentLocale);
-// The fonts of the first screen: Latin for English, Cyrillic for Bulgarian.
-const preload = lang === 'bg' ? [manropeCyrillic] : [manropeLatin];
+// The fonts of the first screen: Latin for English; Bulgarian pages need both (digits, spaces and
+// names are Latin), and fetching them together avoids a half-loaded line that wraps and shifts.
+const preload = lang === 'bg' ? [manropeCyrillic, manropeLatin] : [manropeLatin];
 ---
 
 <!doctype html>

@@ -101,21 +101,51 @@ function initReducedMotionSvg() {
 }
 
 // Looping videos load and play only near the screen, and pause away from it, so a case
-// page does not fetch every film at once. With reduced motion the poster stays.
+// page does not fetch every film at once. Each one is covered by a button that pauses and
+// plays it; with reduced motion the poster stays until that button is pressed.
 function initLoopVideos() {
   const videos = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]');
-  if (reduceMotion() || !videos.length) return;
+  if (!videos.length) return;
+  const bg = document.documentElement.lang === 'bg';
+  const stopped = new Set<HTMLVideoElement>(reduceMotion() ? videos : []);
   const near = new IntersectionObserver(
     (entries) => {
       for (const { target, isIntersecting } of entries) {
         const video = target as HTMLVideoElement;
-        if (isIntersecting) video.play().catch(() => {});
-        else video.pause();
+        if (!isIntersecting) video.pause();
+        else if (!stopped.has(video))
+          video.play().catch(() => video.dispatchEvent(new Event('pause')));
       }
     },
     { rootMargin: '25% 0px' },
   );
-  videos.forEach((video) => near.observe(video));
+  videos.forEach((video) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'loop-toggle';
+    button.innerHTML =
+      '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="loop-toggle__play" d="M8 5v14l11-7z"/><path class="loop-toggle__pause" d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>';
+    const sync = (paused: boolean) => {
+      button.toggleAttribute('data-paused', paused);
+      // the video's own label already says it is a video
+      const action = bg ? (paused ? 'Пусни' : 'Спри') : paused ? 'Play' : 'Pause';
+      button.setAttribute('aria-label', `${action}: ${video.getAttribute('aria-label') ?? ''}`);
+    };
+    sync(stopped.has(video));
+    video.addEventListener('play', () => sync(false));
+    video.addEventListener('pause', () => sync(true));
+    button.addEventListener('click', () => {
+      if (video.paused) {
+        stopped.delete(video);
+        video.play().catch(() => {});
+      } else {
+        stopped.add(video);
+        video.pause();
+      }
+    });
+    video.after(button);
+    near.observe(video);
+  });
 }
 
 function initPageLoadSequence() {
