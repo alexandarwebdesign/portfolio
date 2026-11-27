@@ -100,12 +100,22 @@ function initReducedMotionSvg() {
   });
 }
 
-function initReducedMotionVideo() {
-  if (!reduceMotion()) return;
-  document.querySelectorAll<HTMLVideoElement>('video[autoplay]').forEach((video) => {
-    video.removeAttribute('autoplay');
-    video.pause();
-  });
+// Looping videos load and play only near the screen, and pause away from it, so a case
+// page does not fetch every film at once. With reduced motion the poster stays.
+function initLoopVideos() {
+  const videos = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]');
+  if (reduceMotion() || !videos.length) return;
+  const near = new IntersectionObserver(
+    (entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const video = target as HTMLVideoElement;
+        if (isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      }
+    },
+    { rootMargin: '25% 0px' },
+  );
+  videos.forEach((video) => near.observe(video));
 }
 
 function initPageLoadSequence() {
@@ -1253,7 +1263,7 @@ function init() {
   initLanguageSwitchScroll();
   initSmoothScrollLenis();
   initReducedMotionSvg();
-  initReducedMotionVideo();
+  initLoopVideos();
   initPageLoadSequence();
   initScrollReveal();
   initStatementRing();

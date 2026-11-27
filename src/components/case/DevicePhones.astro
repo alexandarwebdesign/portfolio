@@ -32,11 +32,11 @@ const { label, phones } = Astro.props;
                   <video
                     class="overlay screen-video"
                     poster={phone.video.poster}
-                    autoplay
+                    data-autoplay
                     muted
                     loop
                     playsinline
-                    preload="metadata"
+                    preload="none"
                     width={phone.video.width}
                     height={phone.video.height}
                     aria-label={phone.alt}

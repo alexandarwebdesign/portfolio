@@ -25,11 +25,11 @@ const widths = image ? [500, 800, 1080, 1600].filter((w) => w <= image.width) : 
         {video ? (
           <video
             poster={video.poster}
-            autoplay
+            data-autoplay
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
             width={video.width}
             height={video.height}
             class="case-figure-img"
@@ -59,11 +59,11 @@ const widths = image ? [500, 800, 1080, 1600].filter((w) => w <= image.width) : 
             {video ? (
               <video
                 poster={video.poster}
-                autoplay
+                data-autoplay
                 muted
                 loop
                 playsinline
-                preload="metadata"
+                preload="none"
                 width={video.width}
                 height={video.height}
                 class="overlay screen-video"

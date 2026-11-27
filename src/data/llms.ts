@@ -49,6 +49,13 @@ ${caseLine('birse', birse.en)}
 ${caseLine('forma', forma.en)}
 ${caseLine('tunora', tunora.en)}
 ${work
+  .filter((item) => item.url)
+  .map(
+    (item) =>
+      `- [${item.name}](${item.url}): ${item.tag!.en}, a self-initiated concept site, not client work. ${item.category.en}.`,
+  )
+  .join('\n')}
+${work
   .filter((item) => item.status)
   .map((item) => `- ${item.name} (${item.category.en}): ${item.status!.en}, not yet published.`)
   .join('\n')}
