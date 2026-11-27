@@ -40,6 +40,7 @@ const bg = {
     label: 'Услуги',
     title: ['От стратегията', 'до работещия сайт.'],
     cta: 'Да работим заедно',
+    more: 'Уеб дизайн в София',
     pick: 'Избери тази услуга',
   },
   process: {
@@ -117,6 +118,7 @@ const en: typeof bg = {
     label: 'Services',
     title: ['From strategy', 'to live site.'],
     cta: 'Let’s work together',
+    more: 'Web design in Sofia',
     pick: 'Choose this service',
   },
   process: {

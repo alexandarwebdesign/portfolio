@@ -34,12 +34,14 @@ const contact = `## Contact
 
 const bulgarian = `## Bulgarian pages
 
-- [Начало](${url('/')}), [За мен](${url('/about')}), [Birsé](${url('/birse')}), [FORMA Architects](${url('/forma-architects')}), [Tunora](${url('/tunora')}): Bulgarian versions of the English pages.`;
+- [Начало](${url('/')}), [Услуги](${url('/uslugi')}), [За мен](${url('/about')}), [Birsé](${url('/birse')}), [FORMA Architects](${url('/forma-architects')}), [Tunora](${url('/tunora')}): Bulgarian versions of the English pages.`;
 
 export function llms(): string {
   return `${intro}
 
 ## Services
+
+Web design and development in Sofia: ${url('/en/services')}
 
 ${services.en.map((s) => `- [${s.title}](${url('/en#services')}): ${s.text}`).join('\n')}
 

@@ -1972,7 +1972,34 @@ body.is-loaded .hero-cta {
 
 .services-cta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: var(--space-4);
+}
+
+/* The services page (/uslugi): the plain top of the page, and rows that are not clickable */
+.services-page {
+  padding-top: clamp(120px, 18vh, 200px);
+  padding-bottom: var(--section-gap);
+}
+
+.services-page__lead {
+  max-width: 44rem;
+  margin-block: var(--space-6) var(--space-8);
+  font-size: var(--text-body-lg);
+  color: var(--color-text-muted);
+}
+
+.services-page .section-header > [class^='button-'] {
+  align-self: flex-start;
+}
+
+.service-row--plain {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.service-row--plain .service-desc {
+  max-width: 60ch;
 }
 
 /* --------------------------------------------------------------------------

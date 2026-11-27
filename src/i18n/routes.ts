@@ -7,6 +7,7 @@ import type { Lang } from './ui';
 export const routes = {
   home: { bg: '/', en: '/en' },
   about: { bg: '/about', en: '/en/about' },
+  services: { bg: '/uslugi', en: '/en/services' },
   forma: { bg: '/forma-architects', en: '/en/forma-architects' },
   birse: { bg: '/birse', en: '/en/birse' },
   tunora: { bg: '/tunora', en: '/en/tunora' },

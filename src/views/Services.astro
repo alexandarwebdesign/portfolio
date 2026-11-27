@@ -1,0 +1,147 @@
+---
+// The services page: web design in Sofia. Who it is for, what is included, the three services,
+// the case studies, questions and the contact form.
+import Button from '../components/Button.astro';
+import WorkCard from '../components/WorkCard.astro';
+import ServiceIcon from '../components/ServiceIcon.astro';
+import FaqSection from '../components/FaqSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import { servicesPage } from '../data/services-page';
+import { services } from '../data/services';
+import { home, work } from '../data/home';
+import type { Lang } from '../i18n/ui';
+import { pathFor } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = servicesPage[lang];
+const shapes = ['circle', 'triangle', 'hexagon'] as const;
+const serviceIds = ['web-design', 'website-dev', 'end-to-end'];
+const number = (i: number) => `(${String(i + 1).padStart(2, '0')})`;
+const cases = work.filter((item) => item.route);
+const columns = [cases.filter((_, i) => i % 2 === 0), cases.filter((_, i) => i % 2 === 1)];
+---
+
+<section class="services-page" aria-labelledby="services-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label">{t.hero.label}</p>
+      <h1 id="services-title" class="section-title">{t.hero.title}</h1>
+      <p class="services-page__lead">{t.hero.lead}</p>
+      <Button href="#contact" data-focus-target="#name">{t.hero.cta}</Button>
+    </div>
+  </div>
+</section>
+
+<section class="services-section stage">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(01)</span> {t.problem.label}</p>
+      <h2 class="section-title">{t.problem.title}</h2>
+    </div>
+    <ul class="services-list">
+      {
+        t.problem.items.map((item, i) => (
+          <li class="service-row service-row--plain reveal">
+            <span class="service-index" aria-hidden="true">
+              {number(i)}
+            </span>
+            <p class="service-desc">{item}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="services-section stage">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(02)</span> {t.includes.label}</p>
+      <h2 class="section-title">{t.includes.title}</h2>
+    </div>
+    <div class="services-list">
+      {
+        t.includes.items.map((item, i) => (
+          <div class="service-row reveal">
+            <span class="service-index" aria-hidden="true">
+              {number(i)}
+            </span>
+            <h3 class="service-title">{item.title}</h3>
+            <div class="service-body">
+              <p class="service-desc">{item.text}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section id="services" class="services-section stage">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">(03)</span> {t.offer.label}</p>
+      <h2 class="section-title">{t.offer.title}</h2>
+    </div>
+    <div class="services-list">
+      {
+        services[lang].map((service, i) => (
+          <div class="service-row reveal" data-service={serviceIds[i]}>
+            <span class="service-index" aria-hidden="true">
+              {number(i)}
+            </span>
+            <h3 class="service-title">{service.title}</h3>
+            <div class="service-body">
+              <p class="service-desc">{service.text}</p>
+              <a
+                href="#contact"
+                class="service-pick"
+                data-service-pick={serviceIds[i]}
+                data-focus-target="#name"
+              >
+                {home[lang].services.pick} <span aria-hidden="true">→</span>
+                <span class="sr-only">: {service.title}</span>
+              </a>
+            </div>
+            <ServiceIcon shape={shapes[i % shapes.length]} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="work-section stage">
+  <div class="container">
+    <header class="section-header reveal">
+      <p class="mono-label"><span class="index">(04)</span> {t.work.label}</p>
+      <h2 class="section-title">{t.work.title}</h2>
+    </header>
+    <div class="work-stagger">
+      {
+        columns.map((column, c) => (
+          <div class:list={['work-col', { 'work-col--b': c === 1 }]}>
+            {column.map((item) => (
+              <WorkCard
+                name={item.name}
+                index={cases.indexOf(item)}
+                category={item.category[lang]}
+                image={item.image}
+                href={pathFor(item.route!, lang)}
+                tag={item.tag?.[lang]}
+              />
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<FaqSection lang={lang} index="(05)" label={t.faq.label} title={t.faq.title} items={t.faq.items} />
+
+<ContactSection {lang} index="(06)" subject={t.contact.subject} />

@@ -108,6 +108,27 @@ export function homeSchema(lang: Lang, path: string): Node[] {
   ];
 }
 
+export function servicesSchema(
+  lang: Lang,
+  page: {
+    hero: { title: string };
+    meta: { description: string };
+    faq: { items: { q: string; a: string }[] };
+  },
+): Node[] {
+  return [
+    {
+      '@type': 'Service',
+      name: page.hero.title,
+      description: page.meta.description,
+      inLanguage: lang,
+      provider: { '@id': ids.person },
+      areaServed: [{ '@type': 'City', name: 'Sofia' }, 'Worldwide'],
+    },
+    faqPage(lang, page.faq.items),
+  ];
+}
+
 export function aboutSchema(lang: Lang, path: string): Node[] {
   return [
     {

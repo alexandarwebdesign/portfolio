@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import Services from '../../views/Services.astro';
+import { servicesPage } from '../../data/services-page';
+import { servicesSchema } from '../../data/schema';
+const t = servicesPage.en;
+---
+
+<Base
+  title={t.meta.title}
+  description={t.meta.description}
+  route="services"
+  crumb={t.crumb}
+  schema={servicesSchema('en', t)}
+>
+  <Services lang="en" />
+</Base>

@@ -1,0 +1,41 @@
+---
+// The contact section: the title and e-mail beside the form. Home and the services page share it.
+import ContactForm from './ContactForm.astro';
+import { home } from '../data/home';
+import { site } from '../data/site';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** The section number, like "(05)". */
+  index: string;
+  /** The form's e-mail subject, off the home page. */
+  subject?: string;
+}
+
+const { lang, index, subject } = Astro.props;
+const t = home[lang];
+const s = ui[lang].site;
+---
+
+<section id="contact" class="contact-section stage">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="mono-label"><span class="index">{index}</span> {t.contact.label}</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h2 class="contact-title">
+          <span>{t.contact.title[0]}</span>
+          <span>{t.contact.title[1]}</span>
+        </h2>
+        <div class="contact-email">
+          <p class="email-label">{t.contact.email}</p>
+          <a href={`mailto:${site.email}`} class="email-link" aria-label={s.emailTo}>{site.email}</a
+          >
+        </div>
+      </div>
+      <ContactForm {lang} {subject} />
+    </div>
+  </div>
+</section>

@@ -10,15 +10,14 @@ import ImageMarquee from '../components/ImageMarquee.astro';
 import AboutIndex from '../components/AboutIndex.astro';
 import ServiceIcon from '../components/ServiceIcon.astro';
 import FaqSection from '../components/FaqSection.astro';
-import ContactForm from '../components/ContactForm.astro';
+import ContactSection from '../components/ContactSection.astro';
 import portrait from '../assets/images/portrait.jpg';
 import heroImage from '../assets/images/hero/hero.jpg';
 import { home, work } from '../data/home';
 import { about } from '../data/about';
 import { services } from '../data/services';
 import { faq } from '../data/faq';
-import { site } from '../data/site';
-import { ui, type Lang } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
 import { pathFor } from '../i18n/routes';
 
 interface Props {
@@ -27,7 +26,6 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = home[lang];
-const s = ui[lang].site;
 // Numbered labels start after the process section (02).
 const steps = t.process.steps;
 const n = (i: number) => String(i + 1).padStart(2, '0');
@@ -193,6 +191,7 @@ const columns = [
     </div>
     <div class="services-cta reveal">
       <Button href="#contact">{t.services.cta}</Button>
+      <Button href={pathFor('services', lang)!} variant="secondary">{t.services.more}</Button>
     </div>
   </div>
 </section>
@@ -205,24 +204,4 @@ const columns = [
   items={faq[lang]}
 />
 
-<section id="contact" class="contact-section stage">
-  <div class="container">
-    <div class="section-header reveal">
-      <p class="mono-label"><span class="index">({n(5)})</span> {t.contact.label}</p>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <h2 class="contact-title">
-          <span>{t.contact.title[0]}</span>
-          <span>{t.contact.title[1]}</span>
-        </h2>
-        <div class="contact-email">
-          <p class="email-label">{t.contact.email}</p>
-          <a href={`mailto:${site.email}`} class="email-link" aria-label={s.emailTo}>{site.email}</a
-          >
-        </div>
-      </div>
-      <ContactForm {lang} />
-    </div>
-  </div>
-</section>
+<ContactSection {lang} index={`(${n(5)})`} />
