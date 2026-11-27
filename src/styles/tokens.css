@@ -35,7 +35,7 @@
   --color-danger: var(--color-error);
 
   /* ---------- Typography ---------- */
-  --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-body: 'Manrope', 'Manrope Fallback', system-ui, -apple-system, sans-serif;
   --font-display: var(--font-body); /* one family everywhere: Manrope */
   --font-mono: var(--font-body);
   --text-section: clamp(32px, 3.3vw, 56px);
